@@ -1,0 +1,1584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TaAnalysis</class>
+ <widget class="QDialog" name="TaAnalysis">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1336</width>
+    <height>621</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Ta Analys</string>
+      </attribute>
+      <widget class="QComboBox" name="StockListComboBox">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>181</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="SelStockListButton">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>10</y>
+         <width>51</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Välj</string>
+       </property>
+      </widget>
+      <widget class="QwtPlot" name="qwtPlot">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>0</y>
+         <width>731</width>
+         <height>331</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QSlider" name="selTimePeriodSlider">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>60</y>
+         <width>201</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>11</number>
+       </property>
+       <property name="pageStep">
+        <number>11</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="sliderPosition">
+        <number>0</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QSlider" name="moveTimePeriodSlider_2">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>530</y>
+         <width>491</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="timePeriodLlineEdit">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>30</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditStartDate">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>530</y>
+         <width>113</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditStopDate">
+       <property name="geometry">
+        <rect>
+         <x>940</x>
+         <y>530</y>
+         <width>113</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditAssetName">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>80</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QwtPlot" name="qwtPlot_2">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>330</y>
+         <width>731</width>
+         <height>201</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="setEndDateLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>1170</x>
+         <y>0</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="setStartDateLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>0</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>40</y>
+         <width>311</width>
+         <height>511</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <attribute name="headerDefaultSectionSize">
+        <number>90</number>
+       </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="geometry">
+        <rect>
+         <x>1070</x>
+         <y>410</y>
+         <width>191</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBoxReqestData">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>81</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>On line</string>
+       </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>160</y>
+         <width>251</width>
+         <height>401</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>4</number>
+       </property>
+       <widget class="QWidget" name="tab_5">
+        <attribute name="title">
+         <string>TA</string>
+        </attribute>
+        <widget class="QRadioButton" name="radioButMacd">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>310</y>
+           <width>117</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>MACD</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButMomentum">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>230</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Momentum</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButton">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>200</y>
+           <width>117</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>No Indicator</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxBollingBand">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>111</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Bollingband</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxLongMvAvg">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Long Moving Avg</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButRoc">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>290</y>
+           <width>117</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>ROC</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButStochastics">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>250</y>
+           <width>121</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Stochastics</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxMidMvAvg">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Mid Moving Avg</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButRSI">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>270</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>RSI</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxLinjerReg">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Linjer Regression</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxShortMvAvg">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Short Moving Avg </string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_6">
+        <attribute name="title">
+         <string>FA1</string>
+        </attribute>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>21</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>PE</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>0</y>
+           <width>16</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>PS</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_4">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>0</y>
+           <width>71</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Vinst/Utdel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>0</y>
+           <width>51</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Sub/Kurs</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_6">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>0</y>
+           <width>41</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>DirAvk</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditPE">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditPs">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>20</y>
+           <width>41</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditEarningsDivByDividend">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditNavDivLastStockPrice">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditYield">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_17">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>50</y>
+           <width>101</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Historiska P/E tal</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_16">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>200</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Historiska priser</string>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidget_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>220</y>
+           <width>251</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidget_6">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>70</y>
+           <width>251</width>
+           <height>131</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_4">
+        <attribute name="title">
+         <string>FA2</string>
+        </attribute>
+        <widget class="QTreeWidget" name="treeWidget_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>70</y>
+           <width>256</width>
+           <height>131</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_10">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>50</y>
+           <width>81</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditPE_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>21</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>PE</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditYield_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_12">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>0</y>
+           <width>41</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>DirAvk</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditNavDivLastStockPrice_2">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_13">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>0</y>
+           <width>51</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Sub/Kurs</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditEarningsDivByDividend_2">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_14">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>0</y>
+           <width>71</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Vinst/Utdel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditPs_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>0</y>
+           <width>21</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>PS</string>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>230</y>
+           <width>251</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_9">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>210</y>
+           <width>121</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Försäljningstillväxt</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="FA3">
+        <attribute name="title">
+         <string>FA3</string>
+        </attribute>
+        <widget class="QTreeWidget" name="treeWidget_4">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>256</width>
+           <height>141</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Lönsamhetsanalys</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditRisk">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>190</y>
+           <width>61</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_8">
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>170</y>
+           <width>41</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Risk</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>170</y>
+           <width>61</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Medelavk</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineMeanReturn">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>190</y>
+           <width>81</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Info">
+        <attribute name="title">
+         <string>Info</string>
+        </attribute>
+        <widget class="QLabel" name="label_23">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>80</y>
+           <width>51</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Bransch</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_24">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>110</y>
+           <width>31</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>VD</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_25">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>50</y>
+           <width>41</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Sektor</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMoreInfoSector_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>50</y>
+           <width>191</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMoreInfoBransch_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>80</y>
+           <width>191</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMoreInfoexecutiveDirector_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>110</y>
+           <width>191</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="textEditMoreInfobusinessDescription_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>140</y>
+           <width>251</width>
+           <height>231</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditEarningsDivByDividend_3">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditPE_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_28">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>0</y>
+           <width>41</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>DirAvk</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditPs_3">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>20</y>
+           <width>41</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_26">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>21</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>PE</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditYield_3">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_29">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>0</y>
+           <width>16</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>PS</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_30">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>0</y>
+           <width>71</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Vinst/Utdel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditNavDivLastStockPrice_3">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>20</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_31">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>0</y>
+           <width>51</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Sub/Kurs</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Plot_tools">
+        <attribute name="title">
+         <string>Zoom</string>
+        </attribute>
+        <widget class="QPushButton" name="toggleZoomButton">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>61</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Zoom</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="ZoomOutButton">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>10</y>
+           <width>71</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Zoom ut</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="togglePanButton">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>10</y>
+           <width>51</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Pan</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="assetType">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>110</y>
+         <width>171</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelLastPrice">
+       <property name="geometry">
+        <rect>
+         <x>1240</x>
+         <y>130</y>
+         <width>61</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelOneDayProcentChange">
+       <property name="geometry">
+        <rect>
+         <x>1240</x>
+         <y>110</y>
+         <width>71</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="StatusInfoLabel">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>130</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <zorder>StockListComboBox</zorder>
+      <zorder>SelStockListButton</zorder>
+      <zorder>qwtPlot</zorder>
+      <zorder>selTimePeriodSlider</zorder>
+      <zorder>moveTimePeriodSlider_2</zorder>
+      <zorder>timePeriodLlineEdit</zorder>
+      <zorder>lineEditStartDate</zorder>
+      <zorder>lineEditStopDate</zorder>
+      <zorder>lineEditAssetName</zorder>
+      <zorder>qwtPlot_2</zorder>
+      <zorder>setEndDateLineEdit</zorder>
+      <zorder>setStartDateLineEdit</zorder>
+      <zorder>treeWidget</zorder>
+      <zorder>groupBox</zorder>
+      <zorder>checkBoxReqestData</zorder>
+      <zorder>assetType</zorder>
+      <zorder>labelLastPrice</zorder>
+      <zorder>labelOneDayProcentChange</zorder>
+      <zorder>StatusInfoLabel</zorder>
+      <zorder>tabWidget_2</zorder>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Mer info</string>
+      </attribute>
+      <widget class="QLabel" name="label_18">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sektor</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_19">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>90</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bransch</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_20">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>61</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Företag</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_21">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>130</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>VD</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_22">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>181</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Företagsbeskrivning</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditMoreInfobusinessDescription">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>210</y>
+         <width>701</width>
+         <height>321</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMoreInfoComapnyName">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>10</y>
+         <width>611</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMoreInfoSector">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>50</y>
+         <width>611</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMoreInfoBransch">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>90</y>
+         <width>611</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMoreInfoexecutiveDirector">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>130</y>
+         <width>611</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

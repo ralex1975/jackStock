@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CTableTab</class>
+ <widget class="QDialog" name="CTableTab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1531</width>
+    <height>635</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>40</y>
+     <width>891</width>
+     <height>361</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOn</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOn</enum>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>true</bool>
+   </property>
+   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+    <bool>true</bool>
+   </attribute>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>176</width>
+     <height>541</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget1b">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>159</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
+    <item row="0" column="0" colspan="2">
+     <widget class="QComboBox" name="SelDataCountryComboBox"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Hämta senaste data</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget1a">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>10</y>
+     <width>539</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QCheckBox" name="largeCapCheckBox">
+      <property name="text">
+       <string>Large cap</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="midCapCheckBox">
+      <property name="text">
+       <string>Mid cap</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="smallCapCheckBox">
+      <property name="text">
+       <string>Small cap</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="GetDbDataButton">
+      <property name="text">
+       <string>Läs in gamla data</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue7LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>582</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue2LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>252</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator5ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>417</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam5ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>450</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="GetDbDataButton_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Visa utan filter</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue6LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>516</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator2ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>219</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam7ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>582</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam4ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>384</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam2ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>252</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator6ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>483</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue1LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>186</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue4LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>384</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator4ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>351</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam6ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>516</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue3LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>318</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="indicatorValue5LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>450</y>
+     <width>90</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator7ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>549</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator3ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>285</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="indicator1ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>153</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="FilterData">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>87</y>
+     <width>174</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Filtrera data</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam3ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>318</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="compareParam1ComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>186</y>
+     <width>78</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

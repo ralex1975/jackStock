@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Portfolio</class>
+ <widget class="QDialog" name="Portfolio">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1190</width>
+    <height>583</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>10</y>
+     <width>99</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Open file</string>
+   </property>
+  </widget>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>80</y>
+     <width>1101</width>
+     <height>501</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="dateEdit">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>10</y>
+     <width>110</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="dateEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>10</y>
+     <width>110</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>10</y>
+     <width>151</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ResetDatabaseButton">
+   <property name="geometry">
+    <rect>
+     <x>1030</x>
+     <y>40</y>
+     <width>131</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset database</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="UpdatePortfolioList">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>10</y>
+     <width>99</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Update</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="C">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>40</y>
+     <width>99</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset list</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ReadDbButton">
+   <property name="geometry">
+    <rect>
+     <x>1030</x>
+     <y>10</y>
+     <width>131</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Read database</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TabHelp</class>
+ <widget class="QDialog" name="TabHelp">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1336</width>
+    <height>591</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>1291</width>
+     <height>571</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Visa</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Lägg till</string>
+    </attribute>
+    <widget class="QComboBox" name="comboBoxMainSection">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>241</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxSubSection">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>241</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButAddMainSection">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>30</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;&lt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButRemoveMainSection">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>70</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt;&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditMainSection">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>50</y>
+       <width>221</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButAddSubSection">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>120</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;&lt;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSubSection">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>140</y>
+       <width>221</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButRemoveSubSection">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>160</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt;&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Huvudkategori</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Underkategori</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="textEditMsg">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>621</width>
+       <height>321</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButAddMsg">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>240</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Spara</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButRemoveMsg">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>270</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Ta bort</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButRemoveMainSectionFormDb">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>50</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Ta bort</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButRemoveSubSection_2">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>140</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Ta bort</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButAddMainSection_2">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>80</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Lägg till</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButSelectHelpTxt">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>210</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visa</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButSelMainSectionData">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>20</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Välj</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButModifySubSectionNameInDb">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Byt namn</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>310</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Huvudkategori</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSelectedMainSection">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>330</y>
+       <width>201</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>370</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Underkategori</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSelectedSubItem">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>390</y>
+       <width>201</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButRemoveMainSectionFromDb">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Ta bort</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

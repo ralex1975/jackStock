@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CTADlg</class>
+ <widget class="QDialog" name="CTADlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1346</width>
+    <height>633</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QwtPlot" name="qwtPlot">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>120</y>
+     <width>471</width>
+     <height>171</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlotProfitAnalysis">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>460</y>
+     <width>461</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlot_2">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>310</y>
+     <width>471</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidgetHistoricalPENum">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>160</y>
+     <width>271</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <column>
+    <property name="text">
+     <string notr="true">1</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidgetSalesGrowth">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>310</y>
+     <width>271</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <column>
+    <property name="text">
+     <string notr="true">1</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlotHistoricalPrices">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>10</y>
+     <width>321</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlotProfitGrowth">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>460</y>
+     <width>321</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlotSalesGrowth">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>310</y>
+     <width>321</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>241</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Lista</string>
+    </attribute>
+    <widget class="QTreeWidget" name="treeWidgetStockList">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>60</y>
+       <width>231</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="pushButSelStockList">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>231</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Välj</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>231</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>TA</string>
+    </attribute>
+    <widget class="QRadioButton" name="radioButRSI">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>270</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>RSI</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButMacd">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>310</y>
+       <width>117</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>MACD</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButRoc">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>117</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ROC</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxLinjerReg">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Linjer Regression</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButMomentum">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>230</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Momentum</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>200</y>
+       <width>117</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No Indicator</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxMidMvAvg">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Mid Moving Avg</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxBollingBand">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>111</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bollingband</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButStochastics">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Stochastics</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxLongMvAvg">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Long Moving Avg</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxShortMvAvg">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Short Moving Avg </string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="lineEditAssetName_3">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>90</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QSlider" name="selTimePeriodSlider_3">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>70</y>
+     <width>201</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>11</number>
+   </property>
+   <property name="pageStep">
+    <number>11</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="sliderPosition">
+    <number>0</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>false</bool>
+   </property>
+   <property name="invertedControls">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelOneDayProcentChange_3">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>10</y>
+     <width>71</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelLastPrice_3">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>61</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidgetProfitGrowth">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>460</y>
+     <width>271</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <column>
+    <property name="text">
+     <string notr="true">1</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlotHistoricalPENum">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>160</y>
+     <width>321</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditEarningsDivByDividend_5">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>30</y>
+     <width>51</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditPs_5">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>30</y>
+     <width>41</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_35">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>10</y>
+     <width>16</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>PS</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_37">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>10</y>
+     <width>71</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Vinst/Utdel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditNavDivLastStockPrice_5">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>30</y>
+     <width>51</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_39">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>10</y>
+     <width>21</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>PE</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_36">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>10</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>DirAvk</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_38">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>10</y>
+     <width>51</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sub/Kurs</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditPE_5">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>30</y>
+     <width>51</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditYield_5">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>30</y>
+     <width>51</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="setStartDateLineEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>10</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="setEndDateLineEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>10</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="timePeriodLlineEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>40</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="assetType_3">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>60</y>
+     <width>171</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="StatusInfoLabel_3">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>90</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidgetProfit">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>440</y>
+     <width>241</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <column>
+    <property name="text">
+     <string notr="true">1</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidgetHistoricalPrices">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>10</y>
+     <width>271</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <column>
+    <property name="text">
+     <string notr="true">1</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>1230</x>
+     <y>440</y>
+     <width>101</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Försäljningstillväxt</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButSalesGrowthPricePerShare">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>440</y>
+     <width>31</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QRadioButton" name="radioButSalesGrowthTotal">
+   <property name="geometry">
+    <rect>
+     <x>1100</x>
+     <y>440</y>
+     <width>41</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>2</string>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QRadioButton" name="radioButSalesGrowthPerYear">
+   <property name="geometry">
+    <rect>
+     <x>1140</x>
+     <y>440</y>
+     <width>41</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>3</string>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>1260</x>
+     <y>590</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Vinsttillväxt</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_15">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>570</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Lönsamhetsanalys</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_17">
+   <property name="geometry">
+    <rect>
+     <x>1240</x>
+     <y>290</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Historiska P/E tal</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_16">
+   <property name="geometry">
+    <rect>
+     <x>1240</x>
+     <y>140</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Historiska priser</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>1070</x>
+     <y>590</y>
+     <width>125</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QRadioButton" name="radioButProfitGrowthPricePerShare">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_3</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="radioButProfitGrowthTotGrowth">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_3</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="radioButProfitGrowthPerYear">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_3</string>
+      </attribute>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>570</y>
+     <width>82</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QRadioButton" name="radioButProfitMargin">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_2</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="radioButInterestRateDivEquity">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_2</string>
+      </attribute>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>qwtPlot</zorder>
+  <zorder>qwtPlotProfitAnalysis</zorder>
+  <zorder>qwtPlot_2</zorder>
+  <zorder>treeWidgetHistoricalPENum</zorder>
+  <zorder>treeWidgetSalesGrowth</zorder>
+  <zorder>qwtPlotProfitGrowth</zorder>
+  <zorder>qwtPlotSalesGrowth</zorder>
+  <zorder>tabWidget</zorder>
+  <zorder>lineEditAssetName_3</zorder>
+  <zorder>selTimePeriodSlider_3</zorder>
+  <zorder>labelOneDayProcentChange_3</zorder>
+  <zorder>labelLastPrice_3</zorder>
+  <zorder>treeWidgetProfitGrowth</zorder>
+  <zorder>qwtPlotHistoricalPENum</zorder>
+  <zorder>lineEditEarningsDivByDividend_5</zorder>
+  <zorder>lineEditPs_5</zorder>
+  <zorder>label_35</zorder>
+  <zorder>label_37</zorder>
+  <zorder>lineEditNavDivLastStockPrice_5</zorder>
+  <zorder>label_39</zorder>
+  <zorder>label_36</zorder>
+  <zorder>label_38</zorder>
+  <zorder>lineEditPE_5</zorder>
+  <zorder>lineEditYield_5</zorder>
+  <zorder>setStartDateLineEdit_3</zorder>
+  <zorder>setEndDateLineEdit_3</zorder>
+  <zorder>timePeriodLlineEdit_3</zorder>
+  <zorder>assetType_3</zorder>
+  <zorder>StatusInfoLabel_3</zorder>
+  <zorder>treeWidgetProfit</zorder>
+  <zorder>treeWidgetHistoricalPrices</zorder>
+  <zorder>label</zorder>
+  <zorder>radioButSalesGrowthPricePerShare</zorder>
+  <zorder>radioButSalesGrowthTotal</zorder>
+  <zorder>radioButSalesGrowthPerYear</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_15</zorder>
+  <zorder>label_17</zorder>
+  <zorder>label_16</zorder>
+  <zorder>qwtPlotHistoricalPrices</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
+</ui>
