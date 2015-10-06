@@ -12,7 +12,7 @@ INCLUDEPATH +=/home/ajn/qwt-6.0.2/include
 
 
 
-QT       += qwt
+#QT       += qwt
 QT       += core gui
 QT       += network
 QT	 += webkit
@@ -134,6 +134,10 @@ FORMS    += \
     efficentbargraphdlg.ui \
     importdata.ui \
     tabhelp.ui \
+    fatab.ui \
+    graphtab.ui \
+    efficentbargraphdlg.ui \
+    fatab.ui \
     fatab.ui
 
 
