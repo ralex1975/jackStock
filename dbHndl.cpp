@@ -121,18 +121,18 @@ const CDbHndl::StockIndicatorlLookUpTable_ST CDbHndl::m_gpSelLookUpTable[CDbHndl
     {QString::fromUtf8("Tid"),                 CDbHndl::MASK_GPSEL_TIME,                           "time",                     SQL_STR_ASC, SISORT_TYPE_FLOAT,},                                  // GPSEL_INDEX_TIME,                            // 10
     {QString::fromUtf8("P/E"),                 CDbHndl::MASK_GPSEL_PE,                             "keyValuePE",               SQL_STR_ASC, SISORT_TYPE_FLOAT,},                              // GPSEL_INDEX_PE,                              // 11
     {QString::fromUtf8("P/S"),                 CDbHndl::MASK_GPSEL_PS,                             "keyValuePS",               SQL_STR_ASC, SISORT_TYPE_FLOAT,},                              // GPSEL_INDEX_PS,                              // 12
-    {QString::fromUtf8("Vinst/Utdel"),     CDbHndl::MASK_GPSEL_EARNING_DIVIDED_BY_DIVIDEND,    "earningsDividedByDividend",SQL_STR_ASC, SISORT_TYPE_FLOAT,},        // GPSEL_INDEX_FIVE_YEAR_PERCENT_CHANGE,
+    {QString::fromUtf8("Vinst/Utdel"),         CDbHndl::MASK_GPSEL_EARNING_DIVIDED_BY_DIVIDEND,    "earningsDividedByDividend",SQL_STR_ASC, SISORT_TYPE_FLOAT,},        // GPSEL_INDEX_FIVE_YEAR_PERCENT_CHANGE,
     {QString::fromUtf8("Substans/kurs"),       CDbHndl::MASK_GPSEL_NAV_DIV_LAST_STOCK_PRICE,       "navDivLastStockPrice",     SQL_STR_ASC, SISORT_TYPE_FLOAT,},        // GPSEL_INDEX_FIVE_YEAR_PERCENT_CHANGE,
     {QString::fromUtf8("Vinst/aktie"),         CDbHndl::MASK_GPSEL_EARN_PER_SHARE,                 "keyValueEarningsPerShare", SQL_STR_ASC, SISORT_TYPE_FLOAT,},    // GPSEL_INDEX_EARN_PER_SHARE,                  // 13
     {QString::fromUtf8("Substans/aktie"),      CDbHndl::MASK_GPSEL_NAV_PER_SHARE,                  "keyValueNAVPerShare",      SQL_STR_ASC, SISORT_TYPE_FLOAT,},       // GPSEL_INDEX_NAV_PER_SHARE,                    // 14 //net asset
     {QString::fromUtf8("Utdel/aktie"),         CDbHndl::MASK_GPSEL_DIV_PER_SHARE,                  "keyValueDividendPerShare", SQL_STR_ASC, SISORT_TYPE_FLOAT,},  // GPSEL_INDEX_DIV_PER_SHARE,                   // 15
-    {QString::fromUtf8("Direktavk"),        CDbHndl::MASK_GPSEL_YIELD,                          "keyValueYield",            SQL_STR_ASC, SISORT_TYPE_FLOAT,},                   // GPSEL_INDEX_YIELD,                           // 16
+    {QString::fromUtf8("Direktavk"),           CDbHndl::MASK_GPSEL_YIELD,                          "keyValueYield",            SQL_STR_ASC, SISORT_TYPE_FLOAT,},                   // GPSEL_INDEX_YIELD,                           // 16
     {QString::fromUtf8("Kurs/JEK"),            CDbHndl::MASK_GPSEL_COURSE_PER_NET_EQUITY,          "keyValueCoursePerJEK",     SQL_STR_ASC, SISORT_TYPE_FLOAT,},    // GPSEL_INDEX_COURSE_PER_NET_EQUITY,           // 17
     {QString::fromUtf8("Idag"),                CDbHndl::MASK_GPSEL_ONE_DAY_PERCENT_CHANGE,         "procentChangeOneDay",      SQL_STR_ASC, SISORT_TYPE_FLOAT,}, // GPSEL_INDEX_ONE_DAY_PERCENT_CHANGE,          // 3
-    {QString::fromUtf8("1 vecka"),            CDbHndl::MASK_GPSEL_ONE_WEEK_PROCENT_CHANGE,        "procentChangeOneWeek",     SQL_STR_ASC, SISORT_TYPE_FLOAT,},   // GPSEL_INDEX_ONE_WEEK_PROCENT_CHANGE,         // 18
-    {QString::fromUtf8("1 man"),            CDbHndl::MASK_GPSEL_ONE_MONTH_PERCENT_CHANGE,       "procentChange1Month",      SQL_STR_ASC, SISORT_TYPE_FLOAT,},  // GPSEL_INDEX_ONE_MONTH_PERCENT_CHANGE,        // 19
-    {QString::fromUtf8("3 man"),           CDbHndl::MASK_GPSEL_THREE_MONTH_PERCENT_CHANGE,     "procentChange3Month",      SQL_STR_ASC, SISORT_TYPE_FLOAT,}, // GPSEL_INDEX_THREE_MONTH_PERCENT_CHANGE,      // 20
-    {QString::fromUtf8("6 man"),           CDbHndl::MASK_GPSEL_SIX_MONTH_PERCENT_CHANGE,       "procentChange6Month",      SQL_STR_ASC, SISORT_TYPE_FLOAT,},   // GPSEL_INDEX_SIX_MONTH_PERCENT_CHANGE,        // 21
+    {QString::fromUtf8("1 vecka"),             CDbHndl::MASK_GPSEL_ONE_WEEK_PROCENT_CHANGE,        "procentChangeOneWeek",     SQL_STR_ASC, SISORT_TYPE_FLOAT,},   // GPSEL_INDEX_ONE_WEEK_PROCENT_CHANGE,         // 18
+    {QString::fromUtf8("1 man"),               CDbHndl::MASK_GPSEL_ONE_MONTH_PERCENT_CHANGE,       "procentChange1Month",      SQL_STR_ASC, SISORT_TYPE_FLOAT,},  // GPSEL_INDEX_ONE_MONTH_PERCENT_CHANGE,        // 19
+    {QString::fromUtf8("3 man"),               CDbHndl::MASK_GPSEL_THREE_MONTH_PERCENT_CHANGE,     "procentChange3Month",      SQL_STR_ASC, SISORT_TYPE_FLOAT,}, // GPSEL_INDEX_THREE_MONTH_PERCENT_CHANGE,      // 20
+    {QString::fromUtf8("6 man"),               CDbHndl::MASK_GPSEL_SIX_MONTH_PERCENT_CHANGE,       "procentChange6Month",      SQL_STR_ASC, SISORT_TYPE_FLOAT,},   // GPSEL_INDEX_SIX_MONTH_PERCENT_CHANGE,        // 21
     {QString::fromUtf8("1 ar"),                CDbHndl::MASK_GPSEL_ONE_YEAR_PERCENT_CHANGE,        "procentChange1Year",       SQL_STR_ASC, SISORT_TYPE_FLOAT,},        // GPSEL_INDEX_ONE_YEAR_PERCENT_CHANGE,         // 22
     {QString::fromUtf8("2 ar"),                CDbHndl::MASK_GPSEL_TWO_YEAR_PERCENT_CHANGE,        "procentChange2Year",       SQL_STR_ASC, SISORT_TYPE_FLOAT,},        // GPSEL_INDEX_TWO_YEAR_PERCENT_CHANGE,         // 23
     {QString::fromUtf8("3 ar"),                CDbHndl::MASK_GPSEL_THREE_YEAR_PERCENT_CHANGE,      "procentChange3Year",       SQL_STR_ASC, SISORT_TYPE_FLOAT,},      // GPSEL_INDEX_THREE_YEAR_PERCENT_CHANGE,       // 24
@@ -3514,6 +3514,7 @@ bool CDbHndl::getListWithNordnetStockId(QList <CompanyNameAndId_ST> &companyList
             data.assetId = rec.value("assetId").toString();
             data.AssetName = rec.value("assetName").toString();
             companyList.append(data);
+
         }
     }
 
@@ -8819,6 +8820,52 @@ bool CDbHndl::delAllTaStockLists(void)
     // Create sql question
     str.sprintf("DELETE "
                 "FROM TblTaStockList;");
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("Database Error 1"), qry.lastError().text().toLatin1().constData());
+        }
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+        qDebug() << "All TblTaStockList data are deleted\n";
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+/*****************************************************************
+ *
+ * Function:		delAllDtcSwVerPageData()
+ *
+ * Description:		This function delete all data in temp list
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::delAllTaStockData(void)
+{
+    QString str;
+    // QSqlQuery qry;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+    // Create sql question
+    str.sprintf("DELETE "
+                "FROM TblTaStockData;");
 
     qry.prepare(str);
 

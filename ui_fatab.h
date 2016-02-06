@@ -418,7 +418,7 @@ public:
 
         retranslateUi(FaTab);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(FaTab);
@@ -454,7 +454,7 @@ public:
         labelReturnOnEquityPg3->setText(QString());
         pushButNextTabPg3->setText(QApplication::translate("FaTab", "N\303\244sta >", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("FaTab", "3 ->", 0, QApplication::UnicodeUTF8));
-        pushButton_3->setText(QApplication::translate("FaTab", "PushButton", 0, QApplication::UnicodeUTF8));
+        pushButton_3->setText(QApplication::translate("FaTab", "N\303\244sta >>", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("FaTab", "P/E-talsprognos", 0, QApplication::UnicodeUTF8));
         label_16->setText(QApplication::translate("FaTab", "Historiska priser", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("FaTab", "4 ->", 0, QApplication::UnicodeUTF8));

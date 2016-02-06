@@ -400,6 +400,12 @@ void CTADlg::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
 
         ui->lineEditPE_5->setDisabled(false);
 
+        ui->textEditMoreInfoBussiness->clear();
+        ui->lineEditMoreInfoexecutiveDirector_2->clear();
+        ui->lineEditMoreInfoBransch_2->clear();
+        ui->lineEditMoreInfoSector_2->clear();
+        ui->textEditMoreInfoBussiness->clear();
+
         ui->lineEditEarningsDivByDividend_5->clear();
         ui->lineEditNavDivLastStockPrice_5->clear();
         ui->lineEditPE_5->clear();
@@ -431,6 +437,19 @@ void CTADlg::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
         {
             if(true == cd.getKeyDataUseBridge(m_reqStockSymbol,keyFaData))
             {
+                NordnetCompanyDescription_ST nordnetData;
+
+                if(true == cd.getNordnetCompanyDescription(nordnetData, keyFaData.companyName))
+                {
+                    // ui->lineEditMoreInfoComapnyName_2->insert(data.assetName);
+                    ui->lineEditMoreInfoexecutiveDirector_2->insert(nordnetData.executiveDirector);
+                    ui->lineEditMoreInfoBransch_2->insert(nordnetData.bransch);
+                    ui->lineEditMoreInfoSector_2->insert(nordnetData.sector);
+                    ui->textEditMoreInfoBussiness->insertPlainText(nordnetData.businessDescription);
+
+                }
+
+
                 qDebug() << keyFaData.companyName;
                 cd.addFa2operatingIncomeToTreeWidget(ui->treeWidgetSalesGrowth, keyFaData.companyName);
 
@@ -446,6 +465,7 @@ void CTADlg::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
                 {
                     displaySalesGrowth(ui->treeWidgetSalesGrowth, 3);
                 }
+
 
                 cd.addFa2NetProfitAfterTaxToTreeWidget(ui->treeWidgetProfitGrowth, keyFaData.companyName, assetType);
 
@@ -1843,6 +1863,7 @@ void CTADlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST key
         color = Qt::red;
     }
 
+
     setFaEditControlTxtColor(ui->lineEditEarningsDivByDividend_5, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
     //setFaEditControlTxtColor(ui->lineEditEarningsDivByDividend_2, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
 
@@ -1860,7 +1881,8 @@ void CTADlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST key
     }
     else
     {
-        color = Qt::black;
+        // color = Qt::black;
+        color = Qt::red;
     }
 
     setFaEditControlTxtColor(ui->lineEditNavDivLastStockPrice_5, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);

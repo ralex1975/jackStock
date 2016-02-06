@@ -274,7 +274,13 @@ void ImportData::slotReqNextCompanyData()
             // SKa tas bort fixa parser buggen istället
             if(data.assetId.compare("103937") == 0 || data.assetId.compare("104058") == 0 || data.assetId.compare("104058") == 0 || data.assetId.compare("100208") == 0 || data.assetId.compare("98395") == 0 || data.assetId.compare("104597") == 0 || data.assetId.compare("100152") == 0 || data.assetId.compare("101601") == 0 || data.assetId.compare("99667") == 0 ||
                data.assetId.compare("103110") == 0 || data.assetId.compare("104593") == 0 ||
-               data.assetId.compare("101618") == 0 || data.assetId.compare("98809") == 0)
+               data.assetId.compare("101618") == 0 || data.assetId.compare("98809") == 0  ||
+               data.assetId.compare("101207") == 0 || data.assetId.compare("100378") == 0 ||
+               data.assetId.compare("106202") == 0 || data.assetId.compare("106028") == 0 ||
+               data.assetId.compare("101639") == 0 || data.assetId.compare("102786") == 0 ||
+               data.assetId.compare("103930") == 0 || data.assetId.compare("105183") == 0 ||
+               data.assetId.compare("104592") == 0 || data.assetId.compare("101634") == 0
+                    )
             {
                 found = true;
                 m_companyListIndex++;
@@ -503,6 +509,10 @@ void ImportData::on_pushButInit_clicked()
     if(m_importYahooTaDataThread == 0)
     {
         QMessageBox::information(NULL, QObject::tr("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
+    }
+    else
+    {
+        QMessageBox::information(NULL, QObject::tr("Success"), QObject::tr("Finish"));
     }
 
 }
@@ -834,6 +844,8 @@ void ImportData::openUserStockListsFile(void)
 
     m_db.delAllTaStockLists();
     m_db.delAllTaStockNames();
+    m_db.delAllTaStockData();
+    m_db.delAllTblYahooTaData();
 
     openStockListFile(filename);
     addDataToStockListAndStockListCombo();
@@ -1433,7 +1445,7 @@ void ImportData::on_pushButtImportKeyTaBridgeData_clicked()
 
     filename = DWLD_PATH_FA_TA_BRIDGE_DATA;
     pktd.ParseKeyTaBridgeData::readFile(filename);
-    QMessageBox::information(NULL, QObject::tr("keyData"), QObject::tr("Finish"));
+    QMessageBox::information(NULL, QString::fromUtf8("Bridge Data"), QString::fromUtf8("Finish"));
 
 }
 

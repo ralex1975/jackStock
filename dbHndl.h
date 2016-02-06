@@ -763,6 +763,7 @@ public:
     bool findTaStockListId(QString stockListName, int &stockListId, bool dbIsHandledExternly=false);
     bool delAllTaStockLists(void);
     bool delAllTaStockNames(void);
+    bool delAllTaStockData(void);
 
 
     bool execSingleCmd(QSqlQuery qry);

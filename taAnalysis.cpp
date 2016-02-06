@@ -57,7 +57,7 @@ TaAnalysis::TaAnalysis(QWidget *parent) :
     initFa2netProfitAfterTaxList();
     initFa3ProfitabilityAnalysis();
     initFa3MinMaxPePrice();
-    //openUserStockListsFile();
+    // openUserStockListsFile();
 
     ui->checkBoxReqestData->setChecked(true);
 
@@ -669,13 +669,15 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
                 else
                 {
                     m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-                    displayStockData(true, keyFaData.lastPrice.toDouble());
+                    // ajn 160118 displayStockData(true, keyFaData.lastPrice.toDouble());
+                    displayStockData(false, keyFaData.lastPrice.toDouble());
                 }
             }
             else
             {
                 m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-                displayStockData(true, keyFaData.lastPrice.toDouble());
+                // ajn 160118 displayStockData(true, keyFaData.lastPrice.toDouble());
+                displayStockData(false, keyFaData.lastPrice.toDouble());
             }
        }
         // No latest date was found lets add our own
@@ -947,7 +949,7 @@ void TaAnalysis::slotReqSingleStockDataTimerExpired()
         m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
         modifyDateList(m_reqStockSymbol, true);
         qDebug() << m_reqStockSymbol;
-        QMessageBox::information(this, tr("Timeout"), tr("Timeout: ingen data kunde hämtas"));
+        QMessageBox::information(this, QString::fromUtf8("Timeout"), QString::fromUtf8("Timeout: ingen data kunde hämtas"));
     }
 
 }
