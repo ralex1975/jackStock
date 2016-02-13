@@ -60,18 +60,18 @@ TabDialog::TabDialog(QWidget *parent)
 
     tabWidget = new QTabWidget;
 
-    tabWidget->addTab(new CWebBrowserTab(parent), QString::fromLatin1("Webläsare"));
-    tabWidget->addTab(new CTableTab(parent),QString::fromLatin1("Nyckeltal"));
-    tabWidget->addTab(new FaTab(parent), QString::fromLatin1("FA"));
-    tabWidget->addTab(new TaAnalysis(parent), QString::fromLatin1("TA"));
-    tabWidget->addTab(new CTADlg(parent), QString::fromLatin1("TA/FA"));
-    tabWidget->addTab(new Portfolio(parent), QString::fromLatin1("Portfölj"));
-    tabWidget->addTab(new EfficientPortfolio(parent), QString::fromLatin1("Portföljoptimering"));
-    tabWidget->addTab(new ImportData(parent), QString::fromLatin1("Importera"));
-    tabWidget->addTab(new TabHelp(parent), QString::fromLatin1("Anteckningar"));
-    tabWidget->addTab(new GraphTab(parent), QString::fromLatin1("Test, Graf"));
-    tabWidget->addTab(new CJackStock(parent), QString::fromLatin1("Färgtest"));
-    tabWidget->addTab(new LeastSquaresTaDlg(parent), QString::fromLatin1("Nyckeltal2"));
+    tabWidget->addTab(new CWebBrowserTab(parent), QString::fromUtf8("Webläsare"));
+    tabWidget->addTab(new CTableTab(parent),QString::fromUtf8("Nyckeltal"));
+    tabWidget->addTab(new FaTab(parent), QString::fromUtf8("FA"));
+    tabWidget->addTab(new TaAnalysis(parent), QString::fromUtf8("TA"));
+    tabWidget->addTab(new CTADlg(parent), QString::fromUtf8("TA/FA"));
+    tabWidget->addTab(new Portfolio(parent), QString::fromUtf8("Portfölj"));
+    tabWidget->addTab(new EfficientPortfolio(parent), QString::fromUtf8("Portföljoptimering"));
+    tabWidget->addTab(new ImportData(parent), QString::fromUtf8("Importera"));
+    tabWidget->addTab(new TabHelp(parent), QString::fromUtf8("Anteckningar"));
+    tabWidget->addTab(new GraphTab(parent), QString::fromUtf8("Test, Graf"));
+    tabWidget->addTab(new CJackStock(parent), QString::fromUtf8("Färgtest"));
+    tabWidget->addTab(new LeastSquaresTaDlg(parent), QString::fromUtf8("Nyckeltal2"));
 
 
     tabWidget->setCurrentIndex(1);
@@ -123,13 +123,13 @@ void TabDialog::createMenu(void)
      //=======================================
      toolMenu = new QMenu(tr("Verktyg"), this);
      QString tmp;
-     tmp = QString::fromLatin1("InstÃ¤llningar");
+     tmp = QString::fromUtf8("Inställningar");
      QMenu* submenuSettings = toolMenu->addMenu(tmp);
     // QAction* trendIndicatorSetup = submenuSettings->addAction( tr("Trendindikatorer") );
      SelFilterIndicatorAct = submenuSettings->addAction( tr("Nyckeltalsindikatorer") );
 
      // Create sub menu and connect event handler here:
-     SelFilterIndicatorAct->setStatusTip(tr("VÃ¤lj indikatorer"));
+     SelFilterIndicatorAct->setStatusTip(tr("Välj indikatorer"));
      connect(SelFilterIndicatorAct, SIGNAL(triggered()), this, SLOT(onSelFilterInicatorMenu()));
 
 
@@ -237,7 +237,7 @@ bool TabDialog::event( QEvent * e )
  if ( e->type() == (QEvent::User) )
  {
     tabWidget->setCurrentIndex(2);
-    //QMessageBox::information(this, "Title", "InlÃ¤sning fÃ¤rdig 1");
+    //QMessageBox::information(this, "Title", "Inläsning färdig 1");
     QApplication::beep();
     return  true;
  }
