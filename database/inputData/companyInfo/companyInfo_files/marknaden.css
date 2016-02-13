@@ -1,0 +1,874 @@
+/* START MARKNADSÖVERSIKT ////////////////////////////////////////////////////////////////////////// */
+div.navigation .more { /* Martin, "Visa fler länk" när den ligger uppe i navigeringen i en modul */
+position:absolute;
+right:10px;
+top:-2px;
+}
+.highlight {
+width:98%;
+background-color:#f0eeef;
+padding:3px 0 5px 6px;
+margin-top:9px;
+}
+.linkIkon { /* Se Visa index lagret, Marknadsöversikt */
+margin:3px 0 0 0;
+}
+.rightSideIkon { /* Se Visa index lagret, Marknadsöversikt */
+position:absolute;
+top:3px;
+right:0;
+}
+.navigationImg { /* Om den grå flikmenyn ska innehålla bilder (flaggor) istället för vanliga flikar, se t ex Marknadsöversikt Norden */
+position:absolute;
+left:6px;
+top:6px;
+}
+/* INDIKATORN */
+div.module div.changeindicator {
+margin-top:8px;
+}
+div.module div.changeindicator img {
+margin-left:44px;
+float:left;
+}
+div.module div.changeindicator p {
+margin:0 0 15px 0;
+font-size:2.5em;
+text-align:right;
+padding:0;
+}
+/* STORA STAPLARNA PÅ MARKNADSÖVERSIKTEN */
+.stapelBox {
+background:#f0eeef url(/now/images/divider.gif) repeat-x top left;
+padding:0.5em 0 0 0;
+margin-top:8px;
+width:100%;
+}
+.stapelUppText,
+.stapelNeutralText,
+.stapelNerText {
+float:left;
+font-weight:bold;
+width:7.0em;
+margin-bottom:5px;
+margin-top: 3px;
+text-align:right;
+}
+.stapelNeutralText {
+text-align:center;
+}
+.stapelNerText {
+text-align:left;
+}
+.stapelUppText span,
+.stapelNeutralText span,
+.stapelNerText span {
+font-weight:normal;
+}
+.stapelUpp,
+.stapelNeutral,
+.stapelNer {
+float:left;
+height:23px;
+background-color:#00a9ec;
+}
+.stapelNeutral {
+background-color:#c3c3c3;
+margin:0 1px;
+}
+.stapelNer {
+background-color:#e00024;
+}
+.stapelNer,
+.stapelNerText {
+margin-left:0.9em;
+display:inline;
+}
+.module .navigation li.norden { /* För att undvika en halv flik bland flaggorna i "På nordens marknader" - Nordiska marknadsöversikten */
+background: none;
+padding-top: 2px;
+}
+#analyserModule table td div.author {
+overflow: hidden; 
+text-overflow: ellipsis; 
+white-space: nowrap;
+width: 145px;
+}
+/* START PUNKTLISTA BOLAGSDATA */
+ul.siffra {
+margin:12px 0 13px 8px;
+}
+ul.siffra li {
+list-style-type:decimal;
+margin:0 0 0 35px;
+}
+/* SLUT MARKNADSÖVERSIKT ////////////////////////////////////////////////////////////////////////// */
+/* START BOLAGSFAKTA ////////////////////////////////////////////////////////////////////////////// */
+div.punktlista{
+padding: 1em 0 2em 0.8em;
+}
+div.punktlista ol,
+div.punktlista ul {
+margin:10px 0 10px 8px;
+}
+div.punktlista ol li {
+list-style-type:decimal;
+margin:0 0 0 30px;
+}
+div.punktlista ul li {
+margin:0 0 0 30px;
+list-style-image:url(/now/images/bulletGreen2px.gif);
+}
+/* SLUT BOLAGSFAKTA /////////////////////////////////////////////////////////////////////////////// */
+/* START HISTORIK //////////////////////////////////////////////////////////////////////////////// */
+.module tr.doubleRow th { /* Historik sidan har en modulltabell där tabellhuvudet kräver två rader */
+border-bottom:0;
+padding-top:0;
+padding-bottom:0;
+}
+.module tr.doubleRow th.header {
+text-align:left;
+font-weight:bold;
+color:#8c8c8c;
+border-left:1px solid #e1e1e1;
+}
+.module tr.doubleRow th.groupEnd {
+border-right:1px solid #dfdddd;
+}
+/* SLUT HISTORIK //////////////////////////////////////////////////////////////////////////////// */
+/* START NYCKELTAL //////////////////////////////////////////////////////////////////////////////// */
+.nyckeltalBg {
+width:100%;
+background:#f3f3f3 url(/now/images/white.gif) repeat-y top left;
+border:1px solid #d7d7d7;
+margin-top:12px;
+}
+.nyckeltalBgPadding {
+padding:0.8em 1.0em 1.2em 1.0em;
+}
+.nyckeltalBg h3 {
+color:#4a4a4a;
+font-weight:bold;
+margin:12px 0 3px 0;
+text-transform: none;
+}
+.whiteLine { /* Används på Nyckeltal & på Historik */
+background-color:#fff;
+width:100%;
+height:1px;
+}
+/* STAPLARNA TILL HÖGER  PÅ NYCKELTALSIDAN */
+.nyckeltalStapelContainer {
+background-color:#fff;
+border:1px solid #d7d7d7;
+padding:0.5em 0.5em 0.1em 0;
+}
+.nyckeltalStapelContainer span {
+margin-left:0.4em;
+float:left;
+line-height:1.0em;
+}
+.nyckeltalStapelUpp,
+.nyckeltalStapelNeutral,
+.nyckeltalStapelNer {
+height:1.0em;
+margin-bottom:5px;
+float:left;
+}
+.nyckeltalStapelUpp {
+background-color:#00a9ec;
+}
+.nyckeltalStapelNeutral {
+background-color:#a4d20e;
+}
+.nyckeltalStapelNer {
+background-color:#df0023;
+}
+/* END NYCKELTAL //////////////////////////////////////////////////////////////////////////////////// */
+/* START VÄRLDSKARTAN MARKNAD /////////////////////////////////////////////////////////////////////// */
+#kartaVarlden .norden { /* placerar ut de olika marknaderna på kartan */
+top:7.2em;
+left:38.3em;
+}
+#kartaVarlden .uk {
+top:11.9em;
+left:30.8em;
+}
+#kartaVarlden .ryssland {
+top:8.9em;
+left:53.0em;
+}
+#kartaVarlden .usa {
+top:16.0em;
+left:15.6em;
+}
+#kartaVarlden .usa2 {
+top:22.0em;
+left:15.6em;
+}
+#kartaVarlden .frankrike {
+top:18.0em;
+left:31.0em;
+}
+#kartaVarlden .tyskland {
+top:16.0em;
+left:45.4em;
+}
+#kartaVarlden .kina {
+top:18.7em;
+left:59.6em;
+}
+#kartaVarlden .japan {
+top:18.0em;
+left:75.6em;
+width:50px;
+}
+#kartaVarlden .brasilien {
+top:29.6em;
+left:27.5em;
+}
+#kartaVarlden .kanada { /* Theresa, placerar ut 3 till marknader på kartan */
+top:9em;
+left:9.8em;
+}
+#kartaVarlden .indien {
+top:24.5em;
+left:55em;
+}
+#kartaVarlden .sydafrika {
+top:36.5em;
+left:42em;
+}
+#kartaVarlden .world {
+top:0.8em;
+left:0em;
+}
+.marknadBanner div.first {
+margin-left:6.0em;
+}
+.marknadBanner .flag {
+width:16px;
+height:11px;
+margin:2px 4px 0 0;
+}
+td.markerad {
+background-color: #ebf6fc;
+}
+/* END VÄRLDSKARTAN MARKNAD /////////////////////////////////////////////////////////////////////// */
+/* START SEKTORER STAPLAR ///////////////////////////////////////////////////////////////////////// */
+.stapelSektorerContainer {
+width:38.0em;
+margin:1px 0 0 5px;
+}
+.stapelSektorerUpp,
+.stapelSektorerNeutral,
+.stapelSektorerNer {
+float:left;
+color:#fff;
+}
+.stapelSektorerUpp span,
+.stapelSektorerNeutral span,
+.stapelSektorerNer span {
+padding:0 4px;
+}
+.stapelSektorerUpp {
+background-color:#00a9ec;
+text-align:left;
+}
+.stapelSektorerNeutral {
+background-color:#c3c3c3;
+margin:0 1px;
+text-align:center;
+}
+.stapelSektorerNer {
+background-color:#e00024;
+text-align:right;
+}
+td.fixedWidthSektorer { /* Används bara på Sektorer sidan */
+width:38.8em;
+}
+.upp,
+.neutral,
+.ned { /* Används bara på Sektorer sidan */
+float:left;
+width:33%;
+}
+.neutral { /* Används bara på Sektorer sidan */
+text-align:center;
+width:34%
+}
+.ned { /* Används bara på Sektorer sidan */
+text-align:right;
+}
+/* START KURSLISTAN NORDEN /////////////////////////////////////////////////////////////////// */
+.listoptions div.nordic {
+float: left;
+margin-right: 4px;
+}
+.listoptions .nordic div {
+float: left;
+width: 90px;
+height:3.3em;
+}
+.listoptions .nordic div label {
+width:65px;
+margin-right: 5px;
+}
+.listoptions .nordic label {
+font-weight: normal;
+height: 1.2em;
+margin-bottom:8px;
+}
+.listoptions .nordic input.checkbox {
+margin:0 4px 0 0;
+}
+/* SLUT KURSLISTAN NORDEN //////////////////////////////////////////////////////////////////// */
+/* START WARRANTER /////////////////////////////////////////////////////////////////////////// */
+.listoptions #extraSearchFields {
+clear:left;
+float:left;
+width:100%;
+margin-top:7px;
+}
+.list p.helpText { /* Martin */
+padding:5px 0 0 12px;
+}
+#prodpageLink {
+background: url("/now/images/prodpageLink-arrow.png") no-repeat scroll 245px center rgba(0, 0, 0, 0);
+border-bottom: 1px solid #ddd;
+border-top: 1px solid #ddd;
+font-size: 1.1em;
+line-height: 15px;
+margin-top: 15px;
+max-width: 285px;
+position: absolute;
+right: 20px;
+}
+#prodpageLink a {
+font-weight:bold;
+display: block;
+padding: 10px 45px 10px 3px;
+}
+#prodpageLink a span {
+color: #444;
+font-weight: normal;
+}
+/* SLUT WARRANTER //////////////////////////////////////////////////////////////////////////// */
+/* START OPTIONSSIDAN //////////////////////////////////////////////////////////////////////// */
+div.listoptions #typspan,
+div.listoptions #typspan input.radio,
+div.listoptions #typspan label {
+float:left;
+margin:0;
+}
+div.listoptions #typspan input.radio,
+div.listoptions #typspan label {
+margin:3px 4px 0 0;
+}
+div.listoptions #typspan label.underordnad {
+font-weight:normal;
+margin:3px 10px 0 0;
+}
+a.optionsnamn {
+padding:1px 2px 3px 3px;
+}
+a.highlight { /* Se t ex Optionssidan */
+border-left:1px solid #7fd2f4;
+border-right:1px solid #01a8ef;
+background:#0eadef url(/now/images/link_bg.gif) repeat-x left top;
+color:#fff;
+padding:1px 2px 3px 2px;
+}
+.sortering {
+background-color:#ebf6fc;
+}
+.list table td.ikonWidthRight,
+.list table td.ikonWidthLeft {
+width:11px;
+vertical-align:middle;
+text-align:right;
+padding:0 1px 0 3px;
+}
+.list table td.ikonWidthLeft {
+text-align:left;
+padding:0 3px 0 1px;
+}
+.list table td.treKnapp2 {
+width:102px;
+padding-right:0;
+padding-left:0;
+text-align:right;
+}
+span.sell { /* Högerställd text i tabellernas captionsfält. Används på Optionssidan */
+position:absolute;
+top:3px;
+right:8px;
+text-transform:uppercase;
+font-weight:bold;
+}
+/* SLUT OPTIONSSIDAN ///////////////////////////////////////////////////////////////////////////////// */
+/* START MINA LARM OCH RAPPORTER ///////////////////////////////////////////////////////////////////// */
+fieldset.indrag {
+padding-left: 7px;
+}
+.alerts span.smsPris {
+float: left;
+padding:2px 0 0 5px;
+clear: none;
+font-style: normal;
+}
+/* SLUT MINA LARM OCH RAPPORTER ///////////////////////////////////////////////////////////////////// */
+/* START SPARPRODUKTER ////////////////////////////////////////////////////////////////////////////// */
+.textContent {
+width: 58.7em;
+padding: 1.0em 0 0 7.7em;
+}
+.bild {
+width: 20.0em;
+float: right;
+padding: 5.8em 1.7em 0 0;
+}
+/* START VINNARE OCH FÖRLORARE ////////////////////////////////////////////////////////////////////// */
+.navigation h3,
+.navigation .flag { /* Martin, då du behöver knuffa flikarna till höger för att få plats med en bild eller en rubrik */
+font-weight:bold;
+float:left;
+margin:6px 7px 0 8px;
+display:inline;
+text-transform:uppercase;
+}
+/* SLUT VINNARE OCH FÖRLORARE ///////////////////////////////////////////////////////////////////////// */
+/* PlusLager film ///////////////////////////////////////////////////////////////////////// */
+div.filmLager {
+background-color:#000000;
+border:1px solid #9E9E9E;
+height:347px;
+left:27em;
+padding:0 0 0 16px;
+position:absolute;
+top:4.8em;
+visibility:visible;
+width:456px;
+z-index:100;
+}
+div.filmLager a.close {
+float:right;
+height:5px;
+margin:0 5px 0 10px;
+width:6px;
+}
+div.divider{
+border-left:1px solid #C8C8C8;
+float:left;
+}
+div.divider #search{
+width:75px;
+}
+div.divider #vardepapper, div.divider #marknad{
+margin-right: 2px;
+}
+div.dividerLast{
+border-left:1px solid #C8C8C8;
+float:right;
+width: 75px;
+}
+div.backBar #localLoadingIndicator {
+margin-top:0.9em;
+margin-left:0;
+}
+div.backBar #lista {
+margin: 0 1em 0 4px;
+}
+div.backBar .formLinks {
+margin-right:1.9em;
+}
+
+/* Below for new pickers in option and leverage pages */
+#selector_div {
+   background-color: #fff;
+   border: none;
+   border-radius: 0;
+   margin: 22px 0 0;
+   padding: 0;
+   position: absolute;
+   z-index: 10;
+}
+#selector_content select {
+   border: 1px solid #CCCCCC;
+   border-radius: 3px 3px 3px 3px;
+   padding: 1px 0 10px;
+   min-width:135px;
+}
+.warrantPickerButton, .warrantPickerButtonSmall {
+   border-color: #ccc #ccc #bbb;
+   border-radius: 3px 3px 3px 3px;
+   border-style: solid;
+   border-width: 1px;
+   cursor: pointer;
+   height: 20px;
+   padding: 0 15px 2px 2px;
+   text-align: left;
+   width: 135px;
+   overflow: hidden;
+}
+.warrantPickerButtonSmall {
+   width:60px;
+}
+.pickerArrow {
+   background: url("/now/images/arrow4.gif") no-repeat scroll 95% 8px #fff;
+}
+.pickerArrowActive, .pickerArrow:hover {
+   background: url("/now/images/arrow3.gif") no-repeat scroll 95% 8px #fff;
+}
+#measureSpan {
+   display:none;
+   font: 1.0em Verdana, Arial, sans-serif;
+}
+
+fieldset.addInstr{
+	float:left;
+	margin:0em 0 0.5em 0;
+}
+fieldset label, fieldset select, fieldset input{
+	float:left;
+	margin-right:0.5em;
+	font-weight:normal;
+}
+
+/* Rantetorget*/
+div.rantetorget .fourcol{
+	margin:0 3em;
+	width:93em;
+}
+
+div.three-singlecol{
+	width:29.5em;
+	float:left;
+	margin: 1.5em 15px 0 0em;
+}
+div.three-singlecol.last{
+	margin-right:0px;
+}
+div.three-singlecol a.bttn{
+	margin:1em 1em 0 0;
+}
+.rt-box{
+	position:fixed;
+	top:4em;
+}
+.rt-box h1{
+	text-align:center;
+	font-size:1em;
+}
+.rt-box p, .rt-box span{
+	float:left;
+	font-size:0.6em;
+	margin:1em 2em 1em 2em;
+	line-height: 1.45em;
+}
+.rt-box span{
+	float:right;
+	font-weight:bold;
+	margin-right:2.5em;
+}
+.rt-disclaimer{
+	float: left;
+	margin: 5em 2em -1.5em 2em;
+	right: 2em;
+	bottom: 10px;
+	text-align: left;
+	width: 93em;
+}
+.rt-slide-holder{
+	height: auto;
+	float:left;
+	width:93em;
+	margin: 1.5em 0;
+	border-radius: 6px;
+	box-shadow: 0 0 10px #bbb;
+	padding-bottom:3em;
+}
+ul.rt-list li{
+	margin-bottom:0.5em;
+}
+ul.rt-list.news li{
+	text-overflow: ellipsis;
+  	width: 200px;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	width: 100%;
+  	color: #018acf;
+}
+ul.rt-list.news li span{
+	color: #8f8f8f;
+}
+ul.rt-list.news li a{
+	display:inline;
+}
+
+
+/* RÄNTETORGET STYLES */
+#investmentAlternatives .container {
+	margin: 0em 1em 0em 2em;
+}
+#investmentAlternativesGuide .dot { 
+	font-size: 2em; 
+	margin-right: 0.5em; 
+	float: left; 
+	color: #ccc;
+	text-shadow: 1px 1px 1px #727272;
+	position: relative;
+	z-index: 2;
+}
+#investmentAlternativesGuide .alternative {
+	padding: 0.65em 0;
+}
+#investmentAlternativesGuide .alternative1 {
+	color: #47B447;
+}
+#investmentAlternativesGuide .alternative2 {
+    color: #00FF00;
+}
+#investmentAlternativesGuide .alternative3 {
+	color: #EBFF00;
+}
+#investmentAlternativesGuide .alternative4 {
+    color: #fdba0b;
+}
+#investmentAlternativesGuide .alternative5 {
+    color: #f99130;
+}
+#investmentAlternativesGuide .alternative6 {
+    color: #ed5e60;
+}
+#investmentAlternativesGuide .alternative7 {
+    color: #e13c7e;
+}
+#investmentAlternativesGuide .alternative a {
+	color: #8f8f8f;
+}
+#investmentAlternativesGuide .alternative.active a {
+    color: #018acf;
+}
+#investmentAlternativesGuide .risk {
+	color: #bbb; 
+	font-size: 11px;
+	margin-left: 1em;
+}
+#investmentAlternatives {
+	width: 27.5em; 
+	float: left; 
+	color: #8F8F8F;
+	margin-left: 2em;
+	margin-top: 1em;
+}
+#alternativesLine {
+	position: absolute; 
+	width: 1px; 
+	background-color: #bbb; 
+	top: 25px; 
+	left: 25px; 
+	z-index: 1;
+}
+#selectedInvestmentAlternatives {
+	float: right; 
+	margin-right: 2.5em; 
+	padding-top: 1em; 
+	width: 29em;
+}
+#selectedInvestmentAlternatives .title {
+	font-size: 1.5em; 
+	text-align: center; 
+	padding-bottom: 1em;
+}
+
+#selectedInvestmentAlternatives .container {
+	margin-left: 2em;
+}
+#selectedInvestmentAlternatives .disclaimer {
+	margin-top: 3em; 
+	margin-left: 4em;
+	text-align: left;
+}
+.rantebevis-pluslayers a{
+	margin-top:0.5em;
+	display:block;
+}
+.rantebevis-pluslayers a.plus{
+	background-position:0 3px
+}
+table.rantebevis thead tr th {
+	background-color: white;
+	font-size:11px;
+	border-bottom:1px #eee dotted;
+}
+table.rantebevis td {
+	vertical-align: middle;
+	font-size:11px;
+} 
+table.rantebevis thead tr th:first-child {
+	border-bottom:0px;
+}
+table.rantebevis td:first-child {
+	width: 50px;
+}
+table.rantebevis .xsmall {
+	margin: 2px 0;
+}
+.module .rantebevis th {
+	color: #8f8f8f;
+	background: none;
+}
+#rantefonderCategories a.category {
+	margin-top: 0.5em;
+	float: left;
+}
+#rantefonderCategories a.link {
+        position: absolute;
+        left: 19em;
+        margin-top: 0.4em;
+}
+#rantefonderCategories a.link > img {
+	margin-left: 3px;
+	top: 3px;
+	position: relative;
+}
+/* Slider
+----------------------------------*/
+#sliders .ui-widget-content {
+	background: url('/now/images/rantetorget/SlideBG.png') no-repeat;
+	background-position: 0 0;
+	xbackground-size: cover;
+	xfilter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/now/images/rantetorget/SlideBG.png', sizingMethod='scale');
+	x-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/now/images/rantetorget/SlideBG.png', sizingMethod='scale')";
+	zoom: 1;
+	border: none;
+}
+#sliders > .ui-slider-horizontal {
+	height: 17px;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px -1px #696767 inset;
+	width: 274px;
+}
+#sliders .ui-slider-range {
+	background-color: #efefef;
+	border-radius: 3px;
+	box-shadow:0 1px 2px -1px #696767 inset; 
+}
+#yearsSlider > .ui-slider-handle {
+	top: -0.8em;
+	margin-left: -1.4em;
+	cursor:pointer;
+}
+#yearsSlider > .ui-state-default {
+	border: none;
+	background: url(/now/images/rantetorget/SmallHandle.png) no-repeat;
+	width: 33px;
+	height: 34px;
+	outline: none;
+}
+#returnSlider > .ui-state-default, #riskSlider > .ui-state-default {
+	border: none;
+	background: url(/now/images/rantetorget/BigHandle.png) no-repeat;
+	width: 34px;
+	height: 67px;
+	outline: none;
+}
+body.fi #returnSlider > .ui-slider-handle {
+	top: -0.8em;
+}
+#returnSlider > .ui-slider-handle {
+	top: -0.6em;
+	margin-left: -1.3em;
+}
+#riskSlider > .ui-slider-handle {
+	top: -3.8em;
+	margin-left: -1.3em;
+	cursor:pointer;
+}
+/*! jQuery UI - v1.10.0 - 2013-02-07
+* http://jqueryui.com
+* Includes: jquery.ui.core.css, jquery.ui.slider.css
+* Copyright (c) 2013 jQuery Foundation and other contributors Licensed MIT */
+/* Interaction Cues
+----------------------------------*/
+.ui-state-disabled {
+	cursor: default !important;
+}
+/* states and images */
+
+/* Misc visuals
+----------------------------------*/
+/* Overlays */
+.ui-widget-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.ui-slider {
+	position: relative;
+	text-align: left;
+}
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1.2em;
+	height: 1.2em;
+	cursor: default;
+}
+.ui-slider .ui-slider-range {
+	position: absolute;
+	z-index: 1;
+	font-size: .7em;
+	display: block;
+	border: 0;
+	background-position: 0 0;
+}
+/* For IE8 - See #6727 */
+.ui-slider.ui-state-disabled .ui-slider-handle,
+.ui-slider.ui-state-disabled .ui-slider-range {
+	filter: inherit;
+}
+.ui-slider-horizontal {
+	height: .8em;
+}
+.ui-slider-horizontal .ui-slider-handle {
+	top: -.3em;
+	margin-left: -1.4em;
+}
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 100%;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+	right: 0;
+}
+.ui-slider-vertical {
+	width: .8em;
+	height: 100px;
+}
+.ui-slider-vertical .ui-slider-handle {
+	left: -.3em;
+	margin-left: 0;
+	margin-bottom: -.6em;
+}
+.ui-slider-vertical .ui-slider-range {
+	left: 0;
+	width: 100%;
+}
+.ui-slider-vertical .ui-slider-range-min {
+	bottom: 0;
+}
+.ui-slider-vertical .ui-slider-range-max {
+	top: 0;
+}
+/* 
+-------END slider ------------ */
+
+
+

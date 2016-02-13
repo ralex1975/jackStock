@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+  <namespace>test</namespace>
+  <virtualFolder>doc</virtualFolder>
+
+  <filterSection>
+    <toc>
+      <section title="test" ref="index.html">
+      <section title="Find File" ref="findfile.html"></section>
+      </section>
+    </toc>
+
+    <keywords>
+      <keyword name="Test" ref="index.html"/>     
+      <keyword name="Find" ref="findfile.html"/>
+    </keywords>
+
+    <files>
+      <file>index.html</file>
+      <file>findfile.html</file>
+    </files>
+
+  </filterSection>
+</QtHelpProject>
+

@@ -1,0 +1,243 @@
+/* START QUICKBAR /////////////////////////////////////////////////////////// */
+#quickbar { /* Martin, container för hela toolbaren som dyker upp ovanför logotypen och topnavigationen */
+background:#fff;
+border-bottom:1px solid #545454;
+padding:0px 0 0 6px;
+height:23px;
+position:relative;
+z-index:120;
+margin-left:-2em;
+}
+.outer {
+margin:0 auto; 
+width:99.1em;	
+}
+#quickbar a {
+font:inherit;
+}
+#quickbar a.current {
+color:#fff;	
+padding:0 4px 1px 0;
+}
+#fastSeekWrapper .quickbarButton span { /* Martin, quickbarknappen */
+float:left;
+background:url(/now/images/sprites/nav.gif) no-repeat left -395px;
+padding:0 0 0 3px;
+margin-right:2px;
+}
+#fastSeekWrapper .quickbarButton span a { /* Martin, quickbarknappen*/
+float:left;
+display:block;
+height:1.3em;  /* Fixar ett litet glapp i Safari */
+background:url(/now/images/sprites/nav.gif) no-repeat right -395px;
+padding:6px 9px 6px 5px;
+color:#fff;
+}
+#fastSeekWrapper .quickbarButton span.current { /* Martin, toolbar knappen aktiverad */
+background:url(/now/images/sprites/nav.gif) no-repeat left -430px;
+}
+#fastSeekWrapper .quickbarButton span.current a { /* Martin, toolbar knappen aktiverad */
+background:url(/now/images/sprites/nav.gif) no-repeat right -430px;
+}
+#quickbar div.group,
+#quickbar div.group.last { /* Martin, toolbaren är indelad i 4 grupper, index, listor, nyheter och depå */
+background:url(/now/images/toolbarBorder.gif) no-repeat right 5px;
+padding:5px 10px !important;
+margin-left:-2px;
+font-weight:bold;
+float:left;
+position:relative;
+}
+#quickbar div.group.first { /* Martin, den första gruppen (dvs index) */
+padding-left:6px;
+}
+#quickbar div.group.last { /* Martin, den sista gruppen (dvs depå) */
+background-image:none;
+padding-left:14px;
+}
+#quickbar div.group a.index { /* Martin, de två index som visas */
+text-decoration:underline;
+font-weight:bold;
+}
+#quickbar div.group a.index.first,
+#quickbar div.group span.index.first { /* Martin, sätter extra marginal på det första index länken */
+margin-left:6px;
+}
+span.index { /* Martin, ibland vill vi inte länka indexet någonstans, då får det bli en span istället */
+color:#d6d4d5;
+font-weight:bold;
+}
+#quickbar div.group p { /* Martin, tillgängligt på kontot text */
+display:inline;
+color:#d6d4d5;
+}
+#quickbar span.bullet {
+color:#7b7b7b;
+margin:0 3px;
+}
+#quickbar a.dropselection,
+#quickbar a.foldout {
+border:0;
+border-bottom:0;
+background:url(/now/images/toolbarPilNer.gif) no-repeat right 5px !important;
+display:block;
+float:left;
+padding-right:16px;
+}
+/*
+#quickbar div.group a.foldout {
+border-color:#c6c6c6;
+background:#fbf9fc url(/now/images/toolbarPilUpp.gif) no-repeat right 10px ;
+}*/
+#quickbar .close { 
+float:right;
+position:relative;
+right:0;
+top:6px;
+opacity:1;
+}
+/* SLUT QUICKBAR ///////////////////////////////////////////////////////////// */
+/* START GEMENSAMMA KLASSER FÖR ALLA GÖMDA LAGER //////////////////////////// */
+#quickbar div.module {
+margin:0;
+padding-left:0;
+}
+#quickbar div.grey {
+margin:0 0 3px 0;
+width:100%;
+}
+#quickbar div.grey h2 {
+background-color: #FFFFFF;
+}
+#quickbar div.hiddenLayer { /* Martin, Index, Mina Listor, Nyheter */
+position:absolute;
+top:15px;
+left:1px;
+background-color:#fff;
+border:1px solid #817E7E;
+border-top:0;
+padding:13px 15px 14px 14px;
+line-height:1.6em;
+margin: 0;
+}
+/* SLUT GEMENSAMMA KLASSER FÖR ALLA GÖMDA LAGER ///////////////////////////// */
+/* START INDEX LAGRET /////////////////////////////////////////////////////// */
+div.group span.kursNoll { /* Martin, kursNoll måste vara vit när den ska visas mot en svart bakgrund, annars, se nedan */
+color:#000;
+padding-left:3px;
+}
+div.group div.index span.kursNoll {  /* Martin, om kursen är 0 så ska färgen på siffran vara svart  */
+color:#000;
+}
+#quickbar div.index { /* Martin, bredden på hela indexlagret */
+width:448px;
+}
+#quickbar div.svenskaIndex,
+#quickbar div.worldIndex { /* Martin, bredden på diven med svenska och utländska index */
+width:217px;
+}
+#quickbar div.svenskaIndex {
+margin-right:14px;
+}
+#quickbar table td {
+padding:0;
+}
+#quickbar td.se,
+#quickbar td.no,
+#quickbar td.dk,
+#quickbar td.fi,
+#quickbar td.de,
+#quickbar td.us,
+#quickbar td.uk,
+#quickbar td.ru,
+#quickbar td.eu,
+#quickbar td.it,
+#quickbar td.fr,
+#quickbar td.cs,
+#quickbar td.jp,
+#quickbar td.ch,
+#quickbar td.ca,
+#quickbar td.hk { /* Martin, börsindex flaggorna */
+background:url(/now/images/flaggaSe.gif) no-repeat 1px 2px;
+padding-left:3px;
+width:16px;
+height:16px;
+}
+#quickbar td.no {
+background-image:url(/now/images/flaggaNo.gif);
+}
+#quickbar td.dk {
+background-image:url(/now/images/flaggaDk.gif);
+}
+#quickbar td.fi {
+background-image:url(/now/images/flaggaFi.gif);
+}
+#quickbar td.de {
+background-image:url(/now/images/flaggaDe.gif);
+}
+#quickbar td.us {
+background-image:url(/now/images/flaggaUs.gif);
+}
+#quickbar td.uk {
+background-image:url(/now/images/flaggaUk.gif);
+}
+#quickbar td.ru {
+background-image:url(/now/images/flaggaRu.gif);
+}
+#quickbar td.eu {
+background-image:url(/now/images/flaggaEu.gif);
+}
+#quickbar td.it {
+background-image:url(/now/images/flaggaIt.gif);
+}
+#quickbar td.fr {
+background-image:url(/now/images/flaggaFr.gif);
+}
+#quickbar td.cs {
+background-image:url(/now/images/flaggaCs.gif);
+}
+#quickbar td.jp {
+background-image:url(/now/images/flaggaJp.gif);
+}
+#quickbar td.ch {
+background-image:url(/now/images/flaggaCh.gif);
+}
+#quickbar td.ca {
+background-image:url(/now/images/flaggaCa.gif);
+}
+#quickbar td.hk {
+background-image:url(/now/images/flaggaHk.gif);
+}
+#quickbar div.group div.index p { /* Martin, disclaimer text */
+color:#949293;
+font-style:italic;
+float:left;
+margin-top:15px;
+}
+#valdaIndex { /* Kristoffer behöver denna div för att kunna uppdatera indexen */
+display:inline;
+}
+/* SLUT INDEX lAGRET //////////////////////////////////////////////////////// */
+/* START MINA LISTOR LAGRET ///////////////////////////////////////////////// */
+#quickbar div.minaListor {
+width:243px;
+}
+/* SLUT MINA LISTOR LAGRET ////////////////////////////////////////////////// */
+/* START NYHET LAGRET /////////////////////////////////////////////////////// */
+#quickbar div.nyheter { /* Martin, bredden på hela nyhetslagret */
+width:547px;
+}
+#quickbar div.senasteNytt { /* Martin, bredden på senaste nytt diven */
+width:389px;
+margin-right:14px;
+}
+#quickbar div.nyhetslistor { /* Martin, bredden på nyhetslistor diven */
+width:144px;
+}
+#quickbar div.nyheter span { /* Martin, datum i senaste nytt diven */
+margin-right:10px;
+}
+#quickbar div.nyheter a {
+text-decoration:underline;
+padding:0;
+}

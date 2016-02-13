@@ -1,0 +1,165 @@
+		assetNameId	assetName	assetSymbol	marketList	assetType	yahooNordetInterconId
+	ABB Ltd	1	ABB Ltd.	ABB.ST			0
+	Alfa Laval AB	2	Alfa Laval AB	ALFA.ST			0
+	ASSA ABLOY AB ser. B	4	Assa Abloy AB	ASSA-B.ST			0
+	AstraZeneca PLC	5	AstraZeneca PLC	AZN.ST			0
+	Atlas Copco AB ser. A	6	Atlas Copco AB	ATCO-A.ST			0
+	Atlas Copco AB ser. B	7	Atlas Copco AB	ATCO-B.ST			0
+	Atrium Ljungberg B	8	Atrium Ljungberg AB	LJGR-B.ST			0
+	Autoliv Inc. SDB	9	Autoliv	ALIV-SDB.ST			0
+	Axfood AB	10	Axfood Ab	AXFO.ST			0
+	Axis AB	11	Axis AB	AXIS.ST			0
+	BillerudKorsnäs AB	12	Billerud AB	BILL.ST			0
+	Boliden AB	13	Boliden AB	BOL.ST			0
+	Castellum AB	14	Castellum AB	CAST.ST			0
+	Electrolux, AB ser. A	15	Electrolux AB	ELUX-A.ST			0
+	Electrolux, AB ser. B	16	Electrolux AB	ELUX-B.ST			0
+	Elekta AB ser. B	17	Elekta AB	EKTA-B.ST			0
+	Ericsson A	19	Ericsson Telephone Company	ERIC-A.ST			0
+	Ericsson B	20	Ericsson Telephone Company	ERIC-B.ST			0
+	Fabege AB	21	Fabege AB	FABG.ST			0
+	Getinge AB ser. B	22	Getinge AB	GETI-B.ST			0
+	Sv. Handelsbanken A	23	Svenska Handelsbanken	SHB-A.ST			0
+	Sv. Handelsbanken B	24	Svenska Handelsbanken	SHB-B.ST			0
+	Hennes & Mauritz B	25	HENNES&MAURITZ -B-	HM-B.ST			0
+	Hexagon AB ser. B	26	Hexagon AB	HEXA-B.ST			0
+	Holmen AB ser. A	27	Holmen AB	HOLM-A.ST			0
+	Holmen AB ser. B	28	Holmen AB	HOLM-B.ST			0
+	Hufvudstaden AB ser. A	29	Hufvudstaden AB	HUFV-A.ST			0
+	Hufvudstaden AB ser. C	30	Hufvudstaden AB	HUFV-C.ST			0
+	Husqvarna AB ser. A	31	Husqvarna AB	HUSQ-A.ST			0
+	Husqvarna AB ser. B	32	Husqvarna AB	HUSQ-B.ST			0
+	ICA Gruppen AB	33	ICA Gruppen 	ICA.ST			0
+	Industrivärden A	34	IND.VAERDEN -A-	INDU-A.ST			0
+	Industrivärden C	35	IND.VAERDEN -C-	INDU-C.ST			0
+	Investor AB ser. A	36	Investor AB	INVE-A.ST			0
+	Investor AB ser. B	37	Investor AB	INVE-B.ST			0
+	Kinnevik A	38	KINNEVIK INV. -A-	KINV-A.ST			0
+	Kinnevik B	39	KINNEVIK INV. -B-	KINV-B.ST			0
+	Latour B	41	Investment AB Latour	LATO-B.ST			0
+	Lundbergföretagen B	42	L E Lundbergforetagen AB	LUND-B.ST			0
+	Lundin Mining Corporation SDB	43	Lundin Mining Corp	LUMI-SDB.ST			0
+	Lundin Petroleum AB	44	Lundin Petroleum AB	LUPE.ST			0
+	Meda AB ser. A	45	Meda AB	MEDA-A.ST			0
+	Melker Schörling AB	46	Melker Schorling AB	MELK.ST			0
+	Millicom Int. Cellular SDB	47	MILLICOM INT. CELL	MIC-SDB.ST			0
+	Modern Times Group A	48	Modern Times Group MTG AB	MTG-A.ST			0
+	Modern Times Group B	49	Modern Times Group MTG AB	MTG-B.ST			0
+	NCC AB ser. A	50	NCC AB	NCC-A.ST			0
+	NCC AB ser. B	51	NCC AB	NCC-B.ST			0
+	NIBE Industrier B	52	NIBE IND.-B-	NIBE-B.ST			0
+	Nordea Bank AB	53	Nordea Bank AB	NDA-SEK.ST			0
+	Oriflame, SDB	54	Oriflame Cosmetics SA	ORI-SDB.ST			0
+	Peab AB ser. B	55	Peab AB	PEAB-B.ST			0
+	Ratos AB ser. A	56	Ratos AB	RATO-A.ST			0
+	Ratos AB ser. B	57	Ratos AB	RATO-B.ST			0
+	SAAB AB ser. B	58	Saab AB	SAAB-B.ST			0
+	Sandvik AB	59	Sandvik AB	SAND.ST			0
+	SCA A	60	Svenska Cellulosa AB	SCA-A.ST			0
+	SCA B	61	SCA Sv Cellulosa	SCA-B.ST			0
+	SCANIA AB ser. A	62	Scania AB	SCV-A.ST			0
+	SCANIA AB ser. B	63	Scania AB	SCV-B.ST			0
+	SEB A	66	Skandinaviska Enskilda Banken AB	SEB-A.ST			0
+	SEB C	67	Skandinaviska Enskilda Banken AB	SEB-C.ST			0
+	SECTRA AB ser B	68	Securitas AB	SECU-B.ST			0
+	Semafo Inc.	69	SEMAFO	SMF.ST			0
+	Skanska AB ser. B	70	Skanska AB	SKA-B.ST			0
+	SKF, AB ser. A	71	SKF	SKF-A.ST			0
+	SKF, AB ser. B	72	SKF	SKF-B.ST			0
+	SSAB AB ser. A	73	SSAB Corp	SSAB-A.ST			0
+	SSAB AB ser. B	74	SSAB Corp	SSAB-B.ST			0
+	Stora Enso Oyj ser. A	75	STORA ENSO -A-	STE-A.ST			0
+	Stora Enso Oyj ser. R	76	Stora Enso Oyj	STE-R.ST			0
+	Swedbank AB ser A	77	Swedbank AB	SWED-A.ST			0
+	Swedish Match AB	79	Swedish Match AB	SWMA.ST			0
+	Tele2 AB ser. A	80	Tele2 AB	TEL2-A.ST			0
+	Tele2 AB ser. B	81	Tele2 AB	TEL2-B.ST			0
+	TeliaSonera AB	82	Teliasonera Ab	TLSN.ST			0
+	Tieto Corporation	83	TietoEnator Oyj	TIEN.ST			0
+	Trelleborg AB ser. B	84	Trelleborg AB	TREL-B.ST			0
+	Volvo, AB ser. A	85	VOLVO -A-	VOLV-A.ST			0
+	Volvo, AB ser. B	86	Volvo AB	VOLV-B.ST			0
+	Wallenstam AB ser. B	87	Wallenstam Byggn	WALL-B.ST			0
+	Betsson AB ser. B	89	Betsson B	BETS-B.ST			0
+	Bilia AB ser. A	90	Bilia A	BILI-A.ST			0
+	Industrial & Financial Syst. A			IFS-A.ST			
+	Industrial & Financial Syst. B	92	Industrial & Financial Sys. B	IFS-B.ST			0
+	Intrum Justitia AB	93	Intrum Justitia	IJ.ST			0
+	New Wave Group AB ser. B	94	New Wave B	NEWA-B.ST			0
+	Sagax AB A	97	Sagax A	SAGA-A.ST			0
+	Sagax AB B	98	Sagax B	SAGA-B.ST			0
+	AarhusKarlshamn AB	100	AarhusKarlshamn	AAK.ST			0
+	Active Biotech AB	101	Active Biotech	ACTI.ST			0
+	Addtech AB ser. B	102	Addtech B	ADDT-B.ST			0
+	Aerocrine AB ser. B	103	Aerocrine B	AERO-B.ST			0
+	Avanza Bank Holding AB	104	Avanza Bank Holding	AZA.ST			0
+	B&B TOOLS AB ser. B	105	B&B TOOLS B	BBTO-B.ST			0
+	Beijer Alma AB ser. B	106	Beijer Alma B	BEIA-B.ST			0
+	Beijer AB, G & L ser. B	107	Beijer B	BEIJ-B.ST			0
+	BioGaia AB ser. B	108	BioGaia B	BIOG-B.ST			0
+	Black Earth Farming SDB	109	Black Earth Farming	BEF-SDB.ST			0
+	BlackPearl Resources SDB	110	BlackPearl Resources SDB	PXXS-SDB.ST			0
+	Bure Equity AB	111	Bure Equity	BURE.ST			0
+	Byggmax Group AB	112	Byggmax Group	BMAX.ST			0
+	CDON Group AB	113	CDON Group	CDON.ST			0
+	Clas Ohlson AB ser. B	114	Clas Ohlson B	CLAS-B.ST			0
+	Cloetta AB ser. B	115	Cloetta B	CLA-B.ST			0
+	Concentric AB	116	Concentric	COIC.ST			0
+	Corem Property Group AB	117	Corem Property Group	CORE.ST			0
+	Corem Property Group Pref	118	Corem Property Group Pref	CORE-PREF.ST			0
+	Creades AB A	119	Creades A	CRED-A.ST			0
+	Diös Fastigheter AB	120	Diös Fastigheter	DIOS.ST			0
+	Duni AB	121	Duni	DUNI.ST			0
+	East Capital Explorer AB	122	East Capital Explorer	ECEX.ST			0
+	Eniro AB	123	Eniro	ENRO.ST			0
+	Eniro AB pref	124	Eniro pref	ENRO-PREF.ST			0
+	EnQuest PLC	125	EnQuest PLC	ENQ.ST			0
+	Fagerhult, AB	126	Fagerhult	FAG.ST			0
+	Fast Partner AB	127	Fast Partner	FPAR.ST			0
+	Fast Partner AB Pref	128	Fast Partner Pref	FPAR-PREF.ST			0
+	Fast. Balder B	129	Fast. Balder B	BALD-B.ST			0
+	Fenix Outdoor AB ser. B	130	Fenix Outdoor B	FIX-B.ST			0
+	Gunnebo AB	131	Gunnebo	GUNN.ST			0
+	Haldex AB	132	Haldex	HLDX.ST			0
+	HEBA B	133	FAST. HEBA B	HEBA-B.ST			0
+	HEXPOL AB ser. B	134	HEXPOL B	HPOL-B.ST			0
+	HiQ International AB	135	HiQ International	HIQ.ST			0
+	Indutrade AB	136	Indutrade	INDT.ST			0
+	JM AB	137	JM	JM.ST			0
+	KappAhl AB	138	KappAhl	KAHL.ST			0
+	Klövern AB	139	Klövern	KLOV.ST			0
+	Kungsleden AB	140	Kungsleden	KLED.ST			0
+	Lindab International AB	141	Lindab International	LIAB.ST			0
+	Loomis AB ser. B	142	Loomis B	LOOM-B.ST			0
+	Medivir AB ser. B	143	Medivir B	MVIR-B.ST			0
+	Mekonomen AB	144	Mekonomen	MEKO.ST			0
+	Net Entertainment NE B	145	Net Entertainment NE B	NET-B.ST			0
+	Nobia AB	146	Nobia	NOBI.ST			0
+	Nolato AB ser. B	147	Nolato B	NOLA-B.ST			0
+	Nordnet AB ser. B	148	Nordnet B	NN-B.ST			0
+	Proffice AB ser. B	149	Proffice B	PROE-B.ST			0
+	Rezidor Hotel Group AB	150	Rezidor Hotel Group	REZT.ST			0
+	Sagax AB pref	151	Sagax pref	SAGA-PREF.ST			0
+	SAS AB	152	SAS	SAS.ST			0
+	SkiStar AB ser. B	154	SkiStar B	SKIS-B.ST			0
+	SWECO AB ser. A	155	SWECO A	SWEC-A.ST			0
+	SWECO AB ser. B	156	SWECO B	SWEC-B.ST			0
+	Swedish Orphan Biovitrum	157	Swedish Orphan Biovitrum	SOBI.ST			0
+	Swedol AB ser. B	158	Swedol B	SWOL-B.ST			0
+	Systemair AB	159	Systemair	SYSR.ST			0
+	Tethys Oil AB	160	Tethys Oil	TETY.ST			0
+	Transmode AB	161	Transmode	TRMO.ST			0
+	Tribona AB	162	Tribona	TRI.ST			0
+	Unibet Group plc	163	Unibet Group	UNIB-SDB.ST			0
+	Wihlborgs Fastigheter AB	164	Wihlborgs Fastigheter	WIHL.ST			0
+	ÅF AB ser. B	165	ÅF B	AF-B.ST			0
+	Öresund, Investment AB	166	Öresund	ORES.ST			0
+							
+	Vostok Nafta Investment, SDB			VNIL-SDB.ST			
+	Klövern AB pref			KLOV-PREF.ST			
+	Fast. Balder pref			BALD-PREF.ST			
+	Securitas AB ser. B			SECU-B.ST			
+	Sanitec Oyj			SNTC.ST			
+	Nokia Corporation			NOKI-SEK.ST			
+	Platzer Fastigheter Holding B			PLAZ-B.ST			
+	Ratos AB pref			RATO-PREF.ST			

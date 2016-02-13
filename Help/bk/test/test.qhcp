@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QHelpCollectionProject version="1.0">
+  <assistant>
+    <title>test</title>
+    <!--     <applicationIcon>images/handbook.png</applicationIcon> -->
+    <cacheDirectory>test/doc</cacheDirectory>
+
+    <startPage>qthelp://test/doc/index.html</startPage>
+
+    <aboutMenuText>
+      <text>About test</text>
+    </aboutMenuText>
+
+    <enableDocumentationManager>false</enableDocumentationManager>
+    <enableAddressBar>false</enableAddressBar>
+    <enableFilterFunctionality>false</enableFilterFunctionality>
+  </assistant>
+
+  <docFiles>
+    <generate>
+      <file>
+        <input>test.qhp</input>
+        <output>test.qch</output>
+      </file>
+    </generate>
+    <register>
+      <file>test.qch</file>
+    </register>
+  </docFiles>
+</QHelpCollectionProject>
