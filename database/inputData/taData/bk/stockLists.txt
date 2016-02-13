@@ -1,0 +1,5 @@
+Omx Large Cap	omx_large_cap.csv
+Stockholm OMX	omx_1.csv
+Min Portfölj	myPortfolio.cvs
+
+

@@ -1,0 +1,1283 @@
+/* START HUVUDNAVIGATIONEN ///////////////////////////////////////////////////////////////// */
+#navWrapper a, #navWrapper a:active, #navWrapper a:focus, #navWrapper a:link {
+outline:0 none;
+}
+#navWrapper {
+font-size:0.5em;
+background:#DDDCDC none repeat scroll 0 0;
+float:left;
+width:100%;
+}
+#topnavigation {
+float:left;
+width:100%;
+position: relative;
+z-index: 0;
+left:-1.5em;
+}
+.change-account {
+position:absolute;
+z-index: 1000;
+left:-50px;
+margin-top: 1px;
+margin:0;
+text-align: left;
+}
+.change-account a.dropselection {
+background:none;
+float:left;
+padding:5px 3px 0 3px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.change-account a.foldout {
+background:#FBF9FC;
+border-color:#FFFFFF;
+float:left;
+padding:5px 3px 1px 3px;
+}
+.change-account a.foldout:hover {
+text-decoration: none;
+}
+.change-account a.active {
+background:none;
+border-left:1px solid #BFBFBF;
+float:left;
+font-size:1.1em;
+font-weight:normal;
+margin-left:0.5em;
+margin-top:0.5em;
+padding-left:0.6em;
+padding-top:0;
+}
+.change-account a.active:hover {
+text-decoration: underline;
+color:#018ACF;
+}
+.change-account a span {
+background: url("/now/images/toolbarPilNer.gif") no-repeat scroll right center transparent;
+color:#018ACF;
+font-size:11px;
+font-weight:bold;
+padding-right: 13px;
+}
+.change-account div#account-overlay {
+clear:both;
+background:#FBF9FC;
+width:20em;
+text-align:left;
+padding:0.1em 1.2em 1.5em 1em;
+width:auto;
+float:left;
+z-index: 1000;
+border: 1px solid #817E7E;
+border-left:0;
+border-top:0;
+-moz-box-shadow:3px 3px 3px #9F9F9F;
+-webkit-box-shadow: 3px 3px 3px #9F9F9F;
+box-shadow: 3px 3px 3px #9F9F9F;
+-moz-border-radius:0 10px 10px 10px;
+-webkit-border-radius:0 10px 10px 10px;
+}
+.change-account div#account-overlay a {
+font-weight:bold;
+margin:0.3em 0 0.5em 0.3em;
+float:left;
+}
+.change-account div#account-overlay a:hover {
+text-decoration: underline;
+color:#018ACF;
+}
+.change-account div#account-overlay a span {
+color:#747474;
+font-size:1em;
+float: none;
+}
+.change-account div#account-overlay span {
+float:left;
+margin:0.3em 0 0.3em 0.3em;
+color:#747474;
+font-size:1em;
+}
+.change-account div#account-overlay span strong {
+background:#00A9EC;
+color:#fff;
+padding:0px 2px 0 2px;
+}
+.change-account div#account-overlay div.grey {
+margin-top:1.5em;
+width: auto;
+}
+.change-account div#account-overlay div.grey h2{
+background-color:#F7F7F9;
+}
+.change-account div#account-overlay span.bullet {
+color:#A3E20F;
+}
+#navWrapper div.center {
+margin:0 auto;
+text-align:center;
+width:99em;
+padding: 0;
+clear:both;
+position:relative;
+}
+#navWrapper div.center a {
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-weight:normal;
+text-align:left;
+text-transform:none;
+}
+#logo {
+display:block;
+height:59px;
+margin:0 auto;
+width:59px;
+}
+body.blue #logo{
+background:url(/now/images/sprites/logo.gif) no-repeat scroll 0 2px;
+}
+body.fuchsia #logo{
+background:url(/now/images/sprites/logo.gif) no-repeat scroll -166px 2px;
+}
+body.purple #logo{
+background:url(/now/images/sprites/logo.gif) no-repeat scroll -80px 2px;
+}
+body.yellow #logo{
+background:url(/now/images/sprites/logo.gif) no-repeat scroll -254px 2px;
+}
+body.green #logo{
+background:url(/now/images/sprites/logo.gif) no-repeat scroll -340px 2px;
+}
+body.lime #logo{
+background:url(/now/images/sprites/logo.gif) no-repeat scroll -423px 2px;
+}
+#topnavigation ul {
+padding:0;
+margin:0.7em 0 0 0;
+list-style:none;
+}
+#topnavigation li {
+position:relative;
+float:left;
+margin-right:2px;
+height:3.3em;
+}
+#topnavigation li a span {
+background: url(/now/images/sprites/navigation.png) no-repeat 3px 0;
+padding:0 0 0 19px;
+}
+#topnavigation li#user a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 2px -347px;
+padding:0 0 2px 19px;
+}
+#topnavigation li#user a {
+padding-left:3px;
+padding-bottom: 5px;
+outline:none;
+}
+#topnavigation li#user.current a {
+padding-bottom: 9px;
+}
+#topnavigation li#depa a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 3px -41px;
+}
+#topnavigation li#marknaden a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 3px -85px;
+}
+#topnavigation li#fonder a span, #topnavigation li#etf a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 3px -132px;
+}
+#topnavigation li#handla a span {
+background:url(/now/images/sprites/navigation.png) no-repeat  3px -182px;
+}
+#topnavigation li#analys a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 3px -230px;
+}
+#topnavigation li#partnertab a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 3px -375px;
+}
+#topnavigation li#shareville a span {
+background:url(/now/images/sprites/navigation.png) no-repeat 3px -85px;
+}
+
+#navWrapper div.center #topnavigation li a {
+text-transform: lowercase;
+}
+#topnavigation li a {
+float:left;
+display:block;
+background-color:#dddcdc;
+padding:8px 7px 8px 1px;
+font:1.3em Verdana, Arial, Helvetica, Geneva, sans-serif;
+color:#000;
+text-transform:lowercase;
+text-decoration:none;
+white-space:nowrap;
+width:auto; /* Se även ie.css */
+}
+#topnavigation li a:hover {
+background:url(/now/images/sprites/navigation.png) repeat-x -1px -297px;
+}
+#topnavigation .current a {
+background:#F6F5F5;
+padding-bottom:9px;
+padding-top:8px;
+}
+#topnavigation .current a:hover {
+background:#F6F5F5;
+}
+#topnavigation .current a div {
+font-weight: bold;
+font-size: 0.9em;
+}
+#topnavigation .foldout {
+background:url(/now/images/sprites/navigation.png) repeat-x -1px -238px;
+}
+#topnavigation .foldout a {
+background-color:#FBF9FB;
+}
+#topnavigation li.foldout a:hover {
+background:#FBF9FB;
+}
+/* SLUT HUVUDNAVIGATIONEN ///////////////////////////////////////////////////////////////////// */
+/* START SUPPORTNAVIGATION MED SÖK, KONTAKT OCH LOGGA UT ////////////////////////////////////// */
+#fastSeekWrapper {
+position:absolute;
+right:0;
+margin-top:0;
+z-index:11;
+}
+.supportNav {
+position:absolute;
+top:0.6em;
+xleft:57.1em;
+width:420px;
+}
+.supportNav li {
+border-left:1px solid #000;
+height:13px;
+margin-bottom:2px;
+}
+.supportNav li#quickbarToggle {
+border-left:0 none;
+border-right:1px solid #000;
+}
+.supportNav li#supportContact {
+border-left:0;
+padding-top:0;
+}
+.supportNav li#supportMC {
+border-left: 0 none;
+border-right: 1px solid #000000;
+}
+.supportNav li#supportMC img.mcLetter {
+float:left;
+margin:2px -1px 0 6px
+}
+#navWrapper div.center .supportNav li a.betona {
+font-weight:bold;
+}
+.supportNav li a.first, .supportNav li a.first {
+font-weight:bold;
+}
+supportNav li a.first {
+background:url(/now/images/sprites/supportNav.gif) no-repeat scroll right -2px;
+}
+.oinloggad .supportNav {
+width: 416px;
+}
+.tpLight .supportNav {
+xleft:57em;
+}
+#topSearch {
+/*
+ * position:absolute; top:25px;
+ */
+position: absolute;
+top: 45px;
+left: 0px;
+margin: -25px 0 0 0;
+text-align: left;
+}
+#topSearch .search { 
+margin-left:-3px;
+}
+#center select, /* Martin, select i defaultläget */
+.fastSeekResultContainer select {
+float:left;
+width:85px;
+margin:3px 0 4px 0;
+}
+.fastSeekResultContainer select { /* Martin, select när sökresultat visas */
+margin:0 2px 4px 6px;
+}
+/*
+#center input, 
+.fastSeekResultContainer input,  #fastSeekWrapper input.searchField{
+border:1px solid #BFBFBF;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+font-size:11px;
+height:15px;
+left:0.7em;
+margin:0;
+padding:2px 0 1px 2px;
+position:absolute;
+top:0;
+width:180px;
+}
+.fastSeekResultContainer input { 
+margin:0 3px 4px 0;
+font-size:0.85em;
+height:15px;
+padding:1px 0 0 4px;
+width:114px;
+float:left;
+position: relative;
+top: auto;
+left: auto;
+border:1px solid #7F9DB9;
+}
+*/
+.searchIcon, /* Martin, förstoringsglaset i defaultläget */
+.fastSeekResultContainer .searchIcon {
+position:absolute;
+right:1.4em;
+top:0.5em;
+}
+.fastSeekResultContainer .searchIcon { /* Martin, förstoringsglaset när sökresultaten visas */
+margin:-1px 7px 0 11px;
+float:left;
+}
+xbody.fi div#supportNavLogin {
+right: -123px;
+}
+xbody.fi .oinloggad .supportNav {
+width: 305px;
+right: -30em;
+}
+body.da div#supportNavLogin {
+right: -75px;
+}
+/*body.da .oinloggad .supportNav {
+width: 333px;
+}*/
+li#supportNavLogin, div#supportNavLogin  {
+background: none repeat scroll 0 0 transparent;
+padding-top: 0;
+float:right;
+}
+li#supportNavLogin a {
+color: #747474;
+background: none;
+font-weight: bold;
+}
+#navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left 0;
+float:left;
+padding-left:0.5em;
+position:relative;
+margin:0 4px 0 8px;
+}
+#navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+display:block;
+background:url(/now/images/sprites/btnMedium.png) no-repeat right 0;
+padding:6px 0.8em 8px 0.5em;
+margin-right:-5px;
+font:1.2em Verdana, Arial, sans-serif;
+color:#fff;
+white-space:nowrap;
+text-decoration:none;
+text-transform:none;
+text-shadow:1px 1px 1px #000;
+}
+body.blue #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left 0;
+}
+body.blue #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat right 0;
+text-shadow:1px 1px 0 #0098D7;
+}
+body.lime #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -62px;
+}
+body.lime #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat right -62px;
+text-shadow:1px 1px 0 #8CBB0A;
+}
+body.green #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -94px;
+}
+body.green #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat right -94px;
+text-shadow:1px 1px 0 #408910;
+}
+body.fuchsia #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -155px;
+}
+body.fuchsia #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat right -155px;
+text-shadow:1px 1px 0 #AF2469;
+}
+body.purple #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -217px;
+}
+body.purple #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat right -217px;
+text-shadow:1px 1px 0 #570586;
+}
+body.yellow #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -125px;
+}
+body.yellow #navWrapper div.center .supportNav div#supportNavLogin span.btnSmall a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat right -125px;
+text-shadow:1px 1px 0 #BC8927;
+}
+.supportNav ul {
+float: right;
+list-style: none outside none;
+margin: 0 0 8px;
+padding: 1px 0 0;
+}
+.supportNav li,
+.supportNav li.search {
+color:#747474;
+float:left;
+font-size:1.1em;
+position:relative;
+}
+.supportNav li.search a { /* Martin, behövs för att den vita snabbsöt rutan ska lägga sig rätt över och inte orsaka sökrutan att hoppa till */
+padding-right:1.0em;
+}
+.supportNav li.search {
+background-image:none;
+padding-left:0;
+}
+#navWrapper div.center .oinloggad .supportNav li a {
+padding:0 0.5em;
+}
+#navWrapper div.center .oinloggad .supportNav li a.last {
+padding:0 0.3em 0 0.4em;
+}
+#navWrapper div.center .supportNav li a {
+color:#000000;
+display:block;
+float:left;
+font:1em Verdana,Arial,Helvetica,Geneva,sans-serif;
+height:auto;
+margin-right:0;
+padding:0 0.5em 1px 0.5em;
+text-transform:none;
+white-space:nowrap;
+width:auto;
+}
+.supportNav li a:hover {
+text-decoration: underline;
+background: none;
+}
+.supportNav li.current a { /* Martin, kontaktfliken har ett helt unikt utseende när den är vald */
+font-weight:bold;
+}
+.supportNav .foldout { /* Martin, logga ut knappen när den är vald */
+background-color:#f9f8f9;
+background-image:none;
+}
+#topnavigation .supportNav li.foldout a.first {
+background-image:none;
+}
+#topnavigation .supportNav .foldout a { /* Martin, logga ut knappen när den är vald */
+background-color:#f9f8f9;
+background-image:none;
+color:#000;
+font-weight:bold;
+}
+.fastSeekResultContainer {
+background: none repeat scroll 0 0 #F8F8F8;
+border: 1px solid #827E7F;
+left: 5.6em;
+padding: 3px 0 0;
+position: absolute;
+top: 3.1em;
+width: 36.1em;
+}
+.oinloggad .fastSeekResultContainer {
+left: 0.6em;
+}
+#quicktrade .fastSeekResultContainer { /* Jocke, vill bara se vad jag gör i QT */
+left:11.7em;
+width:43.5em;
+z-index:1000;
+top:0.6em;
+}
+#quicktrade .wide.fastSeekResultContainer { /* Jocke, fixar för tyskland etc */
+left:10.8em;
+width:40.0em;
+}
+.wide.fastSeekResultContainer { /* Martin, gör fastSeekResultContainer lite större för tyskarna så att allt för plats */
+left:63.2em;
+width:37.9em;
+}
+.fastSeekResultContainer .lastSearches { /* Martin, dina 5 senaste sökningar */
+padding:0 5px 11px 11px;
+}
+.fastSeekResultContainer .lastSearches a { /* Martin, dina 5 senaste sökningar */
+text-decoration:underline;
+display:block;
+line-height:1.3em;
+padding-top:3px;
+}
+#snabbSokContent .seekResults a.latest { /* Ny layout för senaste sökningar */
+text-decoration:underline;
+margin-left:0;
+}
+#snabbSokContent .seekResults a {
+font-weight: normal;
+text-transform:none;
+}
+.fastSeekResultContainer h2 {
+clear:left;
+padding:12px 0 0 0;
+margin-bottom:1px;
+width:98%;
+border-bottom:1px solid #7f9e8f;
+}
+.snabbStatus .pil,
+.snabbStatus .digits { /* Martin, snabbsatus visar hur aktien har gått under dagen direkt i snabb söken */
+float:left;
+}
+.snabbStatus .pil {
+margin:9px 21px 31px 18px;
+display:inline;
+}
+.snabbStatus .truncate15 {
+margin:11px 0 12px 0;
+display:block;
+}
+.snabbStatus span.buttonBlue {
+margin-right:10px;
+}
+.snabbStatus span.buttonBlueInactive {
+margin-right:10px;
+}
+.snabbStatus .digits table {
+width:28.9em;
+}
+.snabbStatus .digits table td.time {
+padding-top:11px;
+}
+.snabbStatus .digits table td.delayicon {
+padding:13px 23px 0 0;
+}
+.snabbStatus .digits table td {
+line-height:1.4em;
+padding:0 0 0 0;
+}
+/* SLUT SUPPORTNAVIGATION MED SÖK, KONTAKT OCH LOGGA UT /////////////////////////////////////// */
+/* START MENYPORTALERNA /////////////////////////////////////////////////////////////////////// */
+#menyPortalNordnet,
+#menyPortalDepa,
+#menyPortalMarknaden,
+#menyPortalFonder,
+#menyPortalEtf,
+#menyPortalHandla,
+#menyPortalAnalys,
+#menyPortalPartner,
+#menyPortalPartnertab,
+#mc,
+#loggaUt,
+#loggaIn,
+#menyPortalTestflik {
+position:absolute;
+margin-top:0em;
+background:url(/now/images/upperrightfade.png) no-repeat right top;
+z-index:110;
+width:92.1em;
+left:3.6em;
+text-align:left;
+}
+div#mc {
+visibility:visible;
+left:50%;
+margin-left:-486px;
+top:11.5em;
+width:93.1em;
+z-index:990;
+margin-top:0;
+padding-top:0;
+position: absolute;
+font-size:52%;
+}
+#loggaUt {
+left:29.5em;
+width:70.0em;
+top:2.4em;
+}
+#loggaIn {
+left:28.0em;
+width:70.0em;
+margin-top:2.5em;
+}
+.shadowCorner {
+padding-top:3px;
+padding-left:3px;
+}
+.shadow,
+.mcShadow {
+background:url(/now/images/shadow.png) bottom right;
+}
+div#mc .mcContent {
+top:1.9em;
+min-height:34em;
+overflow:visible;
+padding-bottom:18px;
+left:auto;
+border-radius:15px;
+-moz-border-radius:15px;
+-webkit-border-radius:15px;
+}
+.mcContent,
+.mpContent { /* Martin, se även ie.css */
+position:relative;
+background-color:#fff;
+padding:8px 10px 4px 10px;
+left:-3px;
+top:-3px;
+overflow:hidden;
+}
+.mpContent { /* Martin, mp står för Meny Portal */
+background:#fbf9fb;
+border:1px solid #817e7e;
+border-top:0;
+padding:0;
+}
+.mpContent a { /* Martin, gäller samtliga länkar och span taggar i samtliga menyportaler */
+font-size:1.1em;
+}
+.mpContent h2 {
+    display: inline !important;
+}
+/* START HJÄLP ////////////////////////////////////////////////////////////////////////////// */
+div.helpContainer {
+position:relative;
+}
+.helpContent { /* helpContent omsluter bara hjälpytan, inte ikonen som aktiverar hjälpen */
+border-top:1px solid #a4d20e;
+background:#f1f3e8;
+width:100%;
+}
+.helpFaq{
+float:left;
+width:14em;
+}
+#navWrapper div.helpContent a { /* Martin, så här ser alla länkar ut som ligger i hjälpen */
+font-size:1.0em;
+padding:0;
+}
+#navWrapper div.helpContent .module {
+margin:0.9em 0 1.7em 0;
+}
+#navWrapper div.helpContent .threecol {
+width:63.3em; /* se även ie.css */
+}
+#navWrapper div.helpContent .onecol {
+width:20.0em;
+margin:0.8em 0 1.7em 0;
+padding-left:10px;
+}
+div.helpContainer .green h2 { /* Används i kombination med klassen "green" (se nedan) för de rubriker som ska ha ett streck till höger om sig */
+background-color:#f1f3e8;
+display:inline;
+padding-right:5px;
+text-transform:none;
+color:#84aa0b;
+border-bottom:0;
+}
+div.helpContainer .green { /* Vanliga frågor om... */
+
+background:url(/now/images/bgHelp.gif) repeat-x left 3px;
+margin:0 0 5px 0;
+}
+.helpContent img.helpIkon { /* Hjälpikon som ligger i hjälplagret */
+position:absolute;
+left:10px;
+top:10px;
+width:12px;
+height:12px;
+}
+/* SLUT HJÄLP //////////////////////////////////////////////////////////////////////////////// */
+/* START BREV IKON /////////////////////////////////////////////////////////////////////////// */
+div#brevContainer {
+position: relative;
+right: 0.8em;
+top: -0.5em;
+}
+div#brevOuterWrapper {
+position:absolute;
+right:7.2em;
+top:-32px;
+}
+div#brevInnerWrapper {
+background:url(/now/images/mc/noMail.png) no-repeat top;
+position:relative;
+left:29%;
+top:3px;
+z-index:9;
+height:52px;
+width:50px;
+}
+div#avslutContainer {
+position:absolute;
+left:-5px;
+}
+div#avslutOuterWrapper {
+position:absolute;
+right:0;
+}
+div#avslutInnerWrapper {
+position:relative;
+background:url(/now/images/avslutsalert.gif) no-repeat top;
+padding-top:13px;
+top:-13px;
+}
+div#avslutInnerWrapper span.flikInaktiv { /* Martin - sliding doors i avslut alerten */
+background:#d0e77e;
+}
+div#avslutInnerWrapper span.flikInaktiv a { /* Martin - sliding doors i avslut alerten */
+background:#d0e77e;
+padding-bottom: 0.3em;
+outline:none;
+}
+div#brevInnerWrapper.mail {
+background:url(/now/images/mc/mail.png) no-repeat top;
+}
+div#brevInnerWrapper.ett {
+background:url(/now/images/mc/urgetMail.png) no-repeat top;
+}
+div#brevInnerWrapper.tva {
+background:url(/now/images/mc/importantMail.png) no-repeat top;
+}
+div#brevInnerWrapper.tre {
+background:url(/now/images/mc/mail.png) no-repeat top;
+}
+.MClinkIcon {
+width:50px;height:50px;display:block;
+}
+.MClinkText {
+position: absolute; top: 2.2em; text-align: center; width: 17em; right: 0pt;
+}
+/* SLUT BREV IKON //////////////////////////////////////////////////////////////////////////// */
+/* START MEDDELANDECENTRALEN FLIKEN ////////////////////////////////////////////////////////// */
+.mcFlik, /* Martin, fliken under meddelandecentralen se även ie.css */
+.mcFlikInaktiv { /* Martin, fliken som triggar meddelandecentralen */
+position:absolute;
+bottom:-20px;
+right:80px;
+height:23px;
+}
+span.flik, /* se även ie.css */
+span.flikInaktiv {
+display: block;
+position: relative;
+background: url(/now/images/mc/flikFirefoxLeft.png) no-repeat left top;
+padding:0 0 0 3px;
+}
+span.flik a, /* se även ie.css */
+span.flikInaktiv a {
+display: block;
+background: url(/now/images/mc/flikFirefoxRight.png) no-repeat right top;
+padding: 0.3em 0.8em 0.8em 0.5em;
+white-space:nowrap;
+width:auto;
+}
+span.flikInaktiv { /* Martin, vänsterkant av fliken som triggar meddelandecentralen */
+background:none;
+}
+span.flikInaktiv a { /* Martin, högerkant (expanderbar) av fliken som triggar meddelandecentralen */
+background:none;
+color:#0093db;
+padding-top:52px;
+padding-bottom:0;
+min-width: 90px;
+text-align:center;
+outline:none;
+}
+/* SLUT MEDDELANDECENTRALEN FLIKEN ////////////////////////////////////////////////////////// */
+/* DEN BLÅ PILEN I TOPNAVIGATIONEN ////////////////////////////////////////////////////////// */
+#pilNordnet,
+#pilMinsida,
+#pilDepa,
+#pilMarknaden,
+#pilFonder,
+#pilHandla,
+#pilAnalys,
+#pilPartner {
+position:absolute;
+left:-5px;
+margin-left:50%;
+bottom:-5px; /* Se även ie.css */
+height:5px;
+width:7px;
+background:url(/now/images/topnav_pil.gif) no-repeat bottom center;
+visibility:hidden;
+}
+/* START KLASSER SOM ANVÄNDS AV FLERA MENYPORTALER ////////////////////////////////////////// */
+#navWrapper div.mpContent img.close { /* Martin, stängkryssen */
+top:12px;
+}
+#navWrapper div.mpContent a.close { /* Martin, behövs för att länken runt stängkryssen inte ska bli fel */
+padding:0;
+background:none;
+opacity:inherit;
+}
+#navWrapper div.mpContent .module.onecol {
+width: 20.5em;
+}
+a.current,
+#navWrapper div.mpContent a.current { /* Martin, markerar vilken sida som är vald */
+color:#fff;
+background-color:#02a3e3;
+}
+span.ny {
+background-color:#f8f400;
+padding:2px 3px 2px 3px;
+color:#000;
+margin-left:3px;
+}
+#navWrapper div.module a.notYet,a.notYet, span.notYet a,
+#navWrapper div.module a.notYetCurrent { /* Martin, sätts på de länkar som ännu inte är klickbara */
+color:#bebdbd;
+}
+div.grey h2 { /* Används i kombination med klassen "grey" (se nedan) för de rubriker som ska ha ett streck till höger om sig */
+background-color:#f7f7f9;
+display:inline !important;
+padding:0 7px 0 0;
+text-transform:uppercase;
+border-bottom:0;
+display:inline;
+font-size:1em;
+}
+div.grey {
+clear:both;
+background:url(/now/images/grey.gif) repeat-x left 3px;
+width:100%;
+margin:0 0 2px 3px;
+}
+#navWrapper .module {
+margin:0.8em 0 2.3em 0;
+padding-left:1.0em;
+position:relative;
+}
+#navWrapper .module.onecol,
+#loggaUt .module.onecol {
+width:21.1em;
+}
+#navWrapper .module.onecol.DK {
+width:26.5em;
+}
+#navWrapper div.twocol,
+#loggaUt div.twocol,
+#loggaIn div.twocol {
+width:43.5em;
+}
+#navWrapper div.twocol.DK {
+width:38.5em;
+}
+#navWrapper div.threecol {
+width:65.9em;
+}
+#navWrapper div.fourcol {
+width:88.4em;
+}
+#navWrapper div.submodule {
+margin:0;
+width:21.7em;
+}
+#navWrapper div.submodule h3.first,
+#navWrapper div.submodule h3 {
+text-transform:uppercase;
+margin:0.3em 0 0.2em 0.4em;
+}
+#navWrapper div.submodule h3 {
+margin-top:0.85em;
+font-weight:normal;
+font-size:1.0em;
+color:#000;
+}
+#navWrapper .mpContent a {
+line-height:1.4em;
+padding:1px 4px 0 3px;
+}
+#navWrapper .mpContent a.screencast,
+a.screencast { /* Martin */
+background:url(/now/images/ikonScreencast.gif) no-repeat right 3px;
+padding:0 1.5em 0 0;
+margin-right:0.5em;
+}
+/* START MENYPORTAL LOGGA UT //////////////////////////////////////////////// */
+#loggaUt .module,
+#loggaIn .module {
+margin:0.8em 0 1.1em 0;
+padding-left:1.0em;
+}
+#loggaUt .grey {
+margin-bottom:4px;
+}
+#loggaUt .mpContent a {
+font-size:1.0em;
+}
+#loggaUt span.buttonBlue a { /* Martin, special för den blå logga ut knappen */
+color:#fff;
+line-height:normal;
+padding:0.3em 0.7em 0.3em 0.5em;
+}
+#loggaUt a.current {
+padding:0 3px 1px 3px;
+}
+#loggaUt span.bullet { /* Blå bullet */
+color:#0092dd;
+margin:0 8px 0 8px;
+}
+#loggaUt a.current span.bullet { /* Vit bullet */
+color:#fff;
+}
+#loggaUt span.buttonBlue {
+margin:0.5em 0 0 8.4em;
+}
+/* SLUT MENYPORTAL LOGGA UT ///////////////////////////////////////////////// */
+/* START MENYPORTAL NORDNET ///////////////////////////////////////////////// */
+div.topRow {
+padding:12px 0 0.2em 13px;
+width:96%;
+}
+#navWrapper div.center div.topRow  a {
+font-weight:bold;
+}
+#navWrapper a.newWin,
+a.newWin {
+background:url(/now/images/knapp_popup.gif) no-repeat right 4px;
+padding-right:13px;
+}
+/* SLUT MENYPORTAL NORDNET ////////////////////////////////////////////////// */
+/* START MENYPORTAL MARKNADEN /////////////////////////////////////////////// */
+#menyPortalMarknaden table td,
+div.helpContainer table td {
+text-align:left;
+padding:0;
+}
+#navWrapper div.module a.flagSe,
+#navWrapper div.module a.flagNo,
+#navWrapper div.module a.flagDk,
+#navWrapper div.module a.flagFi,
+#navWrapper div.module a.flagDe,
+#navWrapper div.module a.ikonNorden,
+#navWrapper div.module a.ikonNordamerika,
+#navWrapper div.module a.ikonVarlden { /* Martin, se menyportalen Marknaden */
+float:left;
+padding:19px 3px 2px 0;
+margin:0.2em 1.4em 1.2em 0.3em;
+text-decoration:none;
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -3px -1px;
+line-height:normal;
+}
+#navWrapper div.module a.flagNo {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -3px -47px;
+}
+#navWrapper div.module a.flagDk {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -3px -92px;
+}
+#navWrapper div.module a.flagFi {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -3px -136px;
+}
+#navWrapper div.module a.flagDe {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -3px -182px;
+}
+#navWrapper div.module a.ikonNordamerika {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -3px -229px;
+}
+#navWrapper div.module a.ikonNorden {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -5px -282px;
+padding-top:19px;
+width:81px;
+line-height:1.41em;
+}
+#navWrapper div.module a.ikonVarlden {
+background:url(/now/images/sprites/flagSprite.gif) no-repeat -4px -331px;
+margin-right:0;
+line-height:1.41em;
+}
+#navWrapper div.world a,
+#navWrapper div.world span {
+float:left;
+margin-top:20px;
+}
+#navWrapper div.world span {
+margin:23px 2px 0 2px;
+}
+#navWrapper div.module a.flagSeCurrent,
+#navWrapper div.module a.flagNoCurrent,
+#navWrapper div.module a.flagDkCurrent,
+#navWrapper div.module a.flagFiCurrent,
+#navWrapper div.module a.flagDeCurrent,
+#navWrapper div.module a.ikonNordenCurrent,
+#navWrapper div.module a.ikonNordamerikaCurrent,
+#navWrapper div.module a.ikonVarldenCurrent {
+float:left;
+padding:19px 3px 2px 3px;
+margin:0.2em 1.4em 1.2em 0;
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -408px transparent;
+color:#fff;
+line-height:normal;
+}
+#navWrapper div.module a.flagNoCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -462px transparent;
+}
+#navWrapper div.module a.flagDkCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -516px transparent;
+}
+#navWrapper div.module a.flagFiCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -572px transparent;
+}
+#navWrapper div.module a.flagDeCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -630px transparent;
+}
+#navWrapper div.module a.ikonNordamerikaCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -690px transparent;
+}
+#navWrapper div.module a.ikonNordenCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -747px transparent;
+width:81px;
+}
+#navWrapper div.module a.ikonVarldenCurrent {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -3px -805px transparent;
+margin-right:0;
+}
+/* SLUT MENYPORTAL MARKNADEN ///////////////////////////////////////////////// */
+/* START MENYPORTAL EXPERTERNA /////////////////////////////////////////////// */
+#navWrapper div.module a.experterna,
+#navWrapper div.module a.experternaCurrent { /* Martin, Översikt länken */
+xbackground:url(/now/images/experterna/experternaGruppMini.gif) no-repeat 172px top;
+padding:0 0 5px 3px;
+display:block;
+}
+#navWrapper div.module a.experterna {
+float:left;
+}
+#navWrapper div.module a.experternaCurrent {
+background:#02A3E3;         
+color:#fff;
+padding: 2px 3px;
+float:left;
+}
+#navWrapper div.experter {
+float: left;
+margin: 0 0 7px;
+padding-top: 0;
+width: 15.7em;
+}
+#navWrapper div.experter span {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -1px 1px;
+height:19px;
+width:23px;
+display:block;
+}
+#navWrapper div.experter.no span  {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -1px -44px;
+}
+#navWrapper div.experter.dk span  {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -1px -90px;
+}
+#navWrapper div.experter.fi span {
+background:url("/now/images/sprites/flagSprite.gif") no-repeat scroll -1px -134px;
+}
+#navWrapper div.experter.fu {
+background:url(/now/images/ikonFondReflektion.gif) no-repeat 4px top;
+width:15.1em;
+}
+span.fondProfil {
+color:#807e7f;
+margin-left:6px;
+}
+/* SLUT MENYPORTAL EXPERTERNA //////////////////////////////////////////////// */
+
+
+/* MENYPORTAL FONDER //////////////////////////////////////////////// */
+#menyPortalFonder div.fondFlik h3, #menyPortalFonder div.fondFlik a{
+padding-left:0;
+margin-left:0;
+margin-bottom:2px;
+text-align: center;
+}
+#menyPortalFonder div.fondFlik h3.leftAlign {
+text-align: left;
+}
+#menyPortalFonder div.submodule.fondModule {
+margin-top:1em;
+padding:0 6.2em 0 0;
+width:10em;
+}
+#menyPortalFonder div.submodule.fondModule.last {
+padding:0;
+}
+div.flikFondBg {
+background:url(/now/images/fonder/flikFondBg.gif) no-repeat scroll left top;
+margin: 0 0 0 3px;
+padding: 0 0 1.3em 0;
+}
+#menyPortalFonder div.flikFondBg .twocol {
+width: 48.5em;
+}
+#menyPortalEtf .module.onecol.fonder.dk.divider {
+border-right:1px solid #D6D6D5;
+padding-right:1.5em;
+background:none;
+}
+#menyPortalFonder .module.twocol.fonder {
+width:31.8em;
+}
+#menyPortalFonder .module.onecol.fonder {
+width:17.6em;
+}
+#menyPortalEtf .module.onecol.fonder.dk {
+width:20.8em;
+}
+div.flikFondBg h2 {
+border:0;
+font-size: 1.4em;
+padding: 1.3em 0 0 5.1em;
+text-transform: none;
+}
+div.flikFondBg p.ingress {
+padding: 0.5em 0 0 7.2em;
+color: #8A8A8A;
+}
+#menyPortalFonder span.buttonBlue.bigButton2 a {
+padding:7px 13px 22px;
+line-height: normal;
+}
+#menyPortalFonder .module.bottom {
+margin-bottom:0;
+
+}
+#menyPortalFonder img.jobbarVi {
+padding:2.2em 1em 0 0;
+}
+#menyPortalFonder a.jobbarVi {
+padding:1em 0 0 0em;
+}
+#menyPortalFonder .buttomBox {
+margin:2.8em 0 0 13.5em;
+}
+#menyPortalFonder div.grey {
+margin-top:0.5em;
+}
+
+/* SLUT MENYPORTAL FONDER//////////////////////////////////////////////// */
+/* TAB FÖR PARTNERS */
+#menyPortalPartnertab {
+left: 50%;
+margin-left: -459px;
+}
+#partner {
+background: url("/now/images/partner/bgLine.gif") repeat-y scroll 452px top transparent;
+margin:0 0;
+float:left;
+color: #444;
+font-family: Verdana,Arial,Helvetica,sans-serif;
+float:left;
+}
+#partner div.onecolumn {
+width:47%;
+float:left;
+}
+#partner div.twocolumn {
+width:428px;
+min-height:200px;
+float:left;
+}
+#partner div.twocolumn.colLeft {
+padding:0 10px 0 20px;
+}
+#partner div.twocolumn.colRight {
+padding:0 20px 0 10px;
+}
+#partner div.onecolumn.colLeft {
+padding-right:10px;
+}
+#partner div.onecolumn.colRight {
+padding-left:10px;
+}
+#partner h2 {
+border-bottom: 1px solid #444;
+font-size: 12px;
+font-weight: bold;
+height: 16px;
+margin: 10px 0 3px 0;
+text-transform:none;
+}
+#partner h1 {
+border-bottom: 1px solid;
+font-size: 14px;
+font-weight: bold;
+height: 16px;
+margin: 10px 0 0 0;
+}
+#partner ul {
+margin: 7px 0 20px;
+padding-left: 3px;
+list-style: none outside none;
+}
+#partner .logo {
+padding:12px 0;
+}
+#partner .contactImg {
+padding:15px 20px 10px 5px;
+float:left;
+}
+#partner .contactInfo {
+float:left;
+}
+#partner .cName {
+padding-top:20px;
+font-weight:bold;
+padding-bottom:10px;
+}
+#partner .cInfo.head {
+padding-right:5px;
+width:95px;
+}
+#partner .cInfo {
+float:left;
+padding-bottom:5px;
+}
+#partner a {
+font-size:11px;
+text-decoration:none;
+color: #0073CF;
+}
+#partner .twocolumn a {
+padding:0;
+}
+#partner .colLeft p {
+padding:0;
+font-size:11px;
+line-height:1.2em;
+font-weight:normal;
+text-transform:none;
+}
+.footInfo {
+color: #666666;
+font-style: italic;
+padding: 0 15px 15px;
+}
+/* SLUT TAB PARTNERS */
+/* XTRA FOR TJÄNSTER/PRODUKTER TAB */
+.xtraContent {
+    background: none repeat scroll 0 0 #eee;
+    border-top: 1px solid #bfbebe;
+	float:left;
+    width: 100%;
+}
+#navWrapper div.xtraContent div.submodule {
+    margin: 5px 0 -8px;
+}
+/* SLUT */

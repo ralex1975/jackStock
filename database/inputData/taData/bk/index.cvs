@@ -1,0 +1,197 @@
+^OMX	Stockholm	OMXS30
+^OMXO20GI	OMX Olso 20 GI
+^OMXO20PI	OMX Oslo 20
+^OMXHGI	OMX Helsinki_GI
+^OMXH15	OMX Helsinki 15
+^OMXC20	OMX Copenhagen 20
+^OMXSLCGI	OMX Stockholm Large Cap GI
+^OMXSMCGI	OMX_Stockholm_Mid_Cap_GI
+^OMXSSCPI	OMX_Stockholm_Small_Cap_PI
+
+^SX1000GIOMX	OMX Stockholm Basic Materials G
+^SX3000GIOMX	OMX Stockholm Consumer Goods GI
+^SX5000GI	OMX Stockholm Consumer Services
+
+^SX4000PI	OMX Stockholm Health Care PI
+
+
+^SX0530PI	OMX Stockholm Oil & Gas Produce
+
+^SX5750GI	OMX Stockholm Travel & Leisure
+^SX9000PI	OMX Stockholm Technology
+^SX5550PI	OMX Stockholm Media PI
+^SX2770GI	OMX Stockholm Industrial Transp
+^SX1730PI	OMX Stockholm Forestry & Paper
+^SX3000GI	OMX Stockholm Consumer Goods GI
+
+
+
+^OMXSPI	OMX Stockholm_PI
+^SX8300PI	OMX Stockholm Banks PI
+
+^OMXSSCPI	OMX_Stockholm_Small_Cap_PI
+
+^SX0500GI	OMX Stockholm Oil & Gas GI
+^SX1300GI	OMX Stockholm Chemicals GI
+^SX7000PI	OMX Stockholm Utilities PI
+^SX2350GI	OMX Stockholm Construction & Ma
+^SX4000GI	OMX Stockholm Health Care GI
+^SX6570PI	OMX Stockholm Mobile Telecommun
+^SX2750GI	OMX Stockholm Industrial Engine
+^SX4000PI	OMX Stockholm Health Care PI
+^SX5500GI	OMX Stockholm Media GI
+^SX6530GI	OMX Stockholm Fixed Line Teleco
+^SX8300GI	OMX Stockholm Banks GI
+
+^SX5500PI	OMX Stockholm Media PI
+^SX3000PI	OMX Stockholm Consumer Goods PI
+^SX2730PI	OMX Stockholm Electronic & Elec
+^SX3350PI	OMX Stockholm Automobiles & Par
+^SX9530PI	OMX Stockholm Software & Comput
+^SX0500PI	OMX Stockholm Oil & Gas PI
+^SX3780GI	OMX Stockholm Tobacco GI
+
+^SX5750PI	OMX Stockholm Travel & Leisure	1,419.06	Index	NIM
+^SX7500PI	OMX Stockholm Utilities PI	565.80	Index	NIM
+^SX2700PI	OMX Stockholm Industrial Goods	1,007.93	Index	NIM
+^SX2790PI	OMX Stockholm Support Services	1,241.06	Index	NIM
+^SX7500GI	OMX Stockholm Utilities GI	565.80	Index	NIM
+^SX5000PI	OMX Stockholm Consumer Services	1,288.83	Index	NIM
+^SX3760GI	OMX Stockholm Personal Goods GI	1,946.96	Index	NIM
+^SX2000GI	OMX Stockholm Industrials GI	1,148.84	Index	NIM
+^SX1300PI	OMX Stockholm Chemicals PI	2,717.92	Index	NIM
+^SX0530PI	OMX Stockholm Oil & Gas Produce	979.34	Index	NIM
+
+^SX2710PI	OMX Stockholm Aerospace & Defen	1,235.54	Index	NIM
+^SX8300PI	OMX Stockholm Banks PI	1,506.25	Index	NIM
+^SX2720PI	OMX Stockholm General Industria	1,704.85	Index	NIM
+^SX6000GI	OMX Stockholm Telecommunication	1,204.28	Index	NIM
+^SX2710GI	OMX Stockholm Aerospace & Defen	1,326.08	Index	NIM
+
+^OMXS30FF	OMX Stockholm 30 Free Float	123.28	Index	NIM
+^OMXCXC20PI	OMX Copenhagen Ex OMXC20 Index 	2,977.22	Index	NIM
+^OMXBGI	OMX_Baltic_GI	479.11	Index	NIM
+^SX1750PI	OMX Stockholm Industrial Metals	693.37	Index	NIM
+^SX2730GI	OMX Stockholm Electronic & Elec	1,476.34	Index	NIM
+
+^SX9000GI	OMX Stockholm Technology GI	963.18	Index	NIM
+SX5000GI.ST	SX5000GI/OMXS INDEX	1,394.71	Index	STO
+^HX2000PI	OMX Helsinki Industrials PI	1,194.80	Index	NIM
+^QMNX	NASDAQ OMX Middle East North Af	131.92	Index	NIM
+SX2710PI.ST	SX2710PI/OMXS INDEX	1,235.54	Index	STO
+SLSFI.ST	OMX/SLSFI	96.87	Index	STO
+
+^SX1350GI	OMX Stockholm Chemicals GI	2,814.97	Index	NIM
+^SX1300PI	OMX Stockholm Chemicals PI	2,717.92	Index	NIM
+^SX1350PI	OMX Stockholm Chemicals PI	2,717.92	Index	NIM
+^SX2350GI	OMX Stockholm Construction & Ma	1,632.40	Index	NIM
+^SX2300PI	OMX Stockholm Construction & Ma	1,518.60	Index	NIM
+^SX2300GI	OMX Stockholm Construction & Ma	1,632.40	Index	NIM
+^SX2350PI	OMX Stockholm Construction & Ma	1,518.60	Index	NIM
+^SX3000GI	OMX Stockholm Consumer Goods GI	1,422.56	Index	NIM
+^SX3000PI	OMX Stockholm Consumer Goods PI	1,328.65	Index	NIM
+^SX5000PI	OMX Stockholm Consumer Services	1,288.83	Index	NIM
+^SX5000GI	OMX Stockholm Consumer Services	1,394.71	Index	NIM
+^OMXS30DVP	OMX Stockholm Dividend Point In	0.00	Index	NIM
+^SX7530GI	OMX Stockholm Electricity GI	565.80	Index	NIM
+^SX7530PI	OMX Stockholm Electricity PI	565.80	Index	NIM
+^SX2730GI	OMX Stockholm Electronic & Elec	1,476.34	Index	NIM
+^SX2730PI	OMX Stockholm Electronic & Elec	1,419.44	Index	NIM
+^SX8700PI	OMX Stockholm Financial Service	1,407.79	Index	NIM
+^SX8770GI	OMX Stockholm Financial Service	1,525.63	Index	NIM
+^SX8700GI	OMX Stockholm Financial Service	1,525.81	Index	NIM
+^SX8770PI	OMX Stockholm Financial Service	1,407.79	Index	NIM
+
+^SX8000GI	OMX Stockholm Financials GI	1,568.90	Index	NIM
+^SX8000PI	OMX Stockholm Financials PI	1,444.68	Index	NIM
+^SX6530PI	OMX Stockholm Fixed Line Teleco	1,973.65	Index	NIM
+^SX6530GI	OMX Stockholm Fixed Line Teleco	2,095.37	Index	NIM
+^SX3500GI	OMX Stockholm Food & Beverage G	1,537.25	Index	NIM
+^SX3500PI	OMX Stockholm Food & Beverage P	1,503.70	Index	NIM
+^SX5330PI	OMX Stockholm Food & Drug Retai	1,840.08	Index	NIM
+^SX5330GI	OMX Stockholm Food & Drug Retai	1,983.15	Index	NIM
+^SX3570GI	OMX Stockholm Food Producers GI	1,537.25	Index	NIM
+^SX3570PI	OMX Stockholm Food Producers PI	1,503.70	Index	NIM
+^SX1730PI	OMX Stockholm Forestry & Paper	1,185.40	Index	NIM
+^SX1730GI	OMX Stockholm Forestry & Paper	1,302.42	Index	NIM
+^SX2720PI	OMX Stockholm General Industria	1,704.85	Index	NIM
+^SX2720GI	OMX Stockholm General Industria	1,832.51	Index	NIM
+^SX5370PI	OMX Stockholm General Retailers	1,290.18	Index	NIM
+^SX5370GI	OMX Stockholm General Retailers	1,400.87	Index	NIM
+^SX4530GI	OMX Stockholm Health Care Equip	1,311.92	Index	NIM
+^SX4530PI	OMX Stockholm Health Care Equip	1,249.35	Index	NIM
+^SX4500GI	OMX Stockholm Health Care GI	1,408.89	Index	NIM
+^SX4000GI	OMX Stockholm Health Care GI	1,408.89	Index	NIM
+
+^SX4000PI	OMX Stockholm Health Care PI	1,302.15	Index	NIM
+^SX4500PI	OMX Stockholm Health Care PI	1,302.15	Index	NIM
+^SX3720PI	OMX Stockholm Household Goods &	1,075.49	Index	NIM
+^SX3720GI	OMX Stockholm Household Goods &	1,162.13	Index	NIM
+^SX2750GI	OMX Stockholm Industrial Engine	1,022.85	Index	NIM
+^SX2750PI	OMX Stockholm Industrial Engine	956.59	Index	NIM
+^SX2700GI	OMX Stockholm Industrial Goods	1,076.44	Index	NIM
+^SX2700PI	OMX Stockholm Industrial Goods	1,007.93	Index	NIM
+^SX1750GI	OMX Stockholm Industrial Metals	727.44	Index	NIM
+^SX1750PI	OMX Stockholm Industrial Metals	693.37	Index	NIM
+^SX2770PI	OMX Stockholm Industrial Transp	476.85	Index	NIM
+^SX2770GI	OMX Stockholm Industrial Transp	501.53	Index	NIM
+^SX2000GI	OMX Stockholm Industrials GI	1,148.84	Index	NIM
+^SX2000PI	OMX Stockholm Industrials PI	1,074.69	Index	NIM
+^OMXSLCGI	OMX Stockholm Large Cap GI	165.78	Index	NIM
+^OMXSLCPI	OMX Stockholm Large Cap PI	128.27	Index	NIM
+^SX3740GI	OMX Stockholm Leisure Goods GI	1,449.22	Index	NIM
+^SX3740PI	OMX Stockholm Leisure Goods PI	1,377.37	Index	NIM
+^SX5500GI	OMX Stockholm Media GI	918.77	Index	NIM
+^SX5550GI	OMX Stockholm Media GI	918.77	Index	NIM
+
+^SX5500PI	OMX Stockholm Media PI	864.54	Index	NIM
+^SX5550PI	OMX Stockholm Media PI	864.54	Index	NIM
+^SX1770GI	OMX Stockholm Mining GI	813.55	Index	NIM
+^SX1770PI	OMX Stockholm Mining PI	755.48	Index	NIM
+^SX6570GI	OMX Stockholm Mobile Telecommun	1,202.89	Index	NIM
+^SX6570PI	OMX Stockholm Mobile Telecommun	1,053.93	Index	NIM
+^SX0001GI	OMX Stockholm Oil & Gas GI	978.42	Index	NIM
+^SX0500GI	OMX Stockholm Oil & Gas GI	978.42	Index	NIM
+^SX0001PI	OMX Stockholm Oil & Gas PI	978.42	Index	NIM
+^SX0500PI	OMX Stockholm Oil & Gas PI	978.42	Index	NIM
+^SX0530GI	OMX Stockholm Oil & Gas Produce	979.34	Index	NIM
+^SX0530PI	OMX Stockholm Oil & Gas Produce	979.34	Index	NIM
+^SX3700PI	OMX Stockholm Personal & Househ	1,342.31	Index	NIM
+^SX3700GI	OMX Stockholm Personal & Househ	1,440.86	Index	NIM
+^SX3760GI	OMX Stockholm Personal Goods GI	1,946.96	Index	NIM
+^SX3760PI	OMX Stockholm Personal Goods PI	1,808.50	Index	NIM
+^SX4570PI	OMX Stockholm Pharmaceuticals &	1,360.18	Index	NIM
+^SX4570GI	OMX Stockholm Pharmaceuticals &	1,507.94	Index	NIM
+^SX8600GI	OMX Stockholm Real Estate GI	1,299.06	Index	NIM
+^SX8630PI	OMX Stockholm Real Estate Inves	1,211.65	Index	NIM
+
+^SX8630PI	OMX Stockholm Real Estate Inves	1,211.65	Index	NIM
+^SX8600PI	OMX Stockholm Real Estate PI	1,211.65	Index	NIM
+^SX5300GI	OMX Stockholm Retail GI	1,429.52	Index	NIM
+^SX5300PI	OMX Stockholm Retail PI	1,317.54	Index	NIM
+^SX9530PI	OMX Stockholm Software & Comput	1,068.44	Index	NIM
+^SX9530GI	OMX Stockholm Software & Comput	1,170.52	Index	NIM
+^SX2790PI	OMX Stockholm Support Services	1,241.06	Index	NIM
+^SX2790GI	OMX Stockholm Support Services	1,350.90	Index	NIM
+^SX9500GI	OMX Stockholm Technology GI	963.18	Index	NIM
+^SX9000GI	OMX Stockholm Technology GI	963.18	Index	NIM
+^SX9570GI	OMX Stockholm Technology Hardwa	951.24	Index	NIM
+^SX9570PI	OMX Stockholm Technology Hardwa	884.52	Index	NIM
+^SX9500PI	OMX Stockholm Technology PI	894.75	Index	NIM
+^SX9000PI	OMX Stockholm Technology PI	894.75	Index	NIM
+^SX6500PI	OMX Stockholm Telecommunication	1,055.36	Index	NIM
+^SX6500GI	OMX Stockholm Telecommunication	1,204.28	Index	NIM
+^SX6000PI	OMX Stockholm Telecommunication	1,055.36	Index	NIM
+^SX6000GI	OMX Stockholm Telecommunication	1,204.28	Index	NIM
+^SX3780GI	OMX Stockholm Tobacco GI	977.37	Index	NIM
+^SX3780PI	OMX Stockholm Tobacco PI	922.21	Index	NIM
+
+^SX5750GI	OMX Stockholm Travel & Leisure	1,503.56	Index	NIM
+^SX5700GI	OMX Stockholm Travel & Leisure	1,503.56	Index	NIM
+^SX5700PI	OMX Stockholm Travel & Leisure	1,419.06	Index	NIM
+^SX5750PI	OMX Stockholm Travel & Leisure	1,419.06	Index	NIM
+^SX7000GI	OMX Stockholm Utilities GI	565.80	Index	NIM
+^SX7500GI	OMX Stockholm Utilities GI	565.80	Index	NIM
+^SX7000PI	OMX Stockholm Utilities PI	565.80	Index	NIM
+^SX7500PI	OMX Stockholm Utilities PI	565.80	Index	NIM
+^OMXSGI	OMX Stockholm_GI	150.50	Index	NIM

@@ -1,0 +1,9 @@
+Sverige Large Cap	sverige_large_cap.csv
+Sverige Mid Cap	sverige_mid_cap.csv
+Norden Large Cap	norden_large_cap.csv
+Norden Mid Cap	norden_mid_cap.csv
+Stockholm OMX	omx_1.csv
+Min Portfolj	myPortfolio.cvs
+Effektiva fronten	effektivaFronten.cvs
+Index	index.cvs
+

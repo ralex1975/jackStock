@@ -1,0 +1,68 @@
+#navWrapper,.navigation,#footerPoster,.nordnetInfo {
+	display: none;
+}
+#printInfo{
+	display:block;
+}
+
+/* print transactioner & notor*/
+.visaNota{
+font-size:125%;
+}
+.visaNota table td{
+	font-weight:bold;	
+	font-size:12px;
+	padding:4px 0 3px 0;
+}
+.visaNota table td span,.visaNota tr.text td{
+	font-weight:normal;	
+}
+table.instrument td{
+	font-size:11px;
+}
+.visaNota h1{
+	font-size:16px;
+	margin-bottom:0px;
+}
+.visaNota h1 span{
+	float:right;
+	font-weight:normal;
+	font-size:11px;	
+}
+.visaNota span.bold{
+	font-weight:bold;
+	font-size:16px;
+}
+.visaNota h2{
+	font-size:12px;
+}
+div#plusTransaktioner{
+	float:left;
+	width:700px;
+}
+div#plusTransaktioner h1 {
+	font-size:16px;
+	border-bottom:1px solid #666666;
+	padding: 5px 0 5px 0;
+}
+div.line{
+	float:left;
+	border-top:1px solid #666666;
+	width:600px;
+}
+.visaNota div.footer{
+	font-style:italic;
+	float:left;
+	width:700px;
+	border-top: 2px solid #666666;
+	padding-top:5px;
+	margin-top:10px;
+}
+.visaNota div.footer div{
+	font-size:12px;
+	float:left;
+	width:160px;
+}
+.visaNota div.enclosing{
+	clear:both;
+}

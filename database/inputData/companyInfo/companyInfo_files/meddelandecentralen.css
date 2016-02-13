@@ -1,0 +1,697 @@
+#mcContainer a, #mcContainer p, #mcContainer h4, #mcContainer div { /* css conflicts with cms */
+font-family: inherit;
+font-size: inherit;
+}
+/* START FLIKARNA /////////////////////////////////////////////////////////////////////// */
+.mcContent .navigation { /* Martin, färgen bakom flikarna */
+background:#fff;
+height:2.3em;
+margin-bottom:1.8em;
+}
+a.mcTrash{
+position:absolute;
+margin-left: 10px;
+background: url(/now/images/mc/iconTrash.gif) no-repeat 0 0px;
+width:10px;
+height:17px;
+}
+div.mcUpload{
+position:relative;
+width:100%;
+background: url(/now/images/mc/ikonFilGreen.gif) no-repeat;
+padding:0px 10px 10px 18px;
+margin:0px 0 3px 0;
+}
+.bifogafilKnapp {
+position:relative; 
+top:-82px; 
+margin-top:5px;
+height:20px;
+}
+.bifogafilKnapp.answer{
+top:auto;
+bottom:85px;
+position:absolute; 
+}
+.mcContent .navigation ul { 
+padding: 0.3em 0 0 0;
+}
+.mcContent .navigation li {
+background:#fff;
+padding:0;
+}
+.mcContent .navigation li a {
+background:#fff;
+font-size:1.0em;
+color:#00a9ec;
+padding:4px 7px 4px 4px;
+margin-right:13px;
+font-weight:bold;
+-moz-border-radius:8px 8px 8px 8px;
+-webkit-border-radius:8px 8px 8px 8px;
+border-radius:8px 8px 8px 8px;
+}
+.mcContent .navigation .current a span{ 
+color:#FFFFFF;
+}
+.mcContent .navigation .current a {
+background: #00A9EC;
+color:#fff;
+padding:4px 8px 5px 9px;
+}
+.mcContent .navigation .current a:hover { 
+color:#fff;
+}
+.mcContent .navigation li a:hover {
+color:#006FB7;
+}
+.mcContent .navigation .current.blank a {/*white for kundservice tab*/
+xbackground: url(../images/sprites/nav.gif) no-repeat right -225px;
+}
+.mcContent .navigation li a span { /* Martin. Siffran som indikerar antal meddelanden i dina korgar */
+color:#00A9EC;
+padding-left:4px;
+}
+.brevikonMC { /* Liten brevikon intill kundservice-fliken */
+background: url(../images/mc/iconLetter.gif) no-repeat right;
+}
+.mcContent .navigation li a span.brevikonMC {
+padding-left:12px;
+}
+/* SLUT FLIKARNA /////////////////////////////////////////////////////////////////////////// */
+/* START GEMENSAMMA KLASSER FÖR HELA MEDDELANDECENTRALEN /////////////////////////////////// */
+.mcContent h2 { 
+border-bottom:0;
+margin:6px 0 7px;
+}
+.mcContent .headBar { /* Martin, samma utseende som table.fixedHead fast istället för tabell är det en div */
+position:relative;
+background:#efefef;
+border-left:1px solid #C0C0C0;
+padding:0.5em 0 0.4em 0.6em;
+height:14px;
+}
+.mcContent a.close {
+height:37px;
+position:absolute;
+right:-16px;
+top:-8px;
+width:41px;
+z-index:129;
+opacity:1;
+filter: alpha(opacity = 100);
+}
+a.changeHeight { 
+position:relative;
+display:block;
+left:46.5em;
+width:3em;
+height:8px;
+}
+.maximize a.changeHeight {
+background:url(../images/mc/iconSeeLess.gif) no-repeat center 6px;
+}
+div.sizeable { /* Inkorg och Utkorg normalläge */
+height:36.5em;
+}
+.maximize div.sizeable { /* Inkorg och Utkorg maximerad */
+height:36.0em;
+}
+textarea.sizeable { /* Skicka normalläge */
+height:18.4em;
+}
+.maximize textarea.sizeable { /* Skicka normalläge */
+height:25.0em;
+}
+.bodyArea {
+background-color:#ffffff;
+border-bottom:1px solid #c0c0c0;
+border-right:0;
+padding-bottom: 1em;
+position:relative;
+}
+.bodyArea .helpText {
+text-align:center;
+font-size:1.1em;
+margin-top:9px;
+}
+.read .bodyArea {
+overflow-y:scroll;
+overflow-¨x:auto;
+line-height:1.4em;
+border-top:1px solid #C0C0C0;
+}
+div.bodyArea table tr{
+cursor:pointer;
+}
+.write .bodyArea { /* Martin, skicka meddelande har denna div som wrappar faq halvan och skriv meddelande halvan */
+padding:0 10px 10px 10px;
+}
+/* SLUT GEMENSAMMA KLASSSER FÖR HELA MEDDELANDECENTRALEN //////////////////////////////////// */
+/* START INKORGEN ////////////////////////////////////////////////////////////////////////// */
+a.svara { 
+background:url(../images/mc/iconAnswer.png) no-repeat top right;
+padding-right:20px;
+color:#000;
+}
+a.svara:hover {
+color:#6c6c6c;
+}
+div.svara { /* Martin, denna svara div ligger direkt efter alla meddelanden från Nordnet */
+background:#EFEFEF;
+border-top:1px solid #C0C0C0;
+text-align:center;
+padding:5px 0;
+margin:4em 0 2.0em 2.1em;
+width:40.0em;
+}
+.unread{
+font-weight:bold;
+}
+.headBar a.svara { /* Martin, länken med svara ikonen ser lite annorlundas ut om den ligger efter ett meddelande eller i headBar */
+position:absolute;
+right:6px;
+top:6px;
+}
+.half { /* Martin, Inkorgen är uppdelad i dessa två halvor */
+float:left;
+position:relative;
+width:50%;
+background:#EFEFEF;
+border-top:1px solid #C0C0C0;
+}
+.mcContent h1 { /* Martin, alla rubriker i meddelanden från Nordnet är h1:or */
+font-size:1.3em;
+margin:16px 0 14px 21px;
+}
+.mcContent p {
+margin:0 27px 16px 21px;
+}
+.headBar .date,
+.headBar .subject { /* Martin, skriv ut när meddelandet skickades i headBar */
+display:inline;
+position:relative;
+top:1px;
+}
+.headBar .subject { /* Martin, skriv ut ämnesraden till det meddelande som användaren svarar på i headBar */
+font-weight:bold;
+margin-left:4px;
+}
+.mcContent table.fixedHead { 
+width:43.5em;
+height:23px;
+margin-bottom:0;
+}
+.mcContent table { /* Martin, den vanliga scrollbara tabellen */
+width:43.6em;
+margin-bottom:0;
+}
+.mcContent table th {
+background-color:#EFEFEF;
+text-align:left;
+padding:0em 0 0 7px;
+vertical-align:middle;
+}
+.mcContent table th input.checkboxAll {
+float: none;
+margin: 0;
+padding: 0;
+position: absolute;
+right: 26px;
+top: 5px;
+width: auto;
+}
+a.trashCan {
+height: 23px;
+margin: 0;
+position: absolute;
+left: 409px;
+top: 0;
+width: auto;
+}
+span#feedback {
+margin:3px 0px 0 86px;
+}
+.mcContent table th.first {
+background:#EFEFEF;
+width:67px;
+}
+.mcContent table th.date {
+width:80px;
+}
+.mcContent table th.last {
+border-right:1px solid #C0C0C0;
+text-align:right;
+padding:0;
+}
+.mcContent table th.last img {
+float:right;
+}
+.mcContent table th.last input{
+float:right;
+margin:5px 8px 0 5px;
+}
+tr.first td { /* Ge alltid första raden klassen first */
+padding-top:4px;
+border-top:0;;
+}
+.mcContent table td.last {
+text-align:right;
+}
+.mcContent table td.last input {
+width:auto;
+}
+.half table td {
+text-align:left;
+color:#000;
+line-height:1.7em;
+}
+.mcContent table td a {
+color:#000;
+xfloat:left;
+}
+.mcContent table td {
+vertical-align:middle;
+}
+.mcContent table tr:hover{
+background:#c9f0ff;
+}
+.mcContent table.basic tr:hover, .mcContent table.text tr:hover{
+background:none;
+}
+.mcContent table tr.unread td { /* Martin, sätts på samtliga olästa meddelanden */
+background:#d8ed90 url(../images/mc/unreadBg.gif) repeat-x top left;
+color:#013c20;
+}
+.mcContent table tr td span {
+margin-left:0;
+}
+span.urgent { /* Martin, highlighta viktiga meddelanden i användarens inkorg */
+color:#e00022;
+}
+.mcContent .truncate { /* Martin, vissa meddelanden har för långa rubriker, därför trunkerar vi dessa */
+overflow:hidden;
+white-space:nowrap;
+width:23.8em;
+}
+/* SLUT INKORGEN /////////////////////////////////////////////////////////////////////////// */
+/* START SKICKA MEDDELANDEN //////////////////////////////////////////////////////////////// */
+.mcContent form h3 {
+font-weight:bold;
+margin-bottom:1px;
+}
+.mcContent form h4 {
+font-weight:normal;
+text-transform:uppercase;
+font-size:1.0em;
+margin-bottom:2px;
+margin-top:12px;
+}
+.mcContent form p {
+margin:0 4.0em 6px 0 ;
+line-height:1.4em;
+}
+.mcContent label {
+display:block;
+margin:7px 0 3px 0;
+}
+.mcContent div.svar {
+margin:2px 30px 8px 14px;
+line-height:1.4em;
+}
+.mcContent label span, .faqSubrub span  {/* Martin, anger hur många tecken du har kvar */
+font-style:italic;
+color:#707070;
+font-weight:normal;
+}
+.mcContent table.basic,
+.mcContent fieldset {
+float:left;
+position:relative;
+}
+.mcContent table.basic {
+width:22.4em;
+margin-top:0.5em;
+}
+.mcContent table.basic td {
+padding:0 7px 3px 0;
+}
+.mcContent input.errand {/* Martin, inputfält för ärende (subject) */
+width:37.1em;
+}
+.mcContent textarea { 
+width:37.2em;
+xborder:1px solid #648009;
+padding:0.6em 0 0 0.6em
+}
+.mcContent fieldset textarea {
+width:58.5em;
+padding:0.6em 0 0 1.2em;
+margin-bottom:1em;
+}
+#mcformular .headBar {
+border-top:1px solid #C0C0C0;
+border-left:0;
+}
+.textareaWrapper { 
+position:relative;
+width:46.0em;
+}
+fieldset .textareaWrapper { 
+width:70.1em;
+}
+#container div.textareaWrapper span.buttonGreen { 
+position:absolute;
+bottom:0;
+right:20px;
+}
+.thanks {
+padding:4em;
+text-align:center;
+font-size: 1.2em;
+}
+div.kontaktInfo,
+div.mcFragor {
+padding-left:6px;
+}
+div.kontaktInfo p {
+margin-bottom:9px;
+line-height:1.4em;
+}
+/* START FAQ OCH kontaktfaq ////////////////////////////////////////////////////////////// */
+.bodyAreaContact {
+background-color:#ffffff;
+padding:0 0 5px 0;
+border-top:1px solid #C0C0C0;
+}
+.module .loptext p.text{
+padding:0pt 0pt 0.3em;
+}
+div#kontaktfaq {
+position:absolute;
+margin-top:2.5em;
+z-index:100;
+width:98.1em;
+left:0.5em;
+visibility:visible;
+}
+.kontaktfaqHead {
+margin:8px 0 0 19px;
+padding:0;
+}
+.kontaktfaqHead div.grey h2{
+background:#fff;
+}
+.kontaktfaqContent {
+border:1px solid #817e7e;
+-moz-border-radius:15px 15px 15px 15px;
+-webkit-border-radius:15px 15px 15px 15px;
+border-radius:15px 15px 15px 15px;
+margin:0;
+padding:0 2em 8px 0;
+background:#fff;
+position:relative;
+top:-3px;
+left:-3px;
+}
+#mc div.kontaktfaqContent img.close { /* stängkryssen */
+top:-10px;
+right:-8px;
+width:auto;
+height:auto;
+}
+.kontaktOnecol {
+width: 20.1em;
+padding-left:2em;
+margin:0;
+float:left;
+position:relative;
+}
+.kontaktTwocol {
+margin:20px 0 0 0;
+padding-left:2em;
+width:43em;
+float:left;
+position:relative;
+}
+.kontaktFourcol {
+margin:0;
+padding-left:2em;
+width:94em;
+}
+.mcfaqKatHead {
+font-size:1.4em;
+font-weight:bold;
+text-align:center;
+margin:0.8em 0 0 0;
+position:relative;
+}
+.kategorirub {
+padding-left:2em;
+margin:5px 0 5px 2px;
+text-transform:uppercase;
+position:relative;
+}
+div#kontaktfaq h2.noline {
+text-decoration:none;
+border:0;
+}
+ul#kontaktFaqList {
+padding:20px 0 0 0;
+margin:0;
+}
+#kontaktFaqList li {
+background:url(/now/images/bulletGreen2px.gif) no-repeat left 7px;
+padding:0 0 10px 8px;
+margin:0;
+line-height:1.4em;
+text-transform:none;
+}
+div.kontaktFragorText ul,
+div.kontaktFragorText ol {
+padding-top:6px;
+}
+div.kontaktFragorText ul li {
+padding-bottom:5px;
+line-height:1.4em;
+}
+div.kontaktFragorText ol li {
+margin-left:2.0em;
+line-height:1.4em;
+}
+div.kontaktKategori a {
+font-weight:bold;
+line-height:1.8em;
+padding:1px 2px;
+}
+div.kontaktKategori a.mcCurrent { /* Aktiv kategori */
+color:#fff;
+background:#02A3E3;
+}
+.mcContent div.kontaktKategori a { 
+color:#00A9EC;
+}
+.mcContent div.kontaktKategori a:hover, .mcContent div.kontaktFragor a:hover { 
+color:#006FB7;
+}
+.mcContent div.kontaktKategori a.mcCurrent { 
+background:#00A9EC;
+color:#fff
+}
+a.currentFaq {
+background-color:#02A3E3;
+color:#fff;
+}
+div.kontaktFragor a {
+font-weight:bold;
+line-height:1.8em;
+}
+.mcContent div.kontaktFragor a {
+color:#00A9EC;
+}
+div.mcContent a.plus_green { /* Gröna plus och minus */
+background:transparent url(/now/images/mc/knapp_plus_gron.gif) no-repeat;
+background-position:1px 1px;
+padding:0 14px 1px 15px;
+}
+div.mcContent a.minus_green {
+background:transparent url(/now/images/mc/knapp_minus_gron.gif) no-repeat;
+background-position:1px 1px;
+padding:0 14px 1px 15px;
+}
+.kontaktFragor a.plus, a.minus {
+background-position:left center;
+padding:0pt 14px 1px 15px;
+}
+.kontaktFragor p {
+padding:0;
+}
+.kontaktFragorText {
+margin:0 14px 8px 15px;
+line-height:1.4em;
+}
+.faqSubrub { 
+font-weight:bold;
+margin:5px 0;
+padding:0;
+}
+.faqSubrubCenter { 
+font-weight:bold;
+margin:10px 0 10px 0;
+line-height:2em;
+text-align:center;
+}
+fieldset.kontaktAvs {
+display: block;
+margin-top:20px;
+}
+#kontaktFormular fieldset.kontaktAvs input {
+width:30em;
+margin:0 0 -4px 20px;
+}
+#teckenKvar {
+color:#707070;
+font-style:italic;
+font-weight:normal;
+margin-left:8px;
+}
+.kontaktText label {
+display: block;
+margin-top:10px
+}
+#kontaktFormular fieldset.kontaktText input {
+width:43.4em;
+display:block;
+margin-bottom:6px;
+}
+#kontaktFormular fieldset.kontaktText textarea {
+width:43.0em;
+height:8.0em;
+margin-bottom:6px;
+padding:0.6em 0 0 0;
+float:left;
+}
+.submitList, .submitListGreen { /* Flyttar ner submitlist för att bifoga fil ska få plats */
+margin-top:30px;
+}
+.submitListGreen  { /* Grön submitlist */
+position:relative;
+background:#EFEFEF;
+width:60em;
+height:3.4em;
+border-top:1px solid #C0C0C0;
+padding-top:1.5em;
+text-align:center;
+margin-top:55px;
+}
+.bifogafilKnapp input {
+height:20px;
+width: 180px;
+}
+.bifogadefiler table {
+width:44em;
+}
+.bifogadefiler table td {
+padding:2px 0;
+text-align:left;
+}
+.bifogadefiler img {
+margin-left:20em;
+}
+#uploadHalt {
+color:#DF0021;
+line-height:1.4em;
+padding:5px 0;
+}
+#uploadHalt img {
+margin-left:10px;
+margin-bottom:1px;
+}
+#kontaktMeddelande label span {
+color:#5D6F23;
+font-style:italic;
+font-weight:normal;
+margin-left:8px;
+}
+#kontaktMeddelande span { /* Martin, under, jag vill skicka meddelande knappen */
+margin-bottom:12px;
+}
+#kontaktMeddelande p { /* Martin, under, jag vill skicka meddelande knappen */
+line-height:1.4em;
+}
+#footkontaktfaq {
+margin:10px 0 0 2em;
+padding:0;
+border-top:1px solid #C0C0C0;
+float:left;
+width:88em;
+}
+div.mcContent #footkontaktfaq {
+margin:10px 2em 0 2em;
+padding:0;
+border-top:1px solid #C0C0C0;
+width:87.7em;
+}
+div#footkontaktfaq .kontaktOnecol {
+padding:0 0 10px 0;
+}
+div#footkontaktfaq h4 {
+padding:10px 0 0 0;
+margin:0;
+}
+div.mcContent #footkontaktfaq table {
+width:100%;
+}
+span.nordnetInfo,
+span.kontaktInfo,
+span.oppetInfo,
+span.merInfo {
+float:left;
+}
+#footkontaktfaq table td,
+#footkontaktfaq table,
+#footkontaktfaq span {
+line-height:1.4em;
+padding:0;
+}
+.kontaktBifoga {
+background:#fff;
+padding:10px;
+width:380px;
+font-size:0.5em;
+}
+.kontaktBifoga label {
+display:block;
+margin-bottom:10px;
+}
+.kontaktBifoga input,
+.kontaktBifoga textarea  {
+float:left;
+margin:0 10px 0 0;
+width:30.0em;
+}
+.kontaktBifoga textarea {
+height:10.0em;
+}
+.kontaktBifoga div.boxArrow {
+margin-top:20px;
+}
+.kontaktBifogaStang {
+position:relative;
+top: 60px;
+left: 0;
+}
+.original-answer {
+margin-bottom: 20px;
+margin-right: 0;
+margin-top: 10px;
+width: 630px;
+line-height: 15px;
+}
+/* SLUT FAQ OCH kontaktfaq ////////////////////////////////////////////////////////////////// */
+a.mc-attachment{
+	margin-left:21px;
+	font-style:italic;
+	
+	
+}

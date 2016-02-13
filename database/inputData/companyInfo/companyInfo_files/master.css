@@ -1,0 +1,6665 @@
+/* Add because of new footer - Theresa 2013-04 */
+#fire #footer, #kampanj #footer {
+background-color: #d1cfcf;
+min-width: auto;
+padding-bottom: 0;
+}
+#fire #content, #kampanj #content {
+padding-bottom: 0;
+min-height:auto;
+}
+#fire #container {
+margin-bottom:3em;
+}
+/* end Add */
+#fire #container,
+#kampanj #container,
+#landing #container {
+position:relative;
+width:52.5em;
+padding-bottom:3.0em;
+}
+#fire #logotyp,
+#kampanj #logotyp,
+#landing #logotyp {
+width:100%;
+margin:4.9em 0 1.1em 0;
+text-align:center;
+}
+#fire #content,
+#kampanj #content {
+padding-bottom:0;
+}
+#fire #contentPadding,
+#kampanj #contentPadding {
+padding:1.6em 2.8em 0 2.1em;
+}
+/*Nya startsidan*/
+#content.firstpage {
+padding-bottom:0;
+}
+#content.firstpage div.fourcol {
+width:94.8em ;
+}
+#content.firstpage div.fourcol .col-md-12 {
+width: 100%;
+max-width: 92.4em;
+padding: 0;
+}
+#content.firstpage div.module {
+margin:1.5em 0 0 2.1em;
+}
+#content div.background {
+background:#e7e7e7 url(/now/images/index/firstpageBg.gif) repeat-x left top;
+width:99.1em;
+padding-bottom:3em;
+}
+#content .ads{
+float:left;
+position:relative;
+width:30.1em;
+z-index:1;
+}
+#content.firstpage div.singleColumnContainer {
+width:26.6em;
+}
+#content.firstpage div.singleColumnContainer div.module  {
+margin:1.55em 0 0 1.6em;
+}
+#content.firstpage div.singleColumnContainer div.onecol  {
+width:24.4em;
+}
+#content.firstpage div.columnContainer div.module {
+margin:1.5em 0 0 1.6em;
+}
+#content.firstpage .usp {
+background: url(/now/images/uspBg.gif) no-repeat scroll center top;
+height:14.5em;
+width:39.4em;
+margin:1.5em 0 0 1.6em;
+padding:0;
+}
+#content.firstpage .usp  p {
+font-size:1.2em;
+line-height:1.61em;
+font-weight:bold;
+padding: 1.2em 1em 0 2em
+}
+body.no #content.firstpage .usp  p {
+padding: 1.2em 1em 0 1.2em;
+}
+#content.firstpage .usp  p.top {
+padding: 2em 1em 0 2em;
+}
+#content.firstpage .usp  p.link {
+padding: 1em 1em 0 2em;
+}
+body.no #content.firstpage .usp  p.link {
+padding: 0 1em 0 1.2em;
+}
+body.no #content.firstpage .usp  p.more {
+padding: 0.8em 1em 0 1.2em;
+}
+body.da #content.firstpage .usp  p.link {
+padding: 0.5em 1em 0 2em;
+}
+#content.firstpage a.usp-button {
+padding: 0;
+}
+#content.firstpage a.usp-button div {
+width:130px;
+height:116px;
+margin-top:1.5em;
+float:right;
+}
+body.no #content.firstpage a.usp-button div  {
+width:111px;
+}
+/*SE images */
+body.blue #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat left 0;
+}
+body.purple #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat -130px 0;
+}
+body.fuchsia #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat -257px 0;
+}
+body.yellow #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat -400px 0;
+}
+body.green #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat -537px 0;
+}
+body.lime #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat -682px 0;
+}
+body.pink #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspSE.png) no-repeat -828px 0;
+}
+/* /SE images */
+/*NO images */
+body.no.blue #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -11px 0;
+}
+body.no.purple #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -148px 0;
+}
+body.no.fuchsia #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -284px 0;
+}
+body.no.yellow #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -419px 0;
+}
+body.no.green #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -557px 0;
+}
+body.no.lime #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -692px 0;
+}
+body.no.pink #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspNO.png) no-repeat -842px 0;
+}
+/* /NO images */
+/*DKimages */
+body.da.blue #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat left 0;
+}
+body.da.purple #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat -130px 0;
+}
+body.da.fuchsia #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat -267px 0;
+}
+body.da.yellow #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat -400px 0;
+}
+body.da.green #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat -537px 0;
+}
+body.da.lime #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat -676px 0;
+}
+body.da.pink #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDK.png) no-repeat -828px 0;
+}
+/* /DK images */
+/* FI images */
+body.fi.blue #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat left 0;
+}
+body.fi.purple #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat -130px 0;
+}
+body.fi.fuchsia #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat -267px 0;
+}
+body.fi.yellow #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat -405px 0;
+}
+body.fi.green #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat -537px 0;
+}
+body.fi.lime #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat -676px 0;
+}
+body.fi.pink #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspFI.png) no-repeat -828px 0;
+}
+/* /FI images */
+/* DE images */
+body.de.blue #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat left 0;
+}
+body.de.purple #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat -123px 0;
+}
+body.de.fuchsia #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat -255px 0;
+}
+body.de.yellow #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat -400px 0;
+}
+body.de.green #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat -537px 0;
+}
+body.de.lime #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat -679px 0;
+}
+body.de.pink #content.firstpage a.usp-button div {
+background: url(/now/images/sprites/openAccountUspDE.png) no-repeat -825px 0;
+}
+/* /DE images */
+#content.firstpage .topBar{
+background:#F9F9F9 url(/now/images/borderTopTwocol.gif) no-repeat scroll center top;
+width:39.4em;
+height:3em;
+}
+#content.firstpage .onecol .topBar{
+background:transparent url(/now/images/borderTopOnecol.gif) no-repeat scroll center top;
+width:24.5em;
+}
+#content.firstpage .topBar span{
+border-bottom:1px solid #BEBCBD;
+color:#000000;
+display:block;
+float:left;
+font:normal 1.7em Century Gothic, Verdana, Arial, sans-serif;
+margin-left:1.2em;
+padding:0.3em 0 0.1em;
+text-transform:none;
+width:20.6em;
+}
+#content.firstpage .onecol .topBar span {
+width:11.9em;
+padding:0.3em 0 0.1em;
+margin-left:1.3em;
+}
+div.produktblad .topBar span {
+color:#000;
+display:block;
+padding:0.2em 0 0.3em 2em;
+}
+#content.firstpage .contentbox  {
+background:#F9F9F9 url(/now/images/botBox.gif) no-repeat scroll center bottom;
+padding: 0.5em 0 1.5em;
+}
+#content.firstpage .onecol .contentbox, div.produktblad .onecol .contentbox {
+background: transparent url(/now/images/botBoxonecol.gif) no-repeat scroll center bottom;
+padding: 0.2em 0 1.5em 0;
+width:24.5em;
+}
+#content.firstpage table{
+height:8.7em;
+width:90%;
+margin-left:1em;
+}
+#content.firstpage table tr td{
+text-align: center;
+}
+#content.firstpage table tr td img{
+padding-top: 2px;
+}
+#content.firstpage table tr td.text {
+text-align: left;
+font-weight: bold;
+}
+#content.firstpage .contentbox .nyhetsRubrik {
+margin:0 0 0 2em;
+color: #000;
+padding-right:5px;
+}
+#content.firstpage a.plus {
+background:url(/now/images/knapp_plus_small.gif) no-repeat scroll left 1px;
+padding:0 0 0.1em 1.6em;
+line-height:2em;
+font-size: 1.1em;
+color:#000000;
+}
+#content.firstpage  a.minus{
+background:url(/now/images/knapp_minus_small.gif) no-repeat scroll left 1px;
+padding:0 0 0.1em 1.6em;
+line-height:2em;
+font-size: 1.1em;
+color:#000000;
+}
+#content.firstpage .onecol a.plus, #content.firstpage .onecol a.minus, div.produktblad .onecol a.plus, div.produktblad .onecol a.minus {
+padding:0 0 0.1em 1.6em;
+margin: 0 0 0 2em;
+font-weight:bold;
+color:#018ACF;
+}
+#content.firstpage .onecol .merOm {
+padding:0 0 0.1em 1.6em;
+margin-bottom:0.3em;
+}
+#content.firstpage .onecol #experterna.merOm, #content.firstpage .onecol #NNskolan.merOm, #content.firstpage .onecol #sakerhet.merOm,
+#content.firstpage .onecol #nyhetsbrevcontainer.merOm, #content.firstpage .onecol #blogg.merOm, #content.firstpage .onecol #pension.merOm,
+#content.firstpage .onecol #prislista.merOm, #content.firstpage .onecol #blanketter.merOm, #content.firstpage .onecol #omNordnet.merOm.small,
+#content.firstpage .onecol #at.merOm  {
+padding: 0 0.3em 0.5em 1.6em;
+}
+#content.firstpage .onecol #nyhetsbrevcontainer.merOm.de {
+padding:1.1em 0 1em 1.6em;
+}
+#content.firstpage .onecol #nyhetsbrevcontainer.merOm div.textIndrag {
+margin:0.6em 2em 2em 0.9em;
+}
+#content.firstpage .onecol #omNordnet.merOm.fi {
+padding:1.4em 6.8em 1.5em 1.6em;
+}
+#content.firstpage div.nyhet p {
+line-height:1.4em;
+margin:0.2em 2.5em 0.5em 3.8em;
+}
+#content.firstpage .columnContainer{
+width:41em;
+}
+/* /Nya startsidan*/
+.introBox {
+/*background:#f0eeef; url(/now/images/introBoxBg.gif) no-repeat right top;*/
+background-color:#f0eeef;
+padding:1em 0 ;
+margin-top:1.1em;
+margin-bottom:2em;
+border:1px solid #d4d4d4;
+}
+div.penningtvatt .introBox fieldset label {
+display: block;
+font-size: 11px;
+margin-bottom: 8px;
+margin-left:20px;
+}
+div.penningtvatt .introBox fieldset {
+margin-top:0;
+margin-bottom:1em;
+}
+div.penningtvatt table td {
+text-align: left;
+padding: 0 5px 5px 1px;
+font-size:11px;
+}
+/*#footer {
+background:url(/now/images/introPensionBottom.gif) repeat-x bottom left;
+height:2px;
+clear:both;
+}*/
+div.felmeddelande .infoIkon,
+div.meddelande .infoIkon { /* Martin, se sidorna fel och 404 */
+text-align:center;
+margin-bottom:2px;
+}
+div.felmeddelande h1,
+div.meddelande h1 {  /* Martin, se sidorna fel och 404 */
+margin:0 0 0.9em 0;
+text-align:center;
+}
+div.felmeddelande p,
+div.meddelande p {  /* Martin, se sidorna fel och 404 */
+margin:0 0 16px 7px;
+line-height:1.4em;
+color:#df0021
+}
+div.meddelande p {
+color: #000;
+}
+/* SLUT FELMEDDELANDEN ///////////////////////////////////////////////////////////////////////// */
+/* START RESET BROWSER DEFAULT STYLING ///////////////////////////////////////////////////////// */
+html, body,
+div, h1, h2, h3, p, pre, blockquote, ul, ol, li, address,
+dl, dt, dd, td, th, tfoot, form, fieldset, label, select, input, legend, textarea {
+margin:0;
+padding:0;
+font:1.0em Verdana, Arial, sans-serif;
+}
+body.de, body.de div, body.de th, body.de td, body.de p, body.de a,
+body.de h3, body.de ul, body.de li, body.fi, body.fi div, body.fi th,
+body.fi td, body.fi p, body.fi a, body.fi h3, body.fi ul, body.fi li
+{
+font-family:Arial, sans-serif;
+}
+fieldset, img, table {
+border:0;
+}
+ul {
+list-style:none;
+}
+caption {
+text-align:left;
+text-transform:uppercase;
+font-weight:bold;
+}
+img.spacer {
+width:1px;
+height:1px;
+}
+legend {
+font-weight:bold;
+color:#000;
+}
+input {
+height:12px;
+}
+input {
+padding:2px 0 0 4px; /* works in all */
+*padding:1px 0 1px 4px; /* targets IE6 and 7 */
+}
+select {
+padding:1px 0px;
+background-color: #FFFFFF;
+border: 1px solid #CCCCCC;
+border-radius: 3px 3px 3px 3px;
+display: inline-block;
+height:20px;
+box-shadow: 0 0 2px rgba(0, 0, 0, 0.196);
+}
+.derivaFilter { /* selects in option and leverage navigation form */
+height:auto;
+}
+address {
+line-height:1.5em;
+}
+p, .loptext span {
+-ms-word-break: normal;
+word-break: normal;
+-webkit-hyphens: auto;
+-moz-hyphens: auto;
+hyphens: auto;
+}
+/* SLUT RESET BROWSER DEFAULT STYLING //////////////////////////////////////////////////////// */
+/* START RAMVERKET /////////////////////////////////////////////////////////////////////////// */
+body {
+background-color:#f6f5f5;
+font-size:125%; /* Eftersom default storleken p� text �r 16px f�rstorar vi upp den med 25%, v�r default storlek blir d�rmed 20px */
+}
+#container {
+clear:both;
+font-size:0.5em;
+margin: 0 auto 0em;
+position:relative;
+width:99.1em;
+}
+#content {
+clear:both;
+position:relative;
+background:none #FFFFFF;
+min-height:55em;
+width:100%;
+padding-bottom: 3em;
+float:left;
+}
+#contentPadding { /* Martin, anv�nds bara p� list sidor som Kurslistor, ej p� modul sidor som Marknads�versikt */
+padding:1.5em 1.7em 0 1.5em;
+}
+div.columnContainer { /* Martin, Anv�nds t ex p� Kursdata (Marknaden) & Risk (Dep�) f�r att dela upp hela contentytan i tv� kolumner */
+float:left;
+width:48.7em;
+}
+div.columnContainerHalf { /* Christina, columnContainer f�r en onecol */
+float:left;
+width:24.3em;
+}
+div.posterFooter { /* Martin, den poster som ligger l�ngst ner p� sidan, dock ligger den utanf�r content �ven om det inte ser ut s� */
+text-align:center;
+padding:3.5em 0 3.8em 0;
+background:#fff url(/now/images/shadow_right.gif) right top repeat-y;
+}
+div.outerWrapper { /* Martin, outerWrapper ska alltid anv�ndas utanf�r innerWrapper n�r n�got ska centreras */
+position:relative;
+left:50%;
+float:left;
+}
+div.innerWrapper { /* Martin, innerWrapper ska alltid anv�ndas innaf�r outerWrapper n�r n�got ska centreras */
+position:relative;
+left:-50%;
+}
+div.outerBottomWrapper { /* Robin, bottomVersion av Martins Outer/innerWrapper */
+position:relative;
+top:61%;
+float:right;
+margin-top:12px;
+border:0px solid #ff00ff;
+}
+div.innerBottomWrapper {
+position:relative;
+top:-61%;
+border:0px solid #0000ff;
+}
+div.enclosing {
+clear:both;
+}
+#transactionsEq{
+font-size:0.5em;
+}
+/* SLUT RAMVERKET //////////////////////////////////////////////////////////////////////////// */
+
+/* START BANNERS /////////////////////////////////////////////////////////////////////// */
+#footerPoster { /* Martin, banner l�ngst ner p� alla inloggade sidor, precis under content men ovanf�r foot */
+clear:both;
+border-top:#C8C8C8 1px solid;
+padding:2.0em 0;
+text-align:center;
+background:none #F0EEEF;
+float:left;
+width:100%;
+}
+div.kampanj { /* Martin, anv�nds p� F�rstasidan, Fondtorget samt Strukturerade Produkter */
+border-top:1px solid #cac8c8;
+padding-top:1.5em;
+margin:1.5em 0;
+}
+div.ejInloggad p.betona { /* Martin, syns n�r man klickar p� K�p & S�lj knappar oinloggad */
+padding-bottom:1.5em;
+text-align:center;
+}
+/* SLUT BANNERS //////////////////////////////////////////////////////////////////////// */
+/* START ERBJUDANDEN SAMT B�RSINDEX SOM BARA VISAS P� F�RSTASIDAN ////////////////////// */
+div.moduleBorsIndex,
+div.erbjudanden { /* Martin, .moduleBorsIndex anv�nds bara p� den publika f�rstasidan, .erbjudanden anv�nds p� alla �vriga sidor */
+float:right;
+width:57.0em;
+margin-top:2.5em;
+text-align:right;
+font-weight:bold;
+}
+div.erbjudanden {
+width:53.0em;
+margin-top:0;
+}
+div.erbjudanden a {
+font-weight:normal;
+}
+div.bannerBox {
+margin-top:-1px;
+left:260px;
+width: 504px;
+}
+div.bannerOne {
+left:260px;
+width: 504px;
+margin-top:-29px;
+top:auto;
+}
+div.bannerBox div.twocol {
+width: auto;
+}
+div.bannerOne {
+left: 300px;
+width: auto;
+border: none;
+margin-top: 55px;
+}
+div.bannerBox img {
+padding:1.5em 0;
+}
+div.bannerBox div.hr2 img { /* Martin, beh�vs f�r att: se regel ovan */
+padding:0;
+}
+div.bannerBox div.close {
+top: -5px;
+}
+div.bannerOne div.close {
+top: 7px;
+}
+/* SLUT ERBJUDANDEN SAMT B�RSINDEX SOM BARA VISAS P� F�RSTASIDAN ///////////////////////////// */
+/* START SELEKTORER ////////////////////////////////////////////////////////////////////////// */
+label {
+font-weight:bold;
+}
+pre {
+font:1.2em courier, verdana, arial;
+overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+em {
+color:#888;
+line-height:1.4em;
+}
+th em {
+color:#000;
+}
+dt,
+dd {
+display:inline;
+}
+dd {
+padding:0 1.0em 0 0.1em;
+}
+/* SLUT SELEKTORER ////////////////////////////////////////////////////////////////////////// */
+/* START L�NKTYPER ///////////////////////////////////////////////////////////////////////////// */
+:-moz-any-link:focus, a, a:focus, a:hover, a:active { /* Christer, tar bort markeringsramen som annars dyker upp runt l�nkar i FF */
+outline:none;
+}
+a {
+text-decoration:none;
+color:#018acf;
+}
+a.underline {
+text-decoration:underline;
+}
+a.betona,
+td.betona,
+span.betona {
+font-weight:bold;
+}
+span.versal {
+text-transform:uppercase;
+}
+a.populera {
+text-decoration:underline;
+color:#8c8c8c;
+}
+a.plus,
+a.minus {
+background:url(../images/knapp_plus_small.gif) no-repeat left 1px;
+padding:0 16px 1px 15px;
+}
+a.minus {
+background-image:url(../images/knapp_minus_small.gif);
+}
+a.plusBig,
+a.minusBig {
+background:url(../images/knapp_plus.gif) no-repeat left 1px;
+padding:2px 2px 4px 24px;
+height:1.5em;
+float:left;
+clear:both;
+}
+a.minusBig {
+background-image:url(../images/knapp_minus.gif);
+}
+.plusLagerBig{
+float:left;
+clear:both;
+margin-bottom:0.5em;
+}
+div.installningar a.plusBig,div.installningar a.minusBig, div.installningar .plusLagerBig{
+margin-left:7px;
+}
+a.plus.square,
+a.minus.square {
+background:url(../images/squareMarker.gif) no-repeat right 1px;
+}
+div.helpText p a.inline {
+display: inline;
+}
+a.trash {
+background:url(/now/images/ikonPapperskorg.gif) no-repeat right 1px;
+padding-right:1.4em;
+}
+/* SLUT L�NKTYPER //////////////////////////////////////////////////////////////////////////// */
+/* START RUBRIKTYPER ///////////////////////////////////////////////////////////////////////// */
+h1 {
+font:normal 1.7em Century Gothic, Verdana, Arial, sans-serif;
+padding:18px 0 4px;
+}
+h2 {
+font:bold 1.0em Verdana, Arial, sans-serif;
+text-transform:uppercase;
+}
+.module h2 span { /* Martin, se t ex pluslagret f�r Orderboken */
+font-weight:normal;
+margin-left:0.3em;
+}
+h3 {
+font:1.0em Verdana, Arial, sans-serif;
+margin:5px 16px 0 0;
+}
+h4 {
+font-weight:bold;
+font-size:1.0em;
+margin:8px 0 0 8px;
+}
+h6 {
+font:bold 1.0em Verdana, Arial, sans-serif;
+background:url(/now/images/divider2.gif) repeat-x left 17px;
+padding-bottom:7px;
+margin:0 0 6px 0;
+}
+/* Martin, start rubrik med checkbox/radioknappen f�ljd av en rubrik med streck */
+fieldset.headerLine,
+fieldset.headerLineChecked {
+background:transparent url(/now/images/grey.gif) repeat-x left 4px;
+width:98%;
+}
+fieldset.headerLineChecked {
+background:transparent url(/now/images/green.gif) repeat-x left 4px;
+}
+fieldset.headerLine label,
+fieldset.headerLineChecked label {
+background-color:#fff;
+padding:1px 5px 0 4px;
+float:left;
+}
+fieldset.headerLineChecked label {
+color:#a4d20f;
+}
+fieldset.headerLine input.checkbox,
+fieldset.headerLineChecked input.checkbox,
+fieldset.headerLine input.radio,
+fieldset.headerLineChecked input.radio {
+margin:0;
+float:left;
+background-image:url(../images/white.gif); /* Martin, den h�r raden funkar bra f�r IE men har ingen effekt alls f�r FF */
+}
+/* Martin, slut rubrik med checkbox/radioknappen f�ljd av en rubrik med streck */
+/* Martin, start rubrik med gr�tt streck men utan checkboxen/radioknappen */
+div.module .h2LineNoCheck  { /* Martin, h2LineNoCheck funkar som .grey (topnavigation.css) */
+background:url(/now/images/grey.gif) repeat-x left 3px;
+width:97%;
+margin:7px 0pt 2px 7px; /*Martin, se Handla/S�lj fonder */
+}
+div.module div.h2LineNoCheck h2 {
+background-color:#fff;
+display:inline;
+padding:0 8px 0 0;
+text-transform:none;
+border-bottom:0;
+}
+/* Martin, slut rubrik med gr�tt streck men utan checkboxen/radioknappen */
+/* SLUT RUBRIKTYPER //////////////////////////////////////////////////////////////////////////// */
+/* START SPECIAL TEXTKLASSER /////////////////////////////////////////////////////////////////// */
+td.warning,
+span.warning,
+p.warning,
+a.warning,
+.kursMinus
+{
+color:#dc011f;
+}
+.kursPlus { /* Visas vid kursuppg�ng */
+color:#01a3e1;
+}
+.kursNoll { /* Visas n�r kursen �r 0 */
+color:#000;
+}
+.textMedium {
+color:#8e8c8d;
+}
+span.textNormal {
+font-weight:normal;
+text-transform:none;
+color:#000;
+}
+h2 span.textNormal { /* Martin, ett extra meddelande som man kan h�nga p� efter en vanlig h2 module rubrik */
+color:#888;
+}
+.confirmText { /* Martin. Anv�nds i pluslagret */
+margin:1.0em 0 3.0em 1.2em;
+}
+.disclaimer,
+td.disclaimer { /* Martin, kursiv gr� finstilt text */
+clear:left;
+text-align:center;
+font-style:italic;
+color:#888;
+}
+td.disclaimer,
+p.disclaimer {
+text-align:left;
+}
+.disclaimer p {
+padding:0.7em 1.5em;
+line-height:1.4em;
+}
+.dim,
+td.dim { /* Martin, gr�ar ut inneh�llet i en tabellcell */
+color:#a9a9a9;
+}
+span.bildText { /* Martin, bildtexter har tv� olika positioner beroende p� om de ligger i en onecol eller i en twocol modul */
+position:absolute;
+color:#808080;
+text-align:left;
+}
+span.image-comment{
+color:#808080;
+float:left;
+width:100%
+}
+div.onecol span.bildText { /* Martin, se t ex Topp 3 */
+left:138px;
+width:11.0em;
+}
+div.twocol span.bildText {
+top:150px;
+left:230px;
+width:16.5em;
+}
+div.kommentarBild span.bildText {
+left: 44px;
+top: 202px;
+}
+div.bildMedText { /* Martin, vem skapade denna? Jag modifierade 04102007 */
+position: relative;
+margin:0 0 5px 20;
+padding-bottom:5px;
+}
+div.bildMedText span.bildText { /* Martin */
+left:270px;
+top:89px;
+}
+span.ticker, /* Martin, anv�nds f�r tillf�llet bara p� fondfaktaInnehav.html */
+.uppercase {
+text-transform: uppercase;
+}
+div.center { /* Martin */
+text-align:center;
+/*padding-top:10px;*/
+width:100%;
+}
+div.center a { /* Martin, centrera en l�nk av den typen som kan g�mma ett helt block, se t ex Nyheter och pressmeddelanden (Analys och Nyheter) */
+font-weight:bold;
+text-transform:uppercase;
+}
+div.center p a {
+font-weight:bold;
+text-transform:none;
+}
+#nyheterModule table td:first-child, #analyserModule table td:first-child {
+white-space: nowrap;
+}
+#analyserModule table td {
+white-space: normal;
+}
+/* KNAPPAR 2.0 */
+span.btn {
+float:left;
+position:relative;
+}
+span.btn.next {
+margin-left:10px;
+}
+span.btn a {
+display:block;
+text-decoration:none;
+text-transform:none;
+white-space:nowrap;
+float:left;
+}
+#content.firstpage table tr td.flaggaSe {
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -4px transparent;
+padding-left: 1.4em;
+}
+#content.firstpage table tr td.flaggaNo {
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -50px transparent;
+padding-left: 1.4em;
+}
+#content.firstpage table tr td.flaggaFi {
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -139px transparent;
+padding-left: 1.4em;
+}
+#content.firstpage table tr td.flaggaDk {
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -95px transparent;
+padding-left: 1.4em;
+}
+#content.firstpage table tr td.flaggaSeFiNoDk {
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -380px transparent;
+padding-left: 1.4em;
+}
+#content.firstpage table tr td.flaggaDe{
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -186px transparent;
+padding-left: 1.4em;
+}
+#content.firstpage table tr td.flaggaUs{
+background: url("/now/images/sprites/flagSprite.gif") no-repeat scroll 8px -233px transparent;
+padding-left: 1.4em;
+width:1.2em;
+}
+/* small */
+span.btn.small {
+padding-left:0.3em;
+}
+span.btn.small a {
+padding:0.3em 0.8em 0.4em 0.5em;
+margin-right:-5px;
+font:bold 10px Verdana, Arial, sans-serif;
+color:#fff;
+}
+span.btn.small a.upper  {
+font:normal 10px "Century gothic",Verdana,Arial,sans-serif;
+text-transform: uppercase;
+padding-bottom:0.2em;
+}
+span.btn.small.blue {
+background:url(/now/images/sprites/btnSmall.png) no-repeat left 0;
+}
+span.btn.small.blue a {
+background:url(/now/images/sprites/btnSmall.png) no-repeat right 0;
+}
+span.btn.small.green {
+background:url(/now/images/sprites/btnSmall.png) no-repeat left -44px;
+}
+span.btn.small.green a {
+background:url(/now/images/sprites/btnSmall.png) no-repeat right -44px;
+text-shadow: 1px 1px 1px #9CA38A;
+}
+span.btn.small.blue.refl {
+background:url(/now/images/sprites/btnSmall.png) no-repeat left -220px;
+}
+span.btn.small.blue.refl a {
+background:url(/now/images/sprites/btnSmall.png) no-repeat right -220px;
+padding-bottom:2em;
+}
+/* medium */
+span.btn.medium {
+padding: 0 0 0 1em;
+height: auto;
+}
+span.btn.medium a {
+font:bold 12px Verdana,Arial,sans-serif;
+padding:0.6em 1.7em 0.6em 0.8em;
+margin-right:-7px;
+color:#fff;
+}
+span.btn.medium.blue {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left 0;
+}
+span.btn.medium.blue a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right 0 transparent;
+}
+span.btn.medium.grey {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -248px;
+}
+span.btn.medium.grey a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -248px transparent;
+}
+span.btn.medium.lgreen {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -62px;
+}
+span.btn.medium.lgreen a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -62px transparent;
+}
+span.btn.medium.green {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -93px;
+}
+span.btn.medium.green a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -93px transparent;
+}
+span.btn.medium.purple,
+span.btn.medium.purple.refl {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -438px;
+}
+span.btn.medium.purple a,
+span.btn.medium.purple.refl a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -438px transparent;
+}
+span.btn.medium.pink,
+span.btn.medium.pink.refl {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -388px;
+}
+span.btn.medium.pink a,
+span.btn.medium.pink.refl a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -388px transparent;
+}
+span.btn.medium.blue.refl {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -340px transparent;
+}
+span.btn.medium.blue.refl a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -340px transparent;
+padding-bottom:2.1em;
+}
+span.btn.medium.green.refl {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -487px transparent;
+}
+span.btn.medium.green.refl a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -487px transparent;
+}
+span.btn.medium.blue.inactive {
+background:url(/now/images/sprites/btnMedium.png) no-repeat left -309px;
+}
+span.btn.medium.blue.inactive a {
+background:url(/now/images/sprites/btnMedium.png) no-repeat scroll right -309px transparent;
+}
+span.btn.medium a.upper  {
+font: bold 15px "Century gothic",Verdana,Arial,sans-serif;
+padding: 0.4em 1.7em 0.4em 0.8em;
+text-transform: uppercase;
+}
+span.btn.medium.green.refl a,
+span.btn.medium.pink.refl a,
+span.btn.medium.purple.refl a {
+padding-bottom:2.2em;
+}
+/* large */
+span.btn.large {
+padding-left:1em;
+}
+span.btn.large.next {
+margin-left:12px;
+}
+span.btn.large a {
+font: bold 18px "Century gothic",Verdana,Arial,sans-serif;
+margin-right: -7px;
+padding: 0.6em 1.3em 0.7em 0.8em;
+color:#fff;
+}
+span.btn.large a.upper {
+text-transform: uppercase;
+}
+span.btn.large.red,
+span.btn.large.red.refl {
+background:url(/now/images/sprites/btnLarge.png) no-repeat left -616px;
+}
+span.btn.large.red a,
+span.btn.large.red.refl a {
+background: url(/now/images/sprites/btnLarge.png) no-repeat scroll right -616px transparent;
+}
+span.btn.large.blue,
+span.btn.large.blue.refl {
+background:url(/now/images/sprites/btnLarge.png) no-repeat left -536px;
+}
+span.btn.large.blue a,
+span.btn.large.blue.refl a {
+background: url(/now/images/sprites/btnLarge.png) no-repeat scroll right -536px transparent;
+}
+span.btn.large.green,
+span.btn.large.green.refl {
+background:url(/now/images/sprites/btnLarge.png) no-repeat left -694px;
+}
+span.btn.large.green a,
+span.btn.large.green.refl a {
+background: url(/now/images/sprites/btnLarge.png) no-repeat scroll right -694px transparent;
+}
+span.btn.large.red.refl a,
+span.btn.large.blue.refl a,
+span.btn.large.green.refl a {
+padding-bottom:2.2em;
+}
+/* SLUT SPECIAL TEXTKLASSER /////////////////////////////////////////////////////////////////// */
+/* START IKONER och KNAPPAR ////////////////////////////////////////////////////////////////// */
+span.buttonBlue,
+span.buttonBlueInactive,
+span.buttonRed,
+span.buttonRedInactive,
+span.buttonGreen,
+span.buttonGreenInactive,
+span.buttonGrey,
+span.buttonGreyInactive
+{ /* Gemensamma egenskaper f�r samtliga knappars h�gersida */
+float:left;
+padding-left:0.2em;
+position:relative;
+background:url(/now/images/sprites/knapp.gif) no-repeat left -36px;
+}
+span.buttonBlue a,
+span.buttonBlueInactive a,
+span.buttonRed a,
+span.buttonRedInactive a,
+span.buttonGreen a,
+span.buttonGreenInactive a,
+span.buttonGrey a,
+span.buttonGreyInactive a
+{ /* Gemensamma egenskaper f�r samtliga knappars v�nstersida */
+display:block;
+background:url(/now/images/sprites/knapp.gif) no-repeat right -36px;
+padding:0.3em 0.7em 0.3em 0.5em;
+font:1.0em Verdana, Arial, sans-serif;
+color:#fff;
+white-space:nowrap;
+text-decoration:none;
+text-transform:none;
+}
+span.buttonBlueInactive {
+background-position: left -54px;
+}
+span.buttonBlueInactive a {
+background-position: right -54px;
+}
+span.buttonGreen {
+background-position: left top;
+}
+span.buttonGreen a {
+background-position: right top;
+}
+span.buttonGreenInactive {
+background-position: left -18px;
+}
+span.buttonGreenInactive a {
+background-position: right -18px;
+}
+span.buttonGrey
+{
+background-position: left -72px;
+position:static;
+}
+span.buttonGrey a
+{
+background-position: right -72px;
+color:#0390c7;
+}
+span.buttonGreyInactive
+{
+background-position: left -90px;
+}
+span.buttonGreyInactive a
+{
+background-position: right -90px;
+color:#b3ddee;
+}
+span.buttonRed {
+background-position: left -108px;
+}
+span.buttonRed a {
+background-position: right -108px;
+}
+span.buttonRedInactive {
+background-position: left -126px;
+}
+span.buttonRedInactive a {
+background-position: right -126px;
+}
+span.buttonBlue.shadow { /* f�r bl� knappar med skugga under */
+background-position: left -144px;
+}
+span.buttonBlue.shadow a { /* f�r bl� knappar med skugga under */
+background-position: right -144px;
+padding-bottom:19px;
+}
+span.buttonBlue.shadowGreyBg { /* Kristian, f�r bl� knappar med skugga under p� gr� bakgrund */
+background-position: left -273px;
+}
+span.buttonBlue.shadowGreyBg a { /* Kristian, f�r bl�knappar med skugga under p� gr� bakgrund */
+background-position: right -273px;
+}
+span.buttonBlue.bigButton { /* f�r bl� knappar med skugga under */
+background-position: left -181px;
+}
+span.buttonBlue.bigButton a { /* f�r bl� knappar med skugga under */
+background-position: right -181px;
+font-weight:bold;
+font-size: 1.1em;
+padding: 7px 13px 22px 13px;
+}
+span.buttonBlue.bigButton2 a { /*f�r stor bl� knapp med skugga under p� vitBG */
+background-position: right -224px;
+font-weight:bold;
+font-size: 1.1em;
+padding: 6px 13px 27px 13px;
+}
+span.buttonBlue.bigButton2 { /* f�r stor bl� knappar med skugga under p� vitBG */
+background-position: left -224px;
+}
+span.buttonBlue.bigNoShadow a { /*f�r stor bl�knapp utan skugga */
+background-position: right -224px;
+font-weight:bold;
+font-size: 1.1em;
+padding: 7px 13px 7px 13px;
+}
+span.buttonBlue.bigNoShadow { /* f�r stor bl�knapp utan skugga */
+background-position: left -224px;
+}
+span.buttonBlue.bigButton2Inactive a {
+background-position: right -532px;
+font-weight:bold;
+font-size: 1.1em;
+padding: 7px 13px 29px 13px;
+}
+span.buttonBlue.bigButton2Inactive {
+background-position: left -532px;
+}
+span.buttonBlue.bigNoShadow.bigNoShadowInactive, span.buttonBlue.bigShadow.bigNoShadowInactive{  /* Kristian, stor inaktiv bl�knapp */
+background-position: left -487px;
+}
+span.buttonBlue.bigNoShadow.bigNoShadowInactive a, span.buttonBlue.bigShadow.bigNoShadowInactive a{/* Kristian, stor inaktiv bl�knapp */
+background-position: right -487px;
+}
+span.buttonBlue.bigShadow {/* Kristian, stor bl�knapp -investeringsguiden */
+background-position:left -375px;
+}
+span.buttonBlue.bigShadow a {/* Kristian, stor bl�knapp -investeringsguiden */
+background-position:right -375px;
+font-size:1.1em;
+font-weight:bold;
+padding:7px 14px 18px;
+text-align:center;
+}
+span.buttonBlue.bigButtonArrow a { /*f�r stor bl�knapp utan skugga */
+background-position: right -430px;
+font-weight:bold;
+font-size: 1.1em;
+padding:12px 19px 14px 14px;
+text-align:center;
+}
+span.buttonBlue.bigButtonArrow { /* f�r stor bl�knapp utan skugga */
+background-position: left -430px;
+padding-left: 0.8em;
+}
+span.buttonBlue.topMargin, span.buttonGrey.topMargin { /*Theresa, d� knappar ligger i flera rader under varandra */
+margin-top:1em;
+}
+.buttonIcon { /* Print & Excel ikonen till v�nster om knappar */
+float:left;
+margin-right:8px;
+width:16px;
+height:18px;
+}
+a.excel { /* En liten Excel ikon till v�nster om l�nken */
+background:url(/now/images/ikonExcel.gif) no-repeat left 2px;
+padding-left:16px;
+text-decoration:underline;
+margin-left:5px;
+}
+a.bullet {
+background:url(/now/images/bulletGreen2px.gif) no-repeat;
+background-position:1px 8px;
+display:block;
+padding:0.2em 0 0.4em 1.0em;
+text-decoration:underline;
+font-weight:normal;
+}
+a.pdf, a.img-icon,
+span.pdf { /* En liten PDF ikon till v�nster om en gr� text som informerar om filens storlek */
+background:url(/now/images/ikonPdf.gif) no-repeat left 2px;
+padding-left:16px;
+margin-left:1px;
+font-weight:normal;
+text-decoration:underline;
+}
+a.img-icon{
+background:url(/now/images/mc/ImgeIcon.jpg) no-repeat left 2px;
+}
+a.flash {
+background:transparent url(/now/images/flashIcon.gif) no-repeat scroll left 1px;
+font-weight:normal;
+margin-left:1px;
+padding-left:16px;
+text-decoration:underline;
+}
+a.pdf2 { /* En liten PDF ikon till h�ger om en gr� text som informerar om filens storlek */
+background:url(/now/images/ikonPdf.gif) no-repeat right 2px;
+padding-right:16px;
+margin-left:1px;
+font-weight:normal;
+text-decoration:underline;
+}
+a.pdfAfter {color:#018ACF; margin: 0em 2.0em 0em 0em;}
+a.pdfAfter:hover {
+background:transparent url(/NNSE/sv/bilder/ikon_pdf.gif) no-repeat top right;
+color:#018ACF;
+margin: 0em 0.5em 0em 0em;
+padding: 0 1.5em 0 0;
+}
+span.bullet, /* Martin. Gr�n bullet utanf�r captionf�ltet */
+span.bullet2 { /* Martin. Gr� bullet utanf�r captionf�ltet */
+font-weight:bold;
+color:#a3e20f;
+margin:0 0.4em 0.3em 0.5em;
+}
+span.bullet2 {
+color:#858585;
+}
+.textIkon { /* Anv�nds p� ikoner brevid textl�nkar */
+margin:0 0 -2px 0;
+}
+.kursIkon {
+margin:0 5px -2px 0;
+}
+.delayicon { /* Martin, s�tts p� realtidskurs ikonen och de olika f�rdr�jningskurs ikonerna */
+width:11px;
+height:11px;
+}
+table tr td img.delayicon,
+table tr td img.realtimeicon {
+margin-bottom:-2px;
+}
+td.delayicon {
+width:15px;
+padding-left:0;
+padding-right:0;
+}
+.treKnapp .button {
+margin:0px;
+}
+.button { /* Martin, ska s�ttas p� alla knappar i en tabell f�rutom den sista, (vilket ofta �r en plusknapp) */
+margin:1px 4px 0 0;
+}
+
+
+.missingButtonSpacer {
+	display: inline-block;
+	width: 3.8em;
+}
+#content table tr td.enKnapp, /* t ex Orderboken, inneh�ller en Plusknapp */
+#content table tr td.tvaKnapp, /* t ex Handla aktier, inneh�ller en K�p och S�ljknapp */
+#content table tr td.treKnapp, /* t ex Dep��versikten, inneh�ller en K�p, S�lj och Plusknapp */
+#content table tr td.kopKnapp, /* t ex Sparprodukter, inneh�ller en K�pknapp */
+#content table tr td.handlaPlusKnapp, /* t ex Avancerad orderl�ggning, inneh�ller en Handla och Plusknapp */
+#content table tr td.fondlistaKnapp { /* t ex S�k fond, inneh�ller en K�p och Fondlistaknapp */
+padding-left:0;
+padding-right: 0;
+text-align:left;
+width:2.1em;
+}
+body.fi #content table tr td.treKnapp {
+width:9.3em;
+}
+body.fi #content table tr td.tvaKnapp  {
+width:7.3em;
+}
+#content table tr td.tvaKnapp { /* t ex Handla aktier, inneh�ller en K�p och S�ljknapp */
+width:8.3em;
+}
+#content table tr td.treKnapp { /* t ex Dep��versikten, inneh�ller en K�p, S�lj och Plusknapp */
+width:10.5em;
+}
+#content table tr td.handlaPlusKnapp { /* t ex Avancerad orderl�ggning, inneh�ller en Handla och Plusknapp */
+width:9.0em;
+}
+#content table tr td.fondlistaKnapp { /* t ex S�k fond, inneh�ller en K�p och Fondlistaknapp */
+width:12.5em;
+}
+#content table.seekResults td.tvaKnapp { /* Martin, specialregler f�r s�kresultattabellen */
+padding:0 4px 0 10px;
+}
+span.ikonKurs {
+margin-right:4.8em;
+}
+.twocol span.ikonKurs {
+margin-right:1.3em;
+}
+.streaming_button {
+float:right;
+border:0;
+width:24px;
+height:18px;
+margin-left:8px;
+background:url(/now/images/streaming_button_off.png);
+}
+a.enabled .streaming_button {
+background:url(/now/images/streaming_button_on.png);
+}
+/* Martin, placera ut flaggor med sprites, se t ex Dep��versikten och Expert portf�ljen */
+span.se,
+span.no,
+span.dk,
+span.fi,
+span.us,
+span.ca,
+span.eu,
+span.fu { /* Martin, placerar ut flaggor, se t ex Experternas portf�ljer eller Dep��versikten */
+background:url(/now/images/sprites/flaggor.gif) no-repeat left 1px;
+padding-left:22px;
+}
+span.no {
+background-position:left -23px;
+}
+span.dk {
+background-position:left -47px;
+}
+span.fi {
+background-position:left -71px;
+}
+span.us {
+background-position:left -119px;
+}
+span.ca {
+background-position:left -143px;
+}
+span.eu {
+background-position:left -167px;
+}
+span.fu { /* Martin, fondportf�ljerna */
+background-position:left -191px;
+}
+img.flag,
+img.flagSmall {
+width:16px;
+height:11px;
+margin-right:4px;
+}
+img.flagSmall {
+width:9px;
+height:7px;
+}
+td img.trash { /* Martin, papperskorgen om den ligger i en tabellcell */
+margin-top:2px;
+width:9px;
+height:11px;
+}
+div.iconTank { /* Martin, kan finnas i caption, topBar och navigation */
+position:absolute;
+top:0.6em;
+right:0.8em;
+}
+h2 div.iconTank { /* Martin, ikoner i rubriker */
+top:-1px;
+right:0;
+}
+.submodule div.iconTank { /* Martin, marknads�versikten */
+top:5px;
+right:0;
+}
+h2.knappar div.iconTank { /* Martin, eftersom den avancerade ordel�ggning har en handla knapp som �r 4px h�gre �n alla andra ikoner */
+top:-5px;
+}
+div.iconTank span { /* Martin, tidsangivelse */
+position:relative;
+top:1px;
+}
+/* SLUT IKONER och KNAPPAR /////////////////////////////////////////////////////////////////////// */
+/* START NORDNET INFORMERAR ( se Fondtorget samt Strukturerade Produkter ) /////////////////////// */
+div.nninfoRubrik {
+margin:0.5em 0 0 0.8em;
+}
+div.nninfoRubrik span {
+color:#8e8e8e;
+margin-right:0.4em;
+}
+div.nninfoRubrik a.bullet {
+display:inline;
+font-weight:bold;
+text-decoration:none;
+}
+div.nninfo {
+position:relative;
+margin: 0 0 1em;
+}
+div.nninfo p {
+margin:0 1.0em 0 7.4em;
+}
+div.nninfo a {
+margin:0 0 0 7.4em;
+}
+/* SLUT NORDNET INFORMERAR ( se Fondtorget samt Strukturerade Produkter ) //////////////////////// */
+/* START FORMUL�R //////////////////////////////////////////////////////////////////////////////// */
+div.listoptions {
+position: relative;
+overflow: hidden;
+width: 100%;
+padding-bottom: 10px;
+}
+input.checkbox,
+.listoptions fieldset input.checkbox,
+.popupWin input.checkbox { /* Martin, Klassen checkbox ska s�ttas p� samtliga checkboxar */
+width:13px;
+height:14px;
+margin:0 4px 0 0;
+float:left;
+}
+input.checkbox.checkbox2 { /* Theresa, justering f�r F�rs�kringsbesked */
+margin:0 -2px 0 8px;
+}
+input.radio { /* Martin, width och height �r n�dv�ndigt p� samtliga radioknappar */
+margin: 2px 4px 0 0;
+width: 14px;
+height: 14px;
+float:left;
+}
+div.bigStockList .link{
+float:left;
+margin: 0.7em 0 0 2em;
+}
+.listoptions label.checkbox {
+font-weight: normal;
+margin-right: 15px;
+}
+.listoptions label {
+float: left;
+margin-top: 5px;
+margin-right: 2px;
+}
+div.bigStockList label { /* bigStockList anv�nds bara n�r labeln ligger ovanf�r selectboxen */
+margin-top: 0;
+}
+div.bigStockList span.buttonGrey { /* Martin. Om labeln ligger ovanf�r selectboxarna ist�llet f�r till v�nster om den s� m�ste en margin-top s�ttas p� submitknappen */
+margin-top: 1.4em;
+}
+.listoptions input,
+.listoptions select {
+float: left;
+margin:2px 25px 0 0;
+}
+.listoptions fieldset input,
+.listoptions fieldset select {
+margin-right: 0;
+}
+.listoptions  select.nncat {
+margin:4px 0 0 0;
+}
+.listoptions label input,
+.listoptions label select {
+margin: 4px 25px 0 0;
+}
+.listoptions fieldset {
+float: left;
+display: inline;  /* IE double margin float bug */
+position: relative;
+margin-right: 20px;
+}
+.listoptions legend { /* Se �ven ie.css */
+padding: 0;
+border-bottom: 3px solid #fff;  /* Fuskpadding */
+}
+.listoptions div.group { /* Martin, gruppera checkbox */
+position: absolute;
+right: 20px;
+top: 0;
+}
+.formLinks { /* Martin. Se l�nkarna ovanf�r tabellen p� t ex Warranter eller Mina Listor */
+float:left;
+margin:3px 23px 0 0;
+}
+.bigStockList .formLinks {
+margin-top:1.9em;
+}
+select.sektor,
+select.bransch {
+width:15.0em;
+}
+select.lista {
+width:17.6em;
+}
+input.mail {
+width: 18em;
+}
+input.mailLong {
+width: 27.4em;
+}
+input.phone {
+width: 10.4em;
+}
+input.price,
+input.antal {
+width:5.2em;
+}
+input.percent {
+width:2.0em;
+}
+td input.percent {
+margin:1px 0 1px 0; /* se �ven ie.css */
+}
+select.sokFond { /* Martin, se S�k fond (Fonder) och K�p fonder (Handla) */
+width:16.9em;
+margin:4px 25px 0 0;
+}
+select.fondKategorier {
+width: 23.4em;
+}
+input.sokFond { /* Martin, se S�k fond (Fonder) och K�p fonder (Handla) */
+width:13.3em;
+margin:4px 25px 0 0;
+}
+/* SLUT FORMUL�R //////////////////////////////////////////////////////////////////////////////// */
+/* START FORMUL�R SOM ANV�NDS UNDER BLI KUND OCH NORDNET BOL�N ////////////////////////////////// */
+form.forms h4,
+form.forms h5 {
+float:left;
+margin:0 0 8px 0;
+font:1.0em verdana;
+text-transform:uppercase;
+}
+form.forms h4 {
+font-weight:bold;
+}
+form.forms table {
+margin:0 0 14px 0;
+}
+form.forms table.last {
+margin-bottom:0;
+}
+form.forms table td input {
+float:left;
+}
+form.forms label {
+margin-right:0.8em;
+}
+form.forms table td input.firstname,
+form.forms table td input.firstnameInsured,
+form.forms table td input.civicregnr,
+form.forms table td input.civicregnrInsured,
+form.forms table td input.phone,
+form.forms table td input.phoneInsured,
+input.TelMobil,
+input.Personnr,
+input.Fornamn,
+input.Taxeringsvarde,input.lastname { /* Martin, l�ngder p� formul�rf�lt i bli kund ans�kan */
+width:11.1em;
+}
+input.Efternamn,
+input.Arbetsgivare {
+width:14.2em;
+}
+form.forms table td input.address,
+form.forms table td input.addressInsured,
+form.forms table td input.email,
+input.Foreningsnamn,
+input.Gatuadress,
+input.Email,
+form.forms table td input.emailInsured,
+form.forms table td input.companyName,
+form.forms table td input.contact { /* Martin, se kommentar ovan */
+width:22.2em;
+}
+form.forms table td input.zipcode,
+input.Postnr,
+input.Lagenhetsnr,
+input.Boyta,
+input.AntalRum,
+input.Studieskuld,
+input.UnderhallAttBetala,
+input.AnstallningstidpunktAr,
+input.Manadsinkomst,
+form.forms table td select.Barn,
+form.forms table td select.SkallLosas,
+input.Amortering,
+form.forms table td input.zipcodeInsured { /* Martin, se kommentar ovan */
+width:6.2em;
+}
+form.forms table td select.AnstallningstidpunktManad {
+width:4.2em;
+margin-left:1.0em;
+}
+form.forms table td select.SkallLosas {
+width:4.7em;
+}
+input.Rantesats,
+input.Agarandel {
+width:2.5em;
+}
+input.Kopeskilling,
+input.Manadshyra,
+input.cash,
+input.Handpenning,
+input.Uppskov,
+input.AktuellSkuld,
+input.Lanenummer,
+input.Driftskostnad {
+width:6.8em;
+}
+.fake-placeholder{
+color: #878484;
+}
+div#content input[type=search],
+div#content input[type=text] {
+padding: 2px 4px;
+border: 1px solid #CCCCCC;
+border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+-webkit-appearance: none; /* iOS safari & chrome*/
+height: 14px;
+}
+div#content input[type=search]:focus,
+div#content input[type=text]:focus{
+border-color: rgba(82, 168, 236, 0.8);
+box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+outline: 0px solid #ffa;
+}
+div#content select:focus{
+outline:0px;
+}
+form#uppgifter input[type=radio]{
+margin-top:3px;
+}
+div#content input.warning, td.warning {
+background: none repeat scroll 0 0 #FFFFFF;
+border-color: rgba(220, 25, 119, 0.8);
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(220, 25, 119, 0.6);
+outline: 0 none;
+}
+.no-rgba div#content input.warning, .no-rgba td.warning{
+border-color: #DC1877;
+}
+/* Webkit renders height differently with search fields*/
+.webkit div#content input[type=search]{
+height: 18px;
+}
+.webkit div#content input[type=radio]{
+-webkit-appearance:radio;
+margin-top:3px;
+}
+/* END webkit */
+
+form.forms table td {
+padding:0 0 4px 0;
+}
+form.forms table.text td.betona {
+width:13em;
+padding-top:3px;
+}
+form.forms table.text td {
+width:26.0em;
+}
+div.threecol table.text td.betona {
+width:124px;
+padding-top:3px;
+}
+div.threecol table.text td.last {
+width:58.2em;
+}
+form.forms table td select {
+width:15.0em;
+}
+form.forms span.bullet {
+float:left;
+}
+form.forms table td span.bullet {
+float:none;
+margin:0 0.9em 0 0.8em;
+}
+div.formButtonDisclaimer { /* Martin, placera ut disclaimer text till h�ger om submitknapp */
+float:left;
+margin:0.3em 0 0 1.0em;
+white-space:pre-line;
+width:205px;
+}
+form.forms td.warning { /* Martin, f�r felmeddelanden i formul�ret */
+padding:2px 0 16px 0;
+}
+div.threecol table.text td.warning {
+width:70.6em;
+}
+form.forms span.unit {
+margin:2px 0 0 3px;
+display:block;
+}
+/* SLUT FORMUL�R SOM ANV�NDS UNDER BLI KUND OCH NORDNET BOL�N /////////////////////////////////// */
+/* START SUBMITLIST ///////////////////////////////////////////////////////////////////////////// */
+.submitList, /* Martin - Den gr�listen med 2 submitknappar i */
+.submitListJustText, /* Martin - se t ex Byt fonder (Handla) */
+.submitListWithText, /* Martin - se t ex M�nads- och automatspara (Handla) */
+.submitListEmpty, /* Martin - se t ex Avtal, blanketter och betaltj�nster (Dep�) */
+.submitListVillkor .submitList { /* Martin, wrappar en submitListVillkor runt en vanlig submitList f�r att kunna placera ut godk�nn villkor formul�ret */
+position:relative;
+background:#f0eeef url(/now/images/whiteTopLeft.gif);
+width:100%;
+height:3.4em;
+border-top:1px solid #d3d3d3;
+padding-top:1.5em;
+text-align:center;
+}
+div.wrapQT .submitList{
+position:static;
+}
+div.wrapQT #topnavigation{
+left:0;
+}
+.twocol .submitList { /* Martin, om submitList ligger i en twocol tar jag bort den vita v�nsterkanten */
+background:#f0eeef url(/now/images/white.gif) repeat-x top left;
+}
+.buttonBox { /* Christina. Div l�ngst ner till h�ger med knappar f�r excel och printer */
+float:right;
+color:#919191;
+margin-top:1.0em;
+line-height:2.4em;
+width:29.0em;
+}
+.buttonBox .buttonIcon {
+padding-left:10px;
+}
+div.innerWrapper span.buttonGrey,
+div.innerWrapper span.buttonGreyInactive  { /* Martin - Skapa lite luft mellan Avbryt och Skapa knapparna */
+margin-right:10px;
+}
+div.section span.saving{
+margin-top:10px;
+}
+.submitList span { /* Martin, s�tter en extra border runt knapparna om de ligger i en submitList */
+border:1px solid #fff;
+border-top:1px solid #dddbdc;
+border-left:1px solid #dddbdc;
+}
+.submitList span.bullet { /* Martin, undantag fr�n regeln ovan */
+border:0;
+}
+.submitList div.or, /* Martin. Ordet "eller" mellan granska order och k�p direkt p� handlasidan */
+.buttonBox div.or { /* Christina. Ordet "eller" mellan Excel och Skriv ut knapparna  */
+padding: 4px 11px 0 10px;
+float:left;
+position:relative;
+display:inline;
+color:#908e8f;
+}
+.buttonBox div.or {
+padding: 3px 0 0pt 9px;
+}
+.submitListCheck,
+.submitListCheckUp,
+.submitListCheckDown {
+background:#f0eeef url(/now/images/submitListCheckBg.gif) repeat-x top left;
+height:2.4em;
+}
+.checked { /* En aktiv s�dan h�r ska vara m�rkgr�  */
+background-color:#d4d2d3;
+}
+span.OPgrey{/*(F�retagsh�ndelser) */
+color:#969696;
+margin-left:2px;
+}
+.submitListCheck input,
+.submitListCheckUp input,
+.submitListCheckDown input { /* Martin kan vara b�de en checkbox (Min fondf�rdelning) eller en radioknapp (F�retagsh�ndelser) */
+margin-left:8px;
+float:left;
+margin-top:6px;
+}
+.submitListCheck label,
+.submitListCheckUp label,
+.submitListCheckDown label {
+float:left;
+margin-top:6px;
+}
+/* SLUT SUBMITLIST ////////////////////////////////////////////////////////////////////////////// */
+/* START AVKASTNING (under Dep�) och DIAGRAM (under Marknaden) ////////////////////////////////// */
+#formWrapper{
+position:relative;
+height:auto;
+margin-bottom:10px;
+border:0px solid #F5B2BD;
+}
+#formWrapper input.checkbox{ float:left;  }
+label.formLineTop{
+text-align:left;
+margin:3px 0px 0px 0px;
+vertical-align:text-bottom;
+border:0px solid #ff0000;
+}
+label.formLineLeft{
+float:left;
+width:32%;
+margin:2px 2px 0px 1px;
+text-align:left;
+border:0px solid #ffff00;
+}
+.dateFormat{
+float:left;
+width:auto;
+color:#919191;
+margin:20px 0px 0px 0px;
+text-align:left;
+border:0px solid #ffff00;
+}
+.eller {
+position:absolute;
+top:19px;
+font-style:italic;
+border:0px solid #F5B2BD;
+}
+#diagram tr.diagram th { /* Martin. Specialare, anv�nds bara Diagramsidan */
+border-bottom:3px solid #e1dfe0;
+}
+#diagram div.smallerOneCol { /* Martin. Vanliga onecol �r 15px f�r bred f�r denna inbakade variant */
+width: 21.3em;
+margin-left:1.1em;
+}
+.topBar,
+.topBarOrder,
+.topBarToday { /* Martin. Se t ex diagramsidan eller V�xla sidan */
+position:relative;
+background-color:#d9d9d9;
+width:100%;
+padding:5px 0;
+}
+.fourcol .topBar { /* Martin, diagram */
+border-bottom:1px solid #fff;
+}
+.topBarOrder { /* Christina, gr�n topbar p� Assetcardsidan */
+background-color: #a4d20e;
+}
+.topBarToday { /* Christer, gul topbar p� Finanskalendersidan */
+background-color: #f8f400;
+}
+.topBar span,
+.topBarOrder span,
+.topBarToday span { /* Martin */
+font-weight:bold;
+text-transform:uppercase;
+padding-left:7px;
+}
+.topBar span.antal { /* Martin, visar antalet */
+font-weight:normal;
+color:#5e5e5e;
+padding-left:3px;
+}
+.topBarOrder span {
+color:#fff;
+}
+#diagram dl { /* Martin, punkter under diagrammet, se Avkastningssidan (Dep�) */
+padding-top:1px;
+padding-bottom:15px;
+}
+#diagram .topBar dl { /* Martin. se Diagramsidan */
+padding:0 0 0 8px;
+}
+#diagram fieldset {
+width:100%;
+margin-left:0;
+}
+#diagram .onecol fieldset {
+padding-bottom:8px;
+}
+#diagram fieldset legend { /* Se rubrikerna "Period" och "J�mf�r med" */
+border-bottom:0;
+margin-bottom:4px;
+line-height:normal;
+}
+.listoptions .eller { /* Martin, se S�k fond (Fonder) */
+float:left;
+margin:27px 14px 0 -10px;
+font-style:normal;
+}
+#diagram label { /* Checkboxarna till v�nster om diagramet p� Diagramsidan �r wrappade av en label */
+margin-bottom:2px;
+display:block;
+font-weight:normal;
+}
+.antalDagar { /* Martin, visas n�r n�gon av checkboxarna p� Diagramsidan �r aktiverade */
+margin:0 0 0.5em 1.8em;
+display:none;
+}
+.antalDagar input { /* Martin, se klassen ovan */
+width:4.8em;
+margin-left:8px;
+}
+/*
+#diagram input.checkbox {
+margin:0;
+}*/
+#diagram select {
+margin:0 10px 6px 0;
+}
+#diagram input.compare {
+margin:0 6px 0 0;
+}
+#diagram input.date {
+width:6.4em;
+margin:0 6px 0 5px;
+}
+#formWrapper input.date {
+width:6.5em;
+margin:2px 0px 0 0px;
+padding:0;
+}
+#diagram label.fran,
+#diagram label.till {
+float:left;
+width:2.2em;
+padding:2px 0 0 0;
+border:1px solid #A4D20E;
+}
+#diagram label.till {
+width:1.0em;
+}
+#diagram span.format {
+display: block;
+margin-top:23px;
+}
+#diagram .onecol table td {
+line-height:1.6em;
+}
+#diagram .smallerOneCol table {/* Christina, tabellen som s�kresultatet visas i p� avkastningssidan */
+width: 96%;
+}
+/* SLUT AVKASTNING och DIAGRAM ///////////////////////////////////////////////////////////////// */
+/* START G�MDA LAGER //////////////////////////////////////////////////////////////////////////// */
+.dropdownBox { /* Martin, generellt skriven klass som kan ses p� Marknads�versikten, Aktiekurssidan, Dep��versikten, Risk, Expert�versikten och i Handla (Mina Listor till h�ger) */
+position:absolute;
+background:#fbf9fc url(/now/images/whiteTopLeft.gif) no-repeat top left;
+border:1px solid #c6c8c7;
+border-top:0;
+z-index:4;
+padding:0.6em 1.0em 0.9em 0;
+width:20.7em;
+}
+.plusmeny .switchcontent.sms {
+padding-bottom:0;
+}
+.plusmeny .dropdownBox.sms {
+width:auto;
+}
+.plusmeny .dropdownBox.sms .rapport{
+padding:0.5em;
+}
+.plusmeny .dropdownBox.sms div.left {
+width:30%;
+}
+.plusmeny .dropdownBox.sms div.right {
+width:60%;
+}
+.plusmeny .dropdownBox.sms label {
+padding-bottom:7px;
+margin-left: 0;
+}
+.dropdownBox p { /* Martin, anv�nds framf�rallt f�r felmeddelanden, se t ex Bevaka lagret */
+white-space:normal;
+}
+.dropdownBox.utvecklingIndexBox { /* Marknads�versikten */
+width:47.0em;
+padding:7px 0 9px 0;
+}
+.dropdownBox.bevakaBox { /* Martin, f�r pluslagret */
+top:1.7em;
+right:12.2em;
+padding:2em;
+width: 27em;
+}
+.dropdownBox.kurslarmBox,
+.dropdownBox.kursrapportBox { /* Martin, f�r pluslagret */
+top:1.7em;
+right:19.2em;
+width:60.0em;
+background-color:#fff;
+padding:5px 0 0 0;
+}
+.dropdownBox.kurslarmBox { /* Martin, f�r pluslagret */
+right:28.5em;
+}
+div.tableContainer .dropdownBox.bevakaBox,
+div.tableContainer .dropdownBox.kurslarmBox,
+div.tableContainer .dropdownBox.kursrapportBox { /* Martin, justerar placering av bevakaBox f�r Kursdatasidan */
+right:28.2em;
+}
+div.tableContainer .dropdownBox.kurslarmBox { /* Martin, justerar placering av bevakaBox f�r Kursdatasidan */
+right:19.7em;
+}
+div.tableContainer .dropdownBox.kursrapportBox { /* Martin, justerar placering av bevakaBox f�r Kursdatasidan */
+right:9.7em;
+}
+.dropdownBox.valutaBox { /* Dep��versikten */
+width:6.0em;
+margin:0 0 0 15.6em;
+}
+.dropdownBox.risk { /* Martin, se Expertportf�ljl�nken p� sidan om Risk (Dep�) */
+left:26.8em;
+top:5.1em;
+}
+div.dropdownBox table tr td { /* Alla dropdownBoxes ska ha lista sitt inneh�ll i en tabell, detta f�r att current klassen ska se bra ut */
+padding:0 0 0 7px;
+line-height:1.5em;
+border-right:0;
+text-align:left;
+}
+div.dropdownBox table tr td a { /* Martin, se ovan */
+padding:0 4px 1px 4px;
+}
+.spalt { /* Marknads�versikten */
+float:left;
+margin-left:1.2em;
+display:inline;
+width:20.8em;
+line-height:1.5em;
+}
+div.close,
+img.close { /* Martin, i popupers �vre h�gra h�rn */
+position:absolute;
+top:12px;
+right:12px;
+width:6px;
+height:5px;
+}
+img.close { /* Martin, ibland verkar det fungera b�ttre att s�tta klassen close direkt p� bilden ist�llet f�r att wrappa en close div runt bilden */
+top:8px;
+right:8px;
+}
+/* SLUT G�MDA LAGER //////////////////////////////////////////////////////////////////////////// */
+/* START TRUNKERA ////////////////////////////////////////////////////////////////////////////// */
+.list .truncate,
+.onecol .truncate,
+.twocol .truncate,
+div.truncate3,
+div.truncate4,
+div.truncate5,
+div.truncate6,
+div.truncate7,
+div.truncate8,
+div.truncate9,
+div.truncate10,
+div.truncate11,
+div.truncate12,
+div.truncate13,
+div.truncate14,
+div.truncate15,
+div.truncate16,
+div.truncate17,
+div.truncate18,
+div.truncate19,
+div.truncate20,
+div.truncate23,
+div.truncate25,
+div.truncate28,
+div.truncate30,
+div.truncate31,
+div.truncate35,
+div.truncate58,
+div.truncate60,
+div.truncate62,
+div.truncate120 {
+overflow:hidden;
+white-space:nowrap;
+width:20.0em;
+line-height:1.4em;
+}
+.list .truncate { /* Martin */
+line-height:1.6em;
+}
+.onecol .truncate {
+width:9.8em;
+}
+.twocol .truncate {
+width:20.0em;
+}
+div.truncate3 {
+width:3.0em;
+}
+div.truncate4 {
+width:4.0em;
+}
+div.truncate5 , td.truncate5, .list th.truncate5 {
+width:5.0em;
+}
+div.truncate6 {
+width:6.0em;
+}
+div.truncate7 {
+width:7.0em;
+}
+div.truncate8 {
+width:8.0em;
+}
+div.truncate9, td.truncate9, .list th.truncate9 {
+width:9.0em;
+}
+div.truncate10 {
+width:10.0em;
+}
+div.truncate11 {
+width:11.0em;
+}
+div.truncate12, td.truncate12, .list th.truncate12 {
+width:12.1em;
+}
+div.truncate13,td.truncate13, .list th.truncate13 {
+width:13.0em;
+}
+div.truncate14 {
+width:14.0em;
+}
+div.truncate15 {
+width:15.0em;
+}
+div.truncate16 {
+width:16.0em;
+}
+div.truncate17 {
+width:17.0em;
+}
+div.truncate18 {
+width:18.0em;
+}
+div.truncate19 {
+width:19.0em;
+}
+div.truncate20 {
+width:20.0em;
+}
+div.truncate23 {
+width:23.0em;
+}
+div.truncate25 {
+width:25.0em;
+}
+div.truncate28 {
+width:28.0em;
+}
+div.truncate30 {
+width:30em;
+}
+div.truncate35 { /* Christina, Nordnetskolan */
+width:35.0em;
+}
+div.truncate62 { /* Martin, Nyheter och Pressmeddelanden */
+width:62.0em;
+}
+div.truncate31,
+div.truncate60 { /* Christina; special f�r Nordnetskolan, hela kursutbudet */
+width:31.0em;
+padding: 5px 0;
+xline-height: normal;
+}
+div.truncate58 {/* Christina; special f�r Nordnetskolan, hela kursutbudet */
+width:58em;
+}
+div.truncate60 {/* Christina; special f�r Nordnetskolan, hela kursutbudet */
+width:60em;
+white-space:normal;
+}
+/* SLUT TRUNKERA ////////////////////////////////////////////////////////////////////////////////// */
+/* START ORDERDJUP STAPLAR //////////////////////////////////////////////////////////////////////// */
+td.indexStaplar {
+border-bottom: 1px solid #f0eeef;
+width:14.6em;
+text-align:center;
+}
+.stapelOrderdjupContainer {
+position:relative;
+height:1.1em;
+width:14.6em;
+padding-bottom:0.2em;
+}
+.stapelOrderdjupUpp,
+.stapelOrderdjupNer {
+position:absolute;
+height:0.7em;
+margin:0.3em 0 0.2em 0;
+}
+.stapelOrderdjupNer {
+right:7.4em;
+background-color:#e00024;
+}
+.stapelOrderdjupUpp {
+left:7.3em;
+background-color:#00a9ec;
+}
+/* Orderdjup ///////////////////////////////// */
+th.buy {
+padding:3px 7px 4px 0;
+width:73px;
+}
+th.sell {
+text-align:left;
+padding:3px 0 4px 7px;
+width:73px;
+}
+td.orderdjupStaplar {
+background:#fff url(/now/images/grey.gif) repeat-y top;
+border-bottom:1px solid #f0eeef;
+width:14.6em;
+}
+td.orderdjupStaplar .stapelContainer {
+position:relative;
+height:1.1em;
+width:14.6em;
+padding-bottom:0.2em;
+margin-left:0.8em;
+}
+td.orderdjupStaplar .stapelNer { /* R�d */
+position:absolute;
+height:0.7em;
+margin:0.3em 0 0.2em 0;
+left:7.2em;
+background-color:#e00024;
+}
+td.orderdjupStaplar .stapelUpp { /* Bl� */
+position:absolute;
+height:0.7em;
+margin:0.3em 0 0.2em 0;
+right:7.5em;
+background-color:#00a9ec;
+}
+/* SLUT ORDERDJUP STAPLAR //////////////////////////////////////////////////////////////////////// */
+/* GENERELLT F�R SAMTLIGA TABELLER //////////////////////////////////////////////////////////////// */
+table {
+border-collapse:collapse;
+width:100%;
+clear:left;
+}
+table th,
+table td {
+text-align:right;
+padding:0 5px 0 7px;
+white-space:normal;
+line-height:1.5em;
+vertical-align:top;
+border:0px;
+color:#000;
+}
+th.text,
+td.text,
+table.text td,
+table.text th {
+text-align:left;
+}
+td.indrag { /* Martin, ett extra indrag f�r att kunna g�ra undergrupper i tabeller, se t ex Krediter (Dep�) */
+padding-left:1.5em;
+padding-right:1.5em;
+}
+td.break { /* Theresa, radbryter i cellen */
+white-space:normal;
+}
+table.basic tr td,
+td.plusmeny table.basic tr td { /* Nollst�ller en tabell */
+padding:0;
+border-right:0;
+text-align:left;
+}
+table tr td.papperskorg img {
+margin-top:4px;
+}
+table tr td.papperskorg {
+width:10px;
+padding:0 13px 0 6px;
+}
+.list td.date,
+.module td.date { /* Martin, s�tt p� alla kolumner som visar datum, beh�vs dock bara s�ttas p� luftiga tabeller */
+width:7.2em;
+}
+.list td.time { /* Martin, s�tt p� alla kolumner som visar tid, beh�vs dock bara s�ttas p� luftiga tabeller */
+width:5.8em;
+}
+.module .tableContainer  td.time {
+width:11.4em;
+}
+.module td.time {
+width:auto;
+}
+.module table tr td.big {
+font-size:1.4em;
+padding:7px 5px 3px 7px;
+}
+div.list tr.resultLine td,
+div.module tr.resultLine td,
+table tr.resultLine td {
+border-top: 1px solid #a4d20f;
+border-bottom: 1px solid #d5d3d4;
+border-right:0;
+font-weight:bold;
+text-transform:uppercase;
+padding:3px 6px 3px 7px;
+background-color:#fff;
+}
+tr.resultLine td a {
+text-transform:none;
+font-weight:normal;
+}
+div.module table tr.resultLine.connected td { /* Martin, se t ex PPM */
+border-bottom:0;
+}
+table.borders td,
+table td.border { /* S�tt klassen borders p� tabellen i en modul f�r att f� samma typ av ramar som tabeller i en list har */
+border-right:1px solid #eee;
+}
+table.borders td.last {
+border-right:0;
+}
+div.list table.noBorder tr td,
+.module table td.noBorder,
+.list table tbody tr td,
+.list table td.noBorder { /* Tar bort borderstreck p� en list table */
+border:0;
+}
+th.groupHeader { /* De tabellhuvuden som g�r �ver 2 rader t ex M�klarstatistik, Sektor & Mest Omsatta */
+font-weight:bold;
+color:#838383;
+border-right:1px solid #dfdddd;
+border-left:1px solid #fff;
+}
+th.groupStart { /* Se f�rklaring ovan */
+border-left:1px solid #fff;
+}
+th.groupEnd { /* Se f�rklaring ovan */
+border-right:1px solid #dfdddd;
+}
+.list table tr td.checkbox { /* Christina, P�g�ende Transaktioner, Fondmarknader */
+width:20px;
+}
+td.dragspel {  /* Christina. F�r att undvika "dragspelseffekten" */
+width: 25%;
+border-right:0;
+}
+table.wrap td,
+td.wrap,
+div.list td.wrap { /* Martin. Tabellerna har no-wrap som default, denna klass anv�nds om man vill fr�ng� den regeln */
+white-space:normal;
+}
+.module table tr.divider td {
+border-top:1px solid #a9c9bc;
+padding-top:2px;
+padding-bottom:8px;
+}
+td.avdelare,
+td.avdelare2 { /* Martin, anv�nds i diven f�r granska order/�ndra order p� handlasidan och i diven f�r bekr�ftelse till skickat �rsbesked (besked.html) */
+background:url(/now/images/avdelare.gif) repeat-x left 0.7em;
+padding-bottom:1.3em;
+}
+td.avdelare2 { /* gr� variant */
+background:url(/now/images/avdelare2.gif) repeat-x left 0.7em;
+}
+/* OLIKA VARIANTER P� TABELL TOPP ////////////////////////////////////////////////////////////// */
+div.linkRow {
+margin:0 0 0.8em 0;
+}
+div.tableContainer { /* Martin. Wrappa denna div runt tabellen f�r att placera ut bilder i captionf�ltet */
+position:relative;
+width:100%;
+z-index:3;
+}
+div.tableContainer div.iconTank a.dropselection,
+div.tableContainer div.iconTank a.dropactive {
+margin-right:1.6em;
+}
+a.dropselection { /* Martin. Denna regel g�ller samtliga l�nkar med klassen dropselection */
+background: url(/now/images/dropdown_pil2_ner.gif) no-repeat right 1px;
+padding-right: 16px;
+text-decoration:none;
+font-style:normal;
+}
+a.dropactive {
+background:url(/now/images/dropdown_pil2_upp.gif) no-repeat right 1px;
+padding-right: 16px;
+font-style:normal;
+}
+div.tableTopContent a.dropselection,
+div.tableTopContent a.realtid,
+div.tableTopContent a.dropactive { /* Martin. Om dropselection ligger i en tableTopContent, l�gg till f�ljande egenskaper */
+float:left;
+margin:3px 0 0 20px;
+}
+.module.diagram a.dropselection,
+.module.diagram a.dropactive { /* Martin */
+position:absolute;
+bottom:7px;
+right:8px;
+}
+a.realtid {
+background:url(/now/images/ikon_realtid2.gif) no-repeat right 1px;
+padding-right:16px;
+}
+div.list caption {
+background:#d9d9d9 none;
+padding:5px 0 5px 10px;
+border-bottom:1px solid #d9d9d9;
+}
+div.list caption.light { /* Martin, captionf�ltet �r ljusare p� Kursdata, Bolagsfakta, Historik & Nyckeltal */
+background:#f0eeef none;
+}
+div.list caption span {
+font-weight:normal;
+text-transform:none;
+padding-left:6px;
+color:#5e5e5e;
+}
+div.list caption span.bullet {
+color:#858384;
+font-weight:bold;
+margin:0 0 0.3em 0;
+}
+div.list tablen.o-arrow caption span.bullet {
+padding-left: 0;
+}
+div.module caption.world,
+div.column caption.world { /* Marin, se fondtorget samt strukturerade produkter */
+background:url(/now/images/onecolWorldBox.gif) no-repeat top left;
+text-align:center;
+padding:8.6em 0 5px 0;
+}
+td.kursPilSmall { /* Martin, anv�nds i samma tabell som caption klassen ovan */
+width:15px;
+text-align:left;
+padding:0 0 1px 7px;
+}
+/* L�NKAR MED IKON ////////////////////////////////////////////////////////////// */
+/* START MODULERNA ////////////////////////////////////////////////////////////// */
+div.module,
+div.submodule,
+div.noTopModule {
+float:left;
+margin:1.5em 0 0 1.5em;
+display:inline;
+}
+.submodule {
+position:relative;
+}
+div.noTopModule,
+div.submodule {
+margin-top:0;
+}
+.cirkelDiagram { /* Martin, se t ex Risk (Dep�) eller Experterna Innehav (Analys & Nyheter) */
+margin:1.0em 0 1.3em 0;
+text-align:center;
+}
+/* Bredden p� en modul eller submodul anges med en av nedanst�ende fyra klasser */
+div.onecol {
+width:22.8em;
+border:0px solid #ffff00;
+}
+div.twocol {
+width:47.2em;
+border:0px solid #BBDD4A;
+}
+div.threecol {
+width:71.4em;
+}
+div.fourcol {
+width:95.9em;
+border:0px solid #ffff00;
+}
+/*F�r ie6 ox� nordnet.css*/
+div.threecol.wintradeRight {
+width:71.4em;
+margin-left:6em;
+}
+.module div.first {/* F�rsta submodulen i en modul */
+margin-left:0pt;
+}
+.module h2,
+.popupWin h2,
+h2.underline {
+border-bottom:1px dotted #BEBCBD;
+margin:0 0 1px 0;
+position:relative;
+}
+.module .inout h2 {
+border-bottom:0;
+margin:8px 0 2px 0;
+position:relative;
+}
+#gra h2,
+#gra2 h2,
+#gra2 h2.underline,
+{/* Kristian, was here 081118  */
+margin-left:2em;
+}
+h3.underline { /* Robin, was here 081015 */
+border-bottom:1px solid #7d9c8d;
+margin:0em 0 1px 0;
+position:relative;
+font-size:1.4em;
+font-weight:bold;
+}
+div.pad { /* Martin, f�r att inl�nkade moduler ska hamna p� r�tt plats, t�nk common/hogerspalt/flikar eller se t ex Kommande uppdrag (Dep�) */
+padding-top:7px;
+}
+.module div.more { /* "Visa fler" sist i en modul */
+margin:5px 0 0 7px;
+}
+div.helpText {
+padding:0.9em 0 1.1em 0;
+}
+div.helpText p { /* Martin */
+padding:0 2.0em 1.2em 0.8em;
+line-height:1.4em;
+}
+div.helpText ul {
+margin-bottom:12px;
+}
+div.helpText ul li,
+div.helpText ol li { /* Martin, snygga punktlistor i den h�gra spalten, hj�lpen */
+background:url(/now/images/bulletGreen2px.gif) no-repeat left 7px;
+padding-left:9px;
+margin-left:9px;
+line-height:1.4em;
+}
+div.helpText ol li {
+background:none;
+padding-left: 0;
+margin-left:20px;
+}
+/* START KORTA STATUS MEDDELANDEN */
+div.statusText { /* Martin, anv�nd denna ist�llet f�r helpText f�r alla korta action status meddelanden */
+padding:10px 0 0 0;
+}
+div.statusText p {
+text-align:center;
+padding:0 0 12px 0;
+}
+/* SLUT KORTA STATUS MEDDELANDEN */
+.onecol p { /* Martin */
+padding:0.5em 0 0.2em 0.8em;
+line-height:1.4em;
+}
+.twocol p,
+p.finstilt {
+padding:4px 7px;
+line-height:1.4em;
+}
+p.finstilt{
+padding-left:0;
+}
+p.bullet {
+padding:0 0 6px 0;
+line-height:0.0em;
+margin-top:-3px;
+}
+p.betona {
+font-weight:bold;
+}
+div.helpText p a {
+display:block;
+text-decoration:underline;
+}
+div.helpText p.betona,
+div.helpText p.betona2 {
+padding:1px 0 8px 0;
+text-align:center;
+}
+div.helpText p.betona2 { /* Martin, se Ins�ttningar */
+text-transform:uppercase;
+}
+p.finstilt,
+p.finstilt a { /* Martin, se t ex Besked eller Flytta fonder (Dep�) */
+color:#888;
+clear:left;
+}
+/* SLUT MODULERNA ///////////////////////////////////////////////////////////////////////////////// */
+/* TABELLER I MODULERNA /////////////////////////////////////////////////////////////////////////// */
+.module th,
+.popupWin th {
+padding:3px 7px 4px 7px; /* Paddingen i sidled �r extra viktig f�r f�rsta och sista kolumnen */
+vertical-align:bottom;
+background-color:#f0eeee;
+}
+.module th {
+border-bottom:3px solid #fff;  /* Per, egentligen inte en border utan en padding */
+}
+.module caption {
+background: url(/now/images/divider.gif) repeat-x bottom left;
+padding:0 0 2px 0;
+}
+div.list table tr td { /* Martin 2007-09-18 */
+line-height: 1.5em;
+white-space:nowrap;
+}
+.module table tr td {
+line-height: 1.4em;
+}
+div.list table tr td.text a.underline, div.list table tr td.text a {
+color:#000;
+}
+/* SLUT TABELLER I MODULERNA //////////////////////////////////////////////////////////// */
+/* START DIAGRAMTYPER /////////////////////////////////////////////////////////////////// */
+.diagramTwocol {
+position:relative;
+background:#f6f6f6;
+border:1px solid #d6d6d6;
+border-top:0;
+width:45.8em;
+padding:1.2em 0 0.8em 1.2em;
+z-index:1;
+}
+.diagramFourcol, /* Christina, gemensamma egenskaper f�r diagrambakgrunder */
+.diagramThreecol {
+float:left;
+position:relative;
+border-bottom:1px solid #d7d7d7;
+width:100%;
+padding:0 0 30px 0;
+background:#f6f6f6 url(/now/images/diagramBgThreecol.gif) repeat-y top left;
+}
+.diagramFourcol {
+background:#f6f6f6 url(/now/images/diagramBgFourcol.gif) repeat-y top left;
+}
+/* SLUT DIAGRAMTYPER ////////////////////////////////////////////////////////////////////// */
+/* START FLIKMENYERNA ///////////////////////////////////////////////////////////////////// */
+div.navigation {
+position:relative;
+width:100%;
+background:none repeat scroll 0 0 #A4D20E;
+height:2.9em;
+}
+div.no.navigation { /* Anv�nd en tom div med class="no navigation" n�r sidan saknar flikar */
+height:7px;
+}
+div.no.navigation.warning { /* Martin, r�d topp list ist�llet f�r den vanliga gr�na */
+background-color:#dd0023;
+}
+div.no.navigation.underConstruction { /* Martin, gul topp list ist�llet f�r den vanliga gr�na */
+background-color:#f8f400;
+}
+.navigation ul {
+padding:0.5em 0 0 14px;
+list-style:none;
+}
+.navigation li {
+float: left;
+background: url(/now/images/sprites/nav.gif) no-repeat left -105px;
+padding: 0 0 0 3px;
+margin-right:2px;
+}
+div.navigation li a {
+float: left;
+display: block;
+background: url(/now/images/sprites/nav.gif) no-repeat right -105px;
+padding: 6px 10px 5px 6px;
+font-size: 1.1em;
+line-height: 1.1em;
+color: #000;
+white-space: nowrap;
+width: auto;
+cursor: pointer;
+}
+.navigation .current {
+background: url(/now/images/sprites/nav.gif) no-repeat left -140px;
+}
+.navigation .current a {
+background: url(/now/images/sprites/nav.gif) no-repeat right -140px;
+color:#000;
+padding-bottom:6px;
+}
+.module .navigation,
+.list .navigation,
+#quicktrade .navigation {
+background:#d6d6d5;
+height:2.2em;
+}
+div.onecol caption { /* Martin, se Marknads�versikten */
+padding-top:5px;
+font-weight:normal;
+}
+.module .navigation ul,
+.list .navigation ul {
+padding: 3px 0 0 4px;
+}
+.module .navigation li,
+.list .navigation li,
+#quicktrade .navigation li {
+background: url(/now/images/sprites/nav.gif) no-repeat left -175px;
+}
+.module .navigation li a,
+.list .navigation li a,
+#quicktrade .navigation li a {
+background: url(/now/images/sprites/nav.gif) no-repeat right -175px;
+padding: 4px 8px 3px 4px;
+font-size: 1.0em;
+}
+.module .navigation .current,
+.list .navigation .current,
+#quicktrade .navigation .current {
+background: url(/now/images/sprites/nav.gif) no-repeat left -210px;
+}
+.module .navigation .current a,
+.list .navigation .current a,
+#quicktrade .navigation .current a {
+background: url(/now/images/sprites/nav.gif) no-repeat right -210px;
+padding-bottom: 4px;
+}
+.module .navigation li a span,
+.list .navigation li a span,
+#quicktrade .navigation li a span { /* Martin. En del flikar under handla och dep� har en siffra som indikerar antal i sig */
+color:#bbb9ba;
+padding-left:7px;
+}
+.diagram .navigation {
+background: #d6d6d5 url(/now/images/white.gif) repeat-x bottom left;
+height: 2.3em;
+margin-bottom: 0;
+}
+.diagram .navigation .current,
+#experterna .diagram .navigation .current { /* Lite m�rkare �n den vanliga modulnavigationen, tonar inte ut mot vitt */
+background: url(/now/images/sprites/nav.gif) no-repeat left -455px;
+}
+.diagram .navigation .current a,
+#experterna .diagram .navigation .current a { /* Lite m�rkare �n den vanliga modulnavigationen, tonar inte ut mot vitt */
+background: url(/now/images/sprites/nav.gif) no-repeat right -455px;
+padding-bottom: 5px;
+}
+#embeddedDiagram .navigation { /* Martin, se Topplistor Diagram (Fonder) & Grafisk J�mf�relse (Analys & Nyheter) */
+background:transparent url(/now/images/divider2.gif) repeat-x left 19px;
+margin-bottom:6px;
+height:2.1em;
+}
+#embeddedDiagram .navigation ul {
+padding:0;
+}
+#embeddedDiagram .navigation li {
+background:url(/now/images/sprites/nav.gif) no-repeat left -490px;
+padding-right:0;
+}
+#embeddedDiagram .navigation li a {
+background:url(/now/images/sprites/nav.gif) no-repeat right -490px;
+padding-bottom:4px;
+}
+#embeddedDiagram .navigation li.current {
+background:url(/now/images/sprites/nav.gif) no-repeat left -525px;
+}
+#embeddedDiagram .navigation li.current a {
+background:url(/now/images/sprites/nav.gif) no-repeat right -525px;
+padding-bottom:6px;
+}
+#embeddedDiagram { /* Martin, se Topplistor Diagram (Fonder) & Grafisk J�mf�relse (Analys & Nyheter) */
+border-left:1px solid #dedcdd;
+background-color:#f3f3f3;
+border-right:1px solid #dedcdd;
+padding:0 0 34px 0;
+}
+#embeddedDiagram .module { /* Martin, se kommentar ovan */
+float:left;
+margin:0 0 0 1.5em;
+display:inline;
+width:45.6em;
+}
+#embeddedDiagram h3 {
+margin:6px 0 4px 0;
+font-size:1.0em;
+font-weight:bold;
+}
+/* START KURSLISTA TABELL ////////////////////////////////////////////////////////////////////// */
+.list table {
+border-collapse: separate;
+}
+.list table.tableSpace,
+.module table.tableSpace { /* Anv�nds p� listsidor d�r det ligger flera tabeller efter varandra och du vill ha lite marginal mellan dem */
+margin-bottom:1.5em;
+}
+.list th,
+tr.bottomRow th { /* Se �ven separat regel l�ngre ner f�r TH som ligger nedan */
+text-align: right;
+padding:0 5px 4px 0;
+vertical-align: bottom;
+background: #fcfcfc;
+line-height:1.0em;
+border-bottom:0;
+}
+.list tbody th { /* Se ovan och anv�nd TH under varje tr.group n�r kolumnrubrikerna ska repeteras, kurslistan */
+border-bottom: 1px solid #dfdddd;
+padding-top:2px;
+padding-bottom:3px;
+}
+.list th {
+padding:6px 5px 5px 7px;
+}
+.list tr.topRow th,
+.list tr.topRowNoNav th {
+padding-top:3px;
+background: #fcfcfc url(/now/images/tableBg.gif) repeat-x left top;
+padding-bottom:4px;
+border-bottom: none;
+}
+.list tr.topRowNoNav th,
+.list tr.top th { /* Se t ex M�klarstatistiken och V�rldensidorna */
+border-top:1px solid #dfdddd;
+}
+.list tr.thin th {
+border-bottom:0;
+background: #fcfcfc url(/now/images/tableBg.gif) repeat-x left bottom;
+}
+.list th.first, /* Ge alltid f�rsta kolumnen klassen first */
+.list table tr.sort td.first {
+border-left: 1px solid #dfdddd;
+}
+.list tr.group td,
+.module tr.group td { /* Raden som kommer f�rst i varje TBODY i listor som har valet "Gruppera p�..." aktivt */
+background-color: #FFFFFF;
+border-bottom:1px solid #d4d2d3;
+border-top:1px solid #d4d2d3;
+border-right:0;
+font-weight:bold;
+padding:4px 5px 3px 0;
+line-height:normal;
+}
+tr.group td.text {
+padding-left:7px;
+}
+.list tr.first td { /* Ge alltid f�rsta raden klassen first */
+padding-top:3px;
+border-top:1px solid #d5d3d4;
+}
+div.module tr.first td,
+div.popupWin tr.first td,
+table.checkbox tr.first td {
+padding-top:2px;
+}
+.list th.last,
+.list tr.sort td.last { /* Ge alltid sista kolumnen klassen last */
+border-right: 1px solid #dfdddd;
+}
+.list td.last,
+.module td.last { /* Ge alltid sista kolumnen klassen last */
+border-right:0;
+}
+.module tr.last td,
+.popupWin tr.last td {
+padding-bottom:5px;
+}
+.list tr.last td,
+table.checkbox tr.last td { /* Ge alltid sista tabellraden klassen last */
+padding-bottom:3px;
+}
+.list tr.sort td,
+.list tr.sort td.text { /* En rad med pilar f�r sortering som ligger under kolumnrubrikerna */
+background-color: #f0eeee;
+padding: 0;
+border:1px solid #fff;
+border-right: 1px solid #dedcdd;
+border-bottom:0;
+}
+.list tr.sort a { /* Se ovan */
+display: block;
+padding: 3px 4px 2px 4px;
+/*height: 4px; #2835: Sort button arrows and functionality disabled in IE - removed height property to get sort button shown*/
+}
+col.sort {
+background-color:#ebf6fc;
+}
+.list tbody tr td { /* Anv�nd en TBODY f�r varje grupp n�r "Gruppera p�..." �r aktivt */
+border-right:1px solid #eee;
+}
+.list tfoot td,
+.module tfoot td {
+background:#fff url(/now/images/bulletGreen.gif) repeat-x top left;
+color:#878787;
+font-style:italic;
+text-align:left;
+padding:5px 0 0 4px;
+border-right:0;
+}
+tfoot.fler td {
+background:url(../images/bulletGreen.gif) repeat-x bottom left;
+font-style:normal;
+padding:2px 0 6px 8px;
+border-left:1px solid #efefef;
+}
+tfoot.fler td.fler {
+border-left:0;
+}
+div.tableFooter { /* Tabeller utan pluslager anv�nder denna */
+border-top:1px solid #a5d310;
+border-bottom:1px solid #d5d3d4;
+padding:4px 8px 5px 5px;
+}
+.list td.text,
+.list tr.text td {
+text-align:left;
+padding-left:7px;
+}
+.list th.text,
+.list tr.text th {
+text-align:left;
+padding-left:6px
+}
+/* SLUT KURSLISTA ////////////////////////////////////////////////////////////////////////// */
+/* START BACKBAR /////////////////////////////////////////////////////////////////////////// */
+div.backBar {
+background:url(/now/images/backBarBg.gif) no-repeat right top;
+overflow: hidden;
+width: 100%;
+background-color: #f5f3f4;
+margin-bottom:1.0em;
+height:33px;
+}
+div.backBar span.buttonGreen { /* Martin. Tillbakaknappen */
+margin:7px 0pt 0px 7px;
+}
+div.kopBox  {
+border-left:1px solid #C8C8C8;
+border-right:0;
+margin:0 0 0 15px;
+padding-left: 10px;
+float:left;
+}
+div.kopBox.noBorder {
+border:0;
+margin:0 0 0 2px;
+}
+div.kop span.buttonBlue {
+margin:7px 0pt 0px 12px;
+}
+div.kop span.buttonGrey {
+margin:7px 0pt 0px 4px;
+}
+div.kop p.kop {
+border-right:0;
+padding:10px 0 10px 30px;
+margin: 0;
+text-transform:none;
+font-size: 1.1em;
+}
+div.backBar p {
+float:left;
+font-weight:bold;
+margin:0px 0pt 0pt 12px;
+padding:11px 4px 9px 3px;
+text-transform:uppercase;
+}
+div.backBar p.normal {
+border-left:1px solid #C8C8C8;
+padding-left: 14px;
+float:left;
+text-transform: none;
+}
+/* SLUT BACKBAR ////////////////////////////////////////////////////////////////////////// */
+/* START S�KRUTAN //////////////////////////////////////////////////////////////////////// */
+.seekContainer .searchResult {
+background:url(/now/images/dropdown_pil2_ner.gif) no-repeat right 1px;
+font-weight: bold;
+padding:0 16px 0 5px;
+margin-top:3px ;
+float:left;
+display:block;
+text-transform:uppercase;
+}
+div.seekContainer {
+position:relative;
+padding-bottom:10px;
+z-index:4;
+}
+.seekContainer div.listoptions {
+padding-bottom: 0;
+}
+div.seekResultContainer {
+position:absolute;
+left:49%;
+margin-top:0;
+height:0;
+z-index:10;
+}
+#diagram div.seekResultContainer,
+#diagram div.seekResults {
+left:auto;
+right:0;
+}
+div.seekResults {
+position:relative;
+left:-50%;
+border:1px solid #a5acb2;
+background-color:#fff;
+z-index:10;
+}
+div.seekResults table {
+width:auto;
+border-collapse:collapse;
+}
+div.seekResults caption,
+table.seekResults caption { /* Martin, se snabbs�k i topp navigationen */
+background:#f4f3f1;
+border-bottom: 1px solid #dfddde;
+padding:5px 15px 5px 10px;
+}
+table.seekResults caption {
+border-top:1px solid #827e7f;
+}
+div.seekResults th,
+table.seekResults th { /* Martin, se snabbs�k i topp navigationen */
+background: #fbfbfb url(/now/images/tableBg.gif) repeat-x bottom left;
+border-bottom: 1px solid #dedcdd;
+padding:4px 4px 2px 15px;
+}
+div.seekResults td,
+table.seekResults td { /* Martin, se snabbs�k i topp navigationen */
+padding: 0 4px 0 5px;
+border-right: 1px solid #eee;
+}
+table.seekResults td.tvaKnapp a {
+float:left;
+}
+div.seekResults td.text,
+table.seekResults td.text { /* Martin, se snabbs�k i topp navigationen */
+padding: 0 15px 0 4px;
+}
+table.seekResults th.text {
+padding:4px 0 2px 4px;
+}
+div.seekResults th.first,
+div.seekResults td.first {
+padding-left:15px;
+border-left:0;
+}
+div.seekResults th.last,
+div.seekResults td.last {
+padding-right:15px;
+border-right:0;
+}
+table.seekResults td.last,
+table.seekResults th.last { /* Martin, se snabbs�k i topp navigationen */
+padding-right:13px;
+border-right:0;
+}
+div.seekResults tr.first td,
+table.seekResults tr.first td { /* Martin, se snabbs�k i topp navigationen */
+padding-top:5px;
+}
+div.seekResults tr.last td,
+table.seekResults tr.last td {
+padding-bottom:8px;
+}
+/* SLUT S�KRUTAN /////////////////////////////////////////////////////////////////////////////// */
+/* START PLUSLAGRET KURSLISTAN ///////////////////////////////////////////////////////////////// */
+.module table tr td.plusmeny,
+.list table tr td.plusmeny  { /* Tabellraden som man t�nder och sl�cker med Plusknappen */
+border:0;
+padding:0;
+}
+td.plusmeny tr.first td {
+border-top:0;
+padding-top:2px;
+}
+div.switchcontent {
+border:1px solid #929191;
+border-top:0;
+background:url(../images/pluslagerTop.gif) repeat-x left top #fff;
+padding:3px 0 12px 0;
+zoom:1; /* Martin, fixes IE7 bug */
+}
+div.switchcontent div.module {
+margin-top:7px;
+}
+div.switchcontent table tr td {
+line-height:1.4em;
+}
+div.switchcontent div.onecol {
+width:23.0em;
+}
+div.switchcontent div.module.first {
+margin-left:1.0em;
+}
+div.switchcontent div.twocol {
+width:42.3em;
+}
+div.switchcontent div.fourcol {
+width:93.7em;
+clear:both;
+margin-top:0;
+}
+div.switchcontent table th { /* Martin, den �versta tabellen ska se ut som en .list tabell... */
+padding:5px 5px 6px 7px;
+}
+div.switchcontent div.module table th { /* ...och de nedre tabllerna ska se ut som .module tabeller */
+padding:6px 7px 6px 7px;
+background-image:none;
+background-color:#f0eeef;
+border-bottom:0;
+}
+div.switchcontent div.iconTank {
+top:0.8em;
+right:1px;
+}
+div.switchcontent div.iconTank a {
+text-decoration:none;
+margin:0 0.9em 0 0;
+}
+div.switchcontent div.iconTank a.newWin {
+background:url(../images/knappPopup3.gif) no-repeat right 1px;
+padding-right:1.9em;
+}
+div.switchcontent div.iconTank a.refresh,
+div.tableContainer div.iconTank a.refresh {
+background:url(../images/knapp_refresh2.gif) no-repeat right 1px;
+padding-right:1.9em;
+margin-right:0.6em;
+}
+div.switchcontent div.iconTank a.close {
+background:url(../images/knappClose2.gif) no-repeat right 1px;
+padding-right:1.4em;
+}
+div.switchcontent div.iconTank a.kalkylator {
+background:url(../images/ikonKalkylator.gif) no-repeat right 1px;
+padding-right:1.7em;
+}
+div.switchcontent h2 div.iconTank { /* Martin, senaste avsluten */
+top:1px;
+}
+div.switchcontent h2 div.iconTank a { /* Martin, senaste avsluten */
+margin-right:0;
+}
+div.switchcontent div.hr,
+div.tableContainer div.hr {
+margin-bottom:1px;
+}
+div.switchcontent div.navigation {
+position:static;
+}
+div.switchcontent div.diagramcol img {
+margin:14px 0 0 5px;
+}
+div.switchcontent div.nyheter h2 {
+margin:7px 0 6px 0;
+}
+div.switchcontent div.nyheter span.source {
+text-transform:uppercase;
+margin:0 8px 0 7px;
+}
+div.switchcontent div.nyheter span.fler {
+font-weight:bold;
+margin:0 2px 0 1.6em;
+}
+/* Start Bevaka */
+div.dropdownBox input {
+float:left;
+}
+div.dropdownBox fieldset {
+margin-bottom:2px;
+}
+div.dropdownBox label {
+font-weight:normal;
+text-transform:uppercase;
+float:left;
+}
+div.dropdownBox legend {
+padding:13px 0 6px;
+}
+div.dropdownBox select,
+div.dropdownBox input.namnge {
+width:20.7em;
+margin-bottom:7px;
+}
+div.dropdownBox input.namnge {
+width:15.8em;
+}
+div.dropdownBox a.skapa {
+float:left;
+margin-top:3px;
+}
+div.dropdownBox div.knapp {
+float:right;
+}
+/* Slut Bevaka */
+/* Start Kurslarm & Kursrapport */
+div.left,
+div.right {
+float:left;
+display:inline;
+width:48%;
+margin:0 0 5px 10px;
+}
+div.dropdownBox div.left label,
+div.dropdownBox div.right label {
+text-transform:none;
+margin-right:5px;
+}
+div.dropdownBox input.mobil,
+div.dropdownBox input.mail,
+div.dropdownBox input.price {
+position:relative;
+top:-3px;
+margin-right:4px;
+}
+div.dropdownBox input.radio {
+position:relative;
+top:-2px;
+}
+/* Slut Kurslarm & Kursrapport */
+/* START GENERELLA REGLER F�R PLUSLAGER UNDER DEP� och EXPERT TRANSAKTIONERNA ////////////////// */
+.leftcol { /* Anv�nds till pluslagrena i Transaktion & Notor samt Valuta */
+float:left;
+margin:0.9em 0 1.5em 1.0em;
+display: inline;
+white-space:normal;
+}
+.rightcol {
+float:right;
+margin:0.9em 1.0em 1.5em 0;
+display: inline;
+white-space:normal;
+}
+.col1,
+.col3 {
+float:left;
+}
+.col2,
+.col4 {
+float:right;
+}
+/* SLUT GENERELLA REGLER F�R PLUSLAGER UNDER DEP� och EXPERT TRANSAKTIONERNA /////////////// */
+/* START PLUSLAGER TRANSAKTIONER OCH NOTOR (Dep�) & EXPERT TRANSAKTIONER (Analys & Nyheter) /*/
+#plusTransaktioner .leftcol,
+#plusBanktjanster .leftcol {
+width:42.0em;
+}
+#plusTransaktioner .rightcol {
+width:48.0em;
+}
+#plusTransaktioner .col1,
+#plusTransaktioner .col2,
+#plusTransaktioner .col4 {
+width:21.0em;
+}
+#plusTransaktioner .col3 {
+width:27.0em;
+}
+#plusTransaktioner table.basic tr td,
+#plusBanktjanster table.basic tr td {
+white-space: normal;
+}
+/* SLUT PLUSLAGER TRANSAKTIONER OCH NOTOR (Dep�) & EXPERT TRANSAKTIONER (Analys & Nyheter) ///// */
+/* START SPECIALREGLER F�R ALLTING SOM LIGGER I ETT PLUSLAGER ////////////////////////////////// */
+.plusOn { /* Aktiveras n�r man klickar p� plusknappen, t�nder en tabellrad */
+background-color:#d9e2de;
+}
+.switchcontent {
+position:relative;
+text-align:left;
+border:1px solid #929191;
+border-top:3px solid #00a9ec;
+}
+table tr td.plusmeny,
+.list table tr td.plusmeny  { /* Tabellraden som man t�nder och sl�cker med Plusknappen */
+border:0;
+padding:0;
+}
+td.plusmeny .realtidskurs,
+td.plusmeny .graf { /* Kolumnrubrikerna hoppar till om allting i pluslagret �r satt till float:left d�rf�r skriver vi �ver float:left med float:right p� realtidskursen och grafen */
+float:right;
+margin-right:1.2em;
+margin-left:0;
+}
+td.plusmeny .diagramcol {
+width:24.3em;
+}
+table.plus {
+border-collapse: collapse;
+}
+table.orderdjup tr td {
+border-right:1px solid #eee;
+}
+table.plus th {
+background: #efedee none;
+height:1.5em;
+border-bottom:0;
+padding:3px 4px 3px 4px;
+}
+td.plusmeny h2 {
+margin:7px 0 1px 7px;
+}
+td.plusmeny fieldset.first {
+margin-left:17px;
+}
+td.plusmeny tr.first td {
+border-top:0;
+}
+td.plusmeny .diagramcol img {
+margin:8px 0 14px 0;
+}
+div form fieldset.minaListor { /* Martin. T�nk p� att detta fieldset �ven anv�nds p� Kursdatasidan */
+margin:8px 0 0 0;
+position:relative;
+}
+fieldset.minaListor select { /* Martin */
+width:16.6em;
+display:block;
+margin:2px 0 10px 0;
+}
+#container fieldset.minaListor span { /* Martin. Placerar ut knappen */
+position:absolute;
+right:0;
+top:3.9em;
+}
+/* SLUT SPECIALREGLER F�R ALLTING SOM LIGGER I ETT PLUSLAGER //////////////////////////////////////  */
+/* OPTIONSKALKYLATORN  I PLUSLAGRET //////////////////////////////////////////////////////////////// */
+td.plusmeny .leftcol {
+float:left;
+width:54.0em;
+margin-bottom:15px;
+}
+td.plusmeny .rightcol {
+float:right;
+width:39.2em;
+margin-bottom:15px;
+}
+td.plusmeny .volatilitet,
+td.plusmeny .data,
+td.plusmeny .resultat,
+td.plusmeny .berakna,
+#enkelKalkyl .volatilitet,
+#enkelKalkyl .data,
+#enkelKalkyl .resultat,
+#enkelKalkyl .berakna,
+#kalkylatorVarden .volatilitet,
+#kalkylatorVarden .data,
+#kalkylatorVarden .resultat,
+#kalkylatorVarden .berakna
+{
+float:left;
+display:inline;
+margin:0 0 1.5em 1.2em;
+width:12.0em;
+}
+td.plusmeny .data, #enkelKalkyl .data, #kalkylatorVarden .data {
+width:41.8em;
+}
+td.plusmeny .resultat, #enkelKalkyl .resultat, #kalkylatorVarden .resultat{
+width:23.4em;
+}
+td.plusmeny .data input, #enkelKalkyl .data input, #kalkylatorVarden .data input {
+width:68px;
+margin-right:2px;
+padding:0;
+height: 16px;
+}
+td.plusmeny .berakna select, #enkelKalkyl .data select, #kalkylatorVarden .data select {
+width:12.0em;
+}
+td.plusmeny .berakna span, #enkelKalkyl .berakna span, #kalkylatorVarden .berakna span {
+margin:6px 0 0 0;
+}
+td.plusmeny table.optionskalkylator td {
+border-right:0;
+text-align:left;
+padding:0;
+margin:0;
+vertical-align:top;
+}
+form.kalkyl table td  {
+font-size:10px;
+text-align:left;
+}
+/* SLUT OPTIONSKALKYLATORN I PLUSLAGRET //////////////////////////////////////////////////////////// */
+/* START ALERTS T EX KURSLARM & KURSRAPPORT I PLUSLAGRET /////////////////////////////////////////// */
+.alerts div.module { /* Ta bort v�nstermarginalen fr�n v�ra moduler */
+margin-left:0;
+}
+.alerts div.last {
+margin-left:1.5em;
+}
+.alerts fieldset {
+float: left;
+}
+.alerts fieldset.first {
+margin-right: 30px;
+margin-left:7px;
+display:inline;
+}
+.alerts fieldset legend {
+border-top: 5px solid #fff;     /* Fuskpadding */
+border-bottom: 3px solid #fff;  /* Fuskpadding */
+}
+.alerts label {
+display: inline;
+float: left;
+font-weight:normal;
+}
+.alerts .module label {
+font-weight: normal;
+}
+.alerts input {
+display: block;
+float: left;
+margin-bottom: 2px;
+}
+.alerts label.checkbox { /* Larm till mobil formul�r */
+margin:0 15px 5px 0;
+width: 5.2em;
+}
+.alerts br {
+clear:left;
+}
+.alerts fieldset span {
+font-style: italic;
+clear:both;
+display: block;
+padding: 4px 0;
+}
+.alerts img.flag {
+float:left;
+width:9px;
+height:7px;
+margin:3px 4px 0 0;
+}
+div.alerts div.newsSources {
+margin-top: 1.5em;
+}
+.alerts .newsSources fieldset {
+float: left;
+margin: 4px 0 0 0;
+}
+.alerts .newsSources label {
+width: auto;
+}
+.alerts div.trigger {
+margin:7px 0 0 0;
+float:left;
+}
+.alerts input.percent,
+.alerts input.price {
+margin-right: 4px;
+margin-left: 6px;
+}
+.alerts label input { /* Input f�ltet, "Meddela mig om f�ljande ord f�rekommer i en nyhet" */
+margin-top: 4px;
+width: 30.2em;
+}
+.alerts .submitList { /* Martin. Se t ex Skapa Nyhetslarm */
+margin-top:1.0em;
+}
+td.alert{
+color:red;
+}
+/* SLUT ALERTS T EX KURSLARM & KURSRAPPORT I PLUSLAGRET //////////////////////////////////////////// */
+/* START L�PTEXTER ////////////////////////////////////////////////////////////////////////////////  */
+.loptext { /* Martin, s�tt dennna klass p� all text som ska vara 11 pixlar stor */
+font:1.1em/1.5em Verdana, Arial, sans-serif;
+}
+.loptext.DEFI { /* F�r finska och Tyska som kan beh�va ngt st�rre typsnitt */
+font:1.2em/1.5em Verdana, Arial, sans-serif;
+}
+.loptext p.margin,
+.riskmeddelandeBox p,
+.accepteraBox p,
+.bekraftaBox p {
+padding: 0.7em 0 0.7em 0;
+}
+.module .loptext p {
+padding: 0 0 1.2em 0;
+line-height: 1.5em;
+}
+div.threecol div.loptext {
+padding-right: 6.2em;
+}
+div.threecol div.loptext img {
+padding-top: 1.5em;
+}
+div.loptext h1 {
+margin:0 0 15px 0;
+font:normal 1.5em Verdana;
+}
+div.loptext h2 {
+margin: 0 0 0.5em 0;
+font:normal 1.5em Verdana;
+border-bottom:0;
+text-transform:none;
+}
+div.module .loptext h3 {
+text-transform: none;
+margin:0;
+font: bold 1.0em/1.5em Verdana;
+}
+div.loptext ul,
+ul.agenda { /* Martin, anv�nds bla f�r "Det h�nder idag" (Marknaden) och Finanskalendern (Analys & Nyheter) */
+margin:7px 7px 12px 7px;
+}
+div.loptext ul {
+margin-top:0;
+}
+div.loptext ul li,
+ul.agenda ul li {
+list-style:none;
+text-transform:uppercase;
+line-height:1.4em;
+}
+div.loptext li ul li,
+div.loptext ul li, /* Martin, i de fall d� du inte vill n�stla tv� punktistor, se t ex Asset Card */
+ul.agenda li ul li {
+background:url(/now/images/bulletGreen2px.gif) no-repeat left 7px;
+padding-left:8px;
+line-height:1.4em;
+text-transform:none;
+}
+ul li ul {
+padding-bottom:10px;
+}
+span.about { /* Christina, anv�nds p� Marknadskommentaren, Expertkommentaren och Mer om portf�ljen */
+display: block;
+font-style:italic;
+padding-top:1.0em;
+color:#797979;
+}
+span.date {
+color:#878787;
+margin-right:4px;
+white-space:nowrap;
+}
+.loptext span.date { /* Christina, anv�nds p� Marknadskommentaren och Expertkommentaren */
+display:block;
+font-size:0.9em;
+padding-bottom:3em;
+color:#000;
+margin-right:0;
+}
+.textingress {
+font-style:italic;
+}
+/* SLUT L�PTEXTER //////////////////////////////////////////////////////////////////////////////////  */
+/* START TABELL F�R FORMUL�R //////////////////////////////////////////////////////////////////////// */
+table.form { /* Martin, En tabell gjord f�r formul�r, anv�nds p� ett flertal st�llen under dep�, t ex V�xla, Realiserad Avkastning, Uttag och Ins�ttningar men �ven under Handla och Stop Loss */
+margin:0.6em 0 0.4em 0;
+}
+div table.form tr td { /* Martin, standard tabell cell */
+text-align:left;
+padding:4px 0;
+border-right:0;
+vertical-align:middle;
+}
+table.radio { /* Christina, tabell f�r radioknappar */
+margin: 10px 0 20px 10px;
+}
+table.radio tr td {
+text-align:left;
+padding:2px 0 1px 0;
+border-right:0;
+vertical-align:middle;
+}
+div.module table.normal tr td { /* Martin, tabellklass som g�r att s�tta p� form tabeller f�r att minska radavst�ndet, anv�nds p� K�p Sparprodukter */
+padding:0;
+}
+div table.form tr td.first,
+div table.form tr td label,
+div table.form tr td.last { /* Martin, s�tt p� f�rsta cellen i varje rad om f�rsta cellen inte �r en label */
+padding-left:8px;
+}
+div table.form tr td.last {
+color:#909090;
+}
+table.form tr.aboveArrow td { /* Martin, se Uttag och Ins�ttningar (Dep�) */
+padding-bottom:13px;
+}
+table.form td.arrow { /* Martin, se gr� pil med streck ovan i Ins�ttningar och Uttag under Dep�fliken */
+text-align:center;
+padding:0 0 2px 0;
+border-top:1px solid #d4d2d3;
+}
+table.form td.legend {
+font-weight:bold;
+padding:0 0 0.4em 0.7em;
+white-space:normal;
+margin-top:0;
+}
+table.form td h3 { /* Martin, b�r inte detta vara en legend ist�llet? */
+font-weight:bold;
+padding-left:8px;
+text-transform: none;
+}
+table.form td.h3 {
+padding:0;
+text-transform: none;
+}
+table.form td.form { /* Martin, beh�vs om det inte finns n�got inneh�ll i kolumn tre */
+width:24%;
+}
+#andraBox table.form td,
+#laggtillBox table.form td { /* Christina */
+padding:0;
+margin:0;
+border-top:0;
+}
+/* SLUT TABELL F�R FORMUL�R /////////////////////////////////////////////////////////////////////////// */
+.boxArrow,
+.boxArrow2,
+.boxArrow3,
+.boxArrow4 { /* Martin, gr�nt streck, anv�nds under submitList */
+border-top:1px solid #a4d20f;
+text-align:center;
+margin-bottom:1.5em;
+}
+.boxArrow2 { /* Martin, gr�tt streck, annars samma som ovan */
+border-top:1px solid #d3d3d3;
+}
+.boxArrow3 { /* Martin, bl�tt streck, annars samma som ovan */
+border-top:1px solid #0092dd;
+}
+.boxArrow4 { /* M�rk gr�tt streck, annars samma som ovan */
+border-top:1px solid #C3C3C3;
+}
+div.centreradPil1,
+div.centreradPil2,
+div.centreradPil3 { /* Martin, den h�r skulle p� sikt kunna ers�tta klassen boxArrow ovan */
+clear:both;
+height:4px;
+background:url(/now/images/arrow.gif) no-repeat top;
+border-top:1px solid #a3d10e;
+}
+div.centreradPil2 {
+background:url(/now/images/arrow2.gif) no-repeat top;
+border-top:1px solid #d3d3d3;
+}
+div.centreradPil3 {
+background:url(/now/images/arrow3.gif) no-repeat top;
+border-top:1px solid #0092dd;
+}
+.hr, /* Martin. Gr�nt streck */
+.hr2,
+.hr3 {
+background-color:#a3d30d;
+margin-top:0;
+clear:left;
+height:1px;
+}
+.hr2 { /* Martin. Gr�tt streck */
+background-color:#d3d3d3;
+}
+.hr3 { /* Martin. Bl�tt streck, endast Quicktrade? */
+background-color:#0092dd;
+}
+tfoot td.arrow { /* Martin. En i table footern centrerad pil. F�retagsh�ndelser */
+text-align:center;
+padding-top:1px;
+}
+div.arrow2 { /* Martin, se Krediter, V�xla & Fonndportf�ljer */
+text-align:center;
+}
+div.arrow2 img { /* Martin, se Krediter */
+margin-bottom:7px;
+display:inline-block;
+}
+/* START V�RLDEN (MARKNADEN) OCH FONDMARKNADER (FONDER) //////////////////////////////////////////// */
+#kartaVarlden { /* Martin, container med kartan som bakgrund. Boxarna f�r de olika l�nderna �r utplacerade absolute och finns i fonder.css och marknaden.css */
+position:relative;
+background:#fff url(/now/images/karta_varlden.jpg) no-repeat 6.3em 1.5em;
+width:86.4em;
+height:47.0em;
+margin-bottom:1.0em;
+}
+.marknadBox { /* Martin, inneh�ller kurspil, kurssiffra, marknadsnamn */
+position:absolute;
+background-color:#fff;
+border:1px solid #dedede;
+padding:6px 7px 0 70px;
+text-align:right;
+height:3.4em;
+}
+.marknadBox span {
+font-weight:bold;
+display:block;
+}
+.marknadBoxIkon {
+position:absolute;
+top:-17px;
+left:0.9em;
+text-align:center;
+}
+.marknadBoxIkon img  {
+width:30px;
+height:41px;
+}
+.marknadBoxIkon div {
+font:bold 1.2em Verdana, Arial, sans-serif;
+margin-top:-1px;
+}
+.marknadBanner { /* Martin, anv�nds l�ngst ner p� b�de under V�rlden (Marknaden) och Fondmarknader (Fonder) */
+position:absolute;
+top:41em;
+background-color:#fff;
+border:1px solid #dedede;
+width:95.7em;
+padding:22px 0 15px 0;
+}
+.marknadBanner div,
+.marknadBanner div.first { /* Martin, inneh�llet i marknad div, observera att den f�rsta har en egen margin-left, som dessutom skiljer sig mellan fonder.css och marknaden.css */
+float:left;
+display:inline;
+margin-left:4.0em;
+}
+.marknadBanner img { /* Kurspil */
+float:left;
+margin-right:1.4em;
+width:30px;
+height:40px;
+}
+.marknadBanner span {
+font-weight:normal;
+font-size:1.1em;
+}
+.marknadBanner span.bullet {
+font-weight:bold;
+margin:0 4px;
+}
+#kartaVarlden a {
+text-decoration:underline;
+font-weight:bold;
+display:block;
+}
+.marknadBanner a {
+font-size:1.2em;
+margin:2px 0 3px 0;
+}
+/* SLUT V�RLDEN (MARKNADEN) OCH FONDMARKNADER (FONDER) ///////////////////////////////////////// */
+/* START L�GG TILL EN FOND (J�MF�R FONDER, BYT FONDER) ///////////////////////////////////////// */
+.adderaFondLink { /* Martin, standard utf�randet av L�gg till fond l�nken */
+text-align:center;
+margin:1.1em 0 1.5em 0;
+}
+div.analyserakorg .adderaFondLink { /* Martin, se J�mf�r fonder (Fonder) */
+position:absolute;
+left:100%;
+width:14.0em;
+margin:0;
+text-align:left;
+}
+div.module tr.conclusion td {
+border-top:1px solid #d3d3d3;
+border-right:0;
+padding:4px 5px 15px 7px;
+}
+div.module tr.conclusion td span {
+display:block;
+margin:3px 0 2px 0;
+}
+div.conclusion {
+border-top:1px solid #d3d3d3;
+padding:0.9em 0 1.5em 0;
+text-align:center;
+height:1.0em;
+position: relative;
+}
+div.conclusion .adderaFondLink,
+tr.conclusion td a.dropselection,
+tr.conclusion td a.dropselection,
+tr.conclusion td a.dropactive { /* Martin, se Byt fonder (Handla) */
+text-align:left;
+text-decoration:none;
+float:left;
+display:inline;
+margin:0 0 0 9px;
+}
+div.conclusion span.total {
+font-weight:bold;
+float:right;
+margin-right:9px;
+}
+div.helpText .adderaFondLink {
+margin:0 0 8px 0;
+}
+/* SLUT L�GG TILL EN FOND (J�MF�R FONDER, BYT FONDER) /////////////////////////////////////////// */
+/* START K�PFOND M.M. /////////////////////////////////////////////////////////////////////////// */
+.topFond,
+.topPortfolj {  /* Martin, containern f�r b�sta fond och b�sta portf�lj skiljer sig en del �t */
+text-align:center;
+padding:0.8em 0 1.5em 0;
+}
+.topPortfolj { /* Fondtorget */
+text-align: left;
+border-top:1px solid #d3d3d3;
+padding:1.5em 0 1.5em 0;
+}
+div.topFond h2,
+div.topPortfolj h2 {
+border-bottom:0;
+margin:2px 0 7px 0;
+text-align:center;
+}
+.topFond a {
+display:block;
+text-decoration:underline;
+margin-top:-2px;
+padding:4px 0 2px 0;
+}
+.topFond a.linkTo {
+margin-top:8px;
+}
+.topFond span,
+.topPortfolj span { /* Martin, siffran som visar kursen */
+font-weight:bold;
+display:block;
+font-size:1.4em;
+margin-bottom:7px;
+}
+.topFond img.rating { /* Martin */
+margin-top:4px;
+}
+.topFond img.arrow { /* Christer */
+padding-bottom:2px;
+}
+.topFond p.motivering {
+text-align:left;
+}
+.topFond p.utv {
+margin:-2px 0 1px 0; /* se �ven ie.css */
+padding-top:0;
+}
+.twocol span.kursPlus,
+.twocol span.kursMinus { /* Christer, K�p fonder (Fondfaktafliken), formaterar plus och minuskurs */
+font-weight: normal;
+display: inline;
+font-size:1.0em;
+}
+/* SLUT K�PFOND M.M. /////////////////////////////////////////// */
+div#localLoadingIndicator {
+float: left;
+background: #fff url(../images/spinner.gif) no-repeat center center;
+margin-left: 8px;
+margin-top: 0.1em;
+width: 16px;
+height: 16px;
+}
+/* START NYHETSINGRESS ////////////////////////////////////////////////////////////////////////// */
+.nyhetsIngress {
+position:absolute;
+z-index:10;
+background-color:#fcfba8;
+border:1px solid #7e9d8e;
+width:27.2em;
+padding:10px;
+overflow:hidden;
+}
+/* SLUT NYHETSINGRESS ////////////////////////////////////////////////////////////////////////////// */
+.popupWin {
+font-size:11px;
+position:absolute;
+top:15em;;
+left: 50%;
+margin-left: -277px;
+background-color:#fff;
+width:56em;
+min-width: 500px;
+z-index:10000;
+border-radius: 15px 15px 15px 15px;
+-moz-border-radius: 15px 15px 15px 15px;
+-webkit-border-radius: 15px 15px 15px 15px;
+}
+.popupWin .submitList {
+border-radius: 0px 0px 15px 15px;
+-moz-border-radius: 0px 0px 15px 15px;
+-webkit-border-radius: 0px 0px 15px 15px;
+}
+div.aboveSubmitList p { /* Martin, generellt skrivet, se ovan */
+line-height:1.4em;
+padding:0.5em 0 1.2em 0.7em;
+}
+div.popupWin label,
+div.popupWin input,
+div.popupWin select,
+div.popupWin fieldset span,
+div.popupWin fieldset { /* Martin, generellt skrivet, se ovan */
+float:left;
+}
+div.popupWin fieldset { /* Martin, generellt skrivet, se ovan */
+width:100%;
+margin:2px 0 4px 0;
+}
+div.popupWin label { /* Martin, generellt skrivet, se ovan */
+margin:0.3em 1.4em 0 0.7em;
+display:inline;
+}
+.popupWin.rounded {
+-moz-border-radius:15px 15px 15px 15px;
+}
+div#lightbox {
+font-size:0.5em;
+left:38%;
+position:absolute;
+text-align:center;
+top:20em;
+z-index:10001;
+}
+div.popupWin div.aboveSubmitList {
+padding:2.7em 2em 0;
+}
+div#lightbox a.close {
+position:absolute;
+right:-11px;
+top:-13px;
+}
+a.lightboxClose {
+background:url("/now/images/lightbox-close.png") no-repeat scroll 0 0 transparent;
+float:right;
+height:35px;
+margin:-14px -14px 0 0;
+width:35px;
+cursor:pointer;
+}
+/* SLUT �TERANV�NDNINGSV�NLIGT POPUPF�NSTER OFTA MED TV� KNAPPAR I EN SUBMITLIST I BOTTEN */
+/* START F�RANM�LDA KONTON POPUP (se Dep�/F�ranm�lda konton & Bli Kund) ///////////////// */
+.scrollText {
+overflow:auto;
+height:9.3em;
+line-height:1.4em;
+padding:0.7em 1.0em 0.7em 0.7em;
+border-bottom:1px solid #a4d20f;
+}
+.scrollTextcontainer { /* Martin, wrappar �ven rubriken och checkboxen */
+margin:2.6em 2.8em 0.8em 2.7em;
+}
+/* SLUT F�RANM�LDA KONTON POPUP (se Dep�/F�ranm�lda konton & Bli Kund) ///////////// */
+/* START UTLOGGAD PGA INAKTIVITET ////////////////////////////////////////////////// */
+#dimmer { /* Martin, svart div med opacitet, som t�cker hela sk�rmen om anv�ndaren blir utloggad pga inaktivitet */
+position:absolute;
+background-color:#000;
+width:100%;
+filter:alpha(opacity=30);
+opacity:.30;
+z-index:10000;
+}
+div#utloggadBox { /* Martin, p�minner om popupWin men ligger utanf�r container och har r�d topp border */
+border:1px solid #F2798B;
+font-size:0.5em;
+top:20.0em;
+z-index:10001;
+border-radius:15px 15px 15px 15px;
+moz-border-radius:15px 15px 15px 15px;
+webkit-border-radius:15px 15px 15px 15px;
+}
+#utloggadBox[id] {
+position:absolute;
+}
+div#utloggadBox .aboveSubmitList {
+padding:2.9em 4.0em 2.0em 4.0em;
+}
+div#utloggadBox .aboveSubmitList.noKey fieldset input {
+padding:3px 0 3px 3px;
+width:19em;
+}
+div#utloggadBox p {
+font-size:1.1em;
+padding-left:0;
+}
+div#utloggadBox fieldset {
+margin:0 1.5em 0 0;
+display:inline;
+width:auto;
+}
+div#utloggadBox label {
+display:block;
+margin:0 0 2px 0;
+float:none;
+}
+div#utloggadBox input {
+width:12.0em;
+}
+/* SLUT UTLOGGAD PGA INAKTIVITET /////////////////////////////////////////////////// */
+/* MARTIN, START SPECIALREGLER OM MIFID SKA ANV�NDAS I HUVUDF�NSTRET IST�LLET F�R POPUPF�NSTRET /////// */
+#content #mifidNav {
+width:auto;
+}
+#content #mifidNav ul {
+margin:1.2em 0 0 0;
+}
+#content #mifid h1 {
+margin-top:11px;
+}
+/* MARTIN, SLUT SPECIALREGLER OM MIFID SKA ANV�NDAS I HUVUDF�NSTRET IST�LLET F�R POPUPF�NSTRET //////// */
+/* START PASSANDEPR�VNING F�R HANDEL MIFID //////////////////////////////////////////////////////////// */
+#mifid { /* Martin, popupf�nstrets contentyta */
+float:left;
+width:52.3em;
+}
+#mifid label {
+font-weight:normal;
+display:block;
+}
+#mifidNav {
+float:left;
+width:25.1em;
+}
+#mifidNav ul {
+margin:2.2em 0 0 1.7em;
+padding:0;
+}
+#mifidNav ul li {
+list-style:none;
+font-weight:bold;
+font-size:1.1em;
+}
+#mifidNav ul ul {
+margin:10px 0 0 0;
+}
+#mifidNav ul li li {
+background:url(../images/bulletGreen2px.gif) no-repeat 1px 7px;
+padding-left:10px;
+font-weight:normal;
+margin:0;
+line-height:1.4em;
+text-transform:none;
+}
+#mifidNav ul li li a {
+padding:0 2px 2px 2px;
+}
+#mifidNav ul li li a.current {
+background-color:#0091df;
+color:#fff;
+padding:0 2px 2px 2px;
+}
+#mifid h1 {
+margin:21px 0 4px 0;
+}
+#mifid h3 {
+color:#7b7b7b;
+margin-bottom:20px;
+}
+#mifid table td {
+border-bottom:1px solid #d8d8d8;
+padding:12px 0 15px 8px;
+white-space:normal;
+}
+#mifid input { /* Martin, f�r att skriva �ver en regel fr�n depa.css */
+width:auto;
+}
+div.mifidStatus p { /* Martin, se till�ggsklassen nedan, default �r ok */
+text-align:center;
+padding:5.3em 6.0em 0 6.0em;
+margin-top:1.5em;
+line-height:1.4em;
+background:url(/now/images/ikonUtropsteckenGron.gif) no-repeat top;
+}
+div.mifidStatus.fel p { /* Martin, visas om anv�ndaren INTE f�r handla */
+background:url(/now/images/ikonUtropsteckenRod.gif) no-repeat top;
+}
+div.mifidStatus a { /* Martin */
+text-align:center;
+display:block;
+}
+div.mifidStatus span.bullet {
+text-align:center;
+display:block;
+}
+#mifid div.submitList { /* Martin - Den gr�listen med 2 submitknappar i */
+border-bottom:1px solid #0092dd;
+border-top:0;
+}
+#mifid div.loptext {
+margin-top:17px;
+}
+#mifid div.loptext p {
+margin-bottom:17px;
+line-height:1.4em;
+}
+#mifid div.loptext h4 {
+margin-bottom:2px;
+}
+/* SLUT PASSANDEPR�VNING F�R HANDEL MIFID /////////////////////////////////////////// */
+/* GEMENSAMMA EGENSKAPER NORDNETSKOLAN & EXPERTERNA  //////////////////////////////// */
+div.expertBg,
+div.presentationBg {
+background:url(/now/images/experterna/expertBg.gif) repeat-x top left;
+padding-top:0.4em;
+height:12.7em;
+}
+div.expertBg .image,
+div.presentationBg .image {
+float:left;
+padding-left: 11px;
+}
+div.expertBg .image {
+padding-top:14px;
+}
+div.expertBg div.presentation,
+div.presentationBg div.presentation {
+float:left;
+padding-left: 1.5em;
+}
+div.who { /* Martin, inneh�ller namn p� expert + bullet + citat */
+margin-top:1.2em;
+}
+div.presentation h1,
+div.presentationSE h1,
+div.presentationFI h1,
+div.presentationNO h1,
+div.presentationDK h1 {
+margin:0;
+padding-top: 8px;
+}
+div.presentation p,
+div.presentationSE p,
+div.presentationFI p,
+div.presentationNO p,
+div.presentationDK p {
+width:63.0em;
+line-height:1.45em;
+}
+div.presentation p,
+div.presentationSE p,
+div.presentationFI p,
+div.presentationNO p,
+div.presentationDK p
+div.presentation span,
+div.presentationSE span,
+div.presentation cite,
+div.presentationSE cite {
+font-size:1.1em;
+padding:0;
+}
+div.onecol.kommentarBild { /* Anv�nds f�r expertkommentaren/l�s mer om och l�s mer om Nordnetskolan */
+text-align: center;
+}
+/* SLUT GEMENSAMMA EGENSKAPER F�R NORDNETSKOLAN & EXPERTERNA //////////////////////// */
+/* START BYT FOND-BOX /////////////////////////////////////////////////////////////// */
+div.adderaFondBox { /* ppm: byt fondf�rdelning */
+width:42.9em;
+border:1px solid #827e7f;
+background-color:#fff;
+margin-left:auto;
+padding:1.5em;
+left: 2em;
+top:auto;
+margin-top:-1.6em;;
+}
+div.adderaFondBox div.aboveSubmitList {
+padding: 0;
+}
+div.adderaFondBox.jamfor { /* j�mf�r fonder: min fondlista */
+left:-16em;
+margin-top:0;
+}
+div.adderaFondBox.byt { /* handla: byt fonder */  /* min sparplan */
+left:26em;
+margin-top:23px;
+}
+div.adderaFondBox fieldset {
+float:left;
+width:18em;
+margin:6px 10px 1px 0;
+}
+div.adderaFondBox select {
+width:16.9em;
+}
+div.adderaFondBox div.aboveSubmitList label {
+float: none;
+display:block;
+margin: 0 0 4px 0;
+height: auto;
+text-transform: none;
+}
+div.adderaFondBox input {
+float:left;
+margin-right:5px;
+width:121px
+}
+div.fondkorg div.adderaFondBox table {
+margin-bottom:0;
+}
+div.adderaFondBox table th {
+text-transform:uppercase;
+font-weight:bold;
+padding:6px 0;
+border-top:1px solid #827e7f;
+border-bottom:1px solid #d4d2d3;
+background:#f4f3f1 url(/now/images/white.gif) repeat-x top left;
+}
+div.adderaFondBox table td,
+div.adderaFondBox table th {
+text-align:left;
+border-right:0;
+}
+div.conclusion div.adderaFondBox {
+text-align: left;
+}
+div.adderaFondBox table td {
+padding-left: 0;
+}
+div.adderaFondBox table caption {
+border-bottom:1px solid #7D9C8D;
+margin-top:1em;
+background:none;
+padding:0;
+}
+div.adderaFondBox p {
+padding: 1em 0 0.5em 0;
+}
+/* SLUT BYT FOND-BOX /////////////////////////////////////////////////////////////// */
+/* Digitalt l�rande-box, finns p� Nordnetskolan, Strukt. prod-torget och Aktieindexobl. under Nordnetfliken */
+div.puff2 { /* Christina; puffen l�ngst ner till h�ger p� Nordnetskolans startsida */
+border-bottom: 1px solid #d5d3d4;
+position:relative;
+height:12em;
+}
+div.puff2 img {
+position:absolute;
+bottom:0;
+right:0;
+padding-top:0.5em;
+}
+div.module .puff2 p,
+div.onecol.puff2 p {
+padding:0.5em 6.9em 0 0;
+}
+div.onecol.puff2 p {
+padding-left: 0.8em;
+}
+/* Slut Digitalt l�rande */
+/* Landningssidor: Svenska fonder och norska studentf�reninger */
+#landing #container {
+width: 71.7em;
+}
+#landing #footer,
+#fire div#genforvaltning #footer { /* den vanliga �r f�r kort */
+background: transparent url(/now/images/fonder/landing/footerBg.gif) no-repeat left bottom;
+}
+.welcomeText {
+text-align: left;
+float: left;
+width: 54.9em;
+}
+.welcomePic {
+float:left;
+width:11.9em;
+}
+div.bgoncol {
+background: url(../images/produktblad/bgOneCol.gif) repeat-x;
+padding:3px;
+}
+a.hem {
+text-decoration:underline;
+text-align:center;
+width:100%;
+display:block;
+margin-top:1.6em;
+}
+/* Slut Landningssidor */
+/*test class */
+div.barder{border:1px solid #DF0023;}
+/* klasser f�r videovisning
+/mux/web/marknaden/aktiehemsidan/bolagsfakta.html?identifier=49803&marketplace=11*/
+span.HolderMarknad{
+float:left;
+width:115px;
+height:90px;
+margin:0 0px 0 0px ;
+border:0px solid  #0000ff;
+font-size:0.92em;
+border:0px solid #DF0023;
+}
+span.thumbMarknad{
+float:left;
+width:78px;
+height:58px;
+margin:0 0px 0 0px ;
+border:0px solid  #ff00ff;
+}
+span.thumbMarknad img{
+width:78px;
+height:58px;
+}
+span.thumbMarknad:hover{
+border:0px solid  #00A9EC;
+opacity:.80;
+filter: alpha(opacity=80);
+-moz-opacity: 0.8;
+opacity:0.8;
+}
+/* penningtvatt */
+#content.penningtvatt{
+padding-bottom: 4em;
+}
+#kampanj .penningtvatt #contentPadding {
+padding:1.6em 2.8em 0 0;
+}
+div.penningtvatt p, div.penningtvatt ul, p.headline {
+line-height:1.61em;
+padding:0 1.6em 0.6em 0;
+}
+div.penningtvatt div.grupp{
+padding:0 0 2em 0;
+}
+div.penningtvatt div.grupp h2, #kyc span {
+font-size: 11px;
+padding: 0 0 0.4em;
+text-transform: none;
+}
+div.penningtvatt .buttonFirst {
+margin:0 0 0 0;
+}
+div.penningtvatt .buttonLast {
+margin:0 0 0 4em;
+}
+div.penningtvatt fieldset {
+margin:1.2em 0 0 0;
+}
+ul.breadcrumbs li {
+background:none;
+}
+div.penningtvatt fieldset label, #kyc label {
+display: inline;
+margin-bottom:8px;
+font-size:10px;
+}
+div.penningtvatt fieldset span {
+float:left;
+margin:2px 15px 10px 0;
+font-size:10px;
+}
+div.penningtvatt fieldset input, div.penningtvatt fieldset select, #kyc input, #kyc select {
+float:left;
+margin:0 4px 8px 0;
+font-size:10px;
+}
+div.penningtvatt fieldset input.penningtvatt {
+width: auto;
+}
+#kyc .hide p {
+    color: #DC011F;
+    display: block;
+    margin:0.3em 0 1em;
+    clear:both;
+}
+#kyc .questionare div {
+    margin-top: 0.5em;
+}
+#kyc .col-md-4 {
+    float: left;
+    margin-right: 3em;
+    margin-top:0 !important;
+}
+/* /penningtvatt*/
+/* M�nadsspar Fond i fond */
+div.fifBox {
+background-color:#FFFFFF;
+border:1px solid #c8c8c8;
+margin-top:-6px;
+position:absolute;
+width:47em;
+z-index:1;
+padding:0;
+}
+div.adderaFondBox.byt.fifBox {
+left:1.5em;
+}
+div.bg {
+background:url(/now/images/fonder/highLightGrey.gif) repeat-x scroll center top;
+border-top:1px solid #C8C8C8;
+height:48px;
+margin:0;
+padding:0;
+}
+div.bg.first {
+border-top:0;
+}
+div.bg a {
+float:left;
+font-size:1.1em;
+font-weight:bold;
+margin-top:1.2em;
+padding:0.3em 1em 0.5em 3em;
+}
+.fifPortfolj {
+float:left;
+padding-left:1.8em;
+width:18.4em;
+}
+div.bg a.maximal {
+background: url(/now/images/fonder/maximeraDot.gif) no-repeat scroll left center;
+}
+div.bg a.offensiv {
+background: url(/now/images/fonder/offensiveDot.gif) no-repeat scroll left center;
+}
+div.bg a.aggressiv {
+background:url(/now/images/fonder/aggressivDot.gif) no-repeat scroll left center;
+}
+div.bg a.balanserad, div.bg a.balanceret {
+background: url(/now/images/fonder/balanserdDot.gif) no-repeat scroll left center;
+}
+div.bg a.forsiktig, div.bg a.forsigtig {
+background: url(/now/images/fonder/forsiktigDot.gif) no-repeat scroll left center;
+}
+div.bg a.trygg, div.bg a.tryg {
+background:url(/now/images/fonder/sakerDot.gif) no-repeat scroll left center;
+}
+div.fifBox .riskniva {
+float:left;
+margin-top:1.1em;
+width:25.7em;
+}
+div.fifBox .riskniva span.aktie {
+color:#E00024;
+}
+div.fifBox .riskniva span {
+padding-bottom:2px;
+display:block;
+float:left;
+}
+div.fifBox .riskniva span.bullet2 {
+color:#CACACA;
+margin-bottom: 0;
+}
+div.fifBox .riskniva span.fifRiskniva {
+color:#8A8A8A;
+}
+div.fifBox .riskniva span.rante {
+color:#A4D20E;
+}
+/* BLOCKING FUNCTIONALITY WHEN THE PORTFOLIO IS UNDER MANAGEMENT /////////////////// */
+#managementactiveinfo {
+height: 100%;
+left:0;
+position:absolute;
+top:0;
+width:100%;
+z-index:1000;
+}
+.managementactiveoverlay{
+background-color: #000000;
+position: fixed;
+top: 0;
+height: 100%;
+width: 100%;
+z-index: 100;
+-moz-opacity: 0.5;
+opacity:.20;
+filter: alpha(opacity=20);
+}
+div.managementactive {
+background: #FFFFFF none repeat scroll 0 0;
+position: absolute;
+top: 11.9em;
+left: 25em;
+width: 49em;
+padding: 3em 0 3em 0;
+z-index: 105;
+text-align: center;
+border: solid #AAAAAA 1px
+}
+div.managementactive p {
+padding-bottom: 1em;
+}
+/* SLUT BLOCKING FUNCTIONALITY WHEN THE PORTFOLIO IS UNDER MANAGEMENT ////////////// */
+div#pagination-clean {
+height:2em;
+background:url(/now/images/sprites/greyGradientBar.gif) no-repeat left -62px;
+padding: 0.8em 0 0.8em 0;
+border-top:1px solid #EEEEEE;
+}
+div#pagination-clean ul {
+border:0; margin:0; padding:0;
+}
+div#pagination-clean li{
+border:0; margin:0; padding:0;
+font-size:10px;
+list-style:none;
+float:right;
+}
+div#pagination-clean li, #pagination-clean a{
+margin-right:2px;
+}
+div#pagination-clean .next a,
+div#pagination-clean .previous a {
+font-weight:bold;
+}
+div#pagination-clean .active{
+background:url(/now/images/activePage.png) no-repeat center 4px;
+color:#fff;
+font-weight:bold;
+display:block;
+float:right;
+padding:4px 6px;
+}
+div#pagination-clean a:link,
+div#pagination-clean a:visited {
+color:#0089cd;
+display:block;
+float:left;
+padding:3px 3px;
+text-decoration:none;
+}
+div#pagination-clean a:hover{
+text-decoration:underline;
+}
+div.center-box {
+width:100%;
+}
+optgroup{ /* marwar 10 may 2010 */
+font-weight : bold;
+font-style  : normal;
+}
+div#greyoutbox {
+position: fixed;
+top: 0%;
+left: 0%;
+width: 100%;
+height: 100%;
+background-color: #000000;
+z-index:1001;
+-moz-opacity: 0.3;
+opacity:.30;
+filter: alpha(opacity=30);
+}
+div#dimmerbox, .fadeOut{
+position: fixed;
+top: 0%;
+left: 0%;
+width: 100%;
+height: 100%;
+background-color: #000000;
+z-index:960;
+-moz-opacity: 0.5;
+opacity:.50;
+filter: alpha(opacity=50);
+}
+#changeLogin {
+-moz-border-radius:15px;
+-webkit-border-radius: 15px;
+border-radius: 15px;
+background-color:#FFFFFF;
+position:fixed;
+top: 20%;
+left: 50%;
+margin-left:-330px;
+width:625px;
+min-height:270px;
+z-index:1002;
+padding-bottom:2em;
+}
+a.lgnClose {
+background: url("/now/images/lightbox-close.png") no-repeat scroll 0 0 transparent;
+float: right;
+height: 35px;
+margin: -14px -14px 0 0;
+width: 35px;
+}
+#changeLogin div.center {
+text-align: center;
+padding-bottom: 0;
+}
+#changeLogin div.center img {
+padding-top:0.5em;
+}
+#changeLogin div.center h1{
+font:1.5em Century Gothic,Verdana,Arial,sans-serif;
+}
+#changeLogin p {
+font-size:0.6em;
+line-height:17px;
+padding:1em 4em;
+}
+#changeLogin span.buttonBlue.bigButton2 a {
+font-size:11px;
+}
+.topMargin {
+margin-top: 1.5em;
+}
+.confirmbox, .alertbox {
+font-size:10px;
+position: absolute;
+top: 28%;
+left: 50%;
+margin-left:-340px;
+width:380px;
+height:165px;
+padding:1.5em 2em 1.5em 2em;
+background-color: #ffffff;
+z-index:1002;
+overflow: none;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+}
+
+.basicBox.sv-module p.disclaimer {
+margin-top: 1em;
+}
+.sv-module .module a {
+font-size: 1.1em;
+}
+.basicBox{
+font-size:10px;
+position: absolute;
+top: 28%;
+left: 50%;
+width:20%;
+min-height:13em;
+background-color: #ffffff;
+z-index:1002;
+overflow: none;
+-webkit-border-radius:5px;
+border-radius:5px;
+}
+.medium-box{
+width:30%;
+padding:1em 5em 1em 5em;
+}
+.small-box{
+width:15%;
+min-height: 7em;
+padding:1em 5em 1em 5em;
+}
+.medium-box.sv-module {
+min-width:72em ;
+}
+.medium-box.sv-module h1{
+padding: 0px 0 8px 0;
+}
+.medium-box.sv-module h1 span{
+background: url(/now/images/index/sv-logo.png) no-repeat left 0px;
+padding-left: 1.3em;
+}
+.medium-box.sv-module a.more{
+float: right;
+font-weight: bold;
+font-size: 12px;
+margin: 16px 0 16px 0;
+}
+.medium-box.sv-module .module.top {
+margin: 0;
+width: 100%;
+}
+.medium-box.sv-module .module.top ul li{
+float: left;
+width: 32.4%;
+position: relative;
+margin-right:0;
+}
+.medium-box.sv-module .module.top ul li:last-child{
+margin-right: 0;
+margin-left: 1em;
+}
+.medium-box.sv-module .module.top ul li:first-child{
+margin-left: 0;
+margin-right: 1em;
+}
+.medium-box.sv-module .module.top ul li img{
+width: 32px;
+height: 32px;
+border-radius: 50%;
+float: left;
+}
+.medium-box.sv-module .module.top ul li span{
+display: block;
+border:1px solid #D6D6D6;
+border-radius: 4px;
+background: #f9f9f9;
+padding: 12px;
+font-size:12px;
+margin-top: 0.9em;
+color:#000;
+}
+.medium-box.sv-module .module.top ul li span:hover {
+color:#018acf;
+}
+.medium-box.sv-module .module.top ul li span.comment::before{
+content: url('/now/images/arrowUp.png');
+position: absolute;
+top: 2.58em;
+left: 0.7em;
+}
+.medium-box.sv-module .module.top ul li span.name,
+.medium-box.sv-module .module.top ul li span.time {
+display: block;
+border: 0;
+background: transparent;
+padding: 0;
+margin: 2px 0 0 40px;
+color: #5bad27;
+font-size: 12px;
+font-weight: bold;
+}
+.medium-box.sv-module .module.top ul li span.name{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.medium-box.sv-module .module.top ul li span.time {
+color: #aaa;
+font-weight: normal;
+font-size: 11px;
+margin-top: 0;
+}
+.medium-box.sv-module .onecol.module{
+margin:1.5em 1.8em 1.5em 0;
+}
+.medium-box.sv-module .onecol.module.last{
+margin-right:0;
+}
+.sv-module .onecol.module ul li{
+line-height: 18px;
+overflow: hidden;
+white-space: nowrap;
+width: 100%;
+text-overflow: ellipsis;
+}
+.sv-module .module h2{
+border-bottom: 0;
+font-size: 1.1em;
+margin-bottom: 8px;
+}
+.sv-module .module p {
+font-size: 1.1em;
+padding-top: 0;
+}
+.sv-module a.lightboxClose {
+background: url("/now/images/lightbox-close.png") no-repeat scroll 0 0 transparent;
+float: none;
+height: 35px;
+margin: 0;
+width: 35px;
+cursor: pointer;
+position: absolute;
+right: -14px;
+top: -11px;
+}
+.medium-box.sv-module {
+min-width:72em ;
+}
+.medium-box.sv-module .onecol.module{
+margin:1.5em 1.8em 1.5em 0;
+}
+.medium-box.sv-module .onecol.module.last{
+margin-right:0;
+}
+.sv-module .onecol.module ul li{
+line-height: 18px;
+overflow: hidden;
+white-space: nowrap;
+width: 100%;
+text-overflow: ellipsis;
+}
+.sv-module .module h2{
+border-bottom: 0;
+font-size: 1.1em;
+margin-bottom: 8px;
+}
+.sv-module .module p {
+font-size: 1.1em;
+padding-top: 0;
+}
+.sv-module a.lightboxClose {
+background: url("/now/images/lightbox-close.png") no-repeat scroll 0 0 transparent;
+float: none;
+height: 35px;
+margin: 0;
+width: 35px;
+cursor: pointer;
+position: absolute;
+right: -14px;
+top: -11px;
+}
+
+.basicBox.medium-box a.close{
+float:right;
+margin:-16px -57px 0px 0px;
+}
+.basicBox .outerWrapper{
+margin-top:2em;
+}
+.basicBox .submitList .outerWrapper{
+margin-top:0;
+}
+.basicBox h1{
+border-bottom:2px solid #D6D6D6;
+text-align:center;
+font-size:2em;
+font-weight: bold;
+margin-bottom:0.5em;
+}
+.basicBox p{
+padding:1em 2em 1em 2em;
+text-align:left;
+}
+.basicBox div.disclaimer,.basicBox p.disclaimer{
+margin:3em 0 1em 0;
+float:left;
+width:100%;
+font-size:1em;
+text-align:center;
+}
+p.disclaimer{
+font-size:1em;
+}
+
+div.medium-box p, div.small-box p{
+padding:0.5em 0em;
+}
+div.basicBox span.grey{
+margin-right:1em;
+}
+div.basicBox span.blue{
+margin-left:1em;
+}
+
+#confirmClose.basicBox {
+min-height: 33em;
+}
+* html .basicBox{
+height:13em;
+}
+
+.boxButtons{
+position:absolute;
+bottom:0;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+}
+div.outerWrapper.align-bottom{
+position: absolute;
+bottom: 6%;
+}
+div.exclamation{
+background: url('/now/images/ikonUtropsteckenGron.gif') no-repeat scroll 49%  transparent;
+width:100%;
+height:52px;
+}
+.alertbox{
+text-align:center;
+}
+.alertbox.medium{
+width:650px;
+}
+.alertbox.corporateActions{
+height:auto;
+}
+.corporateActions div.twocol{
+float:left;
+width:320px;
+margin:2em 0 2em 0;
+text-align:left;
+}
+.pShowAlert{
+margin:2em 0 2em 0;
+}
+.corporateActions div.twocol td{
+padding:0;
+margin:0 10px 2px 0;
+text-align:left;
+line-height:1.6em;
+}
+.corporateActions h2{
+text-align:center;
+}
+.corporateActions span{
+font-weight:bold;
+line-height:1.6em;
+}
+div.headLine{
+background:url("/now/images/green.gif") repeat-x scroll left 4px transparent;
+}
+
+div.confirmbox p,div.alertbox p{
+margin:1em 0 3em 0;
+line-height:1.4em;
+}
+div.alertbox p{
+pdding:0 2em;
+}
+div.confirmbox span.buttonBlue, div.alertbox span.buttonBlue{
+margin-right:1em;
+padding-left:0.2em;
+}
+a.confirmboxClose,a.alertboxClose {
+float:right;
+color:#000000;
+font-weight:bold;
+cursor:pointer;
+margin:-14px -17px 0px 0px;
+padding:3px;
+}
+div#confirmboxFeedback{
+height:2em;
+margin-top:1em;
+color:#ff0000;
+}
+div#utloggadBox div.submitList{
+-moz-border-radius-bottomright: 15px;
+-moz-border-radius-bottomleft: 15px;
+border-bottom-right-radius:15px;
+border-bottom-left-radius:15px;
+-webkit-border-bottom-left-radius:15px;
+-webkit-border-bottom-right-radius:15px;
+}
+div.bannerwrapper{
+padding:0 0 1em 0;
+text-align:center;
+-moz-border-radius: 0px 0px 15px 15px;
+-webkit-border-radius: 0px 0px 15px 15px;
+}
+.fieldLowercase {
+text-transform: lowercase;
+}
+#norskaInsattningar #warningWindow {
+left:1em;
+top:13em;
+}
+#norskaInsattningar #varsla_information {
+width:350px;
+clear:left;
+white-space:normal;
+}
+#warningWindow.popupWin h2 {
+margin:1.2em 3em 0;
+}
+#warningWindow.popupWin p {
+margin:0.5em 2.5em 0;
+}
+#pagaendecontainer a.edit {
+padding-right:1em;
+}
+.navigation.portfolio {
+margin-bottom:0.4em;
+}
+div.list #aktieinnehav caption, div.list #fondinnehav caption {
+background:#F0EEEE;
+}
+/* Lightbox  */
+.small-lightbox {
+-moz-border-radius:15px;
+-webkit-border-radius: 15px;
+border-radius: 15px;
+background-color:#FFFFFF;
+position:absolute;
+top: 75%;
+left: 50%;
+margin-left:-205px;
+width:440px;
+min-height:200px;
+z-index:2000;
+padding-bottom:2em;
+}
+.medium-lightbox {
+-moz-border-radius:15px;
+-webkit-border-radius: 15px;
+border-radius: 15px;
+background-color:#FFFFFF;
+position:absolute;
+top: 20%;
+left: 50%;
+margin-left:-400px;
+width:800px;
+min-height:200px;
+z-index:2000;
+padding-bottom:2em;
+}
+#first_login_norway_eid.medium-lightbox, #first_login_norway_eid {
+min-height:auto;
+}
+#first_login_norway_eid.medium-lightbox h1, #first_login_norway_eid h1{
+font:17px Century Gothic,Verdana,Arial,sans-serif;
+margin-left: 1em;
+}
+#first_login_norway_eid.medium-lightbox p, #first_login_norway_eid p {
+font-size:11px;
+margin-left: 1.8em;
+margin-bottom:15px;
+}
+#first_login_norway_eid.medium-lightbox span a, #first_login_norway_eid a{
+font-size:11px;
+}
+#first_login_norway_eid .submitList, #first_login_norway_eid.medium-lightbox .submitList, #first_login_norway_eid.medium-lightbox .submitList.boxButtons {
+height: 34px;
+padding-top: 16px;
+margin-top:0;
+border-radius: 0 0 15px 15px;
+-webkit-border-radius: 0 0 15px 15px;
+-moz-border-radius: 0 0 15px 15px;
+}
+#first_login_norway_eid ul li, #first_login_norway_eid.medium-lightbox ul li{
+font-size:11px;
+margin-left: 4em;
+padding-bottom:10px;
+list-style: disc;
+}
+#first_login_norway_eid.medium-lightbox span a {
+font-size:10px;
+}
+.small-lightbox h1{
+font-size:1.0em;
+font-weight:bold;
+padding:0;
+}
+.small-lightbox p{
+line-height:1.1em;
+text-align:left;
+font-size:0.6em;
+padding:0.5em 1.5em;
+}
+a.lgnClose {
+background:url("/now/images/lightbox-close.png") no-repeat scroll 0 0 transparent;
+float:right;
+height:35px;
+margin:-14px -14px 0 0;
+width:35px;
+cursor:pointer;
+}
+/* �rsbesked */
+.module .navigation.portfolio {
+margin-bottom: 1em;
+}
+div.list #aktieinnehav table tr.total-market, div.list #fondinnehav table tr.total-market  {
+background:#fafafa;
+border-top:#d3d3d3 1px solid;
+border-bottom:#d3d3d3 1px solid;
+}
+div.list #aktieinnehav table tr td.first, div.list #fondinnehav table tr td.first {
+padding-left:6px;
+}
+div.list #aktieinnehav table tr.total-market td, div.list #fondinnehav table tr.total-market td {
+line-height:2.2em;
+border-top:#d3d3d3 1px solid;
+border-bottom:#d3d3d3 1px solid;
+border-right:0;
+}
+.list tbody tr td.no-border {
+border-right:0;
+}
+#aktieinnehav div.list caption span.bullet, #fondinnehav div.list caption span.bullet {
+color:#000000;
+font-weight:bold;
+margin:0;
+padding-left:2px;
+}
+#aktieinnehav .list table.tableSpace, #fondinnehav .list table.tableSpace {
+margin-bottom:2.5em;
+}
+#aktieinnehav td.alt{
+background-color: #EBF6FC;
+}
+.excel {
+margin-top: 4px;
+}
+#printInfo{
+display:none;
+float:left;
+margin-bottom:2em;
+font-size:1.3em;
+}
+.print {
+margin-top: 0pt;
+line-height: 1.4em;
+width: auto;
+float: right;
+}
+.print div {
+float:right;
+}
+.header.center {
+margin: 1.0em 0 0 0;
+background: url(/now/images/greyGradient.gif) repeat-x scroll right bottom;
+border-top: 1px solid #D5D3D4;
+}
+.header.center h2 {
+border-bottom: 0 none;
+font-size: 11px;
+padding: 0 0 8px 0;
+}
+.header.center span {
+color: #5E5E5E;
+display: block;
+font-weight: normal;
+padding-bottom: 6px;
+font-size: 11px;
+}
+div.boxArrowLots {
+padding-bottom: 1.0em;
+}
+#aktieinnehav table.tableSpace tfoot td {
+background:none;
+font-style: normal;
+color:#000;
+}
+#aktieinnehav table.tableSpace thead th {
+border-bottom: 1px solid #D5D3D4;
+min-width: 55px;
+}
+#aktieinnehav table.tableSpace thead th.groupHeader {
+border-bottom: none;
+}
+#aktieinnehav table.tableSpace tbody tr.first td,
+#aktieinnehav table.tableSpace tbody td.first {
+border-top: none;
+}
+table tr.resultLine td.right {
+text-align: right;
+}
+table tr.total-market td.right {
+text-align: right;
+}
+.purchaseLotsPrintBtn {
+width: 9em;
+}
+table tr.sort th.plSort {
+padding: 0px;
+background-color: #F0EEEE;
+}
+#aktieinnehav table.tableSpace tfoot tr.plResultLine td {
+background-color:#fff;
+}
+#aktieinnehav table.tableSpace tfoot tr.plResultLine td.noFloat {
+float:none;
+}
+div.module.summary {
+margin-left: 0;
+margin-bottom: 1.5em;
+}
+div.module.summary table tr th {
+border-bottom: 1px solid #EEEEEE;
+}
+#content .bigColumn .repGroupTitle {
+font-size: 1.1em;
+font-weight: bold;
+}
+#content .bigColumn {
+width: 48em;
+}
+#content .bigColumn.wide {
+margin-top: 5em;
+width: 95.8em;
+}
+#content .bigColumn .inner {
+margin-top: 10px;
+}
+#content .bigColumn .inner p {
+line-height: 1.4em;
+padding-right: 5em;
+}
+.bigColumn span.pdf,
+.eqReport span.pdf {
+text-decoration:none;
+}
+span.landingPagePdf {
+text-decoration:none;
+}
+div.inner div.insidelinks{
+margin-top:0.2em;
+}
+.checkboxAll{
+float:right;
+margin:0.3em 1em 0em 0em;
+width:20px;
+}
+.rightFloat{
+float:right;
+}
+a.printIcon{
+background: url(/now/images/mc/printMC.png) no-repeat;
+float:left;
+width:30px;
+height:22px;
+margin-top:-5px;
+}
+.Capitalize{
+text-transform:capitalize;
+}
+.locked {
+background: url("/now/images/locked.gif") no-repeat scroll left 1px transparent;
+padding-left: 15px;
+}
+div#orderlaggning table.form tr td.sum span#summa_text{
+float: left;
+overflow: hidden;
+width: 150px;
+}
+/* Mc print (printablePrint not used yet)*/
+.printablePrint h1,.printableMCPrint h1{
+font-size:22px;
+margin-bottom:8px;
+}
+.printablePrint p,.printableMCPrint p{
+font-size:14px;
+}
+.printableFooter h2{
+font-size:14px;
+font-weight:bold;
+}
+.printableFooter div{
+float:left;
+font-size:12px;
+}
+.printableFooter table td{
+font-size:12px;
+}
+/* Cookies */
+#cookies table td {
+white-space:normal
+}
+#cookies table th,
+#cookies table td {
+padding: 0 5px 8px 7px;
+}
+#cookies table {
+margin-bottom:1.5em;
+}
+/* E-leg timeout f�nster*/
+#utloggadBox .e-leg {
+float: left;
+position: relative;
+width: auto;
+margin-top:1.5em;
+}
+#utloggadBox .e-leg a.plus, #utloggadBox .e-leg a.btn {
+background: none repeat scroll 0 0 #9635F9;
+border-radius: 5px 5px 5px 5px;
+color: #FFFFFF;
+font-size: 1.1em;
+font-weight: bold;
+padding: 5px 10px;
+display:block;
+}
+#utloggadBox .e-leg a.minus {
+background: none repeat scroll 0 0 #00A9EC;
+border-radius: 5px 5px 5px 5px;
+color: #FFFFFF;
+font-size: 1.1em;
+font-weight: bold;
+padding: 5px 10px;
+display:block;
+}
+#utloggadBox .e-leg a.minus:hover {
+background: #00A9EC;
+-moz-box-shadow:0px 0px 3px #999999;
+-webkit-box-shadow:0px 0px 3px #999999;
+box-shadow:0px 0px 3px #999999;
+}
+#utloggadBox .e-leg a.minus span {
+background:url("/now/images/index/arrow-link3.png") no-repeat scroll right 5px;
+padding-right:13px;
+}
+#utloggadBox .e-leg div.dropdown {
+margin-top:6px;
+width:99%;
+background:#00A9EC;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border-radius:5px;
+margin-left:0.1em;
+position:absolute;
+top: 2em;
+left: 0px;
+z-index: 1000;
+}
+#utloggadBox .e-leg div.dropdown a{
+display:block;
+color:#fff;
+font-size:1.1em;
+padding:8px 5px 0 10px;
+}
+#utloggadBox .e-leg div.dropdown a:hover {
+text-decoration:underline;
+}
+#utloggadBox .e-leg div.dropdown a.last {
+padding-bottom:10px;
+}
+#utloggadBox .e-leg a.plus:hover, #utloggadBox .e-leg a.btn:hover {
+background:#00A9EC;
+-moz-box-shadow:0px 0px 3px #999999;
+-webkit-box-shadow:0px 0px 3px #999999;
+box-shadow:0px 0px 3px #999999;
+}
+#utloggadBox .e-leg a.btn span {
+background:none;
+padding-right:13px;
+}
+body.no #utloggadBox .e-leg a.btn span {
+padding-right: 0;
+}
+#utloggadBox .e-leg a.plus span {
+background: url("/now/images/index/arrow-link2.png") no-repeat scroll right 5px transparent;
+padding-right: 13px;
+}
+#utloggadBox .e-leg a.minus span {
+background: url("/now/images/index/arrow-link3.png") no-repeat scroll right 5px transparent;
+ padding-right: 13px;
+}
+#utloggadBox .e-leg a.btn span {
+background: none repeat scroll 0 0 transparent;
+padding-right: 13px;
+}
+div.openAccount #spinner {
+padding: 3em 0;
+}
+/* /E-leg timeout f�nster*/
+/** WebTrader supported browsers page **/
+div.threecol.browser {
+width: 56em;
+}
+div.threecol.browser h2 {
+font-family: Century Gothic,verdana;
+font-size: 1.8em;
+margin: 3em 0 0.2em;
+text-transform: none;
+}
+div.threecol.browser p {
+font-size:1.1em;
+}
+div.threecol.browser a {
+float:left;
+margin:2em 1.5em 3em 0;
+padding:1.5em 0 2.5em 4em;
+font-weight:bold;
+font-size:1.1em;
+}
+div.threecol.browser a:hover {
+text-decoration:underline;
+}
+div.threecol.browser a.chrome {
+background:url(/now/images/chromeIcon.jpg) left center no-repeat;
+}
+div.threecol.browser a.firefox {
+background:url(/now/images/firefoxIcon.jpg) left center no-repeat;
+}
+#first_login_eid {
+font-size:0.55em;
+}
+#first_login_eid h1 {
+text-align:center;
+margin-bottom:1em;
+}
+#first_login_eid p {
+margin: 0 7em;
+}
+div#nx_client_box p.nx_tbs_dialog_title {
+font-size: 12px;
+font-weight: bold;
+padding-left: 0;
+}
+div#nx_client_box p.nx_tbs_dialog_tbs, div#nx_client_box p.nx_tbs_dialog_question{
+font-size: 11px;
+font-weight: normal;
+padding-left: 0;
+}
+div#nx_client_box input {
+width: auto;
+height: 24px;
+margin-right: 10px;
+padding:0;
+font-size: 12px;
+margin-top:1em;
+}
+
+
+/* orange foldable notice box */
+.notice{
+overflow: hidden;
+height:auto;
+position:relative;
+padding: 8px 45px 8px 14px;
+margin: 2em;
+text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+background-color: #fff4e0;
+border: 1px solid #fda800;
+border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+transition: height 400ms ;
+    -webkit-transition:  height 400ms ;
+    -moz-transition: height 400ms ease-out;
+    -o-transition: height 400ms ease-out;
+    -ms-transition: height 400ms ease-out;
+}
+div.notice p{
+line-height:1.4em;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+div.notice.expanded p{
+white-space: normal;
+overflow: visible;
+text-overflow: inherit;
+}
+div.notice a.open-close{
+position:absolute;
+top:0px;
+right:11px;
+font-weight:bold;
+font-size:2em;
+opacity: 0.3;
+color:#000;
+transition: all 0.6s ;
+    -webkit-transition:  all 0.6s ;
+    -moz-transition: all 0.6s ;
+    -o-transition: all 0.6s;
+    -ms-transition: all 0.6s ;
+}
+div.notice a.open-close:hover{
+opacity:1;
+color:#fda800;
+}
+/* END orange foldable notice box */
+
+
+.introBox div.topMarginMini {
+margin-top: 49px;
+}
+
+/* New footer */
+/* account info when logged in */
+.disclaimer.risk {margin: 0 auto;max-width: 50.5em;}
+.disclaimer.risk p {font-size:10px;text-align:left;font-style:italic;color:#000;}
+#footerContainerDepa {
+    background-color: #666;
+    max-width: 100% !important;
+}
+.footerDepaInfo  {
+    margin:0 auto;
+    max-width: 49.5em;
+}
+.footerDepaInfo p {
+    font-size:11px !important;
+    padding: 0.35em 0;
+}
+.footerDepaInfo span.bullet {
+    color:#ddd;
+}
+/* footer */
+#footer {
+    float:left;
+    width: 100%;
+    background-color:#878484;
+    padding-bottom:1.5em;
+    height:auto !important;
+    min-width:991px /* remove when we go responsive */
+}
+#footerContainer, #footerContainerDepa {
+    clear: both;
+    margin: 0 auto;
+    max-width: 49.5em;
+}
+.footerLinks {
+    margin-top:1.5em;
+}
+.footerLinks, .footerContact, .footerSocial {
+    width:100%
+}
+#footerContainer div, #footerContainer address {
+    float: left;
+}
+#footerContainer img.footline {
+    margin: 0.9em 0 0.6em;
+}
+#footer p, #footer dt, #footer dd, #footer li, #footer li a {
+    font-family: helvetica, arial, sans-serif;
+    font-size: 12px;
+    color:#fff;
+    line-height: 1.5em;
+}
+#footer li, #footer p{
+padding-left:0.8em;
+}
+#footer div.iconLarge p{
+padding-left:0;
+}
+div.iconSmall li a {
+padding-left:2.2em;
+}
+div.iconLarge p{
+    padding-top: 7px;
+}
+#footer a {
+    color:#ddd !important;
+}
+#footerContainer h6 {
+    background:none;
+    margin:none;
+    color:#fff !important;
+    font-family: Century gothic, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight:normal;
+    margin-bottom:0.5em;
+    padding-bottom:0em;
+    padding-top:0.5em;
+    padding-left:0.8em;
+    text-transform: uppercase;
+}
+#footerContainer h6.next {
+    margin-top:1em;
+}
+#footer a:hover {
+    color:#fff !important;
+    text-decoration:underline;
+}
+#footerContainer .col4 {
+    width: 33%;
+    max-width:16em;
+}
+#footerContainer .col8 {
+    width: 65%;
+}
+#footerContainer .col4 > div {
+    width: 40%;
+}
+#footerContainer dl {
+    display:table;
+    margin-bottom: 0.5em;
+    padding-left: 0.5em;
+}
+#footerContainer dt {
+    clear: left;
+    display: block;
+    float: left;
+    overflow: hidden;
+}
+#footerContainer dd {
+    display: block;
+    margin-left:110px;
+}
+div.footerSocial .col4 > div {
+    width: 100% !important;
+}
+.followUs a.follow {
+background-image: url("/now/images/sprites/SocialaMedierSprite.png");
+background-repeat: no-repeat;
+background-color:transparent;
+padding: 5px 20px 20px;
+margin-right:5px;
+min-height:1em;
+min-width:1em;
+}
+.Nblog {
+background-position: left top;
+}
+.FB {
+background-position: -54px top;
+}
+.Twttr {
+background-position: -162px top;
+}
+.Instgr {
+background-position: -268px top;
+}
+.YouTube {
+background-position: -427px top;
+}
+.SlideShare {
+background-position: -472px top;
+}
+.followUs div.iconLarge p {
+margin-top: 7px;
+}
+.followUs div.iconLarge {
+min-height:3em;
+
+}
+
+.followUs div.iconSmall li {
+background-image: url("/now/images/sprites/socialMedias_small.png");
+background-repeat: no-repeat;
+padding: 7px 8px 7px 38px;
+}
+.followUs li.Twttr {
+background-position: 3px -102px;
+}
+
+/* NEW BUTTONS - default blue */
+a.bttn {
+    color:#fff;
+    display: inline-block;
+    position: relative;
+    float:left;
+    margin: 0px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
+    font-weight: normal;
+    font-size: 15px;
+    font-family:"Century gothic",Helvetica,Arial,sans-serif;
+    background: #00A9EC;  /* Old browsers */
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    -ms-border-radius: 9px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.2), inset 1px 1px 1px rgba(255,255,255,.4);
+    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.2), inset 1px 1px 1px rgba(255,255,255,.4);
+    box-shadow: 0px 1px 3px rgba(0,0,0,.2), inset 1px 1px 1px rgba(255,255,255,.4);
+    -webkit-transition: all 0.15s ease;
+    -moz-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    -ms-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+    behavior: url(/now/css/PIE.htc);
+    cursor:pointer;
+}
+a.bttn.next {
+    margin-left:0.5em
+}
+a.bttn.xtra {
+    font-weight:bold
+}
+a.bttn:hover {
+    -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 5px rgba(0,0,0, .5);
+    -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 5px rgba(0,0,0, .5);
+    box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 5px rgba(0,0,0, .5);
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    -ms-border-radius: 9px;
+    behavior:url(/now/css/cms/PIE.htc);
+}
+a.bttn:active {
+    -webkit-box-shadow: inset 0px 0px 7px rgba(0,0,0, .8);
+    -moz-box-shadow: inset 0px 0px 7px rgba(0,0,0, .8);
+    box-shadow: inset 0px 0px 7px rgba(0,0,0, .8);
+    behavior:url(/now/css/cms/PIE.htc);
+}
+a.bttn.xsmall {
+    font-size: 10px;
+    padding: 3px 11px;
+    border-radius: 9px;
+    behavior: url(/now/css/PIE.htc);
+}
+a.bttn.small {
+    font-size: 11px;
+    padding: 7px 15px;
+    border-radius: 20px;
+    behavior: url(/now/css/PIE.htc);
+}
+a.bttn.large {
+    font-size: 17px;
+    padding: 14px 22px;
+    border-radius: 25px;
+    behavior: url(/now/css/PIE.htc);
+}
+a.bttnInactive {
+    background: #9b9797; /* Old browsers */
+}
+a.bttnInactive:hover {
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(255, 255, 255, 0.4) inset;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(255, 255, 255, 0.4) inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(255, 255, 255, 0.4) inset;
+}
+a.bttn.grey {
+    background: #9b9797;
+}
+a.bttn.inactive {
+    cursor: not-allowed;
+    opacity:0.3;
+}
+a.bttn.inactive:hover {
+    box-shadow: none;
+}
+
+/* Bootstrap Tooltip */
+
+.tooltip {
+  position: absolute;
+  z-index: 1030;
+  display: block;
+  visibility: visible;
+  padding: 5px;
+  font-size: 11px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.tooltip.in {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+.tooltip.top {
+  margin-top: -3px;
+}
+.tooltip.right {
+  margin-left: 3px;
+}
+.tooltip.bottom {
+  margin-top: 3px;
+}
+.tooltip.left {
+  margin-left: -3px;
+}
+.tooltip-inner {
+line-height: 14px;
+max-width: 200px;
+padding: 5px 8px;
+color: #ffffff;
+text-align: left;
+text-decoration: none;
+background-color: #000000;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+.tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -5px;
+  border-width: 5px 5px 5px 0;
+  border-right-color: #000000;
+}
+.tooltip.left .tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -5px;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #000000;
+}
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
+
+/* End Bootstrap Tooltip */
+
+.offer .contentbox .nyhetsRubrik {
+margin: 0.4em 0 0 3em;
+padding-right: 5px;
+font-size:1.1em;
+}
+.offer .contentbox .nyhetsRubrik a{
+color:#000000;
+line-height: 16px;
+}
+.offer .contentbox div.nyhetsRubrik span {
+color: #8E8E8E;
+margin-right: 0.4em;
+}
+.twocol.offer {
+border-bottom:1px solid #A4D20E;
+text-align:center;
+}
+.twocol.offer .contentbox  {
+background:#f0eeef;
+border-top:1px solid #d3d3d3;
+padding-bottom:10px;
+padding-top:10px;
+box-shadow: 0 1px 0 0 #FFFFFF inset;
+margin-top: 10px;
+text-align: left;
+}
+.twocol.offer h2{
+font: 1.5em Century Gothic,Verdana,Arial,sans-serif;
+border-bottom:0;
+text-align:center;
+}
+.twocol.offer p{
+font-size:1.1em;
+text-align:left;
+}
+.twocol.offer .contentbox p {
+margin: 7px 2px 0 25px;
+line-height: 1.6em;
+}
+.offerBox {
+padding-right: 10px;
+position: absolute;
+right: 0em;
+top: 2.2em;
+}
+.offerBox span, .offerBox a {
+float:left;
+margin-right:5px;
+}
+.offerBox a.last {
+margin-right:2px;
+margin-left:8px;
+}
+/*Fund basket*/
+div.basket {
+position: absolute;
+right: 0;
+top: 20px;
+}
+a.basket {
+background: url("/now/images/fund-basket.png") no-repeat scroll left center transparent;
+font-weight: bold;
+padding: 1.1em 0 0.8em 3.7em;
+}
+a.basket:hover {
+opacity:0.7;
+}
+div.basket-dropdown {
+background: none repeat scroll 0 0 #FFFFFF;
+border: 1px solid #CCCCCC;
+border-radius: 8px 8px 8px 8px;
+box-shadow: 0 2px 8px -2px #999999;
+position: absolute;
+right: 0;
+top: 42px;
+width: 380px;
+z-index: 1000;
+}
+div.basket-dropdown div.grey {
+margin: 11px 0 7px 15px;
+width: 347px;
+}
+div.basket-dropdown div.grey h2{
+background:#fff;
+}
+div.basket-dropdown ul li {
+display:block;
+line-height:22px;
+font-size:1.1em;
+padding:0 0 0 15px;
+background:#fff;
+cursor: default;
+width:365px;
+clear:both;
+}
+div.basket-dropdown ul li.new {
+background-color: #fff3a5;
+}
+div.basket-dropdown ul li:hover {
+background:#eaeaea;
+transition: background 0.4s;
+-webkit-transition: background 0.4s;
+}
+div.basket-dropdown ul li input{
+float:left;
+margin: 4px 8px 0 0;
+}
+div.basket-dropdown ul li label{
+font-weight:normal;
+float:left;
+width:auto;
+margin-bottom: 6px;
+}
+div.basket-dropdown ul li a.remove{
+float:right;
+margin: 7px 20px 0 0;
+}
+div.basket-dropdown ul li a.underline {
+float:left;
+overflow:hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+width:230px;
+}
+div.basket-dropdown ul li a.remove img{
+float:none;
+margin: 0;
+}
+div.basket-dropdown .submit {
+width:347px;
+float:left;
+border-top:1px solid #ccc;
+margin:10px 0 10px 15px;
+text-align:center;
+}
+div.basket-dropdown .bttn {
+margin:14px 4px 6px 0;
+float: none;
+}
+div.twocol.monthlysavings-timeline ul {
+clear: both;
+float: left;
+margin-bottom: 20px;
+}
+div.twocol.monthlysavings-timeline ul li{
+float:left;
+margin-bottom: 2px;
+}
+div.twocol.monthlysavings-timeline ul li.first span.heading {
+border-right: 3px solid #B2B2B2;
+float: left;
+font-weight: bold;
+padding: 6px 15px 7px 16px;
+}
+div.twocol.monthlysavings-timeline ul li span.date {
+float:left;
+border-right:3px solid #dbdbdb;
+padding:24px 15px 40px;
+font-size:11px;
+margin-right:15px;
+}
+div.twocol.monthlysavings-timeline ul li span.timeline-box img {
+left: -9px;
+position: absolute;
+top: 24px;
+}
+div.twocol.monthlysavings-timeline ul li span.timeline-box {
+background: none repeat scroll 0 0 #FFFFFF;
+border: 1px solid #DBDBDB;
+box-shadow: 3px 2px 5px -4px #999999;
+float: left;
+font-size: 11px;
+min-width: 275px;
+padding: 15px 10px 10px 10px;
+position: relative;
+}
+div.twocol.monthlysavings-timeline ul li span.timeline-box strong {
+float:left;
+clear:both;
+}
+div.twocol.monthlysavings-timeline ul li span.timeline-box p{
+padding:5px 0 5px 0;
+float:left;
+clear:both
+}
+div.twocol.monthlysavings-timeline ul li span.timeline-box a{
+float:right;
+margin-top: 6px;
+}
+div.twocol.monthlysavings-timeline h2 {
+border-bottom: 0 none;
+margin: 13px;
+}
+div.basket-dropdown ul li img {
+float: right;
+margin: 8px 8px 0 0;
+}
+div.wrap {
+background: url("/now/images/grey-gradient-large.gif") repeat-x scroll left bottom transparent;
+border-bottom: 1px solid #DDDDDD;
+float: left;
+padding-bottom: 4em;
+width: 100%;
+}
+#basket-container.sticky{
+position: fixed;
+right: 2em;
+top: 0;
+width: 100%;
+z-index: 1000;
+}
+
+/* /Fund basket*/
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+     -moz-transition: opacity 0.15s linear;
+       -o-transition: opacity 0.15s linear;
+          transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+div.navigation-mobile {
+padding: 18px 15px 10px 15px;
+display: none;
+}
+/* START KALENDER */
+img.kalender { /* Martin, den lilla kalender ikonen som triggar #kalender, se nedan */
+float:left;
+margin:1px 0 0 8px;
+}
+#kalender, #kalenderstart, #kalenderend {
+position:absolute;
+left:30.8em;
+width:19.1em;
+z-index:2;
+}
+#kalenderstart {
+left:0.8em;
+top:6.8em;
+}
+#kalenderstart table {
+width:100%;
+}
+#kalenderend {
+left:13.8em;
+top:6.8em;
+}
+#kalenderend table {
+width:100%;
+}
+#kalender div.head, #kalenderstart div.head, #kalenderend div.head {
+background:#d4d2d3 url(/now/images/kalenderTop.gif) no-repeat left top;
+height:2.7em;
+}
+#kalender div.head div.back,
+#kalender div.head div.next,
+#kalenderstart div.head div.back,
+#kalenderstart div.head div.next,
+#kalenderend div.head div.back,
+#kalenderend div.head div.next {
+float:left;
+margin:7px 15px 0 13px;
+display:inline;
+}
+#kalender div.head div.month,
+#kalenderstart div.head div.month,
+#kalenderend div.head div.month {
+float:left;
+width:10.5em;
+text-align:center;
+margin:7px 0 0 0;
+}
+#kalender div.body,
+#kalenderstart div.body,
+#kalenderend div.body {
+clear:left;
+border-left:1px solid #d4d2d3;
+border-right:1px solid #d4d2d3;
+padding:1.4em 1.3em 1.3em 1.3em;
+background-color:#fff;
+font-size:1.1em;
+}
+#kalender div.body table,
+#kalenderstart div.body table,
+#kalenderend div.body table {
+border-top:1px solid #a5acb2;
+background:#f0eeef url(/now/images/white.gif) repeat-x top left;
+border-bottom:1px solid #a5acb2;
+}
+#kalender div.body table td,
+#kalenderstart div.body table td,
+#kalenderend div.body table td {
+padding:1px 0 1px 0;
+text-align:center;
+}
+#kalender div.body table td.past,
+#kalender div.body table td.closed,
+#kalenderstart div.body table td.past,
+#kalenderstart div.body table td.closed,
+#kalenderend div.body table td.past,
+#kalenderend div.body table td.closed { /* Martin, passerade datum och kommande st�ngda dagar */
+color:#999;
+}
+#kalender div.body table td.today,
+#kalenderstart div.body table td.today,
+#kalenderend div.body table td.today { /* Martin, dagens datum */
+background-color:#00a9ec;
+color:#fff;
+}
+#kalender div.body table tr.first td,
+#kalenderstart div.body table tr.first td,
+#kalenderend div.body table tr.first td {
+padding-top:3px;
+}
+#kalender div.body table tr.last td,
+#kalenderstart div.body table tr.last td,
+#kalenderend div.body table tr.last td {
+padding-bottom:18px;
+}
+#kalender div.bottom,
+#kalenderstart div.bottom,
+#kalenderend div.bottom {
+background:url(/now/images/kalenderBottom.gif) no-repeat left top;
+height:2px;
+}
+/* SLUT KALENDER */
+
+/* Shareville icon */
+a.shareville {
+background-repeat: no-repeat;
+float: left;
+min-height: 16px;
+min-width: 16px;
+}
+a.shareable-accno-icon {
+display: none;
+}
+a.shareable-accno-icon.shared {
+background-image: url("/now/images/sp/shareville/logo16.png");
+display: block;
+}
+a.shareable-accno-icon.inactive {
+background-image: url("/now/images/sp/shareville/logo16bw.png");
+display: block;
+}
+
+h2.logo {
+margin-left: 18px;
+}
+
+/* Shareville Feed */
+#shareville-ticker { position: relative; display: inline-block;min-height: 128px;border: 1px solid #d3d3d3;
+-webkit-border-radius: 5px;-moz-border-radius: 5px;-ms-border-radius: 5px;-o-border-radius: 5px;border-radius: 5px;
+-webkit-background-clip: padding;-moz-background-clip: padding;background-clip: padding-box;background-color: #f9f9f9;
+-webkit-box-shadow: inset 0 0 0 2px white;-moz-box-shadow: inset 0 0 0 2px white;box-shadow: inset 0 0 0 2px white;
+overflow: hidden;padding: 11px 13px;padding-top: 0; width:100%;}
+#shareville-ticker .header {padding: 8px 8px 10px;}
+#shareville-ticker .header .container-title {font-size: 17px;font-family: "Century Gothic", Arial, sans-serif;
+padding: 0 0 .1em 1em;color: #000000;border-bottom: 1px solid #BEBCBD; background: url(/now/images/sp/shareville/logo16.png) no-repeat left 1px;}
+#shareville-ticker .shareville-user {text-align: center;padding: 0 8px;}
+.col-sm-2 {width: 14.9%;float: left;}
+#shareville-ticker .shareville-user .avatar {position: relative;width: 100%;display: inline-block;}
+#shareville-ticker .shareville-user .info {font-size: 12px;font-weight: bold;margin: 0;padding-top: 0;}
+#shareville-ticker .shareville-user .info .name {font-family: "Century Gothic", Arial, sans-serif;font-size: 12px;
+color: #5bad27;margin: 0 0 0.2em 0;display: inline-block;}
+#shareville-ticker .shareville-user .avatar img {width: 50%;height: auto;-webkit-border-radius: 50%;-moz-border-radius: 50%;
+-ms-border-radius: 50%;-o-border-radius: 50%;border-radius: 50%;}
+#shareville-ticker .shareville-user .avatar .icon {position: absolute;display: block;top: 0;right: 0;width: 24px;height: 24px;
+background-color: #5bad27;-webkit-border-radius: 3px;-moz-border-radius: 3px;-ms-border-radius: 3px;-o-border-radius: 3px;
+border-radius: 3px;}
+#shareville-ticker .shareville-user .avatar .icon.shareville {background-image: url('/now/images/shareville/icon_shareville.png');
+background-size: 16px 16px;background-position: center center;background-repeat: no-repeat;}
+a.sv-feed img{
+margin: 0 2px 0 0;
+}
+a.sv-feed img:hover{
+opacity: 0.8;
+}
+/*
+ *  Popup with data from Shareville
+ *  Portfolio overview, instrument lists
+ */
+#shareville-popup {
+    left: inherit;
+    right: 50%;
+    background: none;
+    display: none;
+}
+#shareville-popup h1 {
+    text-align: center;
+  margin-bottom: 16px;
+}
+#shareville-popup .innerBox {
+    min-width: 72.5em;
+    font-size: 10px;
+    position: relative;
+    right: -50%;
+    background-color: #ffffff;
+    padding: 1em 5em;
+    border-radius: 5px;
+}
+#shareville-popup .disclaimer {
+    float: none;
+}
+#shareville-instrument-data {
+min-height: 7em;
+}
+#shareville-instrument-data .spinner {
+margin: auto;
+top: 35px !important;
+}
+#shareville-instrument-data .instrument-share-pie {
+background-color: #D6D6D6;
+border-radius: 50%;
+width: 100px;
+height: 100px;
+overflow: hidden;
+position: relative;
+float: left;
+margin: 0 0 5px 0;
+z-index: 100;
+box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
+}
+#shareville-instrument-data .instrument-share-pie > div {
+float: left;
+width: 50%;
+height: 100%;
+position: relative;
+overflow: hidden;
+margin: 0;
+}
+#shareville-instrument-data .instrument-share-pie span {
+background-color: #5bad27;
+display: block;
+width: 100%;
+height: 100%;
+}
+#shareville-instrument-data .instrument-share-pie .left span {
+border-top-right-radius: 0;
+border-bottom-right-radius: 0;
+-webkit-transform-origin: 100% 50%;
+-moz-transform-origin: 100% 50%;
+-ms-transform-origin: 100% 50%;
+transform-origin: 100% 50%;
+}
+#shareville-instrument-data .instrument-share-pie .right span {
+border-top-left-radius: 0;
+border-bottom-left-radius: 0;
+-webkit-transform-origin: 0% 50%;
+-moz-transform-origin: 0% 50%;
+-ms-transform-origin: 0% 50%;
+transform-origin: 0% 50%;
+}
+#shareville-instrument-data .instrument-share-pie:before,
+#shareville-instrument-data .instrument-share-pie:after {
+border-radius: 50%;
+display: block;
+position: absolute;
+top: 50%;
+left: 50%;
+-webkit-transform: translateX(-50%) translateY(-50%);
+-moz-transform: translateX(-50%) translateY(-50%);
+-ms-transform: translateX(-50%) translateY(-50%);
+transform: translateX(-50%) translateY(-50%);
+}
+#shareville-instrument-data .instrument-share-pie:before {
+background-color: #fff;
+content: "";
+width: 84%;
+height: 84%;
+z-index: 100;
+}
+#shareville-instrument-data .instrument-share-pie:after {
+content: attr(data-percent-text) "%";
+font-size: 2em;
+font-weight: normal;
+z-index: 200;
+text-align: center;
+}
+#shareville-instrument-data .details {
+position: relative;
+border-left: 0;
+border-right: 0;
+border-bottom: 0;
+width: 100%;
+margin-left: 0;
+}
+#shareville-instrument-data .details .rightCol{
+	position: relative;
+	width: 44%;
+	padding-left: 4%;
+}
+
+
+#shareville-instrument-data .details .leftCol {
+	border-right: 1px solid grey;
+	min-height: 126px;
+	width: 48%;
+}
+
+#shareville-instrument-data .details .leftCol,
+#shareville-instrument-data .details .rightCol {
+	float: left;
+	display: inline;
+	margin: 0 0 5px 10px;
+}
+
+#shareville-instrument-data .details .left .portfolioListing li {
+	width: 100%;
+	display: block;
+	clear: both;
+}
+#shareville-instrument-data .details .portfolioListing .avatar{
+	float: left;
+	width: 32px;
+	height: 32px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	border-radius: 50%;
+	margin-bottom: 8px;
+}
+
+#shareville-instrument-data .details .portfolioListing .name,
+#shareville-instrument-data .details .portfolioListing .yield {
+	padding-left: 4%;
+	width: 85%;
+	display: inline-block;
+	float: left;
+}
+#shareville-instrument-data .details .portfolioListing .name {
+	color: #5BAD27;
+	font-weight: bold !important;
+	margin-top: 4px;
+}
+#shareville-instrument-data .details .portfolioListing .yield {
+	color: #888888;
+}
+
+#shareville-instrument-data .details .trading-activity {
+padding: 12px 0px 12px 20px;
+background-color: #f9f9f9;
+border: 1px solid #D6D6D6;
+border-radius: 0 4px 4px 0;
+border-left: none;
+position: absolute;
+top: 19px;
+font-size: 12px;
+line-height: 19px;
+}
+
+#shareville-instrument-data .details .share {
+	left: 20px;
+	width: 187px;
+	padding-right: 1em;
+	font-size: 1.2em;
+	top: 30px;
+}
+#shareville-instrument-data .details .trading-activity {
+left: 38.7em;
+}
+#shareville-instrument-data .details .trading-activity-chart {
+border-radius: 50%;
+width: 100px;
+height: 100px;
+overflow: hidden;
+position: absolute;
+float: left;
+margin: 0 0 16px 12px;
+background-color: #D6D6D6;
+text-align: center;
+z-index: 100;
+left: 36.5em;
+box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
+}
+#shareville-instrument-data .details .trading-activity-chart div {
+border-radius: 50%;
+width: 84px;
+height: 84px;
+overflow: hidden;
+left: 6px;
+top: 6px;
+position: absolute;
+line-height: 82px;
+font-size: 1.7em;
+border: 2px solid #fff;
+}
+#shareville-instrument-data .details .trading-activity-chart.trading-activity-high div,
+#shareville-instrument-data .details .trading-activity-chart.trading-activity-high{
+background-color: #c95c61;
+background-color: rgba(248, 119, 125, 0.5);
+color: #fff;
+}
+#shareville-instrument-data .details .trading-activity-chart.trading-activity-medium div,
+#shareville-instrument-data .details .trading-activity-chart.trading-activity-medium {
+background-color: #7d73a3;
+background-color: rgba(125, 115, 163, 0.5);
+color: #fff;
+}
+#shareville-instrument-data .details .trading-activity-chart.trading-activity-low div,
+#shareville-instrument-data .details .trading-activity-chart.trading-activity-low {
+background-color: #8fbed9;
+background-color: rgba(143, 190, 217, 0.5);
+color: #fff;
+}
+
+#shareville-instrument-data span.comment {
+	height: 42px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+#shareville-popup .comment:before {
+top: 2.65em;
+}
+
+a.bubble {
+display: none;
+}
+a.bubble.active {
+display: inline;
+}
+/* Shareville comment module */
+#instrument-comments-widget table tr th {
+text-transform: capitalize;
+}
+#instrument-comments-widget table tr td div {
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+width: 340px;
+line-height: 1.4em;
+}
+#instrument-comments-widget h2 {
+background: url(/now/images/sp/shareville/logo.png) no-repeat left 0px;
+background-size: 11px;
+padding-left: 12px;
+}
+/* End Shareville comment module */
+}
+/* START KALENDER */
+img.kalender { /* Martin, den lilla kalender ikonen som triggar #kalender, se nedan */
+float:left;
+margin:1px 0 0 8px;
+}
+#kalender, #kalenderstart, #kalenderend {
+position:absolute;
+left:30.8em;
+width:19.1em;
+z-index:2;
+}
+#kalenderstart {
+left:0.8em;
+top:6.8em;
+}
+#kalenderstart table {
+width:100%;
+}
+#kalenderend {
+left:13.8em;
+top:6.8em;
+}
+#kalenderend table {
+width:100%;
+}
+#kalender div.head, #kalenderstart div.head, #kalenderend div.head {
+background:#d4d2d3 url(/now/images/kalenderTop.gif) no-repeat left top;
+height:2.7em;
+}
+#kalender div.head div.back,
+#kalender div.head div.next,
+#kalenderstart div.head div.back,
+#kalenderstart div.head div.next,
+#kalenderend div.head div.back,
+#kalenderend div.head div.next {
+float:left;
+margin:7px 15px 0 13px;
+display:inline;
+}
+#kalender div.head div.month,
+#kalenderstart div.head div.month,
+#kalenderend div.head div.month {
+float:left;
+width:10.5em;
+text-align:center;
+margin:7px 0 0 0;
+}
+#kalender div.body,
+#kalenderstart div.body,
+#kalenderend div.body {
+clear:left;
+border-left:1px solid #d4d2d3;
+border-right:1px solid #d4d2d3;
+padding:1.4em 1.3em 1.3em 1.3em;
+background-color:#fff;
+font-size:1.1em;
+}
+#kalender div.body table,
+#kalenderstart div.body table,
+#kalenderend div.body table {
+border-top:1px solid #a5acb2;
+background:#f0eeef url(/now/images/white.gif) repeat-x top left;
+border-bottom:1px solid #a5acb2;
+}
+#kalender div.body table td,
+#kalenderstart div.body table td,
+#kalenderend div.body table td {
+padding:1px 0 1px 0;
+text-align:center;
+}
+#kalender div.body table td.past,
+#kalender div.body table td.closed,
+#kalenderstart div.body table td.past,
+#kalenderstart div.body table td.closed,
+#kalenderend div.body table td.past,
+#kalenderend div.body table td.closed { /* Martin, passerade datum och kommande st�ngda dagar */
+color:#999;
+}
+#kalender div.body table td.today,
+#kalenderstart div.body table td.today,
+#kalenderend div.body table td.today { /* Martin, dagens datum */
+background-color:#00a9ec;
+color:#fff;
+}
+#kalender div.body table tr.first td,
+#kalenderstart div.body table tr.first td,
+#kalenderend div.body table tr.first td {
+padding-top:3px;
+}
+#kalender div.body table tr.last td,
+#kalenderstart div.body table tr.last td,
+#kalenderend div.body table tr.last td {
+padding-bottom:18px;
+}
+#kalender div.bottom,
+#kalenderstart div.bottom,
+#kalenderend div.bottom {
+background:url(/now/images/kalenderBottom.gif) no-repeat left top;
+height:2px;
+}
+/* SLUT KALENDER */
+
+/* Portfolio overview, shareville data popup */
+#sharevilleData {
+    left: inherit;
+    right: 50%;
+    background: none;
+    display: none;
+}
+#sharevilleData h1 {
+    text-align: center;
+}
+#sharevilleData .innerBox {
+    min-width: 72.5em;
+    font-size: 10px;
+    position: relative;
+    right: -50%;
+    background-color: #ffffff;
+    padding: 1em 5em;
+    border-radius: 5px;
+}
+#sharevilleData .disclaimer {
+    float: none;
+}
+.hide {
+    display: none !important;
+}
+
+/* KYC */
+#content.penningtvatt p {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+#kyc .well {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    box-shadow: none;
+    padding: 0;
+}
+#kyc select {
+    margin: 4px 4px 0 0 !important;
+}
+#kyc span {
+    padding: 12px 0 0.4em !important;
+    display: inline-block !important;
+}
+#kyc .btn-custom.cta {
+    background-color: #00A9EC;
+    height: 32px;
+    line-height: 32px;
+    padding: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    min-width: 96px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: #ffffff;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#kyc .btn-custom.cta:hover {
+    background-color: #0097d3;
+}
+#kyc .checkbox label {
+  font-weight: normal;
+}
+
+#kyc .col-md-12 {
+  width: 94%;
+}
+#kyc .float-right {
+    float: right;
+}
+#kyc .btn-custom.cta, #kyc .nx_cs_option a {
+    background-color: #00A9EC;
+}
+#kyc .btn-custom, #kyc .nx_cs_option a {
+    background-color: #AAAAAA;
+    background-image: none;
+    border: medium none;
+    box-shadow: none;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-bottom: 16px;
+    min-width: 96px;
+    outline: medium none;
+    text-shadow: none;
+text-align:center;
+}
+#kyc .row:before, #kyc .row:after {
+    content: " ";
+    display: table;
+}
+#kyc .col-md-12 {
+    float: left;
+}
+#kyc .col-md-12 {
+    min-height: 1px;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+}
+
+#kyc .questionare .checkbox {
+    margin: 0;
+}
+#kyc .radio, #kyc .checkbox {
+    margin-bottom: 16px;
+}
+#kyc .radio, #kyc .checkbox {
+		clear: both;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    min-height: 20px;
+    vertical-align: middle;
+}
+#kyc .checkbox.align-left {
+    padding-left: 15px;
+}
+
+#kyc .col-md-12 {
+  width: 94%;
+}
+
+/* End KYC */
+.hide {
+    display: none !important;
+}
+.show {
+    display: block !important;
+}
+.invisible {
+    visibility: hidden;
+}
+
+#mobile-load-next-page {
+	display: none;
+}
+
+body .buorg { position: absolute; width: 100%; top: 0px; left: 0px; border-bottom: 1px solid #C9C6B5; background: #fcf8e3 no-repeat 8px url(/now/js/browser-update/warning.png); text-align: left; cursor: pointer; font-family: Arial,Helvetica,sans-serif; color: #2D2D2D; font-size: 12px; }
+body .buorg div { padding: 15px 48px 15px 48px; }
+body .buorg a { color: #FF7828; }
+body #buorgclose { position: absolute; right: 16px; top: 16px; width: 16px; height: 16px; padding: 0; background-image: url(/now/js/browser-update/close.png); background-size: 16px 16px; font-size: 0.1px; color: #2D2D2D; color: transparent; }
