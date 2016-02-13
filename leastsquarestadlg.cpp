@@ -12,3 +12,8 @@ LeastSquaresTaDlg::~LeastSquaresTaDlg()
 {
     delete ui;
 }
+
+void LeastSquaresTaDlg::on_pushButton_clicked()
+{
+
+}

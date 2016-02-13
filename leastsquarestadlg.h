@@ -15,6 +15,9 @@ public:
     explicit LeastSquaresTaDlg(QWidget *parent = 0);
     ~LeastSquaresTaDlg();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::LeastSquaresTaDlg *ui;
 };
