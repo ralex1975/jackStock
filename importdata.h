@@ -196,7 +196,7 @@ private slots:
     void on_pushButtImportKeyTaBridgeData_clicked();
     void on_pushButDescription_clicked();
     void on_pushButParseCompanyInfo_clicked();
-    void on_pushButtImportKeyTaBridgeData_toggled(bool checked);
+    // void on_pushButtImportKeyTaBridgeData_toggled(bool checked);
 };
 
 #endif // IMPORTDATA_H
