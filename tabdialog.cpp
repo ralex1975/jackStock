@@ -26,6 +26,7 @@
 #include "importdata.h"
 #include "tabhelp.h"
 #include "fatab.h"
+#include "leastsquarestadlg.h"
 #include <QVBoxLayout>
 
 
@@ -59,17 +60,18 @@ TabDialog::TabDialog(QWidget *parent)
 
     tabWidget = new QTabWidget;
 
-    tabWidget->addTab(new CWebBrowserTab(parent), QString::fromLatin1("Webl�sare"));
+    tabWidget->addTab(new CWebBrowserTab(parent), QString::fromLatin1("Webläsare"));
     tabWidget->addTab(new CTableTab(parent),QString::fromLatin1("Nyckeltal"));
     tabWidget->addTab(new FaTab(parent), QString::fromLatin1("FA"));
     tabWidget->addTab(new TaAnalysis(parent), QString::fromLatin1("TA"));
     tabWidget->addTab(new CTADlg(parent), QString::fromLatin1("TA/FA"));
-    tabWidget->addTab(new Portfolio(parent), QString::fromLatin1("Portf�lj"));
-    tabWidget->addTab(new EfficientPortfolio(parent), QString::fromLatin1("Portf�ljoptimering"));
+    tabWidget->addTab(new Portfolio(parent), QString::fromLatin1("Portfölj"));
+    tabWidget->addTab(new EfficientPortfolio(parent), QString::fromLatin1("Portföljoptimering"));
     tabWidget->addTab(new ImportData(parent), QString::fromLatin1("Importera"));
     tabWidget->addTab(new TabHelp(parent), QString::fromLatin1("Anteckningar"));
     tabWidget->addTab(new GraphTab(parent), QString::fromLatin1("Test, Graf"));
-    tabWidget->addTab(new CJackStock(parent), QString::fromLatin1("F�rgtest"));
+    tabWidget->addTab(new CJackStock(parent), QString::fromLatin1("Färgtest"));
+    tabWidget->addTab(new LeastSquaresTaDlg(parent), QString::fromLatin1("Nyckeltal2"));
 
 
     tabWidget->setCurrentIndex(1);
@@ -121,15 +123,13 @@ void TabDialog::createMenu(void)
      //=======================================
      toolMenu = new QMenu(tr("Verktyg"), this);
      QString tmp;
-     tmp = QString::fromLatin1("Inställningar");
+     tmp = QString::fromLatin1("InstÃ¤llningar");
      QMenu* submenuSettings = toolMenu->addMenu(tmp);
     // QAction* trendIndicatorSetup = submenuSettings->addAction( tr("Trendindikatorer") );
      SelFilterIndicatorAct = submenuSettings->addAction( tr("Nyckeltalsindikatorer") );
 
      // Create sub menu and connect event handler here:
-     //SelFilterIndicatorAct = new QAction(tr("Indikatorer"), this);
-     SelFilterIndicatorAct->setStatusTip(tr("Välj indikatorer"));
-     // toolMenu->addAction(SelFilterIndicatorAct);
+     SelFilterIndicatorAct->setStatusTip(tr("VÃ¤lj indikatorer"));
      connect(SelFilterIndicatorAct, SIGNAL(triggered()), this, SLOT(onSelFilterInicatorMenu()));
 
 
@@ -140,7 +140,6 @@ void TabDialog::createMenu(void)
 
 
      aboutAct = new QAction(tr("&About"), this);
-     //connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
      aboutQtAct = new QAction(tr("About &Qt"), this);
      connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -238,7 +237,7 @@ bool TabDialog::event( QEvent * e )
  if ( e->type() == (QEvent::User) )
  {
     tabWidget->setCurrentIndex(2);
-    //QMessageBox::information(this, "Title", "Inläsning färdig 1");
+    //QMessageBox::information(this, "Title", "InlÃ¤sning fÃ¤rdig 1");
     QApplication::beep();
     return  true;
  }

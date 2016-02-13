@@ -70,7 +70,8 @@ SOURCES += main.cpp\
     linkedList.cpp\
     tabhelp.cpp \
     parsecompdescription.cpp \
-    fatab.cpp
+    fatab.cpp \
+    leastsquarestadlg.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -119,7 +120,8 @@ HEADERS  += WebBrowserTab.h \
     linkedList.h \
     tabhelp.h \
     parsecompdescription.h \
-    fatab.h
+    fatab.h \
+    leastsquarestadlg.h
 
 FORMS    += \
     WebBrowserTab.ui \
@@ -138,6 +140,7 @@ FORMS    += \
     graphtab.ui \
     efficentbargraphdlg.ui \
     fatab.ui \
-    fatab.ui
+    fatab.ui \
+    leastsquarestadlg.ui
 
 
