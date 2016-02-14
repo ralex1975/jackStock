@@ -33,6 +33,7 @@ public:
     void addData(QTableView *tableView, QString data, int row, int col);
     void createTableModel(int maxRow, int maxColumn, QObject *parent = 0);
     void deleteAllData(QTableView *tableView);
+    // void deleteRowFrom(int row, QTableView *tableView);
     void clearHeaderAndData(QTableView *tableView);
     int  getNofRows(void);
     int  getNofCols(void);

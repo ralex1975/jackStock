@@ -94,6 +94,7 @@ CTableTab::CTableTab(QWidget *parent) :
     //qDebug() << "isSSLSupported=  " << isSSLSupported << "\n";
 
 
+    m_sortWithoutfilter = false;
 }
 
 
@@ -133,60 +134,77 @@ void CTableTab::sectionClicked1(int logicalIndex)
 {
     CDbHndl db;
     QString sortParam;
+    static bool toggle = false;
 
-
-    //logicalIndex = logicalIndex;
-    //QMessageBox::information(NULL, QObject::tr("Header clicked"), QObject::tr("Header clicked") );
-
-
-    if(true == db.filter1DividendGetColumnSortParameter(logicalIndex, sortParam))
+    if(m_sortWithoutfilter == true)
     {
-        // qDebug("Open db 7 %s, %d", __FILE__, __LINE__);
-        // db.openDb(PATH_JACK_STOCK_DB);
-        db.createTabelTabFilter(m_filterCtrls);
-
-        //QMessageBox::information(NULL, QObject::tr("sortOrder"), m_tableHeaderList[logicalIndex].sortOrder );
-
-
-        db.debugPrintFilter();
-
-
-        if(m_tableHeaderList[logicalIndex].sortOrder.compare(QObject::tr(SQL_STR_DESC)) ==  0)
+        if(true == toggle)
         {
-           m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_ASC;
-           //QMessageBox::information(NULL, QObject::tr(SQL_STR_ASC), m_tableHeaderList[logicalIndex].sortOrder);
-        }
-        else if(m_tableHeaderList[logicalIndex].sortOrder.compare(QObject::tr(SQL_STR_ASC)) ==  0)
-        {
-            m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
-            //QMessageBox::information(NULL, QObject::tr(SQL_STR_DESC), m_tableHeaderList[logicalIndex].sortOrder);
+            toggle = false;
+            ui->tableView->sortByColumn(logicalIndex, Qt::AscendingOrder);
         }
         else
         {
-            m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
-            QMessageBox::information(NULL, QObject::tr("SQL_STR_?"), m_tableHeaderList[logicalIndex].sortOrder);
+            toggle = true;
+            ui->tableView->sortByColumn(logicalIndex, Qt::DescendingOrder);
         }
+    }
+    else
+    {
+        //logicalIndex = logicalIndex;
+        //QMessageBox::information(NULL, QObject::tr("Header clicked"), QObject::tr("Header clicked") );
 
 
-        db.filter1Dividend(this, ui->tableView, &m_filterCtrls, sortParam, m_tableHeaderList[logicalIndex].sortOrder, true);
+        if(true == db.filter1DividendGetColumnSortParameter(logicalIndex, sortParam))
+        {
+            // qDebug("Open db 7 %s, %d", __FILE__, __LINE__);
+            // db.openDb(PATH_JACK_STOCK_DB);
+            db.createTabelTabFilter(m_filterCtrls);
+
+            //QMessageBox::information(NULL, QObject::tr("sortOrder"), m_tableHeaderList[logicalIndex].sortOrder );
+
+
+            db.debugPrintFilter();
+
+
+            if(m_tableHeaderList[logicalIndex].sortOrder.compare(QObject::tr(SQL_STR_DESC)) ==  0)
+            {
+               m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_ASC;
+               //QMessageBox::information(NULL, QObject::tr(SQL_STR_ASC), m_tableHeaderList[logicalIndex].sortOrder);
+            }
+            else if(m_tableHeaderList[logicalIndex].sortOrder.compare(QObject::tr(SQL_STR_ASC)) ==  0)
+            {
+                m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
+                //QMessageBox::information(NULL, QObject::tr(SQL_STR_DESC), m_tableHeaderList[logicalIndex].sortOrder);
+            }
+            else
+            {
+                m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
+                QMessageBox::information(NULL, QObject::tr("SQL_STR_?"), m_tableHeaderList[logicalIndex].sortOrder);
+            }
+
+
+            db.filter1Dividend(this, ui->tableView, &m_filterCtrls, sortParam, m_tableHeaderList[logicalIndex].sortOrder, true);
 
 
 
-        // Remove all data from filter combo boxes
-        db.delAllFilterStockSnapshotData();
+            // Remove all data from filter combo boxes
+            db.delAllFilterStockSnapshotData();
 
-        // Update combo box with fresh data
-        (void)db.insertFilterDataInDb();
+            // Update combo box with fresh data
+            (void)db.insertFilterDataInDb();
 
-        // Set Filter Combo Box last Selection
-        (void)db.dbDataSetFilterComboSel(&m_filterCtrls);
+            // Set Filter Combo Box last Selection
+            (void)db.dbDataSetFilterComboSel(&m_filterCtrls);
 
-        // db.closeDb();
-        // qDebug("Close db 7 %s, %d", __FILE__, __LINE__);
+            // db.closeDb();
+            // qDebug("Close db 7 %s, %d", __FILE__, __LINE__);
     }
     else
     {
        QMessageBox::information(NULL, QObject::tr("sortParam"), QObject::tr("Error: fail to sort") );
+    }
+
     }
 
 }
@@ -318,6 +336,8 @@ void CTableTab::on_FilterData_clicked()
     // Set Filter Combo Box last Selection
     (void)db.dbDataSetFilterComboSel(&m_filterCtrls);
 
+    m_sortWithoutfilter = true;
+
 }
 
 
@@ -376,6 +396,8 @@ void CTableTab::on_GetDbDataButton_clicked()
 void CTableTab::on_GetDbDataButton_2_clicked()
 {
     CDbHndl db;
+
+    m_sortWithoutfilter = true;
 
     db.createTabelTabFilter(m_filterCtrls);
 

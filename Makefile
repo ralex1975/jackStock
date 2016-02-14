@@ -525,17 +525,17 @@ ui_importdata.h: importdata.ui
 ui_tabhelp.h: tabhelp.ui
 	/usr/lib/x86_64-linux-gnu/qt4/bin/uic tabhelp.ui -o ui_tabhelp.h
 
-ui_fatab.h: fatab.ui
-	/usr/lib/x86_64-linux-gnu/qt4/bin/uic fatab.ui -o ui_fatab.h
+#ui_fatab.h: fatab.ui
+#	/usr/lib/x86_64-linux-gnu/qt4/bin/uic fatab.ui -o ui_fatab.h
 
-ui_graphtab.h: graphtab.ui
-	/usr/lib/x86_64-linux-gnu/qt4/bin/uic graphtab.ui -o ui_graphtab.h
+#ui_graphtab.h: graphtab.ui
+#	/usr/lib/x86_64-linux-gnu/qt4/bin/uic graphtab.ui -o ui_graphtab.h
 
-ui_efficentbargraphdlg.h: efficentbargraphdlg.ui
-	/usr/lib/x86_64-linux-gnu/qt4/bin/uic efficentbargraphdlg.ui -o ui_efficentbargraphdlg.h
+#ui_efficentbargraphdlg.h: efficentbargraphdlg.ui
+#	/usr/lib/x86_64-linux-gnu/qt4/bin/uic efficentbargraphdlg.ui -o ui_efficentbargraphdlg.h
 
-ui_fatab.h: fatab.ui
-	/usr/lib/x86_64-linux-gnu/qt4/bin/uic fatab.ui -o ui_fatab.h
+#ui_fatab.h: fatab.ui
+#	/usr/lib/x86_64-linux-gnu/qt4/bin/uic fatab.ui -o ui_fatab.h
 
 ui_fatab.h: fatab.ui
 	/usr/lib/x86_64-linux-gnu/qt4/bin/uic fatab.ui -o ui_fatab.h

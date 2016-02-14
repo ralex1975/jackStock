@@ -485,6 +485,8 @@ public:
         QString earningsDividedByDividend;
         QString navDivLastStockPrice;
 
+        QString assetSymbol;                    //xxx.st
+
     };
 
     struct GPCompLookUpTable_ST
@@ -692,6 +694,11 @@ public:
     QVector <VarianceData_ST> m_rowVarianseArr;
     QVector <VarianceData_ST> m_colVarianseArr;
     QVector <double> m_tmpArr;
+
+    bool companynameGetKeyDataUseBridge(QString snapshotCompanyName,
+                                        snapshotStockData_ST &keyData,
+                                        bool dbIsHandledExternly=false);
+
 
     bool getKeyDataUseBridge(QString assetSymbol,
                              snapshotStockData_ST &keyData,

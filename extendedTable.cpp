@@ -88,6 +88,29 @@ void CExtendedTable::deleteAllData(QTableView *tableView)
  }
 
 
+#if 0 // funkar inte
+/*******************************************************************
+ *
+ * Function:    deleteAllData()
+ *
+ * Description: Removes contens from a row
+ *
+ *
+ *
+ *******************************************************************/
+void CExtendedTable::deleteRowFrom(int row, QTableView *tableView)
+{
+    int colum = 1;
+
+    for(int i = 0; i < 216; i++)
+    {
+        m_model->removeRows (i, colum);
+        tableView->setModel(m_model);
+    }
+ }
+#endif
+
+
  /*******************************************************************
   *
   * Function:    getNofRows()

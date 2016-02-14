@@ -1106,10 +1106,9 @@ void TaAnalysis::slotImportSingelStockDataIsFinish(int dummy)
 
 /*******************************************************************
  *
- * Function:    on_treeWidget_clicked()
+ * Function:    displayStockData()
  *
- * Description: This function is invoked when user double click
- *              on the stock list.
+ * Description:
  *
  *
  *******************************************************************/

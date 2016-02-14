@@ -3652,6 +3652,140 @@ bool CDbHndl::delAllTblNordnetStockIds(void)
 
 
 
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::companynameGetKeyDataUseBridge(QString snapshotCompanyName,
+                                             snapshotStockData_ST &keyData,
+                                              bool dbIsHandledExternly)
+{
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    // Remove space
+    snapshotCompanyName.trimmed();
+
+    QByteArray ba = snapshotCompanyName.toLocal8Bit();
+    const char *c_snapshotCompanyName = ba.data();
+
+
+
+    str.sprintf("SELECT TblNordnetYahooBridge.*, TblStockDataSnapshot.* "
+                " FROM TblNordnetYahooBridge, TblStockDataSnapshot "
+                " WHERE lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                " lower('%s') = lower(TblNordnetYahooBridge.assetName);", c_snapshotCompanyName);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("companyName").isNull()==true)
+            {
+                qry.finish();
+                if(dbIsHandledExternly == false)
+                {
+                    closeDb();
+                    m_mutex.unlock();
+                }
+                return false;
+            }
+            else
+            {
+                qDebug() << rec.value("companyName").toString() << "\n";
+                keyData.companyName = rec.value("companyName").toString();
+                keyData.lastPrice = rec.value("lastPrice").toString();
+                keyData.priceChange = rec.value("priceChange").toString();
+                keyData.procentChangeOneDay = rec.value("procentChangeOneDay").toString();
+                keyData.bidPrice = rec.value("bidPrice").toString();
+                keyData.offerPrice = rec.value("offerPrice").toString();
+                keyData.highestPrice = rec.value("highestPrice").toString();
+                keyData.lowestPrice = rec.value("lowestPrice").toString();
+                keyData.volume = rec.value("volume").toString();
+                keyData.currency = rec.value("currency").toString();
+                keyData.time = rec.value("time").toString();
+                keyData.date = rec.value("date").toString();
+                keyData.procentChangeOneWeek = rec.value("procentChangeOneWeek").toString();
+                keyData.procentChange1Month = rec.value("procentChange1Month").toString();
+                keyData.procentChange3Month = rec.value("procentChange3Month").toString();
+                keyData.procentChange6Month = rec.value("procentChange6Month").toString();
+                keyData.procentChange1Year = rec.value("procentChange1Year").toString();
+                keyData.procentChange2Year = rec.value("procentChange2Year").toString();
+                keyData.procentChange3Year = rec.value("procentChange3Year").toString();
+                keyData.procentChange5Year = rec.value("procentChange5Year").toString();
+                keyData.keyValuePE = rec.value("keyValuePE").toString();
+                keyData.keyValuePS = rec.value("keyValuePS").toString();
+                keyData.keyValueEarningsPerShare = rec.value("keyValueEarningsPerShare").toString();
+                keyData.keyValueNAVPerShare = rec.value("keyValueNAVPerShare").toString();
+                keyData.keyValueDividendPerShare = rec.value("keyValueDividendPerShare").toString();
+                keyData.keyValueYield = rec.value("keyValueYield").toString();
+                keyData.keyValueCoursePerJEK = rec.value("keyValueCoursePerJEK").toString();
+                keyData.earningsDividedByDividend = rec.value("earningsDividedByDividend").toString();
+                keyData.navDivLastStockPrice = rec.value("navDivLastStockPrice").toString();
+                keyData.assetSymbol = rec.value("assetSymbol").toString();
+
+                qry.finish();
+                if(dbIsHandledExternly == false)
+                {
+                    closeDb();
+                    m_mutex.unlock();
+                }
+                return true;
+
+            }
+
+        }
+    }
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+    return false;
+}
+
+
+
+
 
 /****************************************************************
  *
