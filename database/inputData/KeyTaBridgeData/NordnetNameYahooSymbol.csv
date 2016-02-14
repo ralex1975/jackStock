@@ -18,13 +18,8 @@ Ericsson, Telefonab. L M ser. A|ERIC-A.ST|
 Ericsson, Telefonab. L M ser. B|ERIC-B.ST|
 Fabege AB|FABG.ST|
 Getinge AB ser. B|GETI-B.ST|
-<<<<<<< HEAD
 Svenska Handelsbanken ser. A|SHB-A.ST|
 Svenska Handelsbanken ser. B|SHB-B.ST|
-=======
-Sv. Handelsbanken A|SHB-A.ST|
-Sv. Handelsbanken B|SHB-B.ST|
->>>>>>> Improve_import_company_info
 Hennes & Mauritz AB, H & M ser. B|HM-B.ST|
 Hexagon AB ser. B|HEXA-B.ST|
 HEXPOL AB ser. B|HPOL-B.ST|
@@ -38,22 +33,14 @@ Industrivärden, AB ser. A|INDU-A.ST|
 Industrivärden, AB ser. C|INDU-C.ST|
 Investor AB ser. A|INVE-A.ST|
 Investor AB ser. B|INVE-B.ST|
-<<<<<<< HEAD
 Kinnevik, Investment AB ser. A|KINV-A.ST|
 Kinnevik, Investment AB ser. B|KINV-B.ST|
 Latour, Investmentab. ser. B|LATO-B.ST|
 Lundbergföretagen AB, L E ser. B|LUND-B.ST|
-=======
-Kinnevik A|KINV-A.ST|
-Kinnevik B|KINV-B.ST|
-Latour, Investmentab. ser. B|LATO-B.ST|
-Lundbergföretagen B|LUND-B.ST|
->>>>>>> Improve_import_company_info
 Lundin Mining Corporation SDB|LUMI-SDB.ST|
 Lundin Petroleum AB|LUPE.ST|
 Meda AB ser. A|MEDA-A.ST|
 Melker Schörling AB|MELK.ST|
-<<<<<<< HEAD
 Millicom International Cellular S.A. SDB|MIC-SDB.ST|
 Modern Times Group MTG AB ser. A|MTG-A.ST|
 Modern Times Group MTG AB ser. B|MTG-B.ST|
@@ -62,32 +49,15 @@ NCC AB ser. B|NCC-B.ST|
 NIBE Industrier AB ser. B|NIBE-B.ST|
 Nordea Bank AB|NDA-SEK.ST|
 Oriflame Holding AG|ORI.ST|
-=======
-Millicom Int. Cellular SDB|MIC-SDB.ST|
-Modern Times Group A|MTG-A.ST|
-Modern Times Group B|MTG-B.ST|
-NCC AB ser. A|NCC-A.ST|
-NCC AB ser. B|NCC-B.ST|
-NIBE Industrier B|NIBE-B.ST|
-Nordea Bank AB|NDA-SEK.ST|
-Oriflame, SDB|ORI.ST|
->>>>>>> Improve_import_company_info
 Peab AB ser. B|PEAB-B.ST|
 Ratos AB ser. A|RATO-A.ST|
 Ratos AB ser. B|RATO-B.ST|
 SAAB AB ser. B|SAAB-B.ST|
 Sandvik AB|SAND.ST|
-<<<<<<< HEAD
 Svenska Cellulosa AB SCA ser. A|SCA-A.ST|
 Svenska Cellulosa AB SCA ser. B|SCA-B.ST|
 Skandinaviska Enskilda Banken ser. A|SEB-A.ST|
 Skandinaviska Enskilda Banken ser. C|SEB-C.ST|
-=======
-SCA A|SCA-A.ST|
-SCA B|SCA-B.ST|
-SEB A|SEB-A.ST|
-SEB C|SEB-C.ST|
->>>>>>> Improve_import_company_info
 SECTRA AB ser B|SECT-B.ST|
 Semafo Inc.|SMF.ST|
 Skanska AB ser. B|SKA-B.ST|
@@ -148,11 +118,7 @@ Fast. Balder B|BALD-B.ST|
 Fenix Outdoor AB ser. B|FIX-B.ST|
 Gunnebo AB|GUNN.ST|
 Haldex AB|HLDX.ST|
-<<<<<<< HEAD
 Heba Fastighets AB ser. B|HEBA-B.ST|
-=======
-HEBA B|HEBA-B.ST|
->>>>>>> Improve_import_company_info
 HiQ International AB|HIQ.ST|
 Indutrade AB|INDT.ST|
 JM AB|JM.ST|
@@ -174,11 +140,7 @@ SAS AB|SAS.ST|
 SkiStar AB ser. B|SKIS-B.ST|
 SWECO AB ser. A|SWEC-A.ST|
 SWECO AB ser. B|SWEC-B.ST|
-<<<<<<< HEAD
 Swedish Orphan Biovitrum AB|SOBI.ST|
-=======
-Swedish Orphan Biovitrum|SOBI.ST|
->>>>>>> Improve_import_company_info
 Swedol AB ser. B|SWOL-B.ST|
 Systemair AB|SYSR.ST|
 Tethys Oil AB|TETY.ST|
