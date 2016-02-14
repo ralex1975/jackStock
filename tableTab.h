@@ -78,6 +78,8 @@ private:
     HttpWindow m_hw3;
 
     int m_filesReceived;
+    bool m_sortWithoutfilter;
+
 
 public:
     CParseSnapshotData *m_parserThread;

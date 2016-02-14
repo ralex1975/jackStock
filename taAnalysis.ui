@@ -1428,7 +1428,6 @@
       </widget>
       <zorder>StockListComboBox</zorder>
       <zorder>SelStockListButton</zorder>
-      <zorder>qwtPlot</zorder>
       <zorder>selTimePeriodSlider</zorder>
       <zorder>moveTimePeriodSlider_2</zorder>
       <zorder>timePeriodLlineEdit</zorder>
@@ -1446,6 +1445,7 @@
       <zorder>labelOneDayProcentChange</zorder>
       <zorder>StatusInfoLabel</zorder>
       <zorder>tabWidget_2</zorder>
+      <zorder>qwtPlot</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
