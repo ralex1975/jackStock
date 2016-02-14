@@ -1445,6 +1445,9 @@ bool CUtil::number2DoubleRemoveSpace(QString number, double &dbNumber)
     if(number.isNull() == true)
         return false;
 
+    if(number.size() == 0)
+        return false;
+
 
   // Remove whitespaces inside a string
    number = number.replace(" ","");

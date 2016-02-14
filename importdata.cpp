@@ -272,15 +272,20 @@ void ImportData::slotReqNextCompanyData()
 
 
             // SKa tas bort fixa parser buggen istället
-            if(data.assetId.compare("103937") == 0 || data.assetId.compare("104058") == 0 || data.assetId.compare("104058") == 0 || data.assetId.compare("100208") == 0 || data.assetId.compare("98395") == 0 || data.assetId.compare("104597") == 0 || data.assetId.compare("100152") == 0 || data.assetId.compare("101601") == 0 || data.assetId.compare("99667") == 0 ||
+            if(data.assetId.compare("103937") == 0 || data.assetId.compare("104058") == 0 ||
+               data.assetId.compare("104058") == 0 || data.assetId.compare("100208") == 0 ||
+               data.assetId.compare("98395") == 0  || data.assetId.compare("104597") == 0 ||
+               data.assetId.compare("100152") == 0 || data.assetId.compare("101601") == 0 ||
+               data.assetId.compare("99667") == 0  ||
                data.assetId.compare("103110") == 0 || data.assetId.compare("104593") == 0 ||
                data.assetId.compare("101618") == 0 || data.assetId.compare("98809") == 0  ||
                data.assetId.compare("101207") == 0 || data.assetId.compare("100378") == 0 ||
                data.assetId.compare("106202") == 0 || data.assetId.compare("106028") == 0 ||
                data.assetId.compare("101639") == 0 || data.assetId.compare("102786") == 0 ||
                data.assetId.compare("103930") == 0 || data.assetId.compare("105183") == 0 ||
-               data.assetId.compare("104592") == 0 || data.assetId.compare("101634") == 0
-                    )
+               data.assetId.compare("104592") == 0 || data.assetId.compare("101634") == 0 ||
+               data.assetId.compare("110079") == 0 || data.assetId.compare("107904") == 0 ||
+               data.assetId.compare("877") == 0)
             {
                 found = true;
                 m_companyListIndex++;

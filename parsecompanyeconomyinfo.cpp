@@ -85,6 +85,7 @@ parseProfitloss(QTextStream &inStream, int &dateIndex)
     CUtil cu;
     int intNumber;
     static int i = 0;
+    bool isValidNo;
 
     str = inStream.readLine();
     str = str.trimmed();
@@ -160,7 +161,18 @@ parseProfitloss(QTextStream &inStream, int &dateIndex)
                 // qDebug() << "str aa" << str;
                 QString year;
                 year.sprintf("%d", intNumber);
-                m_resultProfitLossDateArr.append(year);
+                year.toInt(&isValidNo);
+                if(true == isValidNo)
+                {
+                    m_resultProfitLossDateArr.append(year);
+                }
+                else
+                {
+                    m_mainState = STATE_MULTI_YEAR_SUMMARY;
+                    i = 0;
+                    qDebug() << "Error Not a valid no\n" << str;
+                    break;
+                }
                 dateIndex++;
                 m_subState = SUB_STATE_TH_END;
             }
@@ -206,6 +218,7 @@ parseBalance(QTextStream &inStream, int &dateIndex)
     CUtil cu;
     int intNumber;
     static int i = 0;
+    bool dataIsValid;
 
     str = inStream.readLine();
     str = str.trimmed();
@@ -220,7 +233,7 @@ parseBalance(QTextStream &inStream, int &dateIndex)
     case STATE_MULTI_YEAR_SUMMARY:
         if(str.compare(TAG_BALANS_RAKNING1) == 0)
         {
-           qDebug() << "str" << str;
+           // qDebug() << "str" << str;
            i = 0;
            m_subState = SUB_STATE_TH_END;
            m_mainState = STATE_FIND_YEAR;
@@ -236,13 +249,13 @@ parseBalance(QTextStream &inStream, int &dateIndex)
         case SUB_STATE_TH_END:
             if(str.compare(TAG_FIXED_ASSETS) == 0)
             {
-               qDebug() << "str" << str;
+               // qDebug() << "str" << str;
                m_subState = SUB_STATE_TD_END;
                m_mainState = STATE_GET_RESULT_NUMBER;
             }
             else if(str.compare(TAG_TH_END) == 0)
             {
-               qDebug() << "str" << str;
+               // qDebug() << "str" << str;
                m_subState = SUB_STATE_TH_START;
             }
             break;
@@ -250,13 +263,13 @@ parseBalance(QTextStream &inStream, int &dateIndex)
         case SUB_STATE_TH_START:
             if(str.compare(TAG_FIXED_ASSETS) == 0)
             {
-               qDebug() << "str" << str;
+               // qDebug() << "str" << str;
                m_subState = SUB_STATE_TD_END;
                m_mainState = STATE_GET_RESULT_NUMBER;
             }
             else if(str.compare(TAG_TH_START) == 0)
             {
-               qDebug() << "str" << str;
+               // qDebug() << "str" << str;
                m_subState = SUB_STATE_YEAR;
             }
             break;
@@ -264,16 +277,28 @@ parseBalance(QTextStream &inStream, int &dateIndex)
         case SUB_STATE_YEAR:
             if(str.compare(TAG_FIXED_ASSETS) == 0)
             {
-               qDebug() << "str" << str;
+               // qDebug() << "str" << str;
                m_subState = SUB_STATE_TD_END;
                m_mainState = STATE_GET_RESULT_NUMBER;
             }
             else if(true == cu.number2Int(str, intNumber))
             {
-                qDebug() << "str aa" << str;
+                qDebug() << "Balance year:" << str;
                 QString year;
                 year.sprintf("%d", intNumber);
-                m_resultProfitLossDateArr.append(year);
+                year.toInt(&dataIsValid);
+
+                if(true == dataIsValid)
+                {
+                    m_resultProfitLossDateArr.append(year);
+                }
+                else
+                {
+                    i = 0;
+                    m_mainState = STATE_MULTI_YEAR_SUMMARY;
+                    return false;
+                }
+
                 dateIndex++;
                 m_subState = SUB_STATE_TH_END;
             }
@@ -282,8 +307,8 @@ parseBalance(QTextStream &inStream, int &dateIndex)
         break;
 
     case STATE_GET_START_TAG_RESULT_NUMBER:
-        qDebug() << m_tagBalanceArr.at(i);
-        qDebug() << str;
+        qDebug() << str << "==" << m_tagBalanceArr.at(i);
+        //qDebug() << str;
         if(m_tagBalanceArr.at(i) == str)
         {
             m_subState = SUB_STATE_TD_END;
@@ -372,7 +397,9 @@ parseFinNumberInfo(QString str)
     int start;
     int end;
     QString number;
+    QString tmpNumber;
     bool res = false;
+    bool IsValidNo;
 
 
     switch(m_subState)
@@ -420,16 +447,39 @@ parseFinNumberInfo(QString str)
             if(true == cu.number2DoubleRemoveSpace(number, dbNumber))
             {
                 // qDebug() << number;
-                QString tmpNumber;
-                res = true;
+
                 if(number.indexOf(",") > -1)
                     tmpNumber.sprintf("%.2f",dbNumber);
                 else
                     tmpNumber.sprintf("%.0f",dbNumber);
-                // qDebug() << "str aa" << tmpNumber;
-                m_resultProfitLossNumberArr.append(tmpNumber);
+                     qDebug() << "tmpNumber" << tmpNumber;
+                tmpNumber.toDouble(&IsValidNo);
+                if(true == IsValidNo)
+                {
+                    m_resultProfitLossNumberArr.append(tmpNumber);
+                    res = true;
+                }
+                else
+                {
+                    tmpNumber.append("-9e9");
+                    m_resultProfitLossNumberArr.append(tmpNumber);
+                    // res = true;
+                    i++;
+                    return true;
+                }
                 i++;
 
+            }
+            else
+            {
+                if(number.size() < 1)
+                {
+                    tmpNumber.append("-9e9");
+                    m_resultProfitLossNumberArr.append(tmpNumber);
+                    // res = true;
+                    i++;
+                    return true;
+                }
             }
             end += QString::fromUtf8("</td>").length();
             str = str.mid((end-1), len);
@@ -553,6 +603,9 @@ parseFileGetId(QTextStream &inStream, QString &result)
     return false;
 }
 
+#define STOP_GOT_ERROR  fclose(fd); \
+                        file.close(); \
+                        return false;
 
 /****************************************************************
  *
@@ -575,6 +628,8 @@ readFile(QString filename, QString assetName)
     FILE *fd;
     CDbHndl db;
     NordnetBalanceIncomeSheet_ST dataArr[80];
+    bool isValid;
+
 
     fd = fopen("ecoRes.txt", "w+");
 
@@ -610,8 +665,17 @@ readFile(QString filename, QString assetName)
                 fprintf(fd, "Datum:\t\t");
                 for(i= 0; i < m_resultProfitLossDateArr.size(); i++)
                 {
-                    dataArr[i].year = m_resultProfitLossDateArr.at(i).toInt();
-                    fprintf(fd, "%s,\t\t", m_resultProfitLossDateArr.at(i).toAscii().constData());
+					qDebug() << "i" << i << "resultProfitLossDateArr" << m_resultProfitLossDateArr.at(i).toAscii().constData();
+                    dataArr[i].year = m_resultProfitLossDateArr.at(i).toInt(&isValid);
+                    if(true == isValid)
+                    {
+                        // qDebug() << "i" << i << "resultProfitLossDateArr" << m_resultProfitLossDateArr.at(i).toAscii().constData();
+                        fprintf(fd, "%s,\t\t", m_resultProfitLossDateArr.at(i).toAscii().constData());
+                    }
+                    else
+                    {
+                        STOP_GOT_ERROR;
+                    }
                 }
                 fprintf(fd, "\n");
             }
@@ -621,44 +685,89 @@ readFile(QString filename, QString assetName)
             {
             case 0:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].operatingIncome = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+
+                    dataArr[k].operatingIncome = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 1:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].operatingExpensesAndDepreciation = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    // m_resultProfitLossNumberArr.at(k).is
+                    dataArr[k].operatingExpensesAndDepreciation = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 2:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].operatingIncomeAfterDepreciation = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].operatingIncomeAfterDepreciation = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 3:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].netProfitAfterTax = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].netProfitAfterTax = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 4:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].earningsPerShare = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].earningsPerShare = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
 
             case 5:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].numberOfShares = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].numberOfShares = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
             }
 
 
             if(j < 6)
+            {
+                qDebug() << "1 tagProfitLossArr" << m_tagProfitLossArr.at(j).toAscii().constData();
                 fprintf(fd, "%s: ", m_tagProfitLossArr.at(j).toAscii().constData());
+            }
+
             for(i= 0; i < m_resultProfitLossNumberArr.size(); i++)
             {
+                qDebug() << "1 resultProfitLossNumberArr" << m_resultProfitLossNumberArr.at(i).toAscii().constData();
                 fprintf(fd, "%s,\t", m_resultProfitLossNumberArr.at(i).toAscii().constData());
             }
+
             fprintf(fd, "\n");
+
             m_resultProfitLossNumberArr.clear();
             j++;
             if(j>= 6)
@@ -666,7 +775,6 @@ readFile(QString filename, QString assetName)
                 break;
             }
         }
-
     }
 
     dateIndex = 0;
@@ -677,6 +785,7 @@ readFile(QString filename, QString assetName)
     m_resultProfitLossDateArr.clear();
     m_mainState = STATE_MULTI_YEAR_SUMMARY;
 
+    qDebug() << "1. ProfitLossDateArr.size()" << m_resultProfitLossDateArr.size();
 
     while(!inStream.atEnd())
     {
@@ -687,9 +796,12 @@ readFile(QString filename, QString assetName)
             if(j == 0)
             {
                 fprintf(fd, "Datum:\t\t");
+                qDebug() << "ProfitLossDateArr.size()" << m_resultProfitLossDateArr.size();
                 for(i= 0; i < m_resultProfitLossDateArr.size(); i++)
                 {
+                    qDebug() << "i" << i << m_resultProfitLossDateArr.at(i).toAscii().constData();
                     fprintf(fd, "%s,\t\t", m_resultProfitLossDateArr.at(i).toAscii().constData());
+
                 }
                 fprintf(fd, "\n");
             }
@@ -699,12 +811,27 @@ readFile(QString filename, QString assetName)
             {
             case 0:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].fixedAssets = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].fixedAssets = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 1:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[j].currentAssets = m_resultProfitLossNumberArr.at(1).toDouble();
+                {
+                    //dataArr[j].currentAssets = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    dataArr[j].currentAssets = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    qDebug() << "currentAssets" << m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 2:
@@ -714,31 +841,54 @@ readFile(QString filename, QString assetName)
 
             case 3:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].equity = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].equity = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 4:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].liabilities = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].liabilities = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
 
             case 5:
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
-                    dataArr[k].totalEquityAndLiabilities = m_resultProfitLossNumberArr.at(k).toDouble();
+                {
+                    dataArr[k].totalEquityAndLiabilities = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    if(false == isValid)
+                    {
+                        STOP_GOT_ERROR;
+                    }
+                }
                 break;
             }
 
 
 
             if(j < 6)
+            {
                 fprintf(fd, "%s: ", m_tagBalanceArr.at(j).toAscii().constData());
+            }
+
             for(i= 0; i < m_resultProfitLossNumberArr.size(); i++)
             {
                 fprintf(fd, "%s,\t", m_resultProfitLossNumberArr.at(i).toAscii().constData());
             }
+
             fprintf(fd, "\n");
             m_resultProfitLossNumberArr.clear();
             j++;
+
             if(j>= 6)
             {
                  break;
