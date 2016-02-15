@@ -1065,10 +1065,11 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
 
 /*******************************************************************
  *
- * Function:    slotImportSingelStockDataIsFinish()
+ * Function:    slotReceivedAssetTaDataFromServer()
  *
- * Description: This function is invoked singel stock data is
- *              received from http thread
+ * Description:
+ *
+ *
  *
  *******************************************************************/
 void TaAnalysis::slotReceivedAssetTaDataFromServer(int)
@@ -1086,8 +1087,10 @@ void TaAnalysis::slotReceivedAssetTaDataFromServer(int)
  *
  * Function:    slotImportSingelStockDataIsFinish()
  *
- * Description: This function is invoked singel stock data is
+ * Description: This function is invoked when singel stock data is
  *              parsed by: m_importYahooTaDataThread
+ *
+ *
  *
  *******************************************************************/
 void TaAnalysis::slotImportSingelStockDataIsFinish(int dummy)

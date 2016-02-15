@@ -146,6 +146,14 @@ class LeastSquaresTaDlg : public QDialog
     void setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int value);
 
     void plotStockData(QString stockName, QString StockSymbol);
+    void updateMinMaxXAxisScales(CYahooStockPlotUtil::MinMaxAxisValues_ST &axis, CYahooStockPlotUtil::MinMaxAxisValues_ST &qwtPlotAxis);
+    void addStockIndicatorToPlot(int indicatorIndex,
+                                 DataPlotIndex_ET plotIndex,
+                                 QString legendLable,
+                                 CYahooStockPlotUtil::MinMaxAxisValues_ST &axis,
+                                 QwtPlot *qwtPlot,
+                                 CYahooStockPlotUtil::PlotData_ST &qwtPlotData);
+
 
 
 

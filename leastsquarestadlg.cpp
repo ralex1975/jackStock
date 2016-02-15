@@ -627,9 +627,9 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
 
     //=====
-    #if 0
+
     legendLable.clear();
-    if(true == ui->checkBoxLinjerReg->isChecked())
+    if(true == ui->checkBoxLinjerRegLSqrt->isChecked())
     {
         clearStockAndIndicatorTempMem();
         QString kValue;
@@ -647,17 +647,16 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         status += ", R= ";
         status += rValue;
 
-        ui->StatusInfoLabel->setText(status);
+        // ui->StatusInfoLabel->setText(status);
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
 
     legendLable.clear();
     // Check the checkbox
-    if(true == ui->checkBoxShortMvAvg->isChecked())
+    if(true == ui->checkBoxShortMvAvgLSqrt->isChecked())
     {
         clearStockAndIndicatorTempMem();
 
@@ -671,14 +670,12 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Short moving average";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
-
     }
 
 
     // Check the checkbox
     legendLable.clear();
-    if(true == ui->checkBoxMidMvAvg->isChecked())
+    if(true == ui->checkBoxMidMvAvgLSqrt->isChecked())
     {
         /// updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
         clearStockAndIndicatorTempMem();
@@ -693,16 +690,14 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Mid moving average";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
 
     // Check the checkbox
     legendLable.clear();
-    if(true == ui->checkBoxLongMvAvg->isChecked())
+    if(true == ui->checkBoxLongMvAvgLSqrt->isChecked())
     {
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
         clearStockAndIndicatorTempMem();
         qDebug() << "xx size " << m_stockData.data.x.size();
         updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
@@ -714,14 +709,13 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Long moving average";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
 
     // Check the checkboxes
     legendLable.clear();
-    if(true == ui->checkBoxBollingBand->isChecked())
+    if(true == ui->checkBoxBollingBandLSqrt->isChecked())
     {
         clearStockAndIndicatorTempMem();
 
@@ -736,7 +730,6 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Lower bollingerband";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
 
 
         // Mid Bollingerband
@@ -747,7 +740,6 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
         m_stockArr.clear();
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
 
         // Upper Bollingerband
         indicatorIndex++;
@@ -756,14 +748,13 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
         m_stockArr.clear();
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlotLSqr, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
 
 
     //=========
-
+#if 0
     legendLable.clear();
     if(ui->radioButMacd->isChecked() == true)
     {
@@ -876,7 +867,6 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
     }
 
-
     legendLable.clear();
     if(true == ui->radioButStochastics->isChecked())
     {
@@ -940,17 +930,71 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
     ui->lineEditAssetNameLSqrt->clear();
     ui->lineEditAssetNameLSqrt->insert(m_reqStockName);
 
-    #if 0
-    ui->lineEditStartDate->clear();
-    ui->lineEditStartDate->insert(m_qwtStockPlotData.axis.minXDate);
+    // Shows actually start stop date recevived from database
+    ui->lineEditStartDateLSqrt->clear();
+    ui->lineEditStartDateLSqrt->insert(m_qwtStockPlotData.axis.minXDate);
 
-    ui->lineEditStopDate->clear();
-    ui->lineEditStopDate->insert(m_qwtStockPlotData.axis.maxXDate);
-    #endif
+    ui->lineEditStopDateLSqrt->clear();
+    ui->lineEditStopDateLSqrt->insert(m_qwtStockPlotData.axis.maxXDate);
+
 
     // Reset zoomer
     m_plot.initPlotPicker(ui->qwtPlotLSqr);
 }
+
+
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void LeastSquaresTaDlg::addStockIndicatorToPlot(int indicatorIndex,
+                                                DataPlotIndex_ET plotIndex,
+                                                QString legendLable,
+                                                CYahooStockPlotUtil::MinMaxAxisValues_ST &axis,
+                                                QwtPlot *qwtPlot,
+                                                 CYahooStockPlotUtil::PlotData_ST &qwtPlotData)
+{
+        m_yStockArr.insert(0, m_stockData);
+
+        m_plot.addIndicatorToPlot(qwtPlotData, m_yStockArr[0], qwtPlotData.axis, indicatorIndex, plotIndex, legendLable);
+
+        // m_plot.setRightLegend(qwtPlot);
+
+        updateMinMaxXAxisScales(axis, qwtPlotData.axis);
+
+        m_plot.plotData(qwtPlotData, qwtPlot, plotIndex);
+
+        m_plot.removeAllStockArrData(m_yStockArr);
+}
+
+
+/*******************************************************************
+ *
+ * Function:    updateMinMaxXAxisScales()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void LeastSquaresTaDlg::updateMinMaxXAxisScales(CYahooStockPlotUtil::MinMaxAxisValues_ST &axis, CYahooStockPlotUtil::MinMaxAxisValues_ST &qwtPlotAxis)
+{
+    CYahooStockPlotUtil cy;
+
+    // Update min max scale of x and y axis
+    cy.updateMinMaxAxis(axis, qwtPlotAxis.maxX, qwtPlotAxis.maxY, qwtPlotAxis.maxXDate);
+    cy.updateMinMaxAxis(axis, qwtPlotAxis.minX, qwtPlotAxis.minY, qwtPlotAxis.minXDate);
+
+    cy.updateMinMaxAxis(qwtPlotAxis, axis.maxX, axis.maxY, axis.maxXDate);
+    cy.updateMinMaxAxis(qwtPlotAxis, axis.minX, axis.minY, axis.minXDate);
+
+}
+
+
+
 
 
 /*******************************************************************
@@ -1028,8 +1072,10 @@ void LeastSquaresTaDlg::startReqSingleStockDataTimeoutTimer(int ms)
  *
  * Function:    slotImportSingelStockDataIsFinish()
  *
- * Description: This function is invoked singel stock data is
+ * Description: This function is invoked when singel stock data is
  *              parsed by: m_importYahooTaDataThread
+ *
+ *
  *
  *******************************************************************/
 void LeastSquaresTaDlg::slotImportSingelStockDataIsFinish(int dummy)
@@ -1178,10 +1224,11 @@ void LeastSquaresTaDlg::slotReqSingleStockDataTimerExpired()
 
 /*******************************************************************
  *
- * Function:    slotImportSingelStockDataIsFinish()
+ * Function:    slotReceivedAssetTaDataFromServer()
  *
- * Description: This function is invoked singel stock data is
- *              received from http thread
+ * Description:
+ *
+ *
  *
  *******************************************************************/
 void LeastSquaresTaDlg::slotReceivedAssetTaDataFromServer(int)
@@ -1732,6 +1779,7 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
             qDebug() << lastDbDate;
 
 
+            // Check how many days we are missing and ned to get from yahoo
             cu.nofDaysBeteenDates(currDate, lastDbDate, nofDays);
             if(nofDays < -1)
             {
@@ -1743,8 +1791,8 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
                 qDebug() << tmp;
                 qDebug() << stockSymbol;
 
-                #if 0
-                if(/*isUpdate == false &&*/ ui->checkBoxReqestData->isChecked() == true)
+
+                if(isUpdate == false)
                 {
                     // Prepare request of data from Yahoo
                     qDebug() << stockName;
@@ -1754,12 +1802,9 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
 
                     prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate);
                 }
-
                 else
-                #endif
                 {
                     m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-                    // ajn 160118 displayStockData(true, keyFaData.lastPrice.toDouble());
                     displayStockData(false, keyFaData.lastPrice.toDouble());
                 }
 
@@ -1767,11 +1812,9 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
             else
             {
                 m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-                // ajn 160118 displayStockData(true, keyFaData.lastPrice.toDouble());
                 displayStockData(false, keyFaData.lastPrice.toDouble());
             }
-       }
-        #if 0
+        }
         // No latest date was found lets add our own
         else
         {
@@ -1780,7 +1823,6 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
             cu.getCurrentDate(currDate);
             prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate);
         }
-        #endif
     }
     else
     {
