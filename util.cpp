@@ -1663,6 +1663,15 @@ bool CUtil::addYear(QString inputDate, QString &outputDate, int intYear)
  *
  * Description: .
  *
+ * Note:    QDate d1(1995, 5, 17);  // May 17, 1995
+ *          QDate d2(1995, 5, 20);  // May 20, 1995
+ *
+ *          d1.daysTo(d2);          // returns 3
+ *          d2.daysTo(d1);          // returns -3
+ *
+ *
+ *
+ *
  *********************************************************************/
 bool CUtil::nofDaysBeteenDates(QString date1, QString date2, int &nofdays)
 {
@@ -1687,7 +1696,7 @@ bool CUtil::nofDaysBeteenDates(QString date1, QString date2, int &nofdays)
 
     nofdays = myDate1.daysTo(myDate2);
 
-    // qDebug() << "Year outputDate" << outputDate;
+    qDebug() << "Nofdays" << nofdays;
     return true;
 }
 

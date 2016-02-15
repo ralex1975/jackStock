@@ -1342,10 +1342,10 @@ void ImportData::addStockDataToPlot(DataPlotIndex_ET plotIndex,
 
 /*******************************************************************
  *
- * Function:    slotImportSingelStockDataIsFinish()
+ * Function:    slotReceivedAssetTaDataFromServer()
  *
- * Description: This function is invoked singel stock data is
- *              received from http thread
+ * Description:
+ *
  *
  *******************************************************************/
 void ImportData::slotReceivedAssetTaDataFromServer(int)

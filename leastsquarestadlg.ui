@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
+     <x>1070</x>
+     <y>420</y>
      <width>99</width>
      <height>27</height>
     </rect>
@@ -34,7 +34,7 @@
   <widget class="QTableView" name="tableViewLeastSquare">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>530</x>
      <y>60</y>
      <width>391</width>
      <height>321</height>
@@ -49,8 +49,8 @@
   <widget class="QCheckBox" name="largeCapCheckBox">
    <property name="geometry">
     <rect>
-     <x>458</x>
-     <y>22</y>
+     <x>940</x>
+     <y>390</y>
      <width>210</width>
      <height>22</height>
     </rect>
@@ -67,8 +67,8 @@
   <widget class="QCheckBox" name="midCapCheckBox">
    <property name="geometry">
     <rect>
-     <x>674</x>
-     <y>22</y>
+     <x>940</x>
+     <y>410</y>
      <width>210</width>
      <height>22</height>
     </rect>
@@ -85,9 +85,9 @@
   <widget class="QPushButton" name="GetDbDataButton">
    <property name="geometry">
     <rect>
-     <x>1106</x>
-     <y>20</y>
-     <width>210</width>
+     <x>1070</x>
+     <y>390</y>
+     <width>121</width>
      <height>27</height>
     </rect>
    </property>
@@ -103,8 +103,8 @@
   <widget class="QCheckBox" name="smallCapCheckBox">
    <property name="geometry">
     <rect>
-     <x>890</x>
-     <y>22</y>
+     <x>940</x>
+     <y>430</y>
      <width>210</width>
      <height>22</height>
     </rect>
@@ -133,26 +133,11 @@
     </font>
    </property>
   </widget>
-  <widget class="QwtPlot" name="qwtPlotLSqr">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>60</y>
-     <width>481</width>
-     <height>331</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="setStartDateLineEditLSqrt">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>400</y>
+     <x>530</x>
+     <y>390</y>
      <width>91</width>
      <height>21</height>
     </rect>
@@ -166,8 +151,8 @@
   <widget class="QLineEdit" name="setEndDateLineEditLSqrt">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>400</y>
+     <x>640</x>
+     <y>390</y>
      <width>91</width>
      <height>21</height>
     </rect>
@@ -181,8 +166,8 @@
   <widget class="QLineEdit" name="timePeriodLlineEditLSqrt">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>430</y>
+     <x>530</x>
+     <y>420</y>
      <width>201</width>
      <height>21</height>
     </rect>
@@ -196,8 +181,8 @@
   <widget class="QSlider" name="selTimePeriodSliderLSqrt">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>460</y>
+     <x>530</x>
+     <y>450</y>
      <width>201</width>
      <height>16</height>
     </rect>
@@ -227,8 +212,8 @@
   <widget class="QLineEdit" name="lineEditAssetNameLSqrt">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>480</y>
+     <x>530</x>
+     <y>470</y>
      <width>201</width>
      <height>21</height>
     </rect>
@@ -238,6 +223,156 @@
      <pointsize>11</pointsize>
     </font>
    </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>501</width>
+     <height>611</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Plot</string>
+    </attribute>
+    <widget class="QwtPlot" name="qwtPlotLSqr">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>481</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditStartDateLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>10</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditStopDateLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>10</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Inställningar</string>
+    </attribute>
+    <widget class="QCheckBox" name="checkBoxLinjerRegLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Linjer Regression</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxLongMvAvgLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Long Moving Avg</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxMidMvAvgLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Mid Moving Avg</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxBollingBandLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>111</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bollingband</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxShortMvAvgLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Short Moving Avg </string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
