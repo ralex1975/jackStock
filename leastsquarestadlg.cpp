@@ -43,6 +43,71 @@ void LeastSquaresTaDlg::settimeSlideWindowInc(int value)
 
 
 
+/*******************************************************************
+ *
+ * Function:    initStockList()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void LeastSquaresTaDlg::initFa3MinMaxPePrice(void)
+{
+
+    QString column0 = QString::fromUtf8("År");
+    QString column1 = QString("Min\npris");
+    QString column2 = QString::fromUtf8("Medel\npris");
+    QString column3 = QString("Max\npris");
+
+
+    ui->treeWidget_5LSqrt->setColumnCount(4);
+    ui->treeWidget_5LSqrt->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidget_5LSqrt->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header = ui->treeWidget_5LSqrt->headerItem())
+    {
+        header->setText(0, column0);
+        header->setText(1, column1);
+        header->setText(2, column2);
+        header->setText(3, column3);
+
+    }
+
+    ui->treeWidget_5LSqrt->setColumnWidth(0, 55);
+    ui->treeWidget_5LSqrt->setColumnWidth(1, 55);
+    ui->treeWidget_5LSqrt->setColumnWidth(2, 55);
+    ui->treeWidget_5LSqrt->setColumnWidth(3, 55);
+
+
+    QString column4 = QString::fromUtf8("År");
+    QString column5 = QString("Min\nP/E");
+    QString column6 = QString::fromUtf8("Medel\nP/E");
+    QString column7 = QString("Max\nP/E");
+
+
+    ui->treeWidget_6LSqrt->setColumnCount(4);
+    ui->treeWidget_6LSqrt->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidget_6LSqrt->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header1 = ui->treeWidget_6LSqrt->headerItem())
+    {
+        header1->setText(0, column4);
+        header1->setText(1, column5);
+        header1->setText(2, column6);
+        header1->setText(3, column7);
+    }
+
+    ui->treeWidget_6LSqrt->setColumnWidth(0, 65);
+    ui->treeWidget_6LSqrt->setColumnWidth(1, 65);
+    ui->treeWidget_6LSqrt->setColumnWidth(2, 60);
+    ui->treeWidget_6LSqrt->setColumnWidth(3, 50);
+    ui->treeWidget_6LSqrt->setColumnWidth(4, 50);
+
+}
 
 
 
@@ -90,6 +155,8 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
     TableColumnIndicatorInfo_ST headerList[CDbHndl::MAX_NOF_GPSEL_INDEX];
 
     ui->setupUi(this);
+
+    initFa3MinMaxPePrice();
 
     //=======================================================
     // Create thread that import data from yahoo
@@ -152,6 +219,11 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
 
         connect(horizHeaderPlus,  SIGNAL(sectionClicked(int)), this, SLOT(tablePlusHeaderClicked(int)));
         connect(horizHeaderMinus, SIGNAL(sectionClicked(int)), this, SLOT(tableMinusHeaderClicked(int)));
+
+        for(i = 0; i < FA_NOF_DATA; i++ )
+        {
+            m_faDataPalette[i] = new QPalette();
+        }
 
 
         // One day is added first
@@ -1301,266 +1373,6 @@ void LeastSquaresTaDlg::findDateList(QString stockSymbol, bool &isUpdate)
 
 
 
-#if 0
-/**********************************************************************************
- *
- * Function:    on_tableViewLeastSquare_clicked
- *
- * Description: Row clicked in table
- *
- *
- *
- * *******************************************************************************/
-void LeastSquaresTaDlg::on_tableViewLeastSquare_clicked(const QModelIndex &index)
-{
-    CDbHndl db;
-    QString assetSymbol;
-    CDbHndl::snapshotStockData_ST keyData;
-    QModelIndex dummyIndex = index;
-
-
-    //==============
-    QString stockName;
-    QString stockSymbol;
-    CDbHndl cd;
-    CUtil cu;
-    QString lastDbDate;
-    QString currDate;
-    // ajn 160214 QString tmp;
-    int nofDays;
-    // ajn 160214 NordnetCompanyDescription_ST data;
-
-
-
-    // Get data form table
-    ui->tableViewLeastSquare->selectionModel()->currentIndex().row();
-    int rowidx = ui->tableViewLeastSquare->currentIndex().row();
-    assetSymbol.append(ui->tableViewLeastSquare->model()->index(rowidx , 0).data().toString());
-
-    db.openDb(PATH_JACK_STOCK_DB);
-    if(true == db.companynameGetKeyDataUseBridge(assetSymbol, keyData))
-    {
-        // QMessageBox::information(NULL, QObject::tr("Tabell"), keyData.assetSymbol);
-    }
-    else
-    {
-        QMessageBox::information(NULL, QObject::tr("Tabell"), QString::fromUtf8("Symbolen saknas"));
-        return;
-    }
-
-
-
-
-    // Are we already processing data?
-    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_IDLE)
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PENDING;
-        // getSelStockListItem(stockName, stockSymbol, index);
-
-        // ajn 160214
-        stockSymbol = keyData.assetSymbol;
-        stockName = keyData.companyName;
-
-        m_reqStockSymbol = stockSymbol;
-        m_reqStockName = stockName;
-
-        qDebug() << m_reqStockSymbol;
-        qDebug() << m_reqStockName;
-
-        CDbHndl::snapshotStockData_ST keyFaData;
-
-        #if 0
-        ui->lineEditPE->setDisabled(false);
-        ui->lineEditPE_2->setDisabled(false);
-
-
-        ui->lineEditMoreInfoComapnyName->clear();
-        ui->lineEditMoreInfoexecutiveDirector->clear();
-        ui->lineEditMoreInfoBransch->clear();
-        ui->lineEditMoreInfoSector->clear();
-        ui->textEditMoreInfobusinessDescription->clear();
-
-        //ui->lineEditMoreInfoComapnyName_2->clear();
-        ui->lineEditMoreInfoexecutiveDirector_2->clear();
-        ui->lineEditMoreInfoBransch_2->clear();
-        ui->lineEditMoreInfoSector_2->clear();
-        ui->textEditMoreInfobusinessDescription_2->clear();
-
-
-        ui->lineEditEarningsDivByDividend->clear();
-        ui->lineEditNavDivLastStockPrice->clear();
-        ui->lineEditPE->clear();
-        ui->lineEditPs->clear();
-        ui->lineEditRisk->clear();
-        ui->lineEditYield->clear();
-        ui->lineMeanReturn->clear();
-
-        ui->lineEditEarningsDivByDividend_2->clear();
-        ui->lineEditNavDivLastStockPrice_2->clear();
-        ui->lineEditPE_2->clear();
-        ui->lineEditPs_2->clear();
-        ui->lineEditYield_2->clear();
-
-        ui->lineEditEarningsDivByDividend_3->clear();
-        ui->lineEditNavDivLastStockPrice_3->clear();
-        ui->lineEditPE_3->clear();
-        ui->lineEditPs_3->clear();
-        ui->lineEditYield_3->clear();
-
-        ui->treeWidget_2->clear();
-        ui->treeWidget_3->clear();
-        ui->treeWidget_4->clear();
-        ui->treeWidget_5->clear();
-        ui->treeWidget_6->clear();
-        QString assetType;
-        assetType.clear();
-
-        ui->assetType->clear();
-
-        ui->labelLastPrice->clear();
-        ui->labelOneDayProcentChange->clear();
-        #endif
-
-        #if 0
-        if(m_startDate.isEmpty() == false && m_endDate.isEmpty() == false)
-        {
-
-            if(true == cd.getKeyDataUseBridge(m_reqStockSymbol,keyFaData))
-            {
-                qDebug() << keyFaData.companyName;
-
-                if(true == cd.getNordnetCompanyDescription(data, keyFaData.companyName))
-                {
-                    ui->lineEditMoreInfoComapnyName->insert(data.assetName);
-                    ui->lineEditMoreInfoexecutiveDirector->insert(data.executiveDirector);
-                    ui->lineEditMoreInfoBransch->insert(data.bransch);
-                    ui->lineEditMoreInfoSector->insert(data.sector);
-                    ui->textEditMoreInfobusinessDescription->insertPlainText(data.businessDescription);
-
-
-                    // ui->lineEditMoreInfoComapnyName_2->insert(data.assetName);
-                    ui->lineEditMoreInfoexecutiveDirector_2->insert(data.executiveDirector);
-                    ui->lineEditMoreInfoBransch_2->insert(data.bransch);
-                    ui->lineEditMoreInfoSector_2->insert(data.sector);
-                    ui->textEditMoreInfobusinessDescription_2->insertPlainText(data.businessDescription);
-
-                }
-
-
-                cd.addFa2operatingIncomeToTreeWidget(ui->treeWidget_2, keyFaData.companyName);
-                cd.addFa2NetProfitAfterTaxToTreeWidget(ui->treeWidget_3, keyFaData.companyName, assetType);
-
-                ui->assetType->setText(assetType);
-
-                tmp.sprintf("Pris %s",keyFaData.lastPrice.toLocal8Bit().constData());
-                ui->labelLastPrice->setText(tmp);
-                tmp.sprintf("Idag %s \%%",keyFaData.procentChangeOneDay.toLocal8Bit().constData());
-                ui->labelOneDayProcentChange->setText(tmp);
-
-                cd.addFa3NetProfitAfterTaxToTreeWidget(ui->treeWidget_4, keyFaData.companyName);
-
-                cd.addFa3MinMaxPEAndPrice(ui->treeWidget_5, ui->treeWidget_6, keyFaData.companyName, m_reqStockSymbol);
-
-                ui->lineEditEarningsDivByDividend->insert(keyFaData.earningsDividedByDividend);
-                ui->lineEditNavDivLastStockPrice->insert(keyFaData.navDivLastStockPrice);
-                ui->lineEditPE->insert(keyFaData.keyValuePE);
-                ui->lineEditPs->insert(keyFaData.keyValuePS);
-                ui->lineEditYield->insert(keyFaData.keyValueYield);
-
-                ui->lineEditEarningsDivByDividend_2->insert(keyFaData.earningsDividedByDividend);
-                ui->lineEditNavDivLastStockPrice_2->insert(keyFaData.navDivLastStockPrice);
-                ui->lineEditPE_2->insert(keyFaData.keyValuePE);
-                ui->lineEditPs_2->insert(keyFaData.keyValuePS);
-                ui->lineEditYield_2->insert(keyFaData.keyValueYield);
-
-                ui->lineEditEarningsDivByDividend_3->insert(keyFaData.earningsDividedByDividend);
-                ui->lineEditNavDivLastStockPrice_3->insert(keyFaData.navDivLastStockPrice);
-                ui->lineEditPE_3->insert(keyFaData.keyValuePE);
-                ui->lineEditPs_3->insert(keyFaData.keyValuePS);
-                ui->lineEditYield_3->insert(keyFaData.keyValueYield);
-
-
-
-                CDbHndl::EfficPortStockData_ST stockRiskReturnData;
-                stockRiskReturnData.stockSymbol = m_reqStockSymbol;
-                if(true == cd.efficPortfCalcMeanAndStdDev(m_startDate, m_endDate, stockRiskReturnData))
-                {
-                    QString tmp;
-                    tmp.sprintf("%.2f",stockRiskReturnData.riskStdDev * 100);
-                    ui->lineEditRisk->insert(tmp);
-                    tmp.sprintf("%.2f",stockRiskReturnData.meanReturns * 100);
-                    ui->lineMeanReturn->insert(tmp);
-                }
-                setFundametalAnalysisCtrlTxtColor(keyFaData, stockRiskReturnData, assetType);
-            }
-        }
-        #endif
-
-
-        if(true == cd.getLatestDateYahooTaData(lastDbDate, keyData.assetSymbol))
-        {
-            cu.getCurrentDate(currDate);
-            qDebug() << currDate;
-            qDebug() << lastDbDate;
-
-
-            cu.nofDaysBeteenDates(currDate, lastDbDate, nofDays);
-            if(nofDays < -1)
-            {
-                bool isUpdate;
-
-                findDateList(stockSymbol, isUpdate);
-                QString tmp;
-                tmp.sprintf("%d",isUpdate);
-                qDebug() << tmp;
-                qDebug() << stockSymbol;
-
-                #if 0
-                if(/*isUpdate == false &&*/ ui->checkBoxReqestData->isChecked() == true)
-                {
-                    // Prepare request of data from Yahoo
-                    qDebug() << stockName;
-                    qDebug() << stockSymbol;
-                    qDebug() << lastDbDate;
-                    qDebug() << currDate;
-
-                    prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate);
-                }
-
-                else
-                #endif
-                {
-                    m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-                    // ajn 160118 displayStockData(true, keyFaData.lastPrice.toDouble());
-                    displayStockData(false, keyFaData.lastPrice.toDouble());
-                }
-
-            }
-            else
-            {
-                m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-                // ajn 160118 displayStockData(true, keyFaData.lastPrice.toDouble());
-                displayStockData(false, keyFaData.lastPrice.toDouble());
-            }
-       }
-        #if 0
-        // No latest date was found lets add our own
-        else
-        {
-            // Prepare request of data from Yahoo
-            lastDbDate = "1992-01-01";
-            cu.getCurrentDate(currDate);
-            prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate);
-        }
-        #endif
-    }
-    else
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-        QMessageBox::information(this, QString::fromUtf8("Vänta"), QString::fromUtf8("Vänta Processar redan data.."));
-    }
-}
-#endif
 
 /**********************************************************************************
  *
@@ -1595,10 +1407,6 @@ void LeastSquaresTaDlg::on_tableViewLeastSquare_clicked(const QModelIndex &index
         QMessageBox::information(NULL, QObject::tr("Tabell"), QString::fromUtf8("Symbolen saknas"));
         return;
     }
-
-
-
-
 
 }
 
@@ -1644,66 +1452,70 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
 
         CDbHndl::snapshotStockData_ST keyFaData;
 
-        #if 0
-        ui->lineEditPE->setDisabled(false);
-        ui->lineEditPE_2->setDisabled(false);
 
 
-        ui->lineEditMoreInfoComapnyName->clear();
-        ui->lineEditMoreInfoexecutiveDirector->clear();
-        ui->lineEditMoreInfoBransch->clear();
-        ui->lineEditMoreInfoSector->clear();
-        ui->textEditMoreInfobusinessDescription->clear();
+
+        #if 1
+        // ajn 160215 ui->lineEditPELSqrt->setDisabled(false);
+        // ajn 160215 ui->lineEditPE_2->setDisabled(false);
+
+
+        // ajn 160215 ui->lineEditMoreInfoComapnyName->clear();
+        // ajn 160215 ui->lineEditMoreInfoexecutiveDirector->clear();
+        // ajn 160215 ui->lineEditMoreInfoBransch->clear();
+        // ajn 160215 ui->lineEditMoreInfoSector->clear();
+        // ajn 160215 ui->textEditMoreInfobusinessDescription->clear();
 
         //ui->lineEditMoreInfoComapnyName_2->clear();
-        ui->lineEditMoreInfoexecutiveDirector_2->clear();
-        ui->lineEditMoreInfoBransch_2->clear();
-        ui->lineEditMoreInfoSector_2->clear();
-        ui->textEditMoreInfobusinessDescription_2->clear();
+        // ajn 160215 ui->lineEditMoreInfoexecutiveDirector_2->clear();
+        // ajn 160215 ui->lineEditMoreInfoBransch_2->clear();
+        // ajn 160215 ui->lineEditMoreInfoSector_2->clear();
+        // ajn 160215 ui->textEditMoreInfobusinessDescription_2->clear();
 
 
-        ui->lineEditEarningsDivByDividend->clear();
-        ui->lineEditNavDivLastStockPrice->clear();
-        ui->lineEditPE->clear();
-        ui->lineEditPs->clear();
-        ui->lineEditRisk->clear();
-        ui->lineEditYield->clear();
-        ui->lineMeanReturn->clear();
+        ui->lineEditEarningsDivByDividendLSqrt->clear();
+        ui->lineEditNavDivLastStockPriceLSqrt->clear();
+        ui->lineEditPELSqrt->clear();
+        ui->lineEditPsLSqrt->clear();
+        // ajn 160215 ui->lineEditRisk->clear();
+        ui->lineEditYieldLSqrt->clear();
+        // ajn 160215 ui->lineMeanReturn->clear();
 
-        ui->lineEditEarningsDivByDividend_2->clear();
-        ui->lineEditNavDivLastStockPrice_2->clear();
-        ui->lineEditPE_2->clear();
-        ui->lineEditPs_2->clear();
-        ui->lineEditYield_2->clear();
+        // ajn 160215 ui->lineEditEarningsDivByDividend_2->clear();
+        // ajn 160215 ui->lineEditNavDivLastStockPrice_2->clear();
+        // ajn 160215 ui->lineEditPE_2->clear();
+        // ajn 160215 ui->lineEditPs_2->clear();
+        // ajn 160215 ui->lineEditYield_2->clear();
 
-        ui->lineEditEarningsDivByDividend_3->clear();
-        ui->lineEditNavDivLastStockPrice_3->clear();
-        ui->lineEditPE_3->clear();
-        ui->lineEditPs_3->clear();
-        ui->lineEditYield_3->clear();
+        // ajn 160215 ui->lineEditEarningsDivByDividend_3->clear();
+        // ajn 160215 ui->lineEditNavDivLastStockPrice_3->clear();
+        // ajn 160215 ui->lineEditPE_3->clear();
+        // ajn 160215 ui->lineEditPs_3->clear();
+        // ajn 160215 ui->lineEditYield_3->clear();
 
-        ui->treeWidget_2->clear();
-        ui->treeWidget_3->clear();
-        ui->treeWidget_4->clear();
-        ui->treeWidget_5->clear();
-        ui->treeWidget_6->clear();
-        QString assetType;
-        assetType.clear();
+        // ajn 160215 ui->treeWidget_2->clear();
+        // ajn 160215 ui->treeWidget_3->clear();
+        // ajn 160215 ui->treeWidget_4->clear();
+        ui->treeWidget_5LSqrt->clear();
+        ui->treeWidget_6LSqrt->clear();
+        // ajn 160215 QString assetType;
+        // ajn 160215 assetType.clear();
 
-        ui->assetType->clear();
+        // ajn 160215  ui->assetType->clear();
 
-        ui->labelLastPrice->clear();
-        ui->labelOneDayProcentChange->clear();
+        // ajn 160215 ui->labelLastPrice->clear();
+        // ajn 160215 ui->labelOneDayProcentChange->clear();
         #endif
 
-        #if 0
+        #if 1
         if(m_startDate.isEmpty() == false && m_endDate.isEmpty() == false)
         {
 
             if(true == cd.getKeyDataUseBridge(m_reqStockSymbol,keyFaData))
             {
-                qDebug() << keyFaData.companyName;
+                // ajn 160215 qDebug() << keyFaData.companyName;
 
+                #if 0
                 if(true == cd.getNordnetCompanyDescription(data, keyFaData.companyName))
                 {
                     ui->lineEditMoreInfoComapnyName->insert(data.assetName);
@@ -1733,15 +1545,17 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
                 ui->labelOneDayProcentChange->setText(tmp);
 
                 cd.addFa3NetProfitAfterTaxToTreeWidget(ui->treeWidget_4, keyFaData.companyName);
+                #endif
 
-                cd.addFa3MinMaxPEAndPrice(ui->treeWidget_5, ui->treeWidget_6, keyFaData.companyName, m_reqStockSymbol);
+                cd.addFa3MinMaxPEAndPrice(ui->treeWidget_5LSqrt, ui->treeWidget_6LSqrt, keyFaData.companyName, m_reqStockSymbol);
 
-                ui->lineEditEarningsDivByDividend->insert(keyFaData.earningsDividedByDividend);
-                ui->lineEditNavDivLastStockPrice->insert(keyFaData.navDivLastStockPrice);
-                ui->lineEditPE->insert(keyFaData.keyValuePE);
-                ui->lineEditPs->insert(keyFaData.keyValuePS);
-                ui->lineEditYield->insert(keyFaData.keyValueYield);
+                ui->lineEditEarningsDivByDividendLSqrt->insert(keyFaData.earningsDividedByDividend);
+                ui->lineEditNavDivLastStockPriceLSqrt->insert(keyFaData.navDivLastStockPrice);
+                ui->lineEditPELSqrt->insert(keyFaData.keyValuePE);
+                ui->lineEditPsLSqrt->insert(keyFaData.keyValuePS);
+                ui->lineEditYieldLSqrt->insert(keyFaData.keyValueYield);
 
+                #if 0
                 ui->lineEditEarningsDivByDividend_2->insert(keyFaData.earningsDividedByDividend);
                 ui->lineEditNavDivLastStockPrice_2->insert(keyFaData.navDivLastStockPrice);
                 ui->lineEditPE_2->insert(keyFaData.keyValuePE);
@@ -1755,9 +1569,10 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
                 ui->lineEditYield_3->insert(keyFaData.keyValueYield);
 
 
-
+            #endif
                 CDbHndl::EfficPortStockData_ST stockRiskReturnData;
                 stockRiskReturnData.stockSymbol = m_reqStockSymbol;
+                #if 0
                 if(true == cd.efficPortfCalcMeanAndStdDev(m_startDate, m_endDate, stockRiskReturnData))
                 {
                     QString tmp;
@@ -1766,7 +1581,10 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
                     tmp.sprintf("%.2f",stockRiskReturnData.meanReturns * 100);
                     ui->lineMeanReturn->insert(tmp);
                 }
-                setFundametalAnalysisCtrlTxtColor(keyFaData, stockRiskReturnData, assetType);
+                #endif
+                QString dummyAssetType;
+                setFundametalAnalysisCtrlTxtColor(keyFaData, stockRiskReturnData, dummyAssetType);
+
             }
         }
         #endif
@@ -1832,6 +1650,234 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
 
 }
 
+
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *******************************************************************/
+void LeastSquaresTaDlg::setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette, const QColor &color)
+{
+    palette->setColor(QPalette::Text, color); //Qt::red
+    lineEdit->setPalette(*palette);
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *******************************************************************/
+void LeastSquaresTaDlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyData,
+                                                   CDbHndl::EfficPortStockData_ST stockRiskReturnData,
+                                                   QString assetType)
+{
+    CUtil cu;
+    QColor color;
+
+    if(keyData.earningsDividedByDividend.toDouble() >= 1 && keyData.earningsDividedByDividend.toDouble() < 2)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else if(keyData.earningsDividedByDividend.toDouble() >= 2)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+    }
+    else
+    {
+        color = Qt::black;
+    }
+
+    setFaEditControlTxtColor(ui->lineEditEarningsDivByDividendLSqrt, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
+    // setFaEditControlTxtColor(ui->lineEditEarningsDivByDividend_2, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
+    // setFaEditControlTxtColor(ui->lineEditEarningsDivByDividend_3, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
+
+
+    if(keyData.navDivLastStockPrice.toDouble() >= 0.7 && keyData.navDivLastStockPrice.toDouble() < 1)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+    }
+    else if(keyData.navDivLastStockPrice.toDouble() >= 1 && keyData.navDivLastStockPrice.toDouble() < 2)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else if(keyData.navDivLastStockPrice.toDouble() >= 2)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+    }
+    else
+    {
+        color = Qt::red;
+    }
+
+    setFaEditControlTxtColor(ui->lineEditNavDivLastStockPriceLSqrt, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);
+    // setFaEditControlTxtColor(ui->lineEditNavDivLastStockPrice_2, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);
+    // setFaEditControlTxtColor(ui->lineEditNavDivLastStockPrice_3, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);
+
+
+
+    if(keyData.keyValuePE.toDouble() < 5)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else if(keyData.keyValuePE.toDouble() >= 5 && keyData.keyValuePE.toDouble() <= 15)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+    }
+    else if(keyData.keyValuePE.toDouble() > 15 && keyData.keyValuePE.toDouble() <= 18)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+    }
+    else if(keyData.keyValuePE.toDouble() > 18 && keyData.keyValuePE.toDouble() <= 25)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else
+    {
+        color = Qt::red;
+    }
+
+    // Disable P/E when company type is finance and real estate
+    if(assetType.compare("Finans och fastighet")== 0)
+    {
+        ui->lineEditPELSqrt->setDisabled(true);
+        // ui->lineEditPE_2->setDisabled(true);
+        // ui->lineEditPE_3->setDisabled(true);
+    }
+    else
+    {
+        ui->lineEditPELSqrt->setDisabled(false);
+        // ui->lineEditPE_2->setDisabled(false);
+        // ui->lineEditPE_3->setDisabled(false);
+    }
+    setFaEditControlTxtColor(ui->lineEditPELSqrt, m_faDataPalette[FA_PE], color);
+    // setFaEditControlTxtColor(ui->lineEditPE_2, m_faDataPalette[FA_PE], color);
+    // setFaEditControlTxtColor(ui->lineEditPE_3, m_faDataPalette[FA_PE], color);
+
+    double doubleNumber;
+    if(false == cu.number2double(keyData.earningsDividedByDividend, doubleNumber))
+    {
+        if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+        {
+            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+        }
+        else if(keyData.keyValueYield.toDouble() >= 4 && keyData.keyValueYield.toDouble() <= 6)
+        {
+            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+        }
+        else if(keyData.keyValueYield.toDouble() > 6 && keyData.keyValueYield.toDouble() < 7)
+        {
+            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+        }
+        else if(keyData.keyValueYield.toDouble() > 7 && keyData.keyValueYield.toDouble() < 10)
+        {
+            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+        }
+        else if(keyData.keyValueYield.toDouble() > 10)
+        {
+            color = Qt::red;
+        }
+        else
+        {
+            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+        }
+    }
+    else
+    {
+        //  Grön Om vinst/Utdelning är >= 2 && direktavkastningn = 4 - 6 %
+        if(keyData.earningsDividedByDividend.toDouble() > 1 && keyData.earningsDividedByDividend.toDouble() < 2)
+        {
+            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            {
+                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+            }
+            else if(keyData.keyValueYield.toDouble() >= 4 )
+            {
+                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+            }
+            else
+            {
+                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+            }
+        }
+        else if(keyData.earningsDividedByDividend.toDouble() >= 2)
+        {
+            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            {
+                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+            }
+            else if(keyData.keyValueYield.toDouble() >= 4)
+            {
+                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+            }
+            else
+            {
+                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+            }
+        }
+        else
+        {
+            color = Qt::red;
+        }
+    }
+
+
+
+    setFaEditControlTxtColor(ui->lineEditYieldLSqrt, m_faDataPalette[FA_YIELD], color);
+    // setFaEditControlTxtColor(ui->lineEditYield_2, m_faDataPalette[FA_YIELD], color);
+    // setFaEditControlTxtColor(ui->lineEditYield_3, m_faDataPalette[FA_YIELD], color);
+
+
+    if(stockRiskReturnData.meanReturns <= 0)
+    {
+        color = Qt::red;
+    }
+    else
+    {
+        color = Qt::black;
+    }
+
+
+   // setFaEditControlTxtColor(ui->lineMeanReturn, m_faDataPalette[FA_MEAN_RETURN], color);
+
+
+
+    if(keyData.keyValuePS.toDouble() <= 0.75)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+    }
+    else if(keyData.keyValuePS.toDouble() > 0.75 && keyData.keyValuePS.toDouble() <= 1.5)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+    }
+    else if(keyData.keyValuePS.toDouble() > 1.5 && keyData.keyValuePS.toDouble() <= 3.0)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else
+    {
+        color = Qt::red;
+    }
+
+    setFaEditControlTxtColor(ui->lineEditPsLSqrt, m_faDataPalette[FA_YIELD], color);
+    // setFaEditControlTxtColor(ui->lineEditPs_2, m_faDataPalette[FA_YIELD], color);
+    // setFaEditControlTxtColor(ui->lineEditPs_3, m_faDataPalette[FA_YIELD], color);
+
+
+
+
+}
 
 
 

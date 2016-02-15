@@ -12,6 +12,7 @@
 #include "canvaspicker.h"
 #include <qwt_plot_histogram.h>
 #include "common.h"
+#include "dbHndl.h"
 
 
 namespace Ui {
@@ -80,6 +81,18 @@ class LeastSquaresTaDlg : public QDialog
         MAX_NOF_TIME_PERIOD_DAYS_ITEMS
     };
 
+    enum FAData_ET
+    {
+        FA_PE,
+        FA_PS,
+        FA_ERNING_DIV_DIVIDEN, // Visnt / utdelning
+        FA_NAV_DIV_LAST_PRICE, // Substans / Kurs
+        FA_YIELD,
+        FA_MEAN_RETURN,
+        FA_MEAN_RISK,
+        FA_NOF_DATA
+    };
+
     struct TimePeriodDays_ST
     {
         QString TxtTimePeriod;
@@ -89,6 +102,7 @@ class LeastSquaresTaDlg : public QDialog
      HttpWindow m_hw1;
 
 
+     QPalette *m_faDataPalette[FA_NOF_DATA];
     QMutex m_mutex;
     QString m_startDate;
     QString m_endDate;
@@ -153,6 +167,13 @@ class LeastSquaresTaDlg : public QDialog
                                  CYahooStockPlotUtil::MinMaxAxisValues_ST &axis,
                                  QwtPlot *qwtPlot,
                                  CYahooStockPlotUtil::PlotData_ST &qwtPlotData);
+    void setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyData,
+                                           CDbHndl::EfficPortStockData_ST stockRiskReturnData,
+                                           QString assetType);
+    void setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette, const QColor &color);
+    void initFa3MinMaxPePrice(void);
+
+
 
 
 

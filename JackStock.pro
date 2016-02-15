@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     jackStock.cpp \
     httpwindow.cpp \
     httpdownloader.cpp \
-    guiUtils.cpp \
+    src/guiUtil/guiUtils.cpp \
     extendedTable.cpp \
     dbHndl.cpp \
     extendedQwtPlot.cpp \
@@ -71,7 +71,8 @@ SOURCES += main.cpp\
     tabhelp.cpp \
     parsecompdescription.cpp \
     fatab.cpp \
-    leastsquarestadlg.cpp
+    leastsquarestadlg.cpp \
+    src/guiUtil/faanalysis5lineedit.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -85,7 +86,7 @@ HEADERS  += WebBrowserTab.h \
     jackStock.h \
     httpwindow.h \
     httpdownloader.h \
-    guiUtils.h \
+    inc/guiUtil/guiUtils.h \
     extendedTable.h \
     dbHndl.h \
     common.h \
@@ -121,7 +122,8 @@ HEADERS  += WebBrowserTab.h \
     tabhelp.h \
     parsecompdescription.h \
     fatab.h \
-    leastsquarestadlg.h
+    leastsquarestadlg.h \
+    inc/guiUtil/faanalysis5lineedit.h
 
 FORMS    += \
     WebBrowserTab.ui \
