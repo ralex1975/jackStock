@@ -15,7 +15,7 @@
 #include <QtCore>
 #include <QtGui>
 #include "dbHndl.h"
-#include "guiUtils.h"
+#include "inc/guiUtil/guiUtils.h"
 #include <QObject>
 
 #include "parsePriceData.h"

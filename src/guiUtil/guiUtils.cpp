@@ -8,7 +8,7 @@
  *
  *******************************************************************/
 
-#include "guiUtils.h"
+#include "../../inc/guiUtil/guiUtils.h"
 #define COMBO_BOX_NOT_USED " "
 
 
@@ -63,7 +63,8 @@ void CGuiUtils::addSortCompareToComboBox(QComboBox *cb)
  *
  *
  ****************************************************************/
-void CGuiUtils::addindicatorToComboBox(QComboBox *cb, TableColumnIndicatorInfo_ST *tableHeaderList, int maxNofData)
+void CGuiUtils::
+addindicatorToComboBox(QComboBox *cb, TableColumnIndicatorInfo_ST *tableHeaderList, int maxNofData)
 {
     cb->addItem((QString) COMBO_BOX_NOT_USED);
     for(int i = 1; i < maxNofData; i++)
