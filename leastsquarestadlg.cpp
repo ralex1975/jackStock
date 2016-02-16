@@ -3,6 +3,8 @@
 #include "dbHndl.h"
 #include "extendedTable.h"
 #include "util.h"
+#include <QPalette>
+#include "inc/guiUtil/mylineedit.h"
 
 #define TIME_2_MIN ((int)120000)
 
@@ -1001,6 +1003,9 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
     //  boxesUpdate edit
     ui->lineEditAssetNameLSqrt->clear();
     ui->lineEditAssetNameLSqrt->insert(m_reqStockName);
+    // QPalette *palette  = new QPalette;
+    //MyLineEdit::setTxtColor(ui->lineEditAssetNameLSqrt, palette, Qt::yellow);
+
 
     // Shows actually start stop date recevived from database
     ui->lineEditStartDateLSqrt->clear();
@@ -1351,7 +1356,7 @@ getSelStockListItem(QString &stockName, QString &stockSymbol, const QModelIndex 
  *******************************************************************/
 void LeastSquaresTaDlg::findDateList(QString stockSymbol, bool &isUpdate)
 {
-    isUpdate = true;
+    isUpdate = false;
 
     NameKey node;
      QMutableListIterator <NameKey> iterator(m_dateIsUpdatedList);
@@ -1620,12 +1625,13 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
 
                     prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate);
                 }
+#if 0
                 else
                 {
                     m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
                     displayStockData(false, keyFaData.lastPrice.toDouble());
                 }
-
+#endif
             }
             else
             {

@@ -72,7 +72,8 @@ SOURCES += main.cpp\
     parsecompdescription.cpp \
     fatab.cpp \
     leastsquarestadlg.cpp \
-    src/guiUtil/faanalysis5lineedit.cpp
+    src/guiUtil/guiFinanceColor.cpp \
+    src/guiUtil/mylineedit.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -123,7 +124,9 @@ HEADERS  += WebBrowserTab.h \
     parsecompdescription.h \
     fatab.h \
     leastsquarestadlg.h \
-    inc/guiUtil/faanalysis5lineedit.h
+    inc/guiUtil/guiFinanceColor.h \
+    src/guiUtil/mylineedit.h \
+    inc/guiUtil/mylineedit.h
 
 FORMS    += \
     WebBrowserTab.ui \

@@ -15,7 +15,7 @@
 #include <QMessageBox>
 #include "extendedTable.h"
 #include <stdlib.h>
-#include "guiUtils.h"
+#include "inc/guiUtil/guiUtils.h"
 #include <stdlib.h>
 #include "linkedList.h"
 #include "debug.h"

@@ -2033,7 +2033,7 @@ void CTADlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST key
 
 /*******************************************************************
  *
- * Function:    ()
+ * Function:    setFaEditControlTxtColor()
  *
  * Description:
  *
@@ -2048,6 +2048,17 @@ void CTADlg::setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette, co
 }
 
 
+
+/*******************************************************************
+ *
+ * Function:    on_selTimePeriodSlider_3_valueChanged()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *******************************************************************/
 void CTADlg::on_selTimePeriodSlider_3_valueChanged(int value)
 {
     m_timePeriodDaysInc = value;
