@@ -6,6 +6,7 @@
 #include <QPalette>
 #include "inc/guiUtil/mylineedit.h"
 
+
 #define TIME_2_MIN ((int)120000)
 
 
@@ -1478,6 +1479,13 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
         // ajn 160215 ui->textEditMoreInfobusinessDescription_2->clear();
 
 
+        m_faCtrl.fa5Reset(ui->lineEditEarningsDivByDividendLSqrt,
+                          ui->lineEditNavDivLastStockPriceLSqrt,
+                          ui->lineEditPELSqrt,
+                          ui->lineEditPsLSqrt,
+                          ui->lineEditYieldLSqrt);
+
+#if 0
         ui->lineEditEarningsDivByDividendLSqrt->clear();
         ui->lineEditNavDivLastStockPriceLSqrt->clear();
         ui->lineEditPELSqrt->clear();
@@ -1485,6 +1493,7 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
         // ajn 160215 ui->lineEditRisk->clear();
         ui->lineEditYieldLSqrt->clear();
         // ajn 160215 ui->lineMeanReturn->clear();
+#endif
 
         // ajn 160215 ui->lineEditEarningsDivByDividend_2->clear();
         // ajn 160215 ui->lineEditNavDivLastStockPrice_2->clear();
@@ -1554,11 +1563,22 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
 
                 cd.addFa3MinMaxPEAndPrice(ui->treeWidget_5LSqrt, ui->treeWidget_6LSqrt, keyFaData.companyName, m_reqStockSymbol);
 
+
+                #if 0
                 ui->lineEditEarningsDivByDividendLSqrt->insert(keyFaData.earningsDividedByDividend);
                 ui->lineEditNavDivLastStockPriceLSqrt->insert(keyFaData.navDivLastStockPrice);
                 ui->lineEditPELSqrt->insert(keyFaData.keyValuePE);
                 ui->lineEditPsLSqrt->insert(keyFaData.keyValuePS);
                 ui->lineEditYieldLSqrt->insert(keyFaData.keyValueYield);
+                #endif
+
+
+                // Add data set text color on 5 finance ctrls
+                m_faCtrl.fa5AddData(keyFaData.earningsDividedByDividend, ui->lineEditEarningsDivByDividendLSqrt,
+                                    keyFaData.navDivLastStockPrice,        ui->lineEditNavDivLastStockPriceLSqrt,
+                                    keyFaData.keyValuePE,                  ui->lineEditPELSqrt,
+                                    keyFaData.keyValuePS,                  ui->lineEditPsLSqrt,
+                                    keyFaData.keyValueYield,               ui->lineEditYieldLSqrt);
 
                 #if 0
                 ui->lineEditEarningsDivByDividend_2->insert(keyFaData.earningsDividedByDividend);
@@ -1587,8 +1607,8 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
                     ui->lineMeanReturn->insert(tmp);
                 }
                 #endif
-                QString dummyAssetType;
-                setFundametalAnalysisCtrlTxtColor(keyFaData, stockRiskReturnData, dummyAssetType);
+                // ajn 160218 QString dummyAssetType;
+                // ajn 160218 setFundametalAnalysisCtrlTxtColor(keyFaData, stockRiskReturnData, dummyAssetType);
 
             }
         }

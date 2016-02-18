@@ -13,6 +13,7 @@
 #include <qwt_plot_histogram.h>
 #include "common.h"
 #include "dbHndl.h"
+#include "inc/guiUtil/guiFinanceCtrls.h"
 
 
 namespace Ui {
@@ -98,6 +99,11 @@ class LeastSquaresTaDlg : public QDialog
         QString TxtTimePeriod;
         TimePeriodDays_ET timePeriod;
     };
+
+
+    GuiFinanceCtrls m_faCtrl;
+
+
 
      HttpWindow m_hw1;
 
