@@ -73,7 +73,8 @@ SOURCES += main.cpp\
     fatab.cpp \
     leastsquarestadlg.cpp \
     src/guiUtil/guiFinanceColor.cpp \
-    src/guiUtil/mylineedit.cpp
+    src/guiUtil/mylineedit.cpp \
+    src/guiUtil/guiFinanceCtrls.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -126,7 +127,9 @@ HEADERS  += WebBrowserTab.h \
     leastsquarestadlg.h \
     inc/guiUtil/guiFinanceColor.h \
     src/guiUtil/mylineedit.h \
-    inc/guiUtil/mylineedit.h
+    inc/guiUtil/mylineedit.h \
+    src/guiUtil/guifinancectrls.h \
+    inc/guiUtil/guiFinanceCtrls.h
 
 FORMS    += \
     WebBrowserTab.ui \

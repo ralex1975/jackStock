@@ -6,6 +6,7 @@ BBTO-B.ST	B&B TOOLS B
 BACTI-B.ST	Bactiguard Holding AB
 BEIA-B.ST	Beijer Alma B
 BEIJ-B.ST	Beijer AB, G & L ser. B
+BESQ.ST		Besqab AB
 BILI-A.ST	Bilia A
 BIOG-B.ST	BioGaia B
 PXXS-SDB.ST	BlackPearl Resources SDB
@@ -48,12 +49,13 @@ KLOV-B.ST	Klövern B
 KLED.ST	Kungsleden
 LAGR-B.ST	Lagercrantz Group B
 LIAB.ST	Lindab International
+LIFCO-B.ST	Lifco AB ser.B	
 LUC.ST	Lucara Diamond Corp
 LUG.ST	Lundin Gold
 MVIR-B.ST	Medivir B
 MEKO.ST	Mekonomen
 MUNK1S.ST	Munksjö Oyj
-43720.ST	MYCRONIC
+MYCR.ST	MYCRONIC
 NMAN.ST	Nederman Holding
 NET-B.ST	Net Entertainment NE B
 NEWA-B.ST	New Wave B
@@ -67,6 +69,7 @@ ORX.ST	Orexo
 PLAZ-B.ST	Platzer Fastigheter Holding B 
 PROE-B.ST	Proffice B
 CDON.ST	Qliro Group,(CDON)
+RAY-B.ST	RaySearch Laboratories AB ser. B
 RECI-B.ST	Recipharm
 REZT.ST	Rezidor Hotel Group
 SAGA-A.ST	Sagax A
@@ -74,6 +77,7 @@ SAGA-B.ST	Sagax B
 SAS.ST	SAS
 Scandi Standard	SCST.ST
 SECTRA B	SECT-B.ST
+Sensys Gatso Group AB	SENS.ST
 Semafo	SMF.ST
 SKIS-B.ST	SkiStar B
 SWEC-A.ST	SWECO A
@@ -91,7 +95,7 @@ UNIB-SDB.ST	Unibet Group
 VBG-B.ST	VBG GROUP B
 VICP-A.ST	Victoria Park A
 VICP-B.ST	Victoria Park B
-VITR.ST	Vitrolife
+VITR.ST	Vitrolife AB
 VNIL-SDB.ST	Vostok Nafta Investment, SDB
 WIHL.ST	Wihlborgs Fastigheter
 AF-B.ST	ÅF B
