@@ -4,7 +4,7 @@
 #include "extendedTable.h"
 #include "util.h"
 #include <QPalette>
-#include "inc/guiUtil/mylineedit.h"
+#include "inc/guiUtil/myLineEdit.h"
 
 
 #define TIME_2_MIN ((int)120000)

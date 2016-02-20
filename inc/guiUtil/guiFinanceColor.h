@@ -2,7 +2,7 @@
 #define GuiFinanceColor_H
 
 #include <QLineEdit>
-#include "mylineedit.h"
+#include "myLineEdit.h"
 
 class GuiFinanceColor
 {
@@ -27,7 +27,7 @@ class GuiFinanceColor
 public:
     GuiFinanceColor();
     ~GuiFinanceColor();
-    void SetTxtColorEarningsDivDividend(QString inValue, QLineEdit *outValue);
+    void setTxtColorEarningsDivDividend(QString inValue, QLineEdit *outValue);
     void setTxtColorNavDivStockPrice(QString inValue, QLineEdit *outValue);
     void setTxtColorPe(QString inValue, QLineEdit *outValue, QString assetType = "");
     void setTxtColorPs(QString inValue, QLineEdit *outValue);

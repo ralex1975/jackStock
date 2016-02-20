@@ -697,12 +697,23 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
 }
 
 
-
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *******************************************************************/
 void TaAnalysis::setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette, const QColor &color)
 {
     palette->setColor(QPalette::Text, color); //Qt::red
     lineEdit->setPalette(*palette);
 }
+
+
 
 /*******************************************************************
  *
@@ -714,7 +725,6 @@ void TaAnalysis::setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette
  *
  *
  *******************************************************************/
-
 void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyData,
                                                    CDbHndl::EfficPortStockData_ST stockRiskReturnData,
                                                    QString assetType)
