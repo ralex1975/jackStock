@@ -33,6 +33,9 @@
 #include "common.h"
 #include "linkedList.h"
 
+#include "inc/guiUtil/guiFinanceColor.h"
+#include "inc/guiUtil/myTreeWidget.h"
+
 
 // Forward declaration
 class CGuiUtils;
@@ -244,7 +247,10 @@ private:
     };
 
 
+    MyTreeWidget::OneLineTxtColorDataST m_oneLineTxtColorData;
 
+    MyTreeWidget    m_mtw;
+    GuiFinanceColor m_gfc;
 
 
 

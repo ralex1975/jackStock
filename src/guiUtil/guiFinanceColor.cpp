@@ -142,8 +142,91 @@ setTxtColorNavDivStockPrice(QString inValue, QLineEdit *outValue)
 }
 
 
+/**********************************************************************************
+ *
+ * Function:    setTxtColorPe()
+ *
+ *
+ * Description:
+ *
+ *
+ *
+ ********************************************************************************/
+QColor GuiFinanceColor::getPeColor(QString pe)
+{
+    CUtil cu;
+    QColor color;
+    double peDouble;
 
 
+    if(false == cu.number2double(pe, peDouble))
+    {
+        color = Qt::red;
+        return color;
+    }
+
+    // PE Vaue
+    if(pe.toDouble() < 5)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else if((pe.toDouble() >= 5) && (pe.toDouble() <= 15))
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+    }
+    else if((pe.toDouble() > 15) && (pe.toDouble() <= 18))
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
+    }
+    else if((pe.toDouble() > 18) && (pe.toDouble() <= 25))
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+    }
+    else
+    {
+        color = Qt::red;
+    }
+
+    return color;
+
+}
+
+
+/**********************************************************************************
+ *
+ * Function:    setTxtColorPe()
+ *
+ *
+ * Description:
+ *
+ *
+ *
+ ********************************************************************************/
+void GuiFinanceColor::
+setTxtColorPe(QString inValue, QLineEdit *outValue, QString assetType)
+{
+    QColor color;
+
+    color = getPeColor(inValue);
+
+
+    // Disable P/E when company type is finance and real estate
+    if(assetType.compare("Finans och fastighet")== 0)
+    {
+        outValue->setDisabled(true);
+    }
+    else
+    {
+        outValue->setDisabled(false);
+    }
+
+    MyLineEdit::setTxtColor(outValue, m_faDataPalette[FA_PE], color);
+
+}
+
+
+
+#if 0
 /**********************************************************************************
  *
  * Function:    setTxtColorPe()
@@ -205,7 +288,7 @@ setTxtColorPe(QString inValue, QLineEdit *outValue, QString assetType)
     MyLineEdit::setTxtColor(outValue, m_faDataPalette[FA_PE], color);
 
 }
-
+#endif
 
 /**********************************************************************************
  *

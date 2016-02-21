@@ -41,7 +41,7 @@ public:
 
 
 private:
-    QStringList m_keyNumberParam;
+    // QStringList m_keyNumberParam;
     QTabWidget *tabWidget;
     QMenuBar *menuBar;
     QMenu *fileMenu;

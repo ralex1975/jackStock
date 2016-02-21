@@ -26,11 +26,6 @@ public:
                     QString inYield,                QLineEdit *yield,
                     QString assetType = "");
 
-    void fa5Reset(QLineEdit *earningsDivDividend,
-                  QLineEdit *navDivStockPrice,
-                  QLineEdit *pe,
-                  QLineEdit *ps,
-                  QLineEdit *yield);
 
 
     //===============================================================================================

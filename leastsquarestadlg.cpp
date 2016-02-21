@@ -1479,11 +1479,11 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
         // ajn 160215 ui->textEditMoreInfobusinessDescription_2->clear();
 
 
-        m_faCtrl.fa5Reset(ui->lineEditEarningsDivByDividendLSqrt,
-                          ui->lineEditNavDivLastStockPriceLSqrt,
-                          ui->lineEditPELSqrt,
-                          ui->lineEditPsLSqrt,
-                          ui->lineEditYieldLSqrt);
+        m_mle.reset5Ctrl(ui->lineEditEarningsDivByDividendLSqrt,
+                               ui->lineEditNavDivLastStockPriceLSqrt,
+                               ui->lineEditPELSqrt,
+                               ui->lineEditPsLSqrt,
+                               ui->lineEditYieldLSqrt);
 
 #if 0
         ui->lineEditEarningsDivByDividendLSqrt->clear();

@@ -1440,6 +1440,230 @@ bool CDbHndl::addFa3NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
 
 /****************************************************************
  *
+ * Function:    addFa3MinMaxPEAndPrice()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::addFa3MinMaxPEAndPrice(QTreeWidget *treeWidget, QTreeWidget *treeWidget1, QString assetName, QString assetSymbol)
+{
+    QSqlRecord rec;
+    QString str;
+    QString tmp;
+    QString yearArr[40];
+    double erningPerShare[40];
+    int nofData = 0;
+
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+
+    str.sprintf(" SELECT assetName, year, earningsPerShare "
+                " FROM TblNordnetBalanceIncomeSheet "
+                " WHERE LOWER(assetName) = LOWER('%s') "
+                " ORDER BY LOWER(year) ASC;",              // DESC
+                assetName.toLocal8Bit().constData());
+
+    qry.prepare(str);
+
+    qDebug() << str;
+
+    if( !qry.exec() )
+    {
+        treeWidget->clear();
+
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("assetName").isNull()==true || (rec.value("earningsPerShare").isNull()==true) ||
+              (rec.value("year").isNull() ==true))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                yearArr[nofData] = (QString) rec.value("year").toString();
+                yearArr[nofData] = yearArr[nofData].trimmed();
+
+                erningPerShare[nofData] = rec.value("earningsPerShare").toDouble();
+                qDebug() << erningPerShare[nofData];
+                nofData++;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+
+
+  QColor yearColor = Qt::black;
+  QString startDate;
+  QString endDate;
+  double minPrice;
+  double maxPrice;
+  double avgPrice;
+
+
+
+
+  for(int i = 0; i < nofData; i++)
+  {
+      QTreeWidgetItem *item = new QTreeWidgetItem;
+      // ajn 160221 QTreeWidgetItem *item1 = new QTreeWidgetItem;
+
+      startDate.sprintf("%s-01-01", yearArr[i].toLocal8Bit().constData());
+      endDate.sprintf("%s-12-30", yearArr[i].toLocal8Bit().constData());
+
+        if(true == getYahooTaMinMaxAvgPrice(assetSymbol, startDate, endDate, minPrice, maxPrice, avgPrice))
+        {
+            qDebug() << yearArr[i];
+            qDebug() << minPrice;
+            qDebug() << maxPrice;
+            qDebug() << avgPrice;
+            qDebug() << erningPerShare[i];
+
+            m_oneLineTxtColorData.lineColor.clear();
+            m_oneLineTxtColorData.lineData.clear();
+            // m_oneLineTxtColorData.nofData = 4;
+
+
+            item->setText(0, (QString)yearArr[i]);
+            // ajn 160221 item1->setText(0, (QString)yearArr[i]);
+
+            int len = yearArr[i].size();
+            if(len > 0)
+            {
+                m_oneLineTxtColorData.lineData.insert(0, (QString)yearArr[i]);
+                m_oneLineTxtColorData.lineColor.insert(0, yearColor);
+            }
+            else
+            {
+                tmp = " ";
+                m_oneLineTxtColorData.lineData.insert(0, (QString)tmp);
+                m_oneLineTxtColorData.lineColor.insert(0, yearColor);
+            }
+
+
+            tmp.sprintf("%.1f", (minPrice));
+            item->setText(1, tmp);
+
+            tmp.sprintf("%.1f", (avgPrice));
+            item->setText(2, tmp);
+
+            tmp.sprintf("%.1f", (maxPrice));
+            item->setText(3, tmp);
+
+
+            if(erningPerShare[i] != 0)
+            {
+
+                tmp.sprintf("%.1f", (minPrice/erningPerShare[i]));
+                // ajn 160221 item1->setText(1, tmp);
+                // ajn 160221 item1->setTextColor(1, m_gfc.getPeColor(tmp));
+                qDebug() << tmp;
+
+                if(tmp.size() > 0)
+                {
+                    m_oneLineTxtColorData.lineData.insert(1, tmp);
+                    m_oneLineTxtColorData.lineColor.insert(1, m_gfc.getPeColor(tmp));
+                }
+                else
+                {
+                    tmp = " ";
+                    m_oneLineTxtColorData.lineData.insert(1, tmp);
+                    m_oneLineTxtColorData.lineColor.insert(1, m_gfc.getPeColor(tmp));
+                }
+
+                tmp.sprintf("%.1f", (avgPrice/erningPerShare[i]));
+                // ajn 160221 item1->setText(2, tmp);
+                // ajn 160221 item1->setTextColor(2, m_gfc.getPeColor(tmp));
+                qDebug() << tmp;
+
+                if(tmp.size() > 0)
+                {
+                    m_oneLineTxtColorData.lineData.insert(2, tmp);
+                    m_oneLineTxtColorData.lineColor.insert(2, m_gfc.getPeColor(tmp));
+                }
+                else
+                {
+                    tmp = " ";
+                    m_oneLineTxtColorData.lineData.insert(2, tmp);
+                    m_oneLineTxtColorData.lineColor.insert(2, m_gfc.getPeColor(tmp));
+                }
+
+
+                tmp.sprintf("%.1f", (maxPrice/erningPerShare[i]));
+                // ajn 160221 item1->setText(3, tmp);
+                // ajn 160221 item1->setTextColor(3, m_gfc.getPeColor(tmp));
+                qDebug() << tmp;
+
+                if(tmp.size() > 0)
+                {
+                    m_oneLineTxtColorData.lineData.insert(3, tmp);
+                    m_oneLineTxtColorData.lineColor.insert(3, m_gfc.getPeColor(tmp));
+                }
+                else
+                {
+                    tmp = " ";
+                    m_oneLineTxtColorData.lineData.insert(3, tmp);
+                    m_oneLineTxtColorData.lineColor.insert(3, m_gfc.getPeColor(tmp));
+                }
+
+                // Pe min avg max
+                // ajn 160221 treeWidget1->addTopLevelItem(item1);
+                m_mtw.addOneLineTxtColorData(treeWidget1, m_oneLineTxtColorData);
+
+                m_oneLineTxtColorData.lineColor.clear();
+                m_oneLineTxtColorData.lineData.clear();
+
+            }
+
+            treeWidget->addTopLevelItem(item);
+        }
+  }
+
+
+
+  treeWidget->sortByColumn(0, Qt::DescendingOrder); // column/order to sort by
+  treeWidget->setSortingEnabled(true);             // should cause sort on add
+
+  treeWidget1->sortByColumn(0, Qt::DescendingOrder); // column/order to sort by
+  treeWidget1->setSortingEnabled(true);             // should cause sort on add
+
+
+    return true;
+}
+
+
+
+#if 0
+/****************************************************************
+ *
  * Function:    addStockSymbolAndNameInTreeWidget1()
  *
  * Description: This combobox has a checkbox
@@ -1592,7 +1816,7 @@ bool CDbHndl::addFa3MinMaxPEAndPrice(QTreeWidget *treeWidget, QTreeWidget *treeW
 
     return true;
 }
-
+#endif
 
 
 
