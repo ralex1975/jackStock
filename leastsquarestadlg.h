@@ -106,6 +106,7 @@ class LeastSquaresTaDlg : public QDialog
 
 
      HttpWindow m_hw1;
+     MyLineEdit m_mle;
 
 
      QPalette *m_faDataPalette[FA_NOF_DATA];

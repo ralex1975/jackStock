@@ -51,9 +51,11 @@ void GuiFinanceCtrls::fa5AddData(QString inEarningsDivDividend,  QLineEdit *earn
 {
 
     GuiFinanceColor gfc;
+    MyLineEdit mle;
+
 
     // Remove data
-    fa5Reset(earningsDivDividend,
+    mle.reset5Ctrl(earningsDivDividend,
              navDivStockPrice,
              pe,
              ps,
@@ -77,28 +79,7 @@ void GuiFinanceCtrls::fa5AddData(QString inEarningsDivDividend,  QLineEdit *earn
 
 
 
-/**********************************************************************************
- *
- * Function:        fa5CtrlReset()
- *
- *
- * Description: Remove data from 5 fundamental analysis controls
- *
- *
- *
- ********************************************************************************/
-void GuiFinanceCtrls::fa5Reset(QLineEdit *earningsDivDividend,
-                               QLineEdit *navDivStockPrice,
-                               QLineEdit *pe,
-                               QLineEdit *ps,
-                               QLineEdit *yield)
-{
-    earningsDivDividend->clear();
-    navDivStockPrice->clear();
-    pe->clear();
-    ps->clear();
-    yield->clear();
-}
+
 
 
 /*******************************************************************

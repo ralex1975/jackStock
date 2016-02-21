@@ -6,7 +6,15 @@
 class MyTreeWidget : public QTreeWidget
 {
     Q_OBJECT
+
 public:
+    struct OneLineTxtColorDataST
+    {
+        QStringList lineData;
+        QList<QColor> lineColor;
+    };
+
+
     explicit MyTreeWidget(QWidget *parent = 0);
     void setHeader4ColumnTreeWidget(QTreeWidget *treeWidget,
                                QString header0, int headerWidth0,
@@ -24,7 +32,7 @@ public:
                                     QString header1, int headerWidth1, bool hideCol1,
                                     QString header2, int headerWidth2, bool hideCol2);
 
-
+    void addOneLineTxtColorData(QTreeWidget *treeWidget, OneLineTxtColorDataST &data);
 
 
 signals:

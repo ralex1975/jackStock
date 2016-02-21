@@ -29,6 +29,7 @@ public:
     ~GuiFinanceColor();
     void setTxtColorEarningsDivDividend(QString inValue, QLineEdit *outValue);
     void setTxtColorNavDivStockPrice(QString inValue, QLineEdit *outValue);
+    QColor getPeColor(QString pe);
     void setTxtColorPe(QString inValue, QLineEdit *outValue, QString assetType = "");
     void setTxtColorPs(QString inValue, QLineEdit *outValue);
     void setTxtColorYield(QString yield, QString earningsDivDividend, QLineEdit *outValue);
