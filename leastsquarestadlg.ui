@@ -13,126 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>430</y>
-     <width>99</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="QTableView" name="tableViewLeastSquare">
-   <property name="geometry">
-    <rect>
-     <x>530</x>
-     <y>10</y>
-     <width>391</width>
-     <height>321</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="largeCapCheckBox">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>400</y>
-     <width>210</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Large cap</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="midCapCheckBox">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>420</y>
-     <width>210</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Mid cap</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="GetDbDataButton">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>400</y>
-     <width>121</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Läs in gamla data</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="smallCapCheckBox">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>440</y>
-     <width>210</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Small cap</string>
-   </property>
-  </widget>
-  <widget class="QTableView" name="tableViewLeastSquare_2">
-   <property name="geometry">
-    <rect>
-     <x>930</x>
-     <y>10</y>
-     <width>401</width>
-     <height>321</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
@@ -374,246 +254,431 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QTabWidget" name="tabWidget_2">
    <property name="geometry">
     <rect>
-     <x>640</x>
-     <y>340</y>
-     <width>51</width>
-     <height>17</height>
+     <x>520</x>
+     <y>10</y>
+     <width>821</width>
+     <height>611</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
+   <property name="currentIndex">
+    <number>0</number>
    </property>
-   <property name="text">
-    <string>Sub/Kurs</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditPsLSqrt">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>360</y>
-     <width>41</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditNavDivLastStockPriceLSqrt">
-   <property name="geometry">
-    <rect>
-     <x>640</x>
-     <y>360</y>
-     <width>51</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QTreeWidget" name="treeWidget_6LSqrt">
-   <property name="geometry">
-    <rect>
-     <x>830</x>
-     <y>360</y>
-     <width>251</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <column>
-    <property name="text">
-     <string notr="true">1</string>
-    </property>
-   </column>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>340</y>
-     <width>16</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>PS</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditPELSqrt">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>360</y>
-     <width>51</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>550</x>
-     <y>340</y>
-     <width>21</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>PE</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_17">
-   <property name="geometry">
-    <rect>
-     <x>830</x>
-     <y>340</y>
-     <width>101</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Historiska P/E tal</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditEarningsDivByDividendLSqrt">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>360</y>
-     <width>51</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>720</x>
-     <y>340</y>
-     <width>71</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Vinst/Utdel</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditYieldLSqrt">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>360</y>
-     <width>51</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_6">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>340</y>
-     <width>41</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>DirAvk</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_16">
-   <property name="geometry">
-    <rect>
-     <x>1100</x>
-     <y>340</y>
-     <width>181</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Historiska priser</string>
-   </property>
-  </widget>
-  <widget class="QTreeWidget" name="treeWidget_5LSqrt">
-   <property name="geometry">
-    <rect>
-     <x>1100</x>
-     <y>360</y>
-     <width>231</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <column>
-    <property name="text">
-     <string notr="true">1</string>
-    </property>
-   </column>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Tab 1</string>
+    </attribute>
+    <widget class="QTreeWidget" name="treeWidget_6LSqrt">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>360</y>
+       <width>251</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>340</y>
+       <width>181</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Historiska priser</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="GetDbDataButton">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>400</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Läs in gamla data</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditNavDivLastStockPriceLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>360</y>
+       <width>51</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>340</y>
+       <width>21</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>PE</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>340</y>
+       <width>16</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>PS</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>340</y>
+       <width>41</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>DirAvk</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="smallCapCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>440</y>
+       <width>210</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Small cap</string>
+     </property>
+    </widget>
+    <widget class="QTableView" name="tableViewLeastSquare_2">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>10</y>
+       <width>401</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QTableView" name="tableViewLeastSquare">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>391</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="largeCapCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>400</y>
+       <width>210</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Large cap</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditEarningsDivByDividendLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>360</y>
+       <width>51</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>340</y>
+       <width>71</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Vinst/Utdel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>340</y>
+       <width>51</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Sub/Kurs</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>340</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Historiska P/E tal</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditPELSqrt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>360</y>
+       <width>51</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="midCapCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>420</y>
+       <width>210</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Mid cap</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditPsLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>360</y>
+       <width>41</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>430</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditYieldLSqrt">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>360</y>
+       <width>51</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidget_5LSqrt">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>360</y>
+       <width>231</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
+      </property>
+     </column>
+    </widget>
+    <zorder>treeWidget_5LSqrt</zorder>
+    <zorder>label_17</zorder>
+    <zorder>label_4</zorder>
+    <zorder>GetDbDataButton</zorder>
+    <zorder>label_6</zorder>
+    <zorder>tableViewLeastSquare_2</zorder>
+    <zorder>tableViewLeastSquare</zorder>
+    <zorder>largeCapCheckBox</zorder>
+    <zorder>label_5</zorder>
+    <zorder>label_2</zorder>
+    <zorder>smallCapCheckBox</zorder>
+    <zorder>lineEditNavDivLastStockPriceLSqrt</zorder>
+    <zorder>lineEditEarningsDivByDividendLSqrt</zorder>
+    <zorder>lineEditYieldLSqrt</zorder>
+    <zorder>label_3</zorder>
+    <zorder>lineEditPsLSqrt</zorder>
+    <zorder>pushButton</zorder>
+    <zorder>label_16</zorder>
+    <zorder>midCapCheckBox</zorder>
+    <zorder>lineEditPELSqrt</zorder>
+    <zorder>treeWidget_6LSqrt</zorder>
+    <zorder>treeWidget_6LSqrt</zorder>
+    <zorder>label_16</zorder>
+    <zorder>GetDbDataButton</zorder>
+    <zorder>lineEditNavDivLastStockPriceLSqrt</zorder>
+    <zorder>label_2</zorder>
+    <zorder>label_3</zorder>
+    <zorder>label_6</zorder>
+    <zorder>smallCapCheckBox</zorder>
+    <zorder>tableViewLeastSquare_2</zorder>
+    <zorder>tableViewLeastSquare</zorder>
+    <zorder>largeCapCheckBox</zorder>
+    <zorder>lineEditEarningsDivByDividendLSqrt</zorder>
+    <zorder>label_4</zorder>
+    <zorder>label_5</zorder>
+    <zorder>label_17</zorder>
+    <zorder>lineEditPELSqrt</zorder>
+    <zorder>midCapCheckBox</zorder>
+    <zorder>lineEditPsLSqrt</zorder>
+    <zorder>pushButton</zorder>
+    <zorder>lineEditYieldLSqrt</zorder>
+    <zorder>treeWidget_5LSqrt</zorder>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>Tab 2</string>
+    </attribute>
+   </widget>
   </widget>
  </widget>
  <customwidgets>

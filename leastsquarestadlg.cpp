@@ -167,7 +167,7 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
 
     if(m_importYahooTaDataThread == 0)
     {
-        QMessageBox::information(NULL, QObject::tr("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
+        QMessageBox::information(NULL, QString::fromUtf8("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
     }
 
     // Init time period
