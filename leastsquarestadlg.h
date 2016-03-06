@@ -217,6 +217,7 @@ private slots:
     void on_selTimePeriodSliderLSqrt_valueChanged(int value);
 
     void on_tableViewLeastSquare_2_clicked(const QModelIndex &index);
+    void on_GetDbDataButton_clicked();
 
 private:
     Ui::LeastSquaresTaDlg *ui;

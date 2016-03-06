@@ -143,28 +143,28 @@ int CExtendedTable::getNofCols(void)
 
 
 
-  /*******************************************************************
-   *
-   * Function:    setBackgroundColor()
-   *
-   * Description:
-   *
-   *
-   *
-   *******************************************************************/
-   void CExtendedTable::setBackgroundColor(QTableView *tableView, int row, int col, Qt::GlobalColor color)
-   {
-      if(row >= m_model->rowCount() || col >=m_model->columnCount())
-      {
-          QMessageBox::critical(NULL, QObject::tr("1Error: Get Table Data 1"), QObject::tr("Invalid table index") );
-          return;
-      }
+/*******************************************************************
+*
+* Function:    setBackgroundColor()
+*
+* Description:
+*
+*
+*
+*******************************************************************/
+void CExtendedTable::setBackgroundColor(QTableView *tableView, int row, int col, Qt::GlobalColor color)
+{
+    if(row >= m_model->rowCount() || col >=m_model->columnCount())
+    {
+        QMessageBox::critical(NULL, QString::fromUtf8("1Error: Get Table Data 1"), QString::fromUtf8("Invalid table index") );
+        return;
+    }
 
-     // m_model->setData(m_model->index(0, 0), Qt::red, Qt::BackgroundRole);
-      m_model->setData(m_model->index(row, col), color, Qt::BackgroundRole);
-      tableView->setModel(m_model);
+    // m_model->setData(m_model->index(0, 0), Qt::red, Qt::BackgroundRole);
+    m_model->setData(m_model->index(row, col), color, Qt::BackgroundRole);
+    tableView->setModel(m_model);
 
-   }
+}
 
 
 
@@ -184,7 +184,7 @@ void CExtendedTable::setTextColor(QTableView *tableView, int row, int col, Qt::G
    {
        QString debugStr;
        debugStr.sprintf("Invalid table index, row=%d, rowC=%d, col=%d, colC=%d", row, m_model->rowCount(), col, m_model->columnCount());
-       QMessageBox::critical(NULL, QObject::tr("2Error: Get Table Data 2"), debugStr );
+       QMessageBox::critical(NULL, QString::fromUtf8("2Error: Get Table Data 2"), debugStr );
        return;
    }
 
@@ -227,30 +227,32 @@ void CExtendedTable::getOneData(QTableView *tableView, const QModelIndex &index,
    data = tableView->model()->data(index).toString();
 }
 
-  /*******************************************************************
-   *
-   * Function:    getOneData()
-   *
-   * Description:
-   *
-   *
-   *
-   *******************************************************************/
-   void CExtendedTable::getOneData(int row, int col, QString &data)
-   {
-      QVariant vData;
-      if(row > m_model->rowCount() || col >m_model->columnCount())
-      {
-          QMessageBox::critical(NULL, QObject::tr("3Error: Get Table Data 3"), QObject::tr("Invalid table index") );
-          return;
-      }
 
-      if(m_model->item(row, col) != 0)
-      {
+
+/*******************************************************************
+*
+* Function:    getOneData()
+*
+* Description:
+*
+*
+*
+*******************************************************************/
+void CExtendedTable::getOneData(int row, int col, QString &data)
+{
+    QVariant vData;
+    if(row > m_model->rowCount() || col >m_model->columnCount())
+    {
+        QMessageBox::critical(NULL, QString::fromUtf8("3Error: Get Table Data 3"), QString::fromUtf8("Invalid table index") );
+        return;
+    }
+
+    if(m_model->item(row, col) != 0)
+    {
         vData = m_model->item(row, col)->text();
         data = vData.toString();
-      }
-   }
+    }
+}
 
 
 
@@ -270,7 +272,7 @@ void CExtendedTable::getOneRowWithData(QStringList &oneRowWithData, int row)
 
     if(row > getNofRows())
     {
-        QMessageBox::critical(NULL, QObject::tr("Error: Create Table"), QObject::tr("Invalid row number") );
+        QMessageBox::critical(NULL, QString::fromUtf8("Error: Create Table"), QString::fromUtf8("Invalid row number") );
         return;
     }
 
@@ -303,7 +305,7 @@ addHeaders(QTableView *tableView, TableColumnIndicatorInfo_ST *tableHeaderList, 
     if(maxNofData > m_model->columnCount())
     {
         debugStr.sprintf("Invalid number of columns maxNofData=%d > %d=m_model->columnCount()", maxNofData, m_model->columnCount());
-        QMessageBox::critical(NULL, QObject::tr("Error: Create Table"), debugStr );
+        QMessageBox::critical(NULL, QString::fromUtf8("Error: Create Table"), debugStr );
         return;
     }
 
@@ -415,7 +417,7 @@ addHorzVertHeaders(QTableView *tableView, QVector <CDbHndl::EfficPortStockData_S
     if(maxNofData > m_model->columnCount())
     {
         debugStr.sprintf("Invalid number of columns maxNofData=%d > %d=m_model->columnCount()", maxNofData, m_model->columnCount());
-        QMessageBox::critical(NULL, QObject::tr("Error: Create Table"), debugStr );
+        QMessageBox::critical(NULL, QString::fromUtf8("Error: Create Table"), debugStr );
         return;
     }
 

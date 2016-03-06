@@ -1820,3 +1820,38 @@ bool CUtil::annualGrowthRate(double startValue, double endValue, double nofYears
     return true;
 }
 
+
+/*******************************************************************
+ *
+ * Function:    createStartEndDates()
+ *
+ * Description: Get current date (end date) on format yyyy-mm-yy and
+ *              calculate start date by remove x nof month.
+ *
+ * Note:        nofMonthInBetween: Need to be negative
+ *
+ *******************************************************************/
+bool CUtil::createStartEndDates(QString &startDate,
+                                QString &endDate,
+                                int nofMonthInBetween)
+{
+    bool res = true;
+
+    if(nofMonthInBetween >= 0)
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Create Dates"), QString::fromUtf8("Fail: nofMonthInBetween need to be < 0"));
+        res = false;
+    }
+    else
+    {
+        getCurrentDate(endDate);
+
+        if(false == addMonth(endDate, startDate, nofMonthInBetween))
+        {
+            res = false;
+        }
+    }
+
+    return res;
+}
+
