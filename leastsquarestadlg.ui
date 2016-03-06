@@ -358,7 +358,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Läs in gamla data</string>
+    <string>Ladda data</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -638,6 +638,32 @@
     <bool>false</bool>
    </property>
   </widget>
+  <zorder>largeCapCheckBox</zorder>
+  <zorder>tabWidget</zorder>
+  <zorder>tabWidget_2</zorder>
+  <zorder>treeWidget_6LSqrt</zorder>
+  <zorder>label_6</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>treeWidget_5LSqrt</zorder>
+  <zorder>label_3</zorder>
+  <zorder>lineEditEarningsDivByDividendLSqrt</zorder>
+  <zorder>label_4</zorder>
+  <zorder>GetDbDataButton</zorder>
+  <zorder>label_5</zorder>
+  <zorder>lineEditYieldLSqrt</zorder>
+  <zorder>lineEditPELSqrt</zorder>
+  <zorder>smallCapCheckBox</zorder>
+  <zorder>midCapCheckBox</zorder>
+  <zorder>label_17</zorder>
+  <zorder>label_16</zorder>
+  <zorder>lineEditNavDivLastStockPriceLSqrt</zorder>
+  <zorder>label_2</zorder>
+  <zorder>lineEditPsLSqrt</zorder>
+  <zorder>lineEditAssetNameLSqrt</zorder>
+  <zorder>setEndDateLineEditLSqrt</zorder>
+  <zorder>setStartDateLineEditLSqrt</zorder>
+  <zorder>timePeriodLlineEditLSqrt</zorder>
+  <zorder>selTimePeriodSliderLSqrt</zorder>
  </widget>
  <customwidgets>
   <customwidget>
