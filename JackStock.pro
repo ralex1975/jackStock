@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     src/guiUtil/guiFinanceColor.cpp \
     src/guiUtil/guiFinanceCtrls.cpp \
     src/guiUtil/myTreeWidget.cpp \
-    src/guiUtil/myLineEdit.cpp
+    src/guiUtil/myLineEdit.cpp \
+    src/TaBuySellIdicator/taBuySellIdicator.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -131,7 +132,8 @@ HEADERS  += WebBrowserTab.h \
     src/guiUtil/guifinancectrls.h \
     inc/guiUtil/guiFinanceCtrls.h \
     inc/guiUtil/myTreeWidget.h \
-    inc/guiUtil/myLineEdit.h
+    inc/guiUtil/myLineEdit.h \
+    inc/TaBuySellIdicator/taBuySellIdicator.h
 
 FORMS    += \
     WebBrowserTab.ui \

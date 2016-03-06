@@ -1495,7 +1495,7 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_1_MONTH:
-        intMonth = -6;
+        intMonth = -1;
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_2_WEEK:

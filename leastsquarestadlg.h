@@ -14,6 +14,7 @@
 #include "common.h"
 #include "dbHndl.h"
 #include "inc/guiUtil/guiFinanceCtrls.h"
+#include "inc/TaBuySellIdicator/taBuySellIdicator.h"
 
 
 namespace Ui {
@@ -102,7 +103,7 @@ class LeastSquaresTaDlg : public QDialog
 
 
     GuiFinanceCtrls m_faCtrl;
-
+    TaBuySellIdicator m_taBuy;
 
 
      HttpWindow m_hw1;

@@ -1030,7 +1030,7 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
 
     if(false == cu.dateIsValid(endDate))
     {
-         QMessageBox::information(this, tr("Datum"), QString::fromUtf8("1. Slut datum felaktigt"));
+         QMessageBox::information(this, QString::fromUtf8("Datum"), QString::fromUtf8("1. Slut datum felaktigt"));
         return;
     }
 
@@ -1076,7 +1076,7 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_1_MONTH:
-        intMonth = -6;
+        intMonth = -1;
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_2_WEEK:

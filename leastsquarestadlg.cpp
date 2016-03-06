@@ -7,6 +7,7 @@
 #include "inc/guiUtil/myLineEdit.h"
 
 
+
 #define TIME_2_MIN ((int)120000)
 
 
@@ -139,6 +140,9 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
     int nofCols;
     CDbHndl db;
     QString str;
+    CDbHndl::snapshotStockData_ST keyData;
+
+
 
     int nofData = 0;
     double meanXSum = 0;
@@ -175,7 +179,6 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
 
     settimeSlideWindowInc(0);
 
-    // Ska sättas tillbaka
     m_plot.initPlotPicker(ui->qwtPlotLSqr);
     m_plot.initPlotZoomer(ui->qwtPlotLSqr);
     m_plot.initPlotPanner(ui->qwtPlotLSqr);
@@ -189,8 +192,10 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
     nofCols = 0;
 
     headerList[nofCols++].name = QString::fromUtf8("Företag");
+    headerList[nofCols++].name = QString::fromUtf8("Symbol");
     headerList[nofCols++].name = QString::fromUtf8("R");
     headerList[nofCols++].name = QString::fromUtf8("K");
+    headerList[nofCols++].name = QString::fromUtf8("Medel\n20-50");
 
 
 
@@ -218,7 +223,6 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
         // Init columm head click event handlers for tableView
         horizHeaderPlus= ui->tableViewLeastSquare->horizontalHeader();
         horizHeaderMinus= ui->tableViewLeastSquare_2->horizontalHeader();
-        // setTableWidth(10);
 
         connect(horizHeaderPlus,  SIGNAL(sectionClicked(int)), this, SLOT(tablePlusHeaderClicked(int)));
         connect(horizHeaderMinus, SIGNAL(sectionClicked(int)), this, SLOT(tableMinusHeaderClicked(int)));
@@ -259,41 +263,78 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
             }
 
 
+
+
             if(true == db.calc1dLeastSrqFitRParam(nofData,prodXXSum, prodYYSum, prodXYSum, r))
             {
                 if(true == db.calc1dLeastSrqFitParams(nofData, meanXSum, meanYSum, prodXXSum, prodYYSum, prodXYSum, m, k))
                 {
+
                     if(r > 0.7)
                     {
-
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, m_stockArr[j].stockName, rowPlus, 0, Qt::black);
-                        str.sprintf("%f", r);
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 1, Qt::black);
-                        str.sprintf("%f", k);
-                        if(k >= 0)
+                        // Add stock symbol Column 1
+                        if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
                         {
-                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::blue);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.assetSymbol, rowPlus, 1, Qt::black);
+                            if(true == m_taBuy.buySignalAvg20Above50(keyData.assetSymbol))
+                            {
+                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, QString::fromUtf8("Köp"), rowPlus, 4, Qt::blue);
+                            }
                         }
                         else
                         {
-                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::red);
+                            keyData.assetSymbol = "";
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.assetSymbol, rowPlus, 1, Qt::black);
+                        }
+
+                        // Add stockname column 0
+                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, m_stockArr[j].stockName, rowPlus, 0, Qt::black);
+
+                        // Add R on column 2
+                        str.sprintf("%f", r);
+                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::black);
+
+                        // Add K on column 3
+                        str.sprintf("%f", k);
+                        if(k >= 0)
+                        {
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 3, Qt::blue);
+                        }
+                        else
+                        {
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 3, Qt::red);
                         }
                         rowPlus++;
                     }
                     else if(r < -0.7)
                     {
-
-                        etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, m_stockArr[j].stockName, rowMinus, 0, Qt::black);
-                        str.sprintf("%f", r);
-                        etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 1, Qt::black);
-                        str.sprintf("%f", k);
-                        if(k >= 0)
+                        // Add stock symbol Column 1
+                        if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
                         {
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::blue);
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.assetSymbol, rowMinus, 1, Qt::black);
                         }
                         else
                         {
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::red);
+                            keyData.assetSymbol = "";
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.assetSymbol, rowMinus, 1, Qt::black);
+                        }
+
+                        // Add stock name Column 0
+                        etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, m_stockArr[j].stockName, rowMinus, 0, Qt::black);
+
+                        // Add R on Column 2
+                        str.sprintf("%f", r);
+                        etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::black);
+
+                        // Add K on Column 3
+                        str.sprintf("%f", k);
+                        if(k >= 0)
+                        {
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 3, Qt::blue);
+                        }
+                        else
+                        {
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 3, Qt::red);
                         }
                         rowMinus++;
                     }
@@ -487,7 +528,7 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_1_MONTH:
-        intMonth = -6;
+        intMonth = -1;
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_2_WEEK:
@@ -655,7 +696,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
     CDbHndl db;
     CYahooStockPlotUtil cy;
     DataPlotIndex_ET plotIndex;
-    SubPlotIndex_ET subplotIndex;
+    //SubPlotIndex_ET subplotIndex;
 
 
     QString legendLable;
@@ -1394,7 +1435,7 @@ void LeastSquaresTaDlg::on_tableViewLeastSquare_clicked(const QModelIndex &index
     CDbHndl db;
     QString assetName;
     CDbHndl::snapshotStockData_ST keyData;
-    QModelIndex dummyIndex = index;
+    //QModelIndex dummyIndex = index;
 
 
 
