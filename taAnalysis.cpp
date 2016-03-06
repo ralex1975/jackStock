@@ -1252,7 +1252,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
     legendLable.clear();
     if(true == ui->checkBoxLongMvAvg->isChecked())
     {
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
         clearStockAndIndicatorTempMem();
         qDebug() << "xx size " << m_stockData.data.x.size();
         updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
@@ -1264,7 +1263,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Long moving average";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlot, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
@@ -1286,7 +1284,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Lower bollingerband";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlot, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
 
 
         // Mid Bollingerband
@@ -1297,7 +1294,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
 
         m_stockArr.clear();
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlot, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
 
         // Upper Bollingerband
         indicatorIndex++;
@@ -1306,7 +1302,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
 
         m_stockArr.clear();
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlot, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
@@ -1798,7 +1793,7 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_1_MONTH:
-        intMonth = -6;
+        intMonth = -1;
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_2_WEEK:
@@ -1931,7 +1926,7 @@ setTimeSlideWindowUpdateStartStopDate(QString &startDate, QString &endDate, int 
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_1_MONTH:
-        intMonth = -6;
+        intMonth = -1;
         cu.addMonth(endDate, startDate, intMonth);
         break;
     case TIME_PERIOD_DAYS_2_WEEK:
