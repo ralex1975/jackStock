@@ -2027,8 +2027,8 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("Symbol         ");
     headerList[nofCols++].name = QString::fromUtf8("R");
     headerList[nofCols++].name = QString::fromUtf8("K");
-    headerList[nofCols++].name = QString::fromUtf8("Köp");
-    headerList[nofCols++].name = QString::fromUtf8("Sälj");
+    headerList[nofCols++].name = QString::fromUtf8("Medv Köp       ");
+    headerList[nofCols++].name = QString::fromUtf8("Medv Sälj      ");
 
 
 

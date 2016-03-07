@@ -115,6 +115,82 @@ QString TaBuySellIdicator::convAvgSellSignalToNumber(SellSignalMovingAvgST &sell
 
     if(sellSignals.priceDipBelowShortAvg == true)
     {
+        sellSignalNo = "1 PBSA";
+    }
+
+    if(sellSignals.priceDipBelowMidAvg == true)
+    {
+        sellSignalNo = "2 PBMA";
+    }
+
+    if(sellSignals.priceDipBelowLongAvg == true)
+    {
+        sellSignalNo = "3 PBLA";
+    }
+
+    if(sellSignals.ShortAvgDipBelowMidAvg == true)
+    {
+        sellSignalNo = "4 SABMA";
+    }
+
+    if(sellSignals.ShortAvgDipBelowLongAvg == true)
+    {
+        sellSignalNo = "5 SABLA";
+    }
+
+    if(sellSignals.MidAvgDipBelowLongAvg == true)
+    {
+        sellSignalNo = "6 MABLA";
+    }
+
+    #if 0
+    if(sellSignals.priceContBelowShortAvg == true)
+    {
+        sellSignalNo = "7";
+    }
+
+    if(sellSignals.priceContBelowMidAvg  == true)
+    {
+        sellSignalNo = "8";
+    }
+
+    if(sellSignals.priceContBelowLongAvg  == true)
+    {
+        sellSignalNo = "9";
+    }
+
+    if(sellSignals.priceContBelowMidLongAvg  == true)
+    {
+        sellSignalNo = "10";
+    }
+
+
+    if(sellSignals.priceContBelowShortMidLongAvg == true)
+    {
+        sellSignalNo = "11";
+    }
+    #endif
+
+    return sellSignalNo;
+}
+
+#if 0
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+QString TaBuySellIdicator::convAvgSellSignalToNumber(SellSignalMovingAvgST &sellSignals)
+{
+    QString sellSignalNo = "0";
+
+    if(sellSignals.priceDipBelowShortAvg == true)
+    {
         sellSignalNo = "1";
     }
 
@@ -173,9 +249,87 @@ QString TaBuySellIdicator::convAvgSellSignalToNumber(SellSignalMovingAvgST &sell
 
     return sellSignalNo;
 }
+#endif
 
 
 
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+QString TaBuySellIdicator::convAvgBuySignalToNumber(BuySignalMovingAvgST &buySignals)
+{
+    QString buySignalNo = "0";
+
+    if(buySignals.priceRiseAboveShortAvg == true)
+    {
+        buySignalNo = "1 PASA";
+    }
+
+    if(buySignals.priceRiseAboveMidAvg == true)
+    {
+        buySignalNo = "2 PAMA";
+    }
+
+    if(buySignals.priceRiseAboveLongAvg == true)
+    {
+        buySignalNo = "3 PALA";
+    }
+
+    if(buySignals.ShortAvgRiseAboveMidAvg == true)
+    {
+        buySignalNo = "4 SAAMA";
+    }
+
+    if(buySignals.ShortAvgRiseAboveLongAvg == true)
+    {
+        buySignalNo = "5 SAALA";
+    }
+
+    if(buySignals.MidAvgRiseAboveLongAvg == true)
+    {
+        buySignalNo = "6 MAALA";
+    }
+
+    #if 0
+    if(buySignals.priceContAboveShortAvg == true)
+    {
+        buySignalNo = "7";
+    }
+
+    if(buySignals.priceContAboveMidAvg  == true)
+    {
+        buySignalNo = "8";
+    }
+
+    if(buySignals.priceContAboveLongAvg  == true)
+    {
+        buySignalNo = "9";
+    }
+
+    if(buySignals.priceContAboveMidLongAvg  == true)
+    {
+        buySignalNo = "10";
+    }
+
+
+    if(buySignals.priceContAboveShortMidLongAvg == true)
+    {
+        buySignalNo = "11";
+    }
+    #endif
+
+    return buySignalNo;
+}
+
+
+#if 0
 /****************************************************************
  *
  * Function:    ()
@@ -250,6 +404,8 @@ QString TaBuySellIdicator::convAvgBuySignalToNumber(BuySignalMovingAvgST &buySig
 
     return buySignalNo;
 }
+#endif
+
 
 /****************************************************************
  *
@@ -520,13 +676,13 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
                                  sellSignals.MidAvgDipBelowLongAvg);
 
 
-    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, stockVal1, stockVal2, avgShortVal1, avgShortVal2,
+    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgShortVal1, avgShortVal2,
                                  sellSignals.priceDipBelowShortAvg);
 
-    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, stockVal1, stockVal2, avgMidVal1, avgMidVal2,
+    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgMidVal1, avgMidVal2,
                                  sellSignals.priceDipBelowMidAvg);
 
-    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, stockVal1, stockVal2, avgLongVal1, avgLongVal2,
+    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgLongVal1, avgLongVal2,
                                  sellSignals.priceDipBelowLongAvg);
 
     //==================================================================================
@@ -543,13 +699,13 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
                                  buySignals.MidAvgRiseAboveLongAvg);
 
 
-    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, stockVal1, stockVal2, avgShortVal1, avgShortVal2,
+    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgShortVal1, avgShortVal2,
                                  buySignals.priceRiseAboveShortAvg);
 
-    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, stockVal1, stockVal2, avgMidVal1, avgMidVal2,
+    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgMidVal1, avgMidVal2,
                                  buySignals.priceRiseAboveMidAvg);
 
-    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, stockVal1, stockVal2, avgLongVal1, avgLongVal2,
+    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgLongVal1, avgLongVal2,
                                  buySignals.priceRiseAboveLongAvg);
 
 
@@ -782,6 +938,41 @@ void TaBuySellIdicator::sellSignalFastAvgCrossSlowAvg(double priseVal1,
 }
 
 
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void TaBuySellIdicator::sellSignalFastAvgCrossSlowAvg(double avgFastVal1,
+                                                      double avgFastVal2,
+                                                      double avgSlowVal1,
+                                                      double avgSlowVal2,
+                                                      bool &sellSignalFastCrossSlow)
+{
+
+    // Is short avg crossing mid avg?
+    if((avgFastVal1 > avgSlowVal1) &&
+       (avgSlowVal2 > avgFastVal2) &&
+       (avgFastVal1 > avgFastVal2) &&
+       (avgSlowVal1 > avgSlowVal2))
+    {
+        sellSignalFastCrossSlow = true;
+    }
+    else
+    {
+        sellSignalFastCrossSlow = false;
+    }
+
+}
+
+
+
 /****************************************************************
  *
  * Function:    ()
@@ -807,6 +998,39 @@ void TaBuySellIdicator::buySignalFastAvgCrossSlowAvg(double priseVal1,
        (avgFastVal1 < avgFastVal2) &&
        (priseVal2 > avgFastVal2)   &&
        (priseVal2 > avgSlowVal2)   &&
+       (avgSlowVal1 < avgSlowVal2))
+    {
+        buySignalFastCrossSlow = true;
+    }
+    else
+    {
+        buySignalFastCrossSlow = false;
+    }
+
+}
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void TaBuySellIdicator::buySignalFastAvgCrossSlowAvg(double avgFastVal1,
+                                                     double avgFastVal2,
+                                                     double avgSlowVal1,
+                                                     double avgSlowVal2,
+                                                     bool &buySignalFastCrossSlow)
+{
+
+    // Is short avg crossing mid avg?
+    if((avgFastVal1 < avgSlowVal1) &&
+       (avgSlowVal2 < avgFastVal2) &&
+       (avgFastVal1 < avgFastVal2) &&
        (avgSlowVal1 < avgSlowVal2))
     {
         buySignalFastCrossSlow = true;

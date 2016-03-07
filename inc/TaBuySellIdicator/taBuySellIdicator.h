@@ -74,6 +74,13 @@ struct BuySignalMovingAvgST
                                       double avgSlowVal2,
                                       bool &selSignalFastCrossSlow);
 
+    void sellSignalFastAvgCrossSlowAvg(double avgFastVal1,
+                                       double avgFastVal2,
+                                       double avgSlowVal1,
+                                       double avgSlowVal2,
+                                       bool &sellSignalFastCrossSlow);
+
+
     QString convAvgSellSignalToNumber(SellSignalMovingAvgST &sellSignals);
     bool getBuySignals(QString stockSymbol);
     void clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData_ST &stockData);
@@ -92,6 +99,13 @@ struct BuySignalMovingAvgST
                                       double avgSlowVal1,
                                       double avgSlowVal2,
                                       bool &buySignalFastCrossSlow);
+
+    void buySignalFastAvgCrossSlowAvg(double avgFastVal1,
+                                      double avgFastVal2,
+                                      double avgSlowVal1,
+                                      double avgSlowVal2,
+                                      bool &buySignalFastCrossSlow);
+
 
 
 
