@@ -158,174 +158,6 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
     m_plot.enablePanningMode(false);
     m_plot.enableZoomMode(false);
 
-    //=======================================================
-
-#if 0
-    nofCols = 0;
-
-    headerList[nofCols++].name = QString::fromUtf8("Företag");
-    headerList[nofCols++].name = QString::fromUtf8("Symbol");
-    headerList[nofCols++].name = QString::fromUtf8("R");
-    headerList[nofCols++].name = QString::fromUtf8("K");
-    headerList[nofCols++].name = QString::fromUtf8("Medel\n20-50");
-
-
-
-    m_mutex.lock();
-    db.openDb(PATH_JACK_STOCK_DB);
-
-
-    // Init least sqrt
-    db.init1dLeastSrq(nofData, meanXSum, meanYSum, prodXXSum, prodYYSum, prodXYSum);
-
-
-    // Request snapshot data from database
-    if(true == db.getAllSnapshotPlotStocksData(m_stockArr))
-    {
-        len = m_stockArr.size();
-
-        // Init table
-        etPlus.createTableModel(len, nofCols, this);
-        etPlus.addHeaders(ui->tableViewLeastSquare, headerList, nofCols);
-
-
-        etMinus.createTableModel(len, nofCols, this);
-        etMinus.addHeaders(ui->tableViewLeastSquare_2, headerList, nofCols);
-
-        // Init columm head click event handlers for tableView
-        horizHeaderPlus= ui->tableViewLeastSquare->horizontalHeader();
-        horizHeaderMinus= ui->tableViewLeastSquare_2->horizontalHeader();
-
-        connect(horizHeaderPlus,  SIGNAL(sectionClicked(int)), this, SLOT(tablePlusHeaderClicked(int)));
-        connect(horizHeaderMinus, SIGNAL(sectionClicked(int)), this, SLOT(tableMinusHeaderClicked(int)));
-
-        for(i = 0; i < FA_NOF_DATA; i++ )
-        {
-            m_faDataPalette[i] = new QPalette();
-        }
-
-
-        // One day is added first
-        for(rowPlus = 0, rowMinus = 0, j = 0; j < len; j++)
-        {
-            len1 = m_stockArr[j].data.x.count();
-            // Is there enough data to calc least square on?
-            if(len1 < 2)
-            {
-                break;
-            }
-
-            if(len1 > 6)
-            {
-                len1 = 6;
-            }
-
-            for(i = len1 -1; i >= 0; i--)
-            {
-                // m_stockArr[j].data.x[i];
-                // m_stockArr[j].data.y[i];
-                db.gather1dLeastSrqData(m_stockArr[j].data.x[i],
-                                     m_stockArr[j].data.y[i],
-                                     nofData,
-                                     meanXSum,
-                                     meanYSum,
-                                     prodXXSum,
-                                     prodYYSum,
-                                     prodXYSum);
-            }
-
-
-
-
-            if(true == db.calc1dLeastSrqFitRParam(nofData,prodXXSum, prodYYSum, prodXYSum, r))
-            {
-                if(true == db.calc1dLeastSrqFitParams(nofData, meanXSum, meanYSum, prodXXSum, prodYYSum, prodXYSum, m, k))
-                {
-
-                    if(r > 0.7)
-                    {
-                        // Add stock symbol Column 1
-                        if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
-                        {
-                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.assetSymbol, rowPlus, 1, Qt::black);
-                            if(true == m_taBuy.buySignalAvgShortAboveMid(keyData.assetSymbol))
-                            {
-                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, QString::fromUtf8("Köp"), rowPlus, 4, Qt::blue);
-                            }
-                        }
-                        else
-                        {
-                            keyData.assetSymbol = "";
-                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.assetSymbol, rowPlus, 1, Qt::black);
-                        }
-
-                        // Add stockname column 0
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, m_stockArr[j].stockName, rowPlus, 0, Qt::black);
-
-                        // Add R on column 2
-                        str.sprintf("%f", r);
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::black);
-
-                        // Add K on column 3
-                        str.sprintf("%f", k);
-                        if(k >= 0)
-                        {
-                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 3, Qt::blue);
-                        }
-                        else
-                        {
-                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 3, Qt::red);
-                        }
-                        rowPlus++;
-                    }
-                    else if(r < -0.7)
-                    {
-                        // Add stock symbol Column 1
-                        if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
-                        {
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.assetSymbol, rowMinus, 1, Qt::black);
-                        }
-                        else
-                        {
-                            keyData.assetSymbol = "";
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.assetSymbol, rowMinus, 1, Qt::black);
-                        }
-
-                        // Add stock name Column 0
-                        etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, m_stockArr[j].stockName, rowMinus, 0, Qt::black);
-
-                        // Add R on Column 2
-                        str.sprintf("%f", r);
-                        etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::black);
-
-                        // Add K on Column 3
-                        str.sprintf("%f", k);
-                        if(k >= 0)
-                        {
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 3, Qt::blue);
-                        }
-                        else
-                        {
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 3, Qt::red);
-                        }
-                        rowMinus++;
-                    }
-                }
-             }
-        }
-
-        ui->tableViewLeastSquare->resizeColumnsToContents();
-        ui->tableViewLeastSquare->sortByColumn(2, Qt::DescendingOrder);
-
-        ui->tableViewLeastSquare_2->resizeColumnsToContents();
-        ui->tableViewLeastSquare_2->sortByColumn(2, Qt::DescendingOrder);
-
-    }
-
-    db.closeDb();
-    m_mutex.unlock();
-#endif
-
 }
 
 
@@ -396,6 +228,7 @@ void LeastSquaresTaDlg::tableMinusHeaderClicked(int column)
 LeastSquaresTaDlg::~LeastSquaresTaDlg()
 {
     delete ui;
+    delete m_macdHist;
 }
 
 
@@ -539,7 +372,6 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
 void LeastSquaresTaDlg::initTimePeriodCtrls(int value)
 {
     CUtil cu;
-    int nofDays;
 
     // Init to valid date
     cu.getCurrentDate(m_startDate);
@@ -552,17 +384,6 @@ void LeastSquaresTaDlg::initTimePeriodCtrls(int value)
     ui->timePeriodLlineEditLSqrt->insert((QString)m_timePeriodDaysArr[value].TxtTimePeriod.toLatin1());
     ui->selTimePeriodSliderLSqrt->setValue(value);
     setTimePeriodDaysUpdateStartStopDate(m_startDate, m_endDate, value);
-
-#if 0
-    if(cu.nofDaysBeteenDates(m_startDate, m_endDate, nofDays) == true)
-    {
-       ui->moveTimePeriodSlider_2->setMaximum(nofDays);
-    }
-#endif
-
-
-    // m_startDate.daysTo (m_endDate);
-
 }
 
 
@@ -669,7 +490,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
     CDbHndl db;
     CYahooStockPlotUtil cy;
     DataPlotIndex_ET plotIndex;
-    //SubPlotIndex_ET subplotIndex;
+    SubPlotIndex_ET subplotIndex;
 
 
     QString legendLable;
@@ -678,15 +499,17 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
     QString titleXAxis;
     CYahooStockPlotUtil::MinMaxAxisValues_ST mainPlotAxis;
-    // CYahooStockPlotUtil::MinMaxAxisValues_ST subPlotAxis;
+    CYahooStockPlotUtil::MinMaxAxisValues_ST subPlotAxis;
+
+    m_macdHist = new QwtPlotHistogram ();
 
 
     deleteAllPlotData(m_qwtStockPlotData, ui->qwtPlotLSqr);
-    // deleteAllPlotData(m_qwtsubPlotData, ui->qwtPlotLSqr_2);
+    deleteAllPlotData(m_qwtsubPlotData, ui->qwtPlotLSqr_2);
 
-    // ajn 160214 m_macdHistData.clear();
-    // ajn 160214 m_macdHist->detach();
-    // ajn 160214 m_macdHist->setData(NULL);
+    m_macdHistData.clear();
+    m_macdHist->detach();
+    m_macdHist->setData(NULL);
 
 
     QString startDate = ui->setStartDateLineEditLSqrt->text();
@@ -843,7 +666,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
 
     //=========
-#if 0
+#if 1
     legendLable.clear();
     if(ui->radioButMacd->isChecked() == true)
     {
@@ -880,7 +703,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
 
 
-        m_macdHist-> setStyle (qwtPlotLSqrHistogram :: Columns);
+        //m_macdHist->setStyle(qwtPlotLSqrHistogram::Columns);
 
         m_macdHistData.clear();
         m_macdHist->detach();
@@ -1006,7 +829,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Momentum";
 
 
-        ui->StatusInfoLabel->setText(status);
+        // ui->StatusInfoLabel->setText(status);
         addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
         updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
     }
@@ -2110,13 +1933,6 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                         {
                             etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.assetSymbol, rowPlus, 1, Qt::black);
 
-                            #if 0
-                            if(true == m_taBuy.buySignalAvgShortAboveMid(keyData.assetSymbol))
-                            {
-                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, QString::fromUtf8("Köp"), rowPlus, 4, Qt::blue);
-                            }
-                            #endif
-
                             if( true == m_taBuy.getAvgBuySellSignals(keyData.assetSymbol, sellSignals, buySignals))
                             {
                                 QString sellSignal;
@@ -2182,16 +1998,6 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                                     etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, buySignal, rowMinus, 4, Qt::blue);
                                 }
                             }
-
-
-
-                            #if 0 // obs etPlus ska vara etMinus mm
-                            if(true == m_taBuy.buySignalAvgShortAboveMid(keyData.assetSymbol))
-                            {
-                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, QString::fromUtf8("Köp"), rowPlus, 4, Qt::blue);
-                            }
-                            #endif
-
 
                             etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.assetSymbol, rowMinus, 1, Qt::black);
                         }
