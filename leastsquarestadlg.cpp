@@ -40,9 +40,7 @@ const LeastSquaresTaDlg::TimePeriodDays_ST LeastSquaresTaDlg::m_timePeriodDaysAr
  *******************************************************************/
 void LeastSquaresTaDlg::settimeSlideWindowInc(int value)
 {
-    // ui->moveTimePeriodSlider_2->setValue(value);
     m_timeSlideWindowInc = value;
-
 }
 
 
@@ -704,7 +702,6 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
 
         //m_macdHist->setStyle(qwtPlotLSqrHistogram::Columns);
-
         m_macdHistData.clear();
         m_macdHist->detach();
         m_macdHist->setData(NULL);
@@ -715,7 +712,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
             m_macdHistData.append (QwtIntervalSample (m_stockData.data.indicator3.at(ii),m_stockData.data.x.at(ii),m_stockData.data.x.at(ii)+1));
         }
 
-        //m_macdHist->setBrush(Qt::red);
+        m_macdHist->setBrush(Qt::red);
         m_macdHist->setPen( QPen( Qt::black) );
         m_macdHist->setSamples(m_macdHistData);
         m_macdHist->attach(ui->qwtPlotLSqr_2);
