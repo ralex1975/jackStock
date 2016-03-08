@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -80,6 +80,16 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlotLSqr_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>380</y>
+       <width>481</width>
+       <height>201</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -156,6 +166,87 @@
      </property>
      <property name="text">
       <string>Short Moving Avg </string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>150</y>
+       <width>117</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No Indicator</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButStochastics">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Stochastics</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButMacd">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>117</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>MACD</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButRoc">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>240</y>
+       <width>117</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ROC</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButMomentum">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>180</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Momentum</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButRSI">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>220</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>RSI</string>
      </property>
      <property name="checked">
       <bool>true</bool>

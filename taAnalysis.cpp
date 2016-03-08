@@ -57,7 +57,6 @@ TaAnalysis::TaAnalysis(QWidget *parent) :
     initFa2netProfitAfterTaxList();
     initFa3ProfitabilityAnalysis();
     initFa3MinMaxPePrice();
-    // openUserStockListsFile();
 
     ui->checkBoxReqestData->setChecked(true);
 
@@ -1200,7 +1199,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
         ui->StatusInfoLabel->setText(status);
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlot, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
     }
 
 
@@ -1221,8 +1219,6 @@ void TaAnalysis::displayStockData(bool addLastPrice, double lastPrice)
         legendLable = "Short moving average";
 
         addStockIndicatorToPlot(indicatorIndex, plotIndex, legendLable, mainPlotAxis, ui->qwtPlot, m_qwtStockPlotData);
-        // updateMinMaxXAxisScales(mainPlotAxis, m_qwtStockPlotData.axis);
-
     }
 
 

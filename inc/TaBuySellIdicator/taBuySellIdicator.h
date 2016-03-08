@@ -28,15 +28,6 @@ public:
         bool ShortAvgDipBelowLongAvg;
 
         bool MidAvgDipBelowLongAvg;
-
-        bool priceContBelowShortAvg;
-        bool priceContBelowMidAvg;
-        bool priceContBelowLongAvg;
-
-        bool priceContBelowMidLongAvg;
-
-        // Very strong sell signal
-        bool priceContBelowShortMidLongAvg;
     };
 
 
@@ -50,15 +41,6 @@ struct BuySignalMovingAvgST
     bool ShortAvgRiseAboveLongAvg;
 
     bool MidAvgRiseAboveLongAvg;
-
-    bool priceContAboveShortAvg;
-    bool priceContAboveMidAvg;
-    bool priceContAboveLongAvg;
-
-    bool priceContAboveMidLongAvg;
-
-    // Very strong sell signal
-    bool priceContAboveShortMidLongAvg;
 };
 
 
@@ -86,12 +68,12 @@ struct BuySignalMovingAvgST
     void clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData_ST &stockData);
 
     bool getAvgBuySellSignals(QString stockSymbol,
-                                           SellSignalMovingAvgST &sellSignals,
-                                           BuySignalMovingAvgST  &buySignals);
+                              SellSignalMovingAvgST &sellSignals,
+                              BuySignalMovingAvgST  &buySignals);
 
     QString convAvgBuySignalToNumber(BuySignalMovingAvgST &buySignals);
-    bool resetBuySignals(BuySignalMovingAvgST &buySignals);
-    bool resetSellSignals(SellSignalMovingAvgST &sellSignals);
+    void resetBuySignals(BuySignalMovingAvgST &buySignals);
+    void resetSellSignals(SellSignalMovingAvgST &sellSignals);
     void buySignalFastAvgCrossSlowAvg(double priseVal1,
                                       double priseVal2,
                                       double avgFastVal1,
