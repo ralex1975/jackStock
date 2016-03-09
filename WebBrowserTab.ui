@@ -38,7 +38,7 @@
    <item row="0" column="0">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>Info</string>
+      <string>Yield Curve</string>
      </property>
     </widget>
    </item>
@@ -52,7 +52,7 @@
    <item row="0" column="1">
     <widget class="QPushButton" name="pushButton_3">
      <property name="text">
-      <string>Get Data</string>
+      <string>Nordnet</string>
      </property>
     </widget>
    </item>

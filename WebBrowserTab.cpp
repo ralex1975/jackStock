@@ -67,7 +67,10 @@ CWebBrowserTab::~CWebBrowserTab()
  *******************************************************************/
 void CWebBrowserTab::on_pushButton_clicked()
 {
-   QMessageBox::information(this, "Title", "Do not hit me");
+    QUrl url("http://www.yieldcurve.com/");
+    ui->webView->setUrl(url);
+
+   //QMessageBox::information(this, "Title", "Do not hit me");
 }
 
 
@@ -82,7 +85,8 @@ void CWebBrowserTab::on_pushButton_clicked()
  *******************************************************************/
 void CWebBrowserTab::on_pushButton_3_clicked()
 {
-
+    QUrl url("https://www.nordnet.se/mux/web/marknaden/kurslista/aktier.html?marknad=Sverige&lista=1_1&large=on&mid=on&sektor=0&subtyp=price&sortera=aktie&sorteringsordning=stigande");
+    ui->webView->setUrl(url);
 }
 
 
