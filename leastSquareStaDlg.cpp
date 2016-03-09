@@ -1,4 +1,4 @@
-#include "leastsquarestadlg.h"
+#include "leastSquareStaDlg.h"
 #include "ui_leastsquarestadlg.h"
 #include "dbHndl.h"
 #include "extendedTable.h"
@@ -666,19 +666,15 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
 
 
     //=========
-#if 1
-    legendLable.clear();
-    if(ui->radioButMacd->isChecked() == true)
+    if(true == ui->checkBoxVolume->isChecked())
     {
-        clearStockAndIndicatorTempMem();
-        db.getYahooTaMacd(m_reqStockSymbol, startDate, endDate, 26, 12, 9, m_qwtsubPlotData, m_stockData);
+        // Get Volume
+        legendLable.clear();
 
-        setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
-        subplotIndex = SUBPLOT_MACD_LINE;
-        legendLable = "MACD";
-        indicatorIndex = 1;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+        clearStockAndIndicatorTempMem();
+        subPlotAxis.minMaxIsInit = false;
+        m_qwtsubPlotData.axis.minMaxIsInit = false;
+        db.getYahooTaVolume(m_reqStockSymbol, startDate, endDate, m_qwtsubPlotData, m_stockData);
 
         subPlotAxis.maxX = mainPlotAxis.maxX;
         subPlotAxis.minX = mainPlotAxis.minX;
@@ -686,156 +682,188 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         m_qwtsubPlotData.axis.minX = mainPlotAxis.minX;
 
 
-        setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
-        subplotIndex = SUBPLOT_MACD_SIGNAL;
-        legendLable = "MACD signal";
-        indicatorIndex = 2;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
 
-
-
-        setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
-        subplotIndex = SUBPLOT_MACD_HISTOGRAM;
-        legendLable = "MACD Hist";
-        indicatorIndex = 3;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-
-
-        //m_macdHist->setStyle(qwtPlotLSqrHistogram::Columns);
-        m_macdHistData.clear();
-        m_macdHist->detach();
-        m_macdHist->setData(NULL);
-
-        for(int ii = 0; ii < m_stockData.data.indicator3.size(); ii++)
-        {
-            m_stockData.data.x.at(ii);
-            m_macdHistData.append (QwtIntervalSample (m_stockData.data.indicator3.at(ii),m_stockData.data.x.at(ii),m_stockData.data.x.at(ii)+1));
-        }
-
-        m_macdHist->setBrush(Qt::red);
-        m_macdHist->setPen( QPen( Qt::black) );
-        m_macdHist->setSamples(m_macdHistData);
-        m_macdHist->attach(ui->qwtPlotLSqr_2);
-    }
-
-    legendLable.clear();
-    if(true == ui->radioButRoc->isChecked())
-    {
-        clearStockAndIndicatorTempMem();
-        subPlotAxis.minMaxIsInit = false;
-        m_qwtsubPlotData.axis.minMaxIsInit = false;
-        db.getYahooTaRateOfChange(m_reqStockSymbol, startDate, endDate, 10, m_qwtsubPlotData, m_stockData);
-
-        setAxisTitles(titleXAxis, "(%)",ui->qwtPlotLSqr_2, false);
-        subplotIndex = SUBPLOT_RATE_OF_CHANGE;
-        legendLable = "Rate of change";
-        indicatorIndex = 1;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-
-        subplotIndex = SUBPLOT_RATE_OF_CHANGE_LIMIT_100;
-        legendLable = " ";
-        indicatorIndex = 2;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-    }
-
-
-    // RSI = Relative Strength Index
-    legendLable.clear();
-    if(true == ui->radioButRSI->isChecked())
-    {
-        clearStockAndIndicatorTempMem();
-        subPlotAxis.minMaxIsInit = false;
-        m_qwtsubPlotData.axis.minMaxIsInit = false;
-        db.getYahooTaRsi(m_reqStockSymbol, startDate, endDate, 14, m_qwtsubPlotData, m_stockData);
-        m_qwtsubPlotData.axis.maxY=100;
-        m_qwtsubPlotData.axis.minY=0;
+        // m_qwtsubPlotData.axis.maxY=100;
+        // m_qwtsubPlotData.axis.minY=0;
         m_qwtsubPlotData.axis.minMaxIsInit = true;
 
-        subplotIndex = SUBPLOT_RSI_LIMIT_30;
-        legendLable = "";
-        indicatorIndex = 2;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-
-
-        subplotIndex = SUBPLOT_RSI_LIMIT_70;
-        legendLable = "";
-        indicatorIndex = 3;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-
         setAxisTitles(titleXAxis, "(%)",ui->qwtPlotLSqr_2, false);
-        subplotIndex = SUBPLOT_RSI;
+        subplotIndex = SUBPLOT_INDEX_VOLUME;
         legendLable = "";
         indicatorIndex = 1;
         addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
         updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-
-
     }
-
-    legendLable.clear();
-    if(true == ui->radioButStochastics->isChecked())
+    else
     {
-        clearStockAndIndicatorTempMem();
-        db.getYahooTaStochastics(m_reqStockSymbol, startDate, endDate,  9, 3, m_qwtsubPlotData, m_stockData);
+        legendLable.clear();
+        if(ui->radioButMacd->isChecked() == true)
+        {
+            clearStockAndIndicatorTempMem();
+            db.getYahooTaMacd(m_reqStockSymbol, startDate, endDate, 26, 12, 9, m_qwtsubPlotData, m_stockData);
 
-        setAxisTitles(titleXAxis, "(%)",ui->qwtPlotLSqr_2, false);
-        subplotIndex = SUBPLOT_STOCHASTIC_LIMIT_20;
-        legendLable = "";
+            setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
+            subplotIndex = SUBPLOT_MACD_LINE;
+            legendLable = "MACD";
+            indicatorIndex = 1;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
 
-        indicatorIndex = 3;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+            subPlotAxis.maxX = mainPlotAxis.maxX;
+            subPlotAxis.minX = mainPlotAxis.minX;
+            m_qwtsubPlotData.axis.maxX = mainPlotAxis.maxX;
+            m_qwtsubPlotData.axis.minX = mainPlotAxis.minX;
 
-        legendLable = "";
-        indicatorIndex = 4;
-        subplotIndex = SUBPLOT_STOCHASTIC_LIMIT_80;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
 
-        legendLable = "Stochastics D";
-        indicatorIndex = 2;
-        subplotIndex = SUBPLOT_STOCHASTIC_D;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+            setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
+            subplotIndex = SUBPLOT_MACD_SIGNAL;
+            legendLable = "MACD signal";
+            indicatorIndex = 2;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
 
-        legendLable = "Stochastics K";
-        indicatorIndex = 1;
-        subplotIndex = SUBPLOT_STOCHASTIC_K;
 
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
+            subplotIndex = SUBPLOT_MACD_HISTOGRAM;
+            legendLable = "MACD Hist";
+            indicatorIndex = 3;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+
+            //m_macdHist->setStyle(qwtPlotLSqrHistogram::Columns);
+            m_macdHistData.clear();
+            m_macdHist->detach();
+            m_macdHist->setData(NULL);
+
+            for(int ii = 0; ii < m_stockData.data.indicator3.size(); ii++)
+            {
+                m_stockData.data.x.at(ii);
+                m_macdHistData.append (QwtIntervalSample (m_stockData.data.indicator3.at(ii),m_stockData.data.x.at(ii),m_stockData.data.x.at(ii)+1));
+            }
+
+            m_macdHist->setBrush(Qt::red);
+            m_macdHist->setPen( QPen( Qt::black) );
+            m_macdHist->setSamples(m_macdHistData);
+            m_macdHist->attach(ui->qwtPlotLSqr_2);
+        }
+
+        legendLable.clear();
+        if(true == ui->radioButRoc->isChecked())
+        {
+            clearStockAndIndicatorTempMem();
+            subPlotAxis.minMaxIsInit = false;
+            m_qwtsubPlotData.axis.minMaxIsInit = false;
+            db.getYahooTaRateOfChange(m_reqStockSymbol, startDate, endDate, 10, m_qwtsubPlotData, m_stockData);
+
+            setAxisTitles(titleXAxis, "(%)",ui->qwtPlotLSqr_2, false);
+            subplotIndex = SUBPLOT_RATE_OF_CHANGE;
+            legendLable = "Rate of change";
+            indicatorIndex = 1;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            subplotIndex = SUBPLOT_RATE_OF_CHANGE_LIMIT_100;
+            legendLable = " ";
+            indicatorIndex = 2;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+        }
+
+
+        // RSI = Relative Strength Index
+        legendLable.clear();
+        if(true == ui->radioButRSI->isChecked())
+        {
+            clearStockAndIndicatorTempMem();
+            subPlotAxis.minMaxIsInit = false;
+            m_qwtsubPlotData.axis.minMaxIsInit = false;
+            db.getYahooTaRsi(m_reqStockSymbol, startDate, endDate, 14, m_qwtsubPlotData, m_stockData);
+            m_qwtsubPlotData.axis.maxY=100;
+            m_qwtsubPlotData.axis.minY=0;
+            m_qwtsubPlotData.axis.minMaxIsInit = true;
+
+            subplotIndex = SUBPLOT_RSI_LIMIT_30;
+            legendLable = "";
+            indicatorIndex = 2;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+
+            subplotIndex = SUBPLOT_RSI_LIMIT_70;
+            legendLable = "";
+            indicatorIndex = 3;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            setAxisTitles(titleXAxis, "(%)",ui->qwtPlotLSqr_2, false);
+            subplotIndex = SUBPLOT_RSI;
+            legendLable = "";
+            indicatorIndex = 1;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+
+        }
+
+        legendLable.clear();
+        if(true == ui->radioButStochastics->isChecked())
+        {
+            clearStockAndIndicatorTempMem();
+            db.getYahooTaStochastics(m_reqStockSymbol, startDate, endDate,  9, 3, m_qwtsubPlotData, m_stockData);
+
+            setAxisTitles(titleXAxis, "(%)",ui->qwtPlotLSqr_2, false);
+            subplotIndex = SUBPLOT_STOCHASTIC_LIMIT_20;
+            legendLable = "";
+
+            indicatorIndex = 3;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            legendLable = "";
+            indicatorIndex = 4;
+            subplotIndex = SUBPLOT_STOCHASTIC_LIMIT_80;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            legendLable = "Stochastics D";
+            indicatorIndex = 2;
+            subplotIndex = SUBPLOT_STOCHASTIC_D;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            legendLable = "Stochastics K";
+            indicatorIndex = 1;
+            subplotIndex = SUBPLOT_STOCHASTIC_K;
+
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+        }
+
+        legendLable.clear();
+        if(true == ui->radioButMomentum->isChecked())
+        {
+            clearStockAndIndicatorTempMem();
+            db.getYahooTaMomentum(m_reqStockSymbol, startDate, endDate, 20, m_qwtsubPlotData, m_stockData);
+
+            indicatorIndex = 2;
+            subplotIndex = SUBPLOT_INDEX_MOMENTUM_ZERO_LINE;
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+
+            indicatorIndex = 1;
+            subplotIndex = SUBPLOT_INDEX_MOMENTUM;
+            legendLable = "Momentum";
+
+
+            // ui->StatusInfoLabel->setText(status);
+            addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
+            updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
+        }
+
+
     }
-
-    legendLable.clear();
-    if(true == ui->radioButMomentum->isChecked())
-    {
-        clearStockAndIndicatorTempMem();
-        db.getYahooTaMomentum(m_reqStockSymbol, startDate, endDate, 20, m_qwtsubPlotData, m_stockData);
-
-        indicatorIndex = 2;
-        subplotIndex = SUBPLOT_INDEX_MOMENTUM_ZERO_LINE;
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET)subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-
-        indicatorIndex = 1;
-        subplotIndex = SUBPLOT_INDEX_MOMENTUM;
-        legendLable = "Momentum";
-
-
-        // ui->StatusInfoLabel->setText(status);
-        addStockIndicatorToPlot(indicatorIndex, (DataPlotIndex_ET) subplotIndex, legendLable, subPlotAxis, ui->qwtPlotLSqr_2, m_qwtsubPlotData);
-        updateMinMaxXAxisScales(subPlotAxis, m_qwtsubPlotData.axis);
-    }
-//    updateMinMaxXAxisScales(subPlotAxis);
-
-#endif
-
 
     //  boxesUpdate edit
     ui->lineEditAssetNameLSqrt->clear();

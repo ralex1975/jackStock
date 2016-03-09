@@ -46,6 +46,7 @@ class TaAnalysis : public QDialog
         PLOT_INDEX_MAX
     };
 
+
     enum SubPlotIndex_ET
     {
         SUBPLOT_INDEX_MOMENTUM_ZERO_LINE,

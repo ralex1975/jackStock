@@ -71,12 +71,12 @@ SOURCES += main.cpp\
     tabhelp.cpp \
     parsecompdescription.cpp \
     fatab.cpp \
-    leastsquarestadlg.cpp \
     src/guiUtil/guiFinanceColor.cpp \
     src/guiUtil/guiFinanceCtrls.cpp \
     src/guiUtil/myTreeWidget.cpp \
     src/guiUtil/myLineEdit.cpp \
-    src/TaBuySellIdicator/taBuySellIdicator.cpp
+    src/TaBuySellIdicator/taBuySellIdicator.cpp \
+    leastSquareStaDlg.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -126,14 +126,14 @@ HEADERS  += WebBrowserTab.h \
     tabhelp.h \
     parsecompdescription.h \
     fatab.h \
-    leastsquarestadlg.h \
     inc/guiUtil/guiFinanceColor.h \
     src/guiUtil/mylineedit.h \
     src/guiUtil/guifinancectrls.h \
     inc/guiUtil/guiFinanceCtrls.h \
     inc/guiUtil/myTreeWidget.h \
     inc/guiUtil/myLineEdit.h \
-    inc/TaBuySellIdicator/taBuySellIdicator.h
+    inc/TaBuySellIdicator/taBuySellIdicator.h \
+    leastSquareStaDlg.h
 
 FORMS    += \
     WebBrowserTab.ui \

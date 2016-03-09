@@ -7276,7 +7276,19 @@ bool CDbHndl::getYahooTaRateOfChange(const QString assetSymbol,
 
 
 
+#if 0
+tmp.sprintf("CREATE TABLE IF NOT EXISTS TblYahooTaData"
+            " (date DATE , "
+            " open REAL, "
+            " High REAL, "
+            " low REAL, "
+            " close REAL, "
+            " volume REAL, "
+            " adjClose REAL, "
+            " assetNameId INTEGER,"
+            " PRIMARY KEY (date, assetNameId));");
 
+#endif
 
 
 
@@ -7284,6 +7296,128 @@ bool CDbHndl::getYahooTaRateOfChange(const QString assetSymbol,
 /*****************************************************************
  *
  * Function:		getYahooTaPriceData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::getYahooTaVolume(QString assetSymbol,
+                                  QString startDate,
+                                  QString endDate,
+                                  CYahooStockPlotUtil::PlotData_ST &qwtStockPlotData,
+                                  CYahooStockPlotUtil::StockData_ST &stockData)
+{
+
+    QSqlRecord rec;
+    QString str;
+    QString date;
+    CYahooStockPlotUtil ypu;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+    int cnt = 0;
+
+
+    QByteArray ba = assetSymbol.toLocal8Bit();
+    const char *c_assetSymbol = ba.data();
+
+    QByteArray ba1 = startDate.toLocal8Bit();
+    const char *c_startDate = ba1.data();
+
+    QByteArray ba2 = endDate.toLocal8Bit();
+    const char *c_endDate = ba2.data();
+
+
+
+    str.sprintf("SELECT TblYahooTaStockName.assetNameId, TblYahooTaStockName.assetName, TblYahooTaStockName.assetSymbol, "
+                " TblYahooTaData.date, TblYahooTaData.volume, TblYahooTaData.assetNameId "
+                " FROM  TblYahooTaStockName, TblYahooTaData "
+                " WHERE TblYahooTaStockName.assetNameId = TblYahooTaData.assetNameId AND "
+                " TblYahooTaStockName.assetSymbol = '%s' AND "
+                " TblYahooTaData.date >= '%s' AND TblYahooTaData.date <= '%s' "
+                " ORDER BY TblYahooTaData.date ASC;",
+                c_assetSymbol, c_startDate, c_endDate);
+
+    qDebug() << "str =" << str << "\n";
+
+    qry.prepare(str);
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        // Contains nof data displayed in plot
+        qwtStockPlotData.nofStocksToPlot = 0;
+
+        // This variable is automaticly updated when first data is handled by pdateMinMaxAxis()
+        qwtStockPlotData.axis.minMaxIsInit = false;
+
+
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("assetSymbol").isNull() == true)
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                qDebug() << (QString) rec.value("volume").toString() << "\n";
+                qDebug() << (QString) rec.value("assetName").toString() << "\n";
+                qDebug() << (QString) rec.value("assetSymbol").toString() << "\n";
+                qDebug() << (QString) rec.value("date").toString() << "\n";
+
+                stockData.data.x.insert(cnt, (double) cnt);
+                stockData.data.indicator1.insert(cnt, rec.value("volume").toDouble());
+                if(false == rec.value("date").isNull())
+                {
+                    date = rec.value("date").toString();
+                    qDebug() << "b11 date" << date;
+                    stockData.data.xDate.insert(cnt, date);
+                    ypu.updateMinMaxAxis(qwtStockPlotData.axis, (double) cnt, rec.value("volume").toDouble(), date);
+                }
+                else
+                {
+                    ypu.updateMinMaxAxis(qwtStockPlotData.axis, (double) cnt, rec.value("volume").toDouble());
+                }
+                cnt++;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getYahooTaRsi()
  *
  * Description:
  *
