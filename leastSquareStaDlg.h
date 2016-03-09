@@ -21,13 +21,20 @@ namespace Ui {
 class LeastSquaresTaDlg;
 }
 
+
+// Special subplot index
+//#define SUBPLOT_INDEX_VOLUME 0
+
+
 class LeastSquaresTaDlg : public QDialog
 {
     Q_OBJECT
 
+
     enum SubPlotIndex_ET
     {
         SUBPLOT_INDEX_MOMENTUM_ZERO_LINE,
+        SUBPLOT_INDEX_VOLUME = SUBPLOT_INDEX_MOMENTUM_ZERO_LINE,
         SUBPLOT_INDEX_MOMENTUM,
         SUBPLOT_STOCHASTIC_LIMIT_80,
         SUBPLOT_STOCHASTIC_LIMIT_20,

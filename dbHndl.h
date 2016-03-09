@@ -363,6 +363,11 @@ public:
 
     bool findMainHelpSectionInTblHelpSectionTxt(QString  mainHelpSectionName, int &mainHelpSectionId);
 
+    bool getYahooTaVolume(QString assetSymbol,
+                          QString startDate,
+                          QString endDate,
+                          CYahooStockPlotUtil::PlotData_ST &qwtStockPlotData,
+                          CYahooStockPlotUtil::StockData_ST &stockData);
 
 
 

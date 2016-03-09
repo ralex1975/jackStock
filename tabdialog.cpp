@@ -26,7 +26,7 @@
 #include "importdata.h"
 #include "tabhelp.h"
 #include "fatab.h"
-#include "leastsquarestadlg.h"
+#include "leastSquareStaDlg.h"
 #include <QVBoxLayout>
 
 
