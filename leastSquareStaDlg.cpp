@@ -2058,10 +2058,10 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
         }
 
         ui->tableViewLeastSquare->resizeColumnsToContents();
-        ui->tableViewLeastSquare->sortByColumn(2, Qt::DescendingOrder);
+        ui->tableViewLeastSquare->sortByColumn(3, Qt::DescendingOrder);
 
         ui->tableViewLeastSquare_2->resizeColumnsToContents();
-        ui->tableViewLeastSquare_2->sortByColumn(2, Qt::DescendingOrder);
+        ui->tableViewLeastSquare_2->sortByColumn(3, Qt::DescendingOrder);
 
     }
 
