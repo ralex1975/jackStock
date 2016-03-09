@@ -133,6 +133,8 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
 
     ui->setupUi(this);
 
+    m_macdHist = new QwtPlotHistogram ();
+
     initFa3MinMaxPePrice();
 
     //=======================================================
@@ -499,7 +501,7 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
     CYahooStockPlotUtil::MinMaxAxisValues_ST mainPlotAxis;
     CYahooStockPlotUtil::MinMaxAxisValues_ST subPlotAxis;
 
-    m_macdHist = new QwtPlotHistogram ();
+    // m_macdHist = new QwtPlotHistogram ();
 
 
     deleteAllPlotData(m_qwtStockPlotData, ui->qwtPlotLSqr);
