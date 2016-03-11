@@ -46,7 +46,7 @@ CTADlg::CTADlg(QWidget *parent) :
     initFa3ProfitabilityAnalysis();
     initFa3MinMaxPePrice();
 
-    m_macdHist = new QwtPlotHistogram ();
+    // m_macdHist = new QwtPlotHistogram ();
 
     initStockList();
 
