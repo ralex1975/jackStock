@@ -10,6 +10,7 @@ Axfood AB|AXFO.ST|
 Axis AB|AXIS.ST|
 BillerudKorsnäs AB|BILL.ST|
 Boliden AB|BOL.ST|
+Bulten AB|BULTEN.ST|
 Castellum AB|CAST.ST|
 Collector AB|COLL.ST|
 Electrolux, AB ser. A|ELUX-A.ST|
@@ -28,11 +29,11 @@ HEXPOL AB ser. B|HPOL-B.ST|
 Holmen AB ser. A|HOLM-A.ST|
 Holmen AB ser. B|HOLM-B.ST|
 Hufvudstaden AB ser. A|HUFV-A.ST|
-Hufvudstaden AB ser. C|Kass|
+Hufvudstaden AB ser. C|Kass 1|
 Husqvarna AB ser. A|HUSQ-A.ST|
 Husqvarna AB ser. B|HUSQ-B.ST|
 ICA Gruppen AB|ICA.ST|
-Industrial & Financial Systems AB ser. A|Kass|
+Industrial & Financial Systems AB ser. A|Kass 2|
 Industrial & Financial Systems AB ser. B|IFS-B.ST|
 Industrivärden, AB ser. A|INDU-A.ST|
 Industrivärden, AB ser. C|INDU-C.ST|
@@ -95,6 +96,7 @@ AAK AB|AAK.ST|
 Active Biotech AB|ACTI.ST|
 Addtech AB ser. B|ADDT-B.ST|
 Aerocrine AB ser. B|AERO-B.ST|
+Alimak Group AB|ALIG.ST|
 Avanza Bank Holding AB|AZA.ST|
 B&B TOOLS AB ser. B|BBTO-B.ST|
 Besqab AB|BESQ.ST|
@@ -110,8 +112,6 @@ CDON Group AB|CDON.ST|
 Clas Ohlson AB ser. B|CLAS-B.ST|
 Cloetta AB ser. B|CLA-B.ST|
 Concentric AB|COIC.ST|
-Corem Property Group AB|CORE.ST|
-Corem Property Group Pref|CORE-PREF.ST|
 Creades AB A|CRED-A.ST|
 Diös Fastigheter AB|DIOS.ST|
 Duni AB|DUNI.ST|
@@ -145,6 +145,7 @@ Nobina AB|NOBINA.ST|
 Nolato AB ser. B|NOLA-B.ST|
 Nordnet AB ser. B|NN-B.ST|
 Proffice AB ser. B|PROE-B.ST|
+Qliro Group AB|QLRO.ST|
 Rezidor Hotel Group AB|REZT.ST|
 Sagax AB pref|SAGA-PREF.ST|
 SAS AB|SAS.ST|
@@ -179,6 +180,8 @@ Carlsberg A A/S|CARL-A.CO|
 Carlsberg B A/S|CARL-B.CO|
 Chr. Hansen Holding A/S|CHR.CO|
 Coloplast B A/S|COLOB.CO|
+Corem Property Group AB|CORE.ST|
+Corem Property Group Pref|CORE-PREF.ST|
 Danske Bank A/S|DANSKE.CO|
 DNB|DNB.OL|
 DSV A/S|DSV.CO|
@@ -198,6 +201,7 @@ Novo Nordisk B A/S|NOVO-B.CO|
 Novozymes B A/S|NZYM-B.CO|
 Odfjell Drilling|ODL.OL|
 Orkla|ORK.OL|
+Oasmia Pharmaceutical AB|OASM.ST|
 Pandora A/S|PNDORA.CO|
 REC Silicon|REC.OL|
 Rockwool Int. A|ROCK-A.CO|
@@ -271,6 +275,7 @@ RaySearch Laboratories AB ser. B|RAY-B.ST|
 REC Solar|RECSOL.OL|
 Ringkjøbing Landbobank|RILBA.CO|
 Royal UNIBREW A/S|RBREW.CO|
+Scandi Standard|SCST.ST|	
 SalMar|SALM.OL|
 Schibsted|SCH.OL|
 Schouw & Co. A/S|SCHO.CO|
