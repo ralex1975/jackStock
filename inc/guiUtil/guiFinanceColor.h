@@ -27,13 +27,27 @@ class GuiFinanceColor
 public:
     GuiFinanceColor();
     ~GuiFinanceColor();
+    QColor getColorEarningsDivDividend(QString inValue);
+    QColor getColorEarningsDivDividend(QString inValue, Qt::GlobalColor &gClolor);
     void setTxtColorEarningsDivDividend(QString inValue, QLineEdit *outValue);
+
+    QColor getColorNavDivStockPrice(QString inValue);
+    QColor getColorNavDivStockPrice(QString inValue, Qt::GlobalColor &gColor);
     void setTxtColorNavDivStockPrice(QString inValue, QLineEdit *outValue);
-    QColor getPeColor(QString pe);
+
+    QColor getColorPe(QString pe);
+    QColor getColorPe(QString pe, Qt::GlobalColor &gColor);
     void setTxtColorPe(QString inValue, QLineEdit *outValue, QString assetType = "");
+
+    QColor getColorPs(QString inValue);
+    QColor getColorPs(QString inValue, Qt::GlobalColor &gColor);
     void setTxtColorPs(QString inValue, QLineEdit *outValue);
+
+    QColor getColorYield(QString yield, QString earningsDivDividend);
+    QColor getColorYield(QString yield, QString earningsDivDividend, Qt::GlobalColor &gColor);
     void setTxtColorYield(QString yield, QString earningsDivDividend, QLineEdit *outValue);
 
+    // Qt::GlobalColor convertQColor(QColor color);
 
 };
 

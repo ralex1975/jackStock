@@ -906,7 +906,11 @@ void FaTab::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyD
     double doubleNumber;
     if(false == cu.number2double(keyData.earningsDividedByDividend, doubleNumber))
     {
-        if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+        if(keyData.keyValueYield.toDouble() < 2)
+        {
+            color = Qt::red;
+        }
+        else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
         {
             color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
         }
@@ -936,7 +940,11 @@ void FaTab::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyD
         //  Grön Om vinst/Utdelning är >= 2 && direktavkastningn = 4 - 6 %
         if(keyData.earningsDividedByDividend.toDouble() > 1 && keyData.earningsDividedByDividend.toDouble() < 2)
         {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            if(keyData.keyValueYield.toDouble() < 2)
+            {
+                color = Qt::red;
+            }
+            else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
             {
                 color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
             }
@@ -951,7 +959,11 @@ void FaTab::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyD
         }
         else if(keyData.earningsDividedByDividend.toDouble() >= 2)
         {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            if(keyData.keyValueYield.toDouble() < 2)
+            {
+                color = Qt::red;
+            }
+            else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
             {
                 color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
             }
@@ -1284,6 +1296,7 @@ void FaTab::clearStockAndIndicatorTempMem(void)
 {
     m_stockData.data.x.clear();
     m_stockData.data.y.clear();
+    m_stockData.data.xDate.clear();
     m_stockData.data.indicator1.clear();
     m_stockData.data.indicator2.clear();
     m_stockData.data.indicator3.clear();
@@ -1291,6 +1304,7 @@ void FaTab::clearStockAndIndicatorTempMem(void)
 
     m_stockData1.data.x.clear();
     m_stockData1.data.y.clear();
+    m_stockData1.data.xDate.clear();
     m_stockData1.data.indicator1.clear();
     m_stockData1.data.indicator2.clear();
     m_stockData1.data.indicator3.clear();
@@ -1298,6 +1312,7 @@ void FaTab::clearStockAndIndicatorTempMem(void)
 
     m_stockData2.data.x.clear();
     m_stockData2.data.y.clear();
+    m_stockData2.data.xDate.clear();
     m_stockData2.data.indicator1.clear();
     m_stockData2.data.indicator2.clear();
     m_stockData2.data.indicator3.clear();
@@ -1306,6 +1321,7 @@ void FaTab::clearStockAndIndicatorTempMem(void)
 
     m_stockData3.data.x.clear();
     m_stockData3.data.y.clear();
+    m_stockData3.data.xDate.clear();
     m_stockData3.data.indicator1.clear();
     m_stockData3.data.indicator2.clear();
     m_stockData3.data.indicator3.clear();

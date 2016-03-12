@@ -1249,6 +1249,7 @@ void ImportData::clearStockAndIndicatorTempMem(void)
 {
     m_stockData.data.x.clear();
     m_stockData.data.y.clear();
+    m_stockData.data.xDate.clear();
     m_stockData.data.indicator1.clear();
     m_stockData.data.indicator2.clear();
     m_stockData.data.indicator3.clear();

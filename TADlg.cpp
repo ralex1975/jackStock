@@ -62,7 +62,7 @@ CTADlg::CTADlg(QWidget *parent) :
 
     if(m_importYahooTaDataThread == 0)
     {
-        QMessageBox::information(NULL, QObject::tr("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
+        QMessageBox::information(NULL, QString::fromUtf8("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
     }
 
     // Init time period
@@ -1177,6 +1177,7 @@ void CTADlg::clearStockAndIndicatorTempMem(void)
 {
     m_stockData.data.x.clear();
     m_stockData.data.y.clear();
+    m_stockData.data.xDate.clear();
     m_stockData.data.indicator1.clear();
     m_stockData.data.indicator2.clear();
     m_stockData.data.indicator3.clear();
@@ -1929,7 +1930,11 @@ void CTADlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST key
     double doubleNumber;
     if(false == cu.number2double(keyData.earningsDividedByDividend, doubleNumber))
     {
-        if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+        if(keyData.keyValueYield.toDouble() < 2)
+        {
+            color = Qt::red;
+        }
+        else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
         {
             color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
         }
@@ -1957,9 +1962,13 @@ void CTADlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST key
     else
     {
         //  Grön Om vinst/Utdelning är >= 2 && direktavkastningn = 4 - 6 %
-        if(keyData.earningsDividedByDividend.toDouble() > 1 && keyData.earningsDividedByDividend.toDouble() < 2)
+         if(keyData.earningsDividedByDividend.toDouble() > 1 && keyData.earningsDividedByDividend.toDouble() < 2)
         {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            if(keyData.keyValueYield.toDouble() < 2)
+            {
+                color = Qt::red;
+            }
+            else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
             {
                 color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
             }
@@ -1974,7 +1983,11 @@ void CTADlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST key
         }
         else if(keyData.earningsDividedByDividend.toDouble() >= 2)
         {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            if(keyData.keyValueYield.toDouble() < 2)
+            {
+                color = Qt::red;
+            }
+            else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
             {
                 color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
             }

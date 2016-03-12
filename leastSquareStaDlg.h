@@ -182,9 +182,6 @@ class LeastSquaresTaDlg : public QDialog
                                  CYahooStockPlotUtil::MinMaxAxisValues_ST &axis,
                                  QwtPlot *qwtPlot,
                                  CYahooStockPlotUtil::PlotData_ST &qwtPlotData);
-    void setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyData,
-                                           CDbHndl::EfficPortStockData_ST stockRiskReturnData,
-                                           QString assetType);
     void setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette, const QColor &color);
     void initFa3MinMaxPePrice(void);
 
@@ -216,7 +213,6 @@ public slots:
 
 
 private slots:
-    void on_pushButton_clicked();
     void slotReqSingleStockDataFromServer();
     void slotReceivedAssetTaDataFromServer(int);
     void slotReqSingleStockDataTimerExpired();

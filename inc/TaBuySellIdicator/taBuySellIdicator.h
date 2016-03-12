@@ -2,22 +2,35 @@
 #define TABUYSELLIDICATOR_H
 
 #include "dbHndl.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 class TaBuySellIdicator
 {
+    FILE *m_file;
+
     // Store one stock with data
     CYahooStockPlotUtil::StockData_ST m_stockPrice;
     CYahooStockPlotUtil::StockData_ST m_avgShortData;
     CYahooStockPlotUtil::StockData_ST m_avgMidData;
     CYahooStockPlotUtil::StockData_ST m_avgLongData;
 
+    CYahooStockPlotUtil::StockData_ST m_macdData;
+    CYahooStockPlotUtil::StockData_ST m_rsiData;
+    CYahooStockPlotUtil::StockData_ST m_stochasticsData;
 
     bool buyAvg20Above50(QString stockSymbol);
 
 
-
-
 public:
+    struct SellSignalMomentumST
+    {
+        bool stochasticsBelow80;
+        bool macdBelowZero;
+        bool rsiBelow70;
+    };
+
     struct SellSignalMovingAvgST
     {
         bool priceDipBelowShortAvg;
@@ -30,18 +43,24 @@ public:
         bool MidAvgDipBelowLongAvg;
     };
 
+    struct BuySignalMomentumST
+    {
+        bool stochasticsAbove20;
+        bool macdAboveZero;
+        bool rsiAbove30;
+    };
 
-struct BuySignalMovingAvgST
-{
-    bool priceRiseAboveShortAvg;
-    bool priceRiseAboveMidAvg;
-    bool priceRiseAboveLongAvg;
+    struct BuySignalMovingAvgST
+    {
+        bool priceRiseAboveShortAvg;
+        bool priceRiseAboveMidAvg;
+        bool priceRiseAboveLongAvg;
 
-    bool ShortAvgRiseAboveMidAvg;
-    bool ShortAvgRiseAboveLongAvg;
+        bool ShortAvgRiseAboveMidAvg;
+        bool ShortAvgRiseAboveLongAvg;
 
-    bool MidAvgRiseAboveLongAvg;
-};
+        bool MidAvgRiseAboveLongAvg;
+    };
 
 
 
@@ -67,13 +86,34 @@ struct BuySignalMovingAvgST
     bool getBuySignals(QString stockSymbol);
     void clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData_ST &stockData);
 
+    QString convMomentumSellSignalToNumber(BuySignalMomentumST &buySignals);
+    QString convMomentumSellSignalToNumber(SellSignalMomentumST &sellSignals);
+
+
+    void sellMomentumSignal(double dataVal1,
+                            double dataVal2,
+                            double level,
+                            bool &sellSignal);
+
+    void buyMomentumSignal(double dataVal1,
+                            double dataVal2,
+                            double level,
+                            bool &buySignal);
+
+
+
     bool getAvgBuySellSignals(QString stockSymbol,
                               SellSignalMovingAvgST &sellSignals,
-                              BuySignalMovingAvgST  &buySignals);
+                              BuySignalMovingAvgST  &buySignals,
+                              SellSignalMomentumST &sellMomentumSignals,
+                              BuySignalMomentumST &buyMomentumSignals);
 
     QString convAvgBuySignalToNumber(BuySignalMovingAvgST &buySignals);
     void resetBuySignals(BuySignalMovingAvgST &buySignals);
     void resetSellSignals(SellSignalMovingAvgST &sellSignals);
+    void resetBuySignals(BuySignalMomentumST &buySignals);
+    void resetSellSignals(SellSignalMomentumST &sellSignals);
+
     void buySignalFastAvgCrossSlowAvg(double priseVal1,
                                       double priseVal2,
                                       double avgFastVal1,
