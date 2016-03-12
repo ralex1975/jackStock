@@ -813,7 +813,11 @@ void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST
     double doubleNumber;
     if(false == cu.number2double(keyData.earningsDividedByDividend, doubleNumber))
     {
-        if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+        if(keyData.keyValueYield.toDouble() < 2)
+        {
+            color = Qt::red;
+        }
+        else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
         {
             color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
         }
@@ -843,7 +847,12 @@ void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST
         //  Grön Om vinst/Utdelning är >= 2 && direktavkastningn = 4 - 6 %
         if(keyData.earningsDividedByDividend.toDouble() > 1 && keyData.earningsDividedByDividend.toDouble() < 2)
         {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+
+            if(keyData.keyValueYield.toDouble() < 2)
+            {
+                color = Qt::red;
+            }
+            else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
             {
                 color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
             }
@@ -858,7 +867,11 @@ void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST
         }
         else if(keyData.earningsDividedByDividend.toDouble() >= 2)
         {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
+            if(keyData.keyValueYield.toDouble() < 2)
+            {
+                color = Qt::red;
+            }
+            else if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
             {
                 color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
             }
@@ -1621,6 +1634,7 @@ void TaAnalysis::clearStockAndIndicatorTempMem(void)
 {
     m_stockData.data.x.clear();
     m_stockData.data.y.clear();
+    m_stockData.data.xDate.clear();
     m_stockData.data.indicator1.clear();
     m_stockData.data.indicator2.clear();
     m_stockData.data.indicator3.clear();

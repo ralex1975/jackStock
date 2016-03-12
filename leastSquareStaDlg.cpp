@@ -232,20 +232,6 @@ LeastSquaresTaDlg::~LeastSquaresTaDlg()
 }
 
 
-/**********************************************************************************
- *
- * Function:
- *
- *
- * Description:
- *
- *
- *
- ********************************************************************************/
-void LeastSquaresTaDlg::on_pushButton_clicked()
-{
-
-}
 
 /*******************************************************************
  *
@@ -400,6 +386,7 @@ void LeastSquaresTaDlg::clearStockAndIndicatorTempMem(void)
 {
     m_stockData.data.x.clear();
     m_stockData.data.y.clear();
+    m_stockData.data.xDate.clear();
     m_stockData.data.indicator1.clear();
     m_stockData.data.indicator2.clear();
     m_stockData.data.indicator3.clear();
@@ -696,6 +683,8 @@ void LeastSquaresTaDlg::displayStockData(bool addLastPrice, double lastPrice)
         {
             clearStockAndIndicatorTempMem();
             db.getYahooTaMacd(m_reqStockSymbol, startDate, endDate, 26, 12, 9, m_qwtsubPlotData, m_stockData);
+            // db.getYahooTaMacd(m_reqStockSymbol, startDate, endDate, 52, 24, 8, m_qwtsubPlotData, m_stockData);
+
 
             setAxisTitles(titleXAxis, " ",ui->qwtPlotLSqr_2, false);
             subplotIndex = SUBPLOT_MACD_LINE;
@@ -1463,9 +1452,6 @@ void LeastSquaresTaDlg::plotStockData(QString inStockName, QString inStockSymbol
                     ui->lineMeanReturn->insert(tmp);
                 }
                 #endif
-                // ajn 160218 QString dummyAssetType;
-                // ajn 160218 setFundametalAnalysisCtrlTxtColor(keyFaData, stockRiskReturnData, dummyAssetType);
-
             }
         }
         #endif
@@ -1551,215 +1537,6 @@ void LeastSquaresTaDlg::setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *
 
 
 
-/*******************************************************************
- *
- * Function:    ()
- *
- * Description:
- *
- *
- *
- *
- *******************************************************************/
-void LeastSquaresTaDlg::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST keyData,
-                                                   CDbHndl::EfficPortStockData_ST stockRiskReturnData,
-                                                   QString assetType)
-{
-    CUtil cu;
-    QColor color;
-
-    if(keyData.earningsDividedByDividend.toDouble() >= 1 && keyData.earningsDividedByDividend.toDouble() < 2)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-    }
-    else if(keyData.earningsDividedByDividend.toDouble() >= 2)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
-    }
-    else
-    {
-        color = Qt::black;
-    }
-
-    setFaEditControlTxtColor(ui->lineEditEarningsDivByDividendLSqrt, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
-    // setFaEditControlTxtColor(ui->lineEditEarningsDivByDividend_2, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
-    // setFaEditControlTxtColor(ui->lineEditEarningsDivByDividend_3, m_faDataPalette[FA_ERNING_DIV_DIVIDEN], color);
-
-
-    if(keyData.navDivLastStockPrice.toDouble() >= 0.7 && keyData.navDivLastStockPrice.toDouble() < 1)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-    }
-    else if(keyData.navDivLastStockPrice.toDouble() >= 1 && keyData.navDivLastStockPrice.toDouble() < 2)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-    }
-    else if(keyData.navDivLastStockPrice.toDouble() >= 2)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
-    }
-    else
-    {
-        color = Qt::red;
-    }
-
-    setFaEditControlTxtColor(ui->lineEditNavDivLastStockPriceLSqrt, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);
-    // setFaEditControlTxtColor(ui->lineEditNavDivLastStockPrice_2, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);
-    // setFaEditControlTxtColor(ui->lineEditNavDivLastStockPrice_3, m_faDataPalette[FA_NAV_DIV_LAST_PRICE], color);
-
-
-
-    if(keyData.keyValuePE.toDouble() < 5)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-    }
-    else if(keyData.keyValuePE.toDouble() >= 5 && keyData.keyValuePE.toDouble() <= 15)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
-    }
-    else if(keyData.keyValuePE.toDouble() > 15 && keyData.keyValuePE.toDouble() <= 18)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-    }
-    else if(keyData.keyValuePE.toDouble() > 18 && keyData.keyValuePE.toDouble() <= 25)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-    }
-    else
-    {
-        color = Qt::red;
-    }
-
-    // Disable P/E when company type is finance and real estate
-    if(assetType.compare("Finans och fastighet")== 0)
-    {
-        ui->lineEditPELSqrt->setDisabled(true);
-        // ui->lineEditPE_2->setDisabled(true);
-        // ui->lineEditPE_3->setDisabled(true);
-    }
-    else
-    {
-        ui->lineEditPELSqrt->setDisabled(false);
-        // ui->lineEditPE_2->setDisabled(false);
-        // ui->lineEditPE_3->setDisabled(false);
-    }
-    setFaEditControlTxtColor(ui->lineEditPELSqrt, m_faDataPalette[FA_PE], color);
-    // setFaEditControlTxtColor(ui->lineEditPE_2, m_faDataPalette[FA_PE], color);
-    // setFaEditControlTxtColor(ui->lineEditPE_3, m_faDataPalette[FA_PE], color);
-
-    double doubleNumber;
-    if(false == cu.number2double(keyData.earningsDividedByDividend, doubleNumber))
-    {
-        if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
-        {
-            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-        }
-        else if(keyData.keyValueYield.toDouble() >= 4 && keyData.keyValueYield.toDouble() <= 6)
-        {
-            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
-        }
-        else if(keyData.keyValueYield.toDouble() > 6 && keyData.keyValueYield.toDouble() < 7)
-        {
-            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-        }
-        else if(keyData.keyValueYield.toDouble() > 7 && keyData.keyValueYield.toDouble() < 10)
-        {
-            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-        }
-        else if(keyData.keyValueYield.toDouble() > 10)
-        {
-            color = Qt::red;
-        }
-        else
-        {
-            color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-        }
-    }
-    else
-    {
-        //  Grön Om vinst/Utdelning är >= 2 && direktavkastningn = 4 - 6 %
-        if(keyData.earningsDividedByDividend.toDouble() > 1 && keyData.earningsDividedByDividend.toDouble() < 2)
-        {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
-            {
-                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-            }
-            else if(keyData.keyValueYield.toDouble() >= 4 )
-            {
-                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-            }
-            else
-            {
-                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-            }
-        }
-        else if(keyData.earningsDividedByDividend.toDouble() >= 2)
-        {
-            if(keyData.keyValueYield.toDouble() >= 3 && keyData.keyValueYield.toDouble() < 4)
-            {
-                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-            }
-            else if(keyData.keyValueYield.toDouble() >= 4)
-            {
-                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
-            }
-            else
-            {
-                color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-            }
-        }
-        else
-        {
-            color = Qt::red;
-        }
-    }
-
-
-
-    setFaEditControlTxtColor(ui->lineEditYieldLSqrt, m_faDataPalette[FA_YIELD], color);
-    // setFaEditControlTxtColor(ui->lineEditYield_2, m_faDataPalette[FA_YIELD], color);
-    // setFaEditControlTxtColor(ui->lineEditYield_3, m_faDataPalette[FA_YIELD], color);
-
-
-    if(stockRiskReturnData.meanReturns <= 0)
-    {
-        color = Qt::red;
-    }
-    else
-    {
-        color = Qt::black;
-    }
-
-
-   // setFaEditControlTxtColor(ui->lineMeanReturn, m_faDataPalette[FA_MEAN_RETURN], color);
-
-
-
-    if(keyData.keyValuePS.toDouble() <= 0.75)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
-    }
-    else if(keyData.keyValuePS.toDouble() > 0.75 && keyData.keyValuePS.toDouble() <= 1.5)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3);
-    }
-    else if(keyData.keyValuePS.toDouble() > 1.5 && keyData.keyValuePS.toDouble() <= 3.0)
-    {
-        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
-    }
-    else
-    {
-        color = Qt::red;
-    }
-
-    setFaEditControlTxtColor(ui->lineEditPsLSqrt, m_faDataPalette[FA_YIELD], color);
-    // setFaEditControlTxtColor(ui->lineEditPs_2, m_faDataPalette[FA_YIELD], color);
-    // setFaEditControlTxtColor(ui->lineEditPs_3, m_faDataPalette[FA_YIELD], color);
-
-
-
-
-}
 
 
 
@@ -1841,9 +1618,12 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
     int nofCols;
     CDbHndl db;
     QString str;
+    GuiFinanceColor gfc;
     CDbHndl::snapshotStockData_ST keyData;
     TaBuySellIdicator::SellSignalMovingAvgST sellSignals;
     TaBuySellIdicator::BuySignalMovingAvgST buySignals;
+    TaBuySellIdicator::SellSignalMomentumST sellMomentumSignals;
+    TaBuySellIdicator::BuySignalMomentumST buyMomentumSignals;
 
     int nofData = 0;
     double meanXSum = 0;
@@ -1865,12 +1645,22 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
 
     nofCols = 0;
 
-    headerList[nofCols++].name = QString::fromUtf8("Företag        ");
-    headerList[nofCols++].name = QString::fromUtf8("Symbol         ");
+    headerList[nofCols++].name = QString::fromUtf8("Företag     ");
+    headerList[nofCols++].name = QString::fromUtf8("Symbol      ");
     headerList[nofCols++].name = QString::fromUtf8("R");
     headerList[nofCols++].name = QString::fromUtf8("K");
-    headerList[nofCols++].name = QString::fromUtf8("Medv Köp/Sälj  ");
-    //headerList[nofCols++].name = QString::fromUtf8("               ");
+    headerList[nofCols++].name = QString::fromUtf8("T Köp/Sälj");
+    headerList[nofCols++].name = QString::fromUtf8("M Köp/Sälj");
+
+
+    headerList[nofCols++].name = QString::fromUtf8("PE     ");
+    headerList[nofCols++].name = QString::fromUtf8("PS     ");
+    headerList[nofCols++].name = QString::fromUtf8("DirAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/DAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Sub/Kurs");
+
+
+
 
 
 
@@ -1950,9 +1740,34 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                         // Add stock symbol Column 1
                         if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
                         {
+                            Qt::GlobalColor color1 = Qt::black;
+
+                            gfc.getColorPe(keyData.keyValuePE, color1);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.keyValuePE, rowPlus, 6, color1);
+
+                            color1 = Qt::black;
+                            gfc.getColorPs(keyData.keyValuePS, color1);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.keyValuePS, rowPlus, 7, color1);
+
+                            gfc.getColorYield(keyData.keyValueYield, keyData.earningsDividedByDividend, color1);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.keyValueYield, rowPlus, 8, color1);
+
+                            gfc.getColorEarningsDivDividend(keyData.earningsDividedByDividend, color1);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.earningsDividedByDividend, rowPlus, 9, color1);
+
+                            color1 = Qt::black;
+                            gfc.getColorNavDivStockPrice(keyData.navDivLastStockPrice, color1);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.navDivLastStockPrice, rowPlus, 10, color1);
+
+                            // Asset symbol
                             etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.assetSymbol, rowPlus, 1, Qt::black);
 
-                            if( true == m_taBuy.getAvgBuySellSignals(keyData.assetSymbol, sellSignals, buySignals))
+
+                            if( true == m_taBuy.getAvgBuySellSignals(keyData.assetSymbol,
+                                                                     sellSignals,
+                                                                     buySignals,
+                                                                     sellMomentumSignals,
+                                                                     buyMomentumSignals))
                             {
                                 QString buySignal;
                                 buySignal = m_taBuy.convAvgBuySignalToNumber(buySignals);
@@ -1966,6 +1781,21 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                                 if(sellSignal.compare(QString::fromUtf8("0")) != 0)
                                 {
                                     etPlus.addDataSetTextColor(ui->tableViewLeastSquare, sellSignal, rowPlus, 4, Qt::red);
+                                }
+
+                                //===============================================================
+                                // Momentum sell buy signal
+                                //===============================================================
+                                buySignal = m_taBuy.convMomentumSellSignalToNumber(buyMomentumSignals);
+                                if(buySignal.compare(QString::fromUtf8("0")) != 0)
+                                {
+                                    etPlus.addDataSetTextColor(ui->tableViewLeastSquare, buySignal, rowPlus, 5, Qt::blue);
+                                }
+
+                                sellSignal = m_taBuy.convMomentumSellSignalToNumber(sellMomentumSignals);
+                                if(sellSignal.compare(QString::fromUtf8("0")) != 0)
+                                {
+                                    etPlus.addDataSetTextColor(ui->tableViewLeastSquare, sellSignal, rowPlus, 5, Qt::red);
                                 }
 
                             }
@@ -2000,9 +1830,35 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                         // Add stock symbol Column 1
                         if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
                         {
-                            if( true == true == m_taBuy.getAvgBuySellSignals(keyData.assetSymbol, sellSignals, buySignals))
+
+                            Qt::GlobalColor color1 = Qt::black;
+                            gfc.getColorPe(keyData.keyValuePE, color1);
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.keyValuePE, rowMinus, 6, color1);
+
+                            gfc.getColorPs(keyData.keyValuePS, color1);
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.keyValuePS, rowMinus, 7, color1);
+
+                            gfc.getColorYield(keyData.keyValueYield, keyData.earningsDividedByDividend, color1);
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.keyValueYield, rowMinus, 8, color1);
+
+                            gfc.getColorEarningsDivDividend(keyData.earningsDividedByDividend, color1);
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.earningsDividedByDividend, rowMinus, 9, color1);
+
+                            color1 = Qt::black;
+                            gfc.getColorNavDivStockPrice(keyData.navDivLastStockPrice, color1);
+                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.navDivLastStockPrice, rowMinus, 10, color1);
+
+                            // Asset symbol
+                            if( true == m_taBuy.getAvgBuySellSignals(keyData.assetSymbol,
+                                                                             sellSignals,
+                                                                             buySignals,
+                                                                             sellMomentumSignals,
+                                                                             buyMomentumSignals))
                             {
 
+                                //============================================================
+                                // Trend sell buy signal
+                                //============================================================
                                 QString buySignal;
                                 buySignal = m_taBuy.convAvgBuySignalToNumber(buySignals);
                                 if(buySignal.compare(QString::fromUtf8("0")) != 0)
@@ -2018,6 +1874,22 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                                     etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, sellSignal, rowMinus, 4, Qt::red);
                                 }
                                 #endif
+
+                                //===============================================================
+                                // Momentum sell buy signal
+                                //===============================================================
+                                buySignal = m_taBuy.convMomentumSellSignalToNumber(buyMomentumSignals);
+                                if(buySignal.compare(QString::fromUtf8("0")) != 0)
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, buySignal, rowMinus, 5, Qt::blue);
+                                }
+
+                                sellSignal = m_taBuy.convMomentumSellSignalToNumber(sellMomentumSignals);
+                                if(sellSignal.compare(QString::fromUtf8("0")) != 0)
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, sellSignal, rowMinus, 5, Qt::red);
+                                }
+
                             }
 
                             etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, keyData.assetSymbol, rowMinus, 1, Qt::black);

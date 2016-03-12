@@ -1584,54 +1584,54 @@ bool CDbHndl::addFa3MinMaxPEAndPrice(QTreeWidget *treeWidget, QTreeWidget *treeW
 
                 tmp.sprintf("%.1f", (minPrice/erningPerShare[i]));
                 // ajn 160221 item1->setText(1, tmp);
-                // ajn 160221 item1->setTextColor(1, m_gfc.getPeColor(tmp));
+                // ajn 160221 item1->setTextColor(1, m_gfc.getColorPe(tmp));
                 qDebug() << tmp;
 
                 if(tmp.size() > 0)
                 {
                     m_oneLineTxtColorData.lineData.insert(1, tmp);
-                    m_oneLineTxtColorData.lineColor.insert(1, m_gfc.getPeColor(tmp));
+                    m_oneLineTxtColorData.lineColor.insert(1, m_gfc.getColorPe(tmp));
                 }
                 else
                 {
                     tmp = " ";
                     m_oneLineTxtColorData.lineData.insert(1, tmp);
-                    m_oneLineTxtColorData.lineColor.insert(1, m_gfc.getPeColor(tmp));
+                    m_oneLineTxtColorData.lineColor.insert(1, m_gfc.getColorPe(tmp));
                 }
 
                 tmp.sprintf("%.1f", (avgPrice/erningPerShare[i]));
                 // ajn 160221 item1->setText(2, tmp);
-                // ajn 160221 item1->setTextColor(2, m_gfc.getPeColor(tmp));
+                // ajn 160221 item1->setTextColor(2, m_gfc.getColorPe(tmp));
                 qDebug() << tmp;
 
                 if(tmp.size() > 0)
                 {
                     m_oneLineTxtColorData.lineData.insert(2, tmp);
-                    m_oneLineTxtColorData.lineColor.insert(2, m_gfc.getPeColor(tmp));
+                    m_oneLineTxtColorData.lineColor.insert(2, m_gfc.getColorPe(tmp));
                 }
                 else
                 {
                     tmp = " ";
                     m_oneLineTxtColorData.lineData.insert(2, tmp);
-                    m_oneLineTxtColorData.lineColor.insert(2, m_gfc.getPeColor(tmp));
+                    m_oneLineTxtColorData.lineColor.insert(2, m_gfc.getColorPe(tmp));
                 }
 
 
                 tmp.sprintf("%.1f", (maxPrice/erningPerShare[i]));
                 // ajn 160221 item1->setText(3, tmp);
-                // ajn 160221 item1->setTextColor(3, m_gfc.getPeColor(tmp));
+                // ajn 160221 item1->setTextColor(3, m_gfc.getColorPe(tmp));
                 qDebug() << tmp;
 
                 if(tmp.size() > 0)
                 {
                     m_oneLineTxtColorData.lineData.insert(3, tmp);
-                    m_oneLineTxtColorData.lineColor.insert(3, m_gfc.getPeColor(tmp));
+                    m_oneLineTxtColorData.lineColor.insert(3, m_gfc.getColorPe(tmp));
                 }
                 else
                 {
                     tmp = " ";
                     m_oneLineTxtColorData.lineData.insert(3, tmp);
-                    m_oneLineTxtColorData.lineColor.insert(3, m_gfc.getPeColor(tmp));
+                    m_oneLineTxtColorData.lineColor.insert(3, m_gfc.getColorPe(tmp));
                 }
 
                 // Pe min avg max
