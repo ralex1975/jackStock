@@ -16,7 +16,7 @@
 //=====================================================================
 // Imported definitions
 //=====================================================================
-#include <semaphore.h>
+#include <QSemaphore>
 #include <errno.h>
 #include <time.h>
 
@@ -35,16 +35,16 @@
 class CSemaphore
 {
 private:
-    sem_t m_semaphore;
+    QSemaphore m_semaphore;
 
 
 public:
     CSemaphore(int value = 0);
    ~CSemaphore();
 
-    int post(void);
-    int wait(void);
-    int tryWait(void);
+    void post(void);
+    void wait(void);
+    bool tryWait(int ms);
 };
 
 

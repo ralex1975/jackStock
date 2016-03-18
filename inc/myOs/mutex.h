@@ -15,9 +15,8 @@
 //=====================================================================
 // Imported definitions
 //=====================================================================
-#include "../../inc/core/typedefs.h"
-#include <pthread.h>
-#include <string>
+#include "QtCore"
+#include <QMutex>
 
 
 //=====================================================================
@@ -26,13 +25,13 @@
 class CMutex
 {
 private:
-	pthread_mutex_t m_mutex;
+    QMutex m_mutex;
 
 public:
 	CMutex();
 	~CMutex();
-	int lock();
-	int unlock();
+    void lock();
+    void unlock();
 
 };
 

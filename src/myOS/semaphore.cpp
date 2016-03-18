@@ -16,9 +16,8 @@
 // Imported definitions
 //=====================================================================
 #include <time.h>
-#include "../../inc/core/semaphore.h"
-#include "../../inc/core/debug.h"
-
+#include "../../inc/myOs/semaphore.h"
+#include "qdebug.h"
 
 /***************************************************************
  *
@@ -30,13 +29,9 @@
  *
  *
  *****************************************************************/
-CSemaphore::CSemaphore(int value)
+CSemaphore::CSemaphore(int value):m_semaphore(value)
 {
-    int res;
-
-    res = sem_init(&m_semaphore, SHARED_BETWEEN_THREADS, value);
-    if (res)
-        ERR("Error: sem_init()");
+        // qDebug() << "Error: sem_init()";
 }
 
 
@@ -54,7 +49,7 @@ CSemaphore::CSemaphore(int value)
  *****************************************************************/
 CSemaphore::~CSemaphore()
 {
-    sem_destroy(&m_semaphore);
+
 }
 
 
@@ -68,9 +63,10 @@ CSemaphore::~CSemaphore()
  *
  *
  *****************************************************************/
-int CSemaphore::post()
+void CSemaphore::post()
 {
-    return sem_post(&m_semaphore);
+    m_semaphore.release(1);
+
 }
 
 /***************************************************************
@@ -84,9 +80,9 @@ int CSemaphore::post()
  *
  *
  *****************************************************************/
-int CSemaphore::wait()
+void CSemaphore::wait()
 {
-    return sem_wait(&m_semaphore);
+    m_semaphore.acquire(1);
 }
 
 
@@ -100,9 +96,9 @@ int CSemaphore::wait()
  *
  *
  *****************************************************************/
-int CSemaphore::tryWait()
+bool CSemaphore::tryWait(int ms)
 {
-    return sem_trywait(&m_semaphore);
+    return m_semaphore.tryAcquire(1, ms);
 }
 
 

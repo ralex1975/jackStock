@@ -401,7 +401,7 @@ bool CDbHndl::createTable(void)
 
 
     //===================================================================
-    // NordnetYahooBridge
+    // NordnetStockIds
     //===================================================================
     tmp.sprintf("CREATE TABLE IF NOT EXISTS TblNordnetStockIds"
                 " (assetId VARCHAR(255) UNIQUE PRIMARY KEY, "
@@ -3872,6 +3872,346 @@ bool CDbHndl::delAllTblNordnetStockIds(void)
     m_mutex.unlock();
     return true;
 }
+
+
+/*****************************************************************
+ *
+ * Function:		getAllSnapshotPlotStocksData()
+ *
+ * Description:		This function extract all stocks from the database
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getAllSnapshotPlotStocksData(QString stockListName,
+                             QVector <CStockPlotUtil::StockData_ST> &stockArr)
+{
+    QSqlRecord rec;
+    QString str;
+    bool found;
+    bool found1;
+    CStockPlotUtil::StockData_ST data;
+    int i;
+    int j;
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+    // Remove space
+    stockListName.trimmed();
+
+    QByteArray ba = stockListName.toLocal8Bit();
+    const char *c_stockListName = ba.data();
+
+
+
+
+    str.sprintf("SELECT TblTaStockList.taStockListId, TblTaStockList.stockListName, "
+                    " TblStockDataSnapshot.*, "
+                    " TblTaStockName.taStockListId, TblTaStockName.stockSymbol, TblTaStockName.stockName, "
+                    " TblNordnetYahooBridge.assetSymbol, TblNordnetYahooBridge.assetName "
+                    " FROM TblTaStockList, TblTaStockName, TblNordnetYahooBridge, TblStockDataSnapshot "
+                    " WHERE TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
+                           "lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                           "TblTaStockName.stockSymbol = TblNordnetYahooBridge.assetSymbol AND "
+                           "lower(TblTaStockList.stockListName) = lower('%s');", c_stockListName);
+
+
+    qDebug() << str;
+
+
+#if 0
+    str.sprintf("SELECT companyName,"
+                "procentChangeOneDay,"
+                "procentChangeOneWeek,"
+                "procentChange1Month,"
+                "procentChange3Month,"
+                "procentChange6Month,"
+                "procentChange1Year,"
+                "procentChange2Year,"
+                "procentChange3Year,"
+                "procentChange5Year"
+                " FROM TblStockDataSnapshot "
+                " ORDER BY companyName;");
+#endif
+
+
+    qry.prepare(str);
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+    }
+    else
+    {
+
+        i = 0;
+        j = 0;
+
+        while(qry.next())
+        {
+            found = false;
+            found1 = false;
+            rec = qry.record();
+
+            if(rec.value("companyName").isNull() == true)
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                found1 = true;
+                data.stockName = rec.value("companyName").toString();
+                qDebug() << rec.value("companyName").toString();
+                qDebug() << rec.value("taStockListId").toString();
+            }
+
+
+            if(rec.value("procentChangeOneDay").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChangeOneDay").toDouble());
+                data.data.x.insert(j, 0); // (0) (time)
+                j++;
+            }
+
+
+
+            if(rec.value("procentChangeOneWeek").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChangeOneWeek").toDouble());
+                data.data.x.insert(j, 7); // (0) (time)
+                j++;
+            }
+
+            if(rec.value("procentChange1Month").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange1Month").toDouble());
+                data.data.x.insert(j, 30); // (0) (time)
+                j++;
+            }
+
+
+            if(rec.value("procentChange3Month").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange3Month").toDouble());
+                data.data.x.insert(j, 90); // (0) (time)
+                j++;
+            }
+
+            if(rec.value("procentChange6Month").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange6Month").toDouble());
+                data.data.x.insert(j, 180); // (0) (time)
+                j++;
+            }
+
+
+            if(rec.value("procentChange1Year").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange1Year").toDouble());
+                data.data.x.insert(j, 365); // (0) (time)
+                j++;
+            }
+
+
+            if(rec.value("procentChange2Year").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange2Year").toDouble());
+                data.data.x.insert(j, 730); // (0) (time)
+                j++;
+            }
+
+
+            if(rec.value("procentChange3Year").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange3Year").toDouble());
+                data.data.x.insert(j, 1095); // (0) (time)
+                j++;
+            }
+
+            if(rec.value("procentChange5Year").isNull() != true)
+            {
+                found = true;
+                data.data.y.insert(j, rec.value("procentChange5Year").toDouble());
+                data.data.x.insert(j, 1825); // (0) (time)
+                j++;
+            }
+
+            // reset stock data index
+            if(found == true && found1 == true)
+            {
+                found = false;
+                found1 = false;
+                stockArr.insert(i, data);
+            }
+            j = 0;
+            i++;
+        }
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description: 160317
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::assetSymbolGetKeyDataUseBridge(QString snapshotAssetSymbol,
+                                             snapshotStockData_ST &keyData,
+                                              bool dbIsHandledExternly)
+{
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    // Remove space
+    snapshotAssetSymbol.trimmed();
+
+    QByteArray ba = snapshotAssetSymbol.toLocal8Bit();
+    const char *c_snapshotAssetSymbol = ba.data();
+
+
+    str.sprintf("SELECT TblNordnetYahooBridge.*, TblStockDataSnapshot.* "
+                " FROM TblNordnetYahooBridge, TblStockDataSnapshot "
+                " WHERE lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                " lower('%s') = lower(TblNordnetYahooBridge.assetSymbol);", c_snapshotAssetSymbol);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("companyName").isNull()==true)
+            {
+                qry.finish();
+                if(dbIsHandledExternly == false)
+                {
+                    closeDb();
+                    m_mutex.unlock();
+                }
+                return false;
+            }
+            else
+            {
+                qDebug() << rec.value("companyName").toString() << "\n";
+                keyData.companyName = rec.value("companyName").toString();
+                keyData.lastPrice = rec.value("lastPrice").toString();
+                keyData.priceChange = rec.value("priceChange").toString();
+                keyData.procentChangeOneDay = rec.value("procentChangeOneDay").toString();
+                keyData.bidPrice = rec.value("bidPrice").toString();
+                keyData.offerPrice = rec.value("offerPrice").toString();
+                keyData.highestPrice = rec.value("highestPrice").toString();
+                keyData.lowestPrice = rec.value("lowestPrice").toString();
+                keyData.volume = rec.value("volume").toString();
+                keyData.currency = rec.value("currency").toString();
+                keyData.time = rec.value("time").toString();
+                keyData.date = rec.value("date").toString();
+                keyData.procentChangeOneWeek = rec.value("procentChangeOneWeek").toString();
+                keyData.procentChange1Month = rec.value("procentChange1Month").toString();
+                keyData.procentChange3Month = rec.value("procentChange3Month").toString();
+                keyData.procentChange6Month = rec.value("procentChange6Month").toString();
+                keyData.procentChange1Year = rec.value("procentChange1Year").toString();
+                keyData.procentChange2Year = rec.value("procentChange2Year").toString();
+                keyData.procentChange3Year = rec.value("procentChange3Year").toString();
+                keyData.procentChange5Year = rec.value("procentChange5Year").toString();
+                keyData.keyValuePE = rec.value("keyValuePE").toString();
+                keyData.keyValuePS = rec.value("keyValuePS").toString();
+                keyData.keyValueEarningsPerShare = rec.value("keyValueEarningsPerShare").toString();
+                keyData.keyValueNAVPerShare = rec.value("keyValueNAVPerShare").toString();
+                keyData.keyValueDividendPerShare = rec.value("keyValueDividendPerShare").toString();
+                keyData.keyValueYield = rec.value("keyValueYield").toString();
+                keyData.keyValueCoursePerJEK = rec.value("keyValueCoursePerJEK").toString();
+                keyData.earningsDividedByDividend = rec.value("earningsDividedByDividend").toString();
+                keyData.navDivLastStockPrice = rec.value("navDivLastStockPrice").toString();
+                keyData.assetSymbol = rec.value("assetSymbol").toString();
+
+                qry.finish();
+                if(dbIsHandledExternly == false)
+                {
+                    closeDb();
+                    m_mutex.unlock();
+                }
+                return true;
+
+            }
+
+        }
+    }
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+    return false;
+}
+
+
 
 
 
@@ -9701,6 +10041,123 @@ bool CDbHndl::addStockSymbolAndNameInTreeWidget1(QTreeWidget *treeWidget,
     m_mutex.unlock();
     return true;
 }
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    addStockSymbolAndNameInTreeWidget1()
+ *
+ * Description: This combobox has a checkbox
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::addStockSymbolAndNameInArr(QVector<CDbHndl::StockNameAndSymbolST> &stockNameAndSymbolArr,
+                                                int stockListId,
+                                                CDbHndl::SortSymbolNameTreeWidget_ET sortOn,
+                                                char *sortOrder)
+{
+    QSqlRecord rec;
+    QString str;
+    bool found1 = false;
+    bool found2 = false;
+    StockNameAndSymbolST data;
+    int i;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    if(sortOn == SORT_TWIDGET_SYMBOL)
+    {
+        str.sprintf("SELECT taStockListId, stockSymbol, stockName "
+                    " FROM TblTaStockName"
+                    " WHERE taStockListId = '%d' "
+                    " ORDER BY LOWER(stockSymbol) %s;",
+                    stockListId,
+                    sortOrder);
+    }
+    else
+    {
+        str.sprintf("SELECT taStockListId, stockSymbol, stockName "
+                    " FROM TblTaStockName"
+                    " WHERE taStockListId = '%d' "
+                    " ORDER BY LOWER(stockName) %s;",
+                    stockListId,
+                    sortOrder);
+    }
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        stockNameAndSymbolArr.clear();
+        i = 0;
+
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("stockSymbol").isNull()==true)
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                found1 = true;
+            }
+
+            if(rec.value("stockName").isNull()==true)
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                found2 = true;
+            }
+
+            if((found1 == true) && (found2 == true))
+            {
+                found1 = false;
+                found2 = false;
+
+                data.name = (QString)rec.value("stockName").toString().toLatin1();
+                data.symbol = (QString)rec.value("stockSymbol").toString().toLatin1();
+                stockNameAndSymbolArr.insert(i++, data);
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
 
 
 

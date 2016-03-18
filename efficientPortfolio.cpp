@@ -660,14 +660,23 @@ void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
             updateMinMax(x, y);
             m_riskReturPlotArr[row].setSamples(&x, &y, 1);
 
-            // Display digat as label
+            // Display digits as label
             if(ui->checkBoxShowNumberInGraph->isChecked() == true)
                 enterPlotLabel(row, x, y, ui->qwtPlot);
             // qDebug() << data.riskStdDev <<  data.meanReturns;
 
-
+            QString str;
+            if(ui->checkBoxShowNumberInGraph->isChecked()== true)
+            {
+                str.sprintf("%d ", row);
+                str += data.stockName;
+            }
+            else
+            {
+                str = data.stockName;
+            }
             QTreeWidgetItem *item = new QTreeWidgetItem;
-            item->setText(CDbHndl::TWColum_Name, data.stockName);
+            item->setText(CDbHndl::TWColum_Name, str);
             item->setText(CDbHndl::TWColum_SYMBOL, data.stockSymbol);
             item->setExpanded(true);
                            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);

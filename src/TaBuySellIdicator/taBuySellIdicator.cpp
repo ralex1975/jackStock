@@ -1,4 +1,5 @@
 #include "inc/TaBuySellIdicator/taBuySellIdicator.h"
+#include "inc/TaBuySellIdicator/taBuySellTask.h"
 #include "yahooStockPlotUtil.h"
 #include "util.h"
 #include "QDebug"
@@ -16,7 +17,8 @@
  ****************************************************************/
 TaBuySellIdicator::TaBuySellIdicator()
 {
-
+   // m_taBuySellTask = new taBuySellTask;
+   // m_taBuySellTask->start(QThread::NormalPriority);
 }
 
 
@@ -193,14 +195,15 @@ QString TaBuySellIdicator::convAvgSellSignalToNumber(SellSignalMovingAvgST &sell
         sellSignalNo = "2 PBMA";
     }
 
-    if(sellSignals.priceDipBelowLongAvg == true)
-    {
-        sellSignalNo = "3 PBLA";
-    }
 
     if(sellSignals.ShortAvgDipBelowMidAvg == true)
     {
-        sellSignalNo = "4 SABMA";
+        sellSignalNo = "3 SABMA";
+    }
+
+    if(sellSignals.priceDipBelowLongAvg == true)
+    {
+        sellSignalNo = "4 PBLA";
     }
 
     if(sellSignals.ShortAvgDipBelowLongAvg == true)
@@ -243,15 +246,17 @@ QString TaBuySellIdicator::convAvgBuySignalToNumber(BuySignalMovingAvgST &buySig
         buySignalNo = "2 PAMA";
     }
 
-    if(buySignals.priceRiseAboveLongAvg == true)
-    {
-        buySignalNo = "3 PALA";
-    }
 
     if(buySignals.ShortAvgRiseAboveMidAvg == true)
     {
-        buySignalNo = "4 SAAMA";
+        buySignalNo = "3 SAAMA";
     }
+
+    if(buySignals.priceRiseAboveLongAvg == true)
+    {
+        buySignalNo = "4 PALA";
+    }
+
 
     if(buySignals.ShortAvgRiseAboveLongAvg == true)
     {
@@ -389,7 +394,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     int arrLenStockPrice;
     int arrLenMacd;
     int arrLenRsi;
-    int arrLenStochastics;
+    // int arrLenStochastics;
 
     QString endDate;
     QString startDate;
@@ -408,20 +413,21 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     double avgLongVal2;
     double macdVal2;
     double rsiVal2;
-    double stochasticsVal2;
+   // double stochasticsVal2;
 
-    double stochasticsMin;
-    double stochasticsMax;
+    // double stochasticsMin;
+    // double stochasticsMax;
 
     double level;
 
+#if 0
     m_file = fopen("debugSell.txt", "a+");
     if(!m_file)
     {
         QMessageBox::information(NULL, QString::fromUtf8("File error"), QString::fromUtf8("Fail to open file"));
         return false;
     }
-
+#endif
 
     // Array with x, y data
     clearStockAndIndicatorMem(m_avgShortData);
@@ -430,7 +436,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     clearStockAndIndicatorMem(m_stockPrice);
     clearStockAndIndicatorMem(m_macdData);
     clearStockAndIndicatorMem(m_rsiData);
-    clearStockAndIndicatorMem(m_stochasticsData);
+    // clearStockAndIndicatorMem(m_stochasticsData);
 
 
 
@@ -439,14 +445,6 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     resetBuySignals(buySignals);
     resetBuySignals(buyMomentumSignals);
     resetSellSignals(sellMomentumSignals);
-
-    if(stockSymbol.compare("MVIR-B.ST") == 0)
-    {
-        static int i = 0;
-        i++;
-        i--;
-    }
-
 
 
     // Calc start stop date
@@ -462,9 +460,14 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
 
     // Gather MACD
     db.getYahooTaMacd(stockSymbol, startDate, endDate, 26, 12, 9, dummyQwtStockPlotData1, m_macdData);
-    //db.getYahooTaMacd(stockSymbol, startDate, endDate, 52, 24, 8, dummyQwtStockPlotData1, m_macdData);
     db.getYahooTaRsi(stockSymbol, startDate, endDate, 14, dummyQwtStockPlotData1, m_rsiData);
-    db.getYahooTaStochastics(stockSymbol, startDate, endDate,  9, 3, dummyQwtStockPlotData1, m_stochasticsData);
+    // db.getYahooTaStochastics(stockSymbol, startDate, endDate,  9, 3, dummyQwtStockPlotData1, m_stochasticsData);
+
+
+    CMyTaskQueData data;
+
+    data.stockSymbol = stockSymbol;
+    m_taTaskInputQue.addDataLast(data);
 
 
     // Nof of data stored in each array
@@ -474,7 +477,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     arrLenAvgLong       = m_avgLongData.data.indicator1.size();
     arrLenMacd          = m_macdData.data.indicator3.size();
     arrLenRsi           = m_rsiData.data.indicator1.size();
-    arrLenStochastics   = m_stochasticsData.data.indicator2.size();
+    //arrLenStochastics   = m_stochasticsData.data.indicator2.size();
 
 
     // To little data to create sell/buy signal?
@@ -482,8 +485,8 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
        (arrLenAvgShort      < 15)  ||
        (arrLenAvgMid        < 15)  ||
        (arrLenAvgLong       < 15)  ||
-       (arrLenRsi           < 15)  ||
-       (arrLenStochastics   < 15)  ||
+       (arrLenRsi           < 15) /* ||
+       (arrLenStochastics   < 15)*/  ||
        (arrLenMacd          < 15))
     {
         return false;
@@ -495,7 +498,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     // Get start stop data value
     //=====================================================================
     stockVal1 = m_stockPrice.data.y.at(arrLenStockPrice - 10);
-    stockVal2  = m_stockPrice.data.y.at(arrLenStockPrice - 1);;
+    stockVal2 = m_stockPrice.data.y.at(arrLenStockPrice - 1);;
 
     avgShortVal1 = m_avgShortData.data.indicator1.at(arrLenAvgShort-10);
     avgShortVal2 = m_avgShortData.data.indicator1.at(arrLenAvgShort-1);
@@ -512,9 +515,10 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     rsiVal1 = m_rsiData.data.indicator1.at(arrLenRsi  - 10);
     rsiVal2 = m_rsiData.data.indicator1.at(arrLenRsi - 1);
 
-    stochasticsVal2 = m_stochasticsData.data.indicator2.at(arrLenStochastics  - 1);
-    stochasticsMin = m_stochasticsData.data.indicator2.at(arrLenStochastics - 10);
-    stochasticsMax = stochasticsMin;
+    // stochasticsVal2 = m_stochasticsData.data.indicator2.at(arrLenStochastics  - 1);
+    // stochasticsMin = m_stochasticsData.data.indicator2.at(arrLenStochastics - 10);
+    // stochasticsMax = stochasticsMin;
+#if 0
     double data;
     for(int k = (arrLenStochastics - 9); k < (arrLenStochastics); k++)
     {
@@ -537,7 +541,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     {
         buyMomentumSignals.stochasticsAbove20 = true;
     }
-
+#endif
 
 
 
@@ -545,13 +549,14 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     // Sell signal (Momentum)
     //==================================================================================
 
+#if 1
     level = 0;
     sellMomentumSignal(macdVal1,
                        macdVal2,
                        level,
                        sellMomentumSignals.macdBelowZero);
 
-
+#endif
 
 
 
@@ -570,30 +575,13 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     // Buy signal (Momentum)
     //==================================================================================
 
+#if 1
     level = 0;
     buyMomentumSignal(macdVal1,
                       macdVal2,
                       level,
                       buyMomentumSignals.macdAboveZero);
-
-
-    #if 0
-    if(true == buyMomentumSignals.macdAboveZero)
-    {
-        qDebug() << "Buy macd";
-        qDebug() << stockSymbol;
-        qDebug() << "macdVal1" << macdVal1;
-        qDebug() << "macdVal2" << macdVal2;
-
-        for(int k = (arrLenMacd - 10); k < (arrLenMacd - 1); k++)
-        {
-            qDebug() << m_macdData.data.indicator3.at(k);
-        }
-    }
 #endif
-
-
-
 
 
     level = 30;
@@ -602,7 +590,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
                       level,
                       buyMomentumSignals.rsiAbove30);
 
-
+#if 0
     fprintf(m_file, "macd\n");
     fprintf(m_file, "%s\n", stockSymbol.toStdString().c_str());
     fprintf(m_file, "sell = %d\n", sellMomentumSignals.macdBelowZero);
@@ -630,7 +618,7 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     fprintf(m_file, "\n");
 
     fclose(m_file);
-
+#endif
     #if 0
     if(true == buyMomentumSignals.rsiAbove30)
     {
@@ -653,13 +641,13 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     // Sell signal (Trend)
     //==================================================================================
 
-    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgShortVal1, avgShortVal2, avgMidVal1, avgMidVal2,
+    sellSignalFastAvgCrossSlowAvg(stockVal2, avgShortVal1, avgShortVal2, avgMidVal1, avgMidVal2,
                                  sellSignals.ShortAvgDipBelowMidAvg);
 
-    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgShortVal1, avgShortVal2, avgLongVal1, avgLongVal2,
+    sellSignalFastAvgCrossSlowAvg(stockVal2, avgShortVal1, avgShortVal2, avgLongVal1, avgLongVal2,
                                  sellSignals.ShortAvgDipBelowLongAvg);
 
-    sellSignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgMidVal1, avgMidVal2, avgLongVal1, avgLongVal2,
+    sellSignalFastAvgCrossSlowAvg(stockVal2, avgMidVal1, avgMidVal2, avgLongVal1, avgLongVal2,
                                  sellSignals.MidAvgDipBelowLongAvg);
 
 
@@ -676,13 +664,13 @@ bool TaBuySellIdicator::getAvgBuySellSignals(QString stockSymbol,
     // Buy signal (Trend)
     //==================================================================================
 
-    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgShortVal1, avgShortVal2, avgMidVal1, avgMidVal2,
+    buySignalFastAvgCrossSlowAvg(stockVal2, avgShortVal1, avgShortVal2, avgMidVal1, avgMidVal2,
                                  buySignals.ShortAvgRiseAboveMidAvg);
 
-    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgShortVal1, avgShortVal2, avgLongVal1, avgLongVal2,
+    buySignalFastAvgCrossSlowAvg(stockVal2, avgShortVal1, avgShortVal2, avgLongVal1, avgLongVal2,
                                  buySignals.ShortAvgRiseAboveLongAvg);
 
-    buySignalFastAvgCrossSlowAvg(stockVal1, stockVal2, avgMidVal1, avgMidVal2, avgLongVal1, avgLongVal2,
+    buySignalFastAvgCrossSlowAvg(stockVal2, avgMidVal1, avgMidVal2, avgLongVal1, avgLongVal2,
                                  buySignals.MidAvgRiseAboveLongAvg);
 
 
@@ -779,8 +767,7 @@ void TaBuySellIdicator::buyMomentumSignal(double dataVal1,
  *
  *
  ****************************************************************/
-void TaBuySellIdicator::sellSignalFastAvgCrossSlowAvg(double priseVal1,
-                                                      double priseVal2,
+void TaBuySellIdicator::sellSignalFastAvgCrossSlowAvg(double priseVal2,
                                                       double avgFastVal1,
                                                       double avgFastVal2,
                                                       double avgSlowVal1,
@@ -851,8 +838,7 @@ void TaBuySellIdicator::sellSignalFastAvgCrossSlowAvg(double avgFastVal1,
  *
  *
  ****************************************************************/
-void TaBuySellIdicator::buySignalFastAvgCrossSlowAvg(double priseVal1,
-                                                     double priseVal2,
+void TaBuySellIdicator::buySignalFastAvgCrossSlowAvg(double priseVal2,
                                                      double avgFastVal1,
                                                      double avgFastVal2,
                                                      double avgSlowVal1,
@@ -865,8 +851,8 @@ void TaBuySellIdicator::buySignalFastAvgCrossSlowAvg(double priseVal1,
        (avgSlowVal2 < avgFastVal2) &&
        (avgFastVal1 < avgFastVal2) &&
        (priseVal2 > avgFastVal2)   &&
-       (priseVal2 > avgSlowVal2)   &&
-       (avgSlowVal1 < avgSlowVal2))
+       (priseVal2 > avgSlowVal2)  /* &&
+       (avgSlowVal1 < avgSlowVal2)*/)
     {
         buySignalFastCrossSlow = true;
     }
@@ -898,8 +884,8 @@ void TaBuySellIdicator::buySignalFastAvgCrossSlowAvg(double avgFastVal1,
     // Is short avg crossing mid avg?
     if((avgFastVal1 < avgSlowVal1) &&
        (avgSlowVal2 < avgFastVal2) &&
-       (avgFastVal1 < avgFastVal2) &&
-       (avgSlowVal1 < avgSlowVal2))
+       (avgFastVal1 < avgFastVal2) /*&&
+       (avgSlowVal1 < avgSlowVal2)*/)
     {
         buySignalFastCrossSlow = true;
     }

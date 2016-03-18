@@ -328,6 +328,18 @@ public:
         SORT_TWIDGET_NAME
     };
 
+    struct StockNameAndSymbolST
+    {
+        QString name;
+        QString symbol;
+    };
+
+    bool addStockSymbolAndNameInArr(QVector<CDbHndl::StockNameAndSymbolST> &stockNameAndSymbolArr,
+                                    int stockListId,
+                                     CDbHndl::SortSymbolNameTreeWidget_ET sortOn,
+                                     char *sortOrder);
+
+
 
 
     bool delAllTblNordnetCompanyDescription(void);
@@ -705,6 +717,16 @@ public:
     QVector <VarianceData_ST> m_rowVarianseArr;
     QVector <VarianceData_ST> m_colVarianseArr;
     QVector <double> m_tmpArr;
+
+    bool getAllSnapshotPlotStocksData(QString stockListName,
+                                      QVector <CStockPlotUtil::StockData_ST> &stockArr);
+
+
+
+    bool assetSymbolGetKeyDataUseBridge(QString snapshotAssetSymbol,
+                                        snapshotStockData_ST &keyData,
+                                        bool dbIsHandledExternly);
+
 
     bool companynameGetKeyDataUseBridge(QString snapshotCompanyName,
                                         snapshotStockData_ST &keyData,

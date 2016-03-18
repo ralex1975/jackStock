@@ -14,11 +14,6 @@ class importYahooTaData : public QThread
     bool m_processSingleStock;
     QString m_filename;
 
-
-
-
-    //HttpWindow m_hw1;
-
     bool openAssetFile(QString filename, QFile **file, QTextStream **inStream);
     void closeAssetFile(QFile **file, QTextStream **inStream);
     bool retreiveAssetName(QString &stockSymbol, QString &stockName, QTextStream *inStream);
@@ -34,7 +29,6 @@ public:
         STATE_RETRIEVE_ASSET_NAME,
         STATE_WAIT_ON_SERVER_DATA,
         STATE_PARSE_DATA
-       // STATE_REQUEST_DATA_FROM_SERVER
     };
 
 
@@ -55,6 +49,7 @@ public:
     void setImportInfo(QString filename);
     void setImportInfoSingleStock(QString stockName, QString stockSymbol);
     void run();
+
     
 signals:
    void emitImportYahooTaDataIsFinish(int);
