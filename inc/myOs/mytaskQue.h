@@ -9,8 +9,8 @@
  *
  ****************************************************************************/
 
-#ifndef BASE_MESSAGE_QUE
-#define BASE_MESSAGE_QUE
+#ifndef MY_TASK_QUEUE_QUE
+#define MY_TASK_QUEUE_QUE
 
 //=====================================================================
 // Imported definitions
@@ -19,77 +19,45 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string>
-#include "../../inc/core/typedefs.h"
-#include "../../inc/core/mutex.h"
-#include "../../inc/core/semaphore.h"
+#include "../../inc/myOs/mutex.h"
+#include "../../inc/myOs/semaphore.h"
+#include "yahooStockPlotUtil.h"
 
-using namespace std;
 
 //=====================================================================
 // Forward declaration
 //=====================================================================
 
 
-//=====================================================================
-// Constants
-//=====================================================================
-#define MAX_IP_ADDR_STR_SIZE 40
-#define MAX_FAN_PAYLOAD_SIZE 1024
 
 //=====================================================================
 // Constants
 //=====================================================================
-enum TaskQuePrio_ET
-{
-	QUE_PRIO_LOWEST = 1,
-	QUE_PRIO_0 = QUE_PRIO_LOWEST,
-	QUE_PRIO_1,
-	QUE_PRIO_2,
-	QUE_PRIO_3,
-	QUE_PRIO_4,
-	QUE_PRIO_HIGHEST = QUE_PRIO_4,
-};
 
 
 
-enum TaskQueMsgType_ET
-{
-	skaTasBort,
-};
 
-enum TaskQuePayloadType_ET
-{
-	FAN_REQ_PAYLOAD,
-	FAN_RESP_PAYLOAD,
-};
-
-class CFanPayloadType
-{
-public:
-	char frame[MAX_FAN_PAYLOAD_SIZE];
-};
-
-union PayloadMsg_UT
-{
-	CFanPayloadType fanMsg;
-};
 
 
 //=====================================================================
 // Class definition
 //=====================================================================
-class CTaskQueData
+class CMyTaskQueData
 {
 public:
-	TaskQueMsgType_ET mainMsgType;
-	unsigned long finalReplyDest;					// The ID of the task that create the req message
-	unsigned long fromTask;							// Changed for each task that handle this message
-	time_t msgCreateTime;							// Removes old messages
-	TaskQuePrio_ET priority;						// Message priority
-	char ipAddr[MAX_IP_ADDR_STR_SIZE];				// If fan message witch destination
-	unsigned long msgID;							// Used by internal web server
-	TaskQuePayloadType_ET payloadType;				// Tell what type of payload
-	PayloadMsg_UT payload;							// This shall be in Air Cleaner frame format
+    QString stockSymbol;
+    QString endDate;
+    QString startDate;
+
+    // Store one stock with data
+    CYahooStockPlotUtil::StockData_ST stockPrice;
+    CYahooStockPlotUtil::StockData_ST avgShortData;
+    CYahooStockPlotUtil::StockData_ST avgMidData;
+    CYahooStockPlotUtil::StockData_ST avgLongData;
+
+    CYahooStockPlotUtil::StockData_ST macdData;
+    CYahooStockPlotUtil::StockData_ST rsiData;
+    CYahooStockPlotUtil::StockData_ST stochasticsData;
 };
 
 
@@ -100,14 +68,14 @@ public:
 //=====================================================================
 // Class definition
 //=====================================================================
-class CTaskQueLink
+class CMyTaskQueLink
 {
 public:
 	friend class CInputLinkedList;
 	friend class CTaskQueData;
 	
-	CTaskQueData data;
-	CTaskQueLink *next;
+    CMyTaskQueData data;
+    CMyTaskQueLink *next;
 };
 
 
@@ -115,17 +83,17 @@ public:
 //=====================================================================
 // Class definition
 //=====================================================================
-class CTaskQue
+class CMyTaskQue
 {
 
 private:
 //=========================================================
 // Private variables
 //==========================================================
-	CTaskQueLink *m_root;
-	CTaskQueLink *m_currSelectNode;
+    CMyTaskQueLink *m_root;
+    CMyTaskQueLink *m_currSelectNode;
 	bool m_isBlockingForever;
-	unsigned long m_blockTimeOutMs;
+    int m_blockTimeOutMs;
 	CSemaphore m_semaphore;
 	CMutex m_mutex;
 
@@ -134,14 +102,19 @@ private:
 //===========================================================
 // Private function
 //===========================================================
-	bool createNewNode(CTaskQueLink **newLink);
-	void addDataToNode(CTaskQueData &nodeData, CTaskQueData data);
-	void extractDataFromNode(CTaskQueData &data, CTaskQueData nodeData);
-	void resetData(CTaskQueData &data);
-	bool getNodeData(TaskQueMsgType_ET comMsg, CTaskQueData &data);
-	bool getFirst(CTaskQueData &data);
-	bool getNext(CTaskQueData &data);
+    bool createNewNode(CMyTaskQueLink **newLink);
+    void addDataToNode(CMyTaskQueData &nodeData, CMyTaskQueData data);
+    void extractDataFromNode(CMyTaskQueData &data, CMyTaskQueData nodeData);
+    void resetData(CMyTaskQueData &data);
+    bool getNodeData(CMyTaskQueData &data);
+    bool getFirst(CMyTaskQueData &data);
+    bool getNext(CMyTaskQueData &data);
 	void waitForDataOrTimeOut(void);
+    void copyDataVectorData(QVector <double> &outData, QVector <double> inData);
+    void copyDataVectorData(QVector <QString> &outData, QVector <QString> inData);
+    void copyXYPlotData(CYahooStockPlotUtil::XYPlotData_ST &outData, CYahooStockPlotUtil::XYPlotData_ST inData);
+
+
 
 
 	
@@ -151,16 +124,15 @@ private:
 // Public functions
 //===========================================================
 public:
-	CTaskQue(unsigned long blockTimeOutMs=100, bool blockForever=false, int semaphoreValue=0);
-	~CTaskQue();
+    CMyTaskQue(int blockTimeOutMs = 100, bool blockForever = false, int semaphoreValue = 0);
+    ~CMyTaskQue();
 	
-	bool copyFirstData(CTaskQueData &data);
+    bool copyFirstData(CMyTaskQueData &data);
 	bool removeFirst(void);
-	bool removeFirst(CTaskQueData &data);
-	bool getDataRemoveLink(TaskQueMsgType_ET ComMsg, CTaskQueData &data);
+    bool removeFirst(CMyTaskQueData &data);
 
-	bool addDataLast(CTaskQueData data);
-	bool addDataInPriority(CTaskQueData data);
+    bool addDataLast(CMyTaskQueData data);
+    bool addDataInPriority(CMyTaskQueData data);
 
 	bool isEmpty(void);
 	void deleteList(void);

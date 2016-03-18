@@ -13,10 +13,8 @@
 //=====================================================================
 // Imported definitions
 //=====================================================================
-#include "string.h"
-#include "../../inc/taskQue/taskQue.h"
-#include "../../inc/core/debug.h"
-#include "../../inc/core/util.h"
+#include "../../inc/myOs/mytaskQue.h"
+#include "qdebug.h"
 
 
 
@@ -31,13 +29,14 @@
  *
  *
  *****************************************************************************/
-CTaskQue::
-CTaskQue(unsigned long blockTimeOutMs, bool blockForever, int semaphoreValue):
-										m_root(NULL),
-										m_currSelectNode(NULL),
-										m_isBlockingForever(blockForever),
-										m_blockTimeOutMs(blockTimeOutMs),
-										m_semaphore(semaphoreValue)
+ CMyTaskQue::
+ CMyTaskQue(int blockTimeOutMs,
+            bool blockForever,
+            int semaphoreValue):m_root(NULL),
+                                m_currSelectNode(NULL),
+                                m_isBlockingForever(blockForever),
+                                m_blockTimeOutMs(blockTimeOutMs),
+                                m_semaphore(semaphoreValue)
 {
 
 
@@ -47,14 +46,14 @@ CTaskQue(unsigned long blockTimeOutMs, bool blockForever, int semaphoreValue):
 
 /***************************************************************************
  *
- * Function: CTaskQue()
+ * Function:  CMyTaskQue()
  *
  * Description: Destructor
  *
  *
  *
  *****************************************************************************/
-CTaskQue::~CTaskQue()
+CMyTaskQue::~ CMyTaskQue()
 {
 	deleteList();
 
@@ -68,7 +67,7 @@ CTaskQue::~CTaskQue()
  *              queue or until we get an timeout.
  *
  *****************************************************************************/
-void CTaskQue::waitForDataOrTimeOut(void)
+void  CMyTaskQue::waitForDataOrTimeOut(void)
 {
 
 	if(m_isBlockingForever == true)
@@ -77,11 +76,7 @@ void CTaskQue::waitForDataOrTimeOut(void)
 	}
 	else
 	{
-		m_semaphore.tryWait();
-		if(isEmpty()== true)
-		{
-			sleepMs(m_blockTimeOutMs);
-		}
+        m_semaphore.tryWait(m_blockTimeOutMs);
 	}
 
 }
@@ -98,7 +93,7 @@ void CTaskQue::waitForDataOrTimeOut(void)
  *
  *
  *****************************************************************************/
-bool CTaskQue::isEmpty(void)
+bool  CMyTaskQue::isEmpty(void)
 {
 
 	if(m_root == NULL)
@@ -117,11 +112,11 @@ bool CTaskQue::isEmpty(void)
  *
  *
  *****************************************************************************/
-bool CTaskQue::copyFirstData(CTaskQueData &data)
+bool  CMyTaskQue::copyFirstData( CMyTaskQueData &data)
 {
 	if((m_isBlockingForever == false) && (m_root == NULL))
 	{
-		sleepMs(m_blockTimeOutMs);
+        m_semaphore.tryWait(m_blockTimeOutMs);
 	}
 
 	if(m_root == NULL)
@@ -142,9 +137,9 @@ bool CTaskQue::copyFirstData(CTaskQueData &data)
  *
  *
  *****************************************************************************/
-bool CTaskQue::removeFirst(void)
+bool  CMyTaskQue::removeFirst(void)
 {
-	CTaskQueLink *curr;
+     CMyTaskQueLink *curr;
 
 	waitForDataOrTimeOut();
 
@@ -173,9 +168,9 @@ bool CTaskQue::removeFirst(void)
  *
  *
  *****************************************************************************/
-bool CTaskQue::removeFirst(CTaskQueData &data)
+bool  CMyTaskQue::removeFirst( CMyTaskQueData &data)
 {
-	CTaskQueLink *curr = NULL;
+     CMyTaskQueLink *curr = NULL;
 
 	waitForDataOrTimeOut();
 
@@ -195,65 +190,6 @@ bool CTaskQue::removeFirst(CTaskQueData &data)
 }
 
 
-/***************************************************************************
- *
- * Function: getDataRemoveLink()
- *
- * Description: This function search for a searchKey if it is found
- *              this data is retrieved and the link is removed from the list.
- *
- *
- *****************************************************************************/
-bool CTaskQue::getDataRemoveLink(TaskQueMsgType_ET comMsgType, CTaskQueData &data)
-{
-	CTaskQueLink *tmpLink = NULL;
-	CTaskQueLink *curr = NULL;
-	CTaskQueLink *prev = NULL;
-
-	waitForDataOrTimeOut();
-
-
-	if(m_root == NULL)
-	{
-		return false;
-	}
-
-	m_mutex.lock();
-
-	curr = m_root;
-	while(curr != NULL)
-	{
-		if(comMsgType == data.mainMsgType)
-		{
-			// Is it first node
-			if(prev == NULL)
-			{
-				tmpLink = m_root;
-				//data = tmpLink->data;
-				extractDataFromNode(data, tmpLink->data);
-				m_root = m_root->next;
-				delete tmpLink;
-				m_mutex.unlock();
-				return true;
-			}
-			else
-			{
-				prev->next = curr->next;
-				tmpLink = curr;
-				// data = tmpLink->data;
-				extractDataFromNode(data, tmpLink->data);
-				delete tmpLink;
-				m_mutex.unlock();
-				return true;
-			}
-		}
-		prev = curr;
-		curr = curr->next;
-	}
-	m_mutex.unlock();
-
-	return false;
-}
 
 
 
@@ -269,12 +205,12 @@ bool CTaskQue::getDataRemoveLink(TaskQueMsgType_ET comMsgType, CTaskQueData &dat
  *
  *
  *****************************************************************************/
-bool CTaskQue::
-addDataLast(CTaskQueData data)
+bool  CMyTaskQue::
+addDataLast( CMyTaskQueData data)
 {
-	CTaskQueLink *curr = NULL;
-	CTaskQueLink *prev = NULL;
-	CTaskQueLink *newLink;
+     CMyTaskQueLink *curr = NULL;
+     CMyTaskQueLink *prev = NULL;
+     CMyTaskQueLink *newLink;
 
 	m_mutex.lock();
 
@@ -315,88 +251,6 @@ addDataLast(CTaskQueData data)
 
 
 
-/***************************************************************************
- *
- * Function: addDataInPriority()
- *
- * Description: Insert data in sort order.
- *
- *
- *
- *****************************************************************************/
-bool CTaskQue::
-addDataInPriority(CTaskQueData data)
-{
-	CTaskQueLink *curr = NULL;
-	CTaskQueLink *prev = NULL;
-	CTaskQueLink *newLink;
-	
-	m_mutex.lock();
-	
-	if(m_root == NULL)
-	{
-		if(createNewNode(&m_root) == true)
-		{
-			addDataToNode(m_root->data, data);
-			m_mutex.unlock();
-			m_semaphore.post();
-			return true;
-		}
-		m_mutex.unlock();
-		return false;
-	}
-	
-	curr = m_root;
-	while(curr)
-	{
-		// Is new key smaller than current node search key?
-		if( data.priority > curr->data.priority )
-		{
-			if(createNewNode(&newLink)== true)
-			{
-				addDataToNode(newLink->data, data);
-			}
-			else
-			{
-				m_mutex.unlock();
-				return false;
-			}
-		
-			// Place new link first in list?
-			if(prev == NULL)
-			{
-				newLink->next = m_root;
-				m_root = newLink;
-				m_mutex.unlock();
-				m_semaphore.post();
-				return true;
-			}
-			// Place new link between first and last link in list
-			else
-			{
-				newLink->next = prev->next;
-				prev->next = newLink;
-				m_mutex.unlock();
-				m_semaphore.post();
-				return true;
-			}
-		}
-		prev = curr;
-		curr = curr->next;
-	}
-
-	// Place new link last in list
-	if(createNewNode(&newLink)==true)
-	{
-		addDataToNode(newLink->data, data);
-		prev->next = newLink;
-		m_mutex.unlock();
-		m_semaphore.post();
-		return true;
-	}
-	m_mutex.unlock();
-	return false;
-}
 
 
 
@@ -410,9 +264,9 @@ addDataInPriority(CTaskQueData data)
  *
  *
  *****************************************************************************/
-void CTaskQue::deleteList(void)
+void  CMyTaskQue::deleteList(void)
 {
-	CTaskQueLink *curr = NULL;
+     CMyTaskQueLink *curr = NULL;
 
 	m_mutex.lock();
 
@@ -420,7 +274,8 @@ void CTaskQue::deleteList(void)
 	{
 		curr = m_root;
 		m_root = m_root->next;
-		m_semaphore.tryWait();
+        // m_semaphore.tryWait();
+        m_semaphore.wait();
 		delete curr;
 	}
 	m_mutex.unlock();
@@ -438,7 +293,7 @@ void CTaskQue::deleteList(void)
  * Note:		Link is not removed from list
  *
  *****************************************************************************/
-bool CTaskQue::getFirst(CTaskQueData &data)
+bool  CMyTaskQue::getFirst( CMyTaskQueData &data)
 {
 	if(m_root == NULL)
 		return false;
@@ -462,7 +317,7 @@ bool CTaskQue::getFirst(CTaskQueData &data)
  * Note: The function getFirst() must be used before the function getNext() is used 
  *
  *****************************************************************************/
-bool CTaskQue::getNext(CTaskQueData &data)
+bool  CMyTaskQue::getNext( CMyTaskQueData &data)
 {
 	
 	if(m_currSelectNode == NULL)
@@ -489,44 +344,24 @@ bool CTaskQue::getNext(CTaskQueData &data)
  *
  *
  *****************************************************************************/
-void CTaskQue::
-addDataToNode(CTaskQueData &nodeData, CTaskQueData data)
+void  CMyTaskQue::
+addDataToNode( CMyTaskQueData &nodeData,  CMyTaskQueData data)
 {
 	m_mutex.lock();
-	int i;
 
-	nodeData.finalReplyDest = data.finalReplyDest;
-	nodeData.fromTask = data.fromTask;
+    nodeData.stockSymbol = data.stockSymbol;
+    nodeData.endDate  = data.endDate;
+    nodeData.startDate  = data.startDate;
 
-	// Check if it is possible to copy IP addr
-	for(i = 0; i < MAX_IP_ADDR_STR_SIZE; i++)
-	{
-		if(data.ipAddr[i]== 0)
-			strcpy(nodeData.ipAddr, data.ipAddr);
-	}
+    copyXYPlotData(nodeData.stockPrice.data, data.stockPrice.data);
+    copyXYPlotData(nodeData.avgShortData.data, data.avgShortData.data);
+    copyXYPlotData(nodeData.avgMidData.data, data.avgMidData.data);
+    copyXYPlotData(nodeData.avgLongData.data, data.avgLongData.data);
+    copyXYPlotData(nodeData.macdData.data, data.macdData.data);
+    copyXYPlotData(nodeData.rsiData.data, data.rsiData.data);
+    copyXYPlotData(nodeData.stochasticsData.data, data.stochasticsData.data);
 
-	nodeData.mainMsgType = data.mainMsgType;
-	nodeData.msgCreateTime = data.msgCreateTime;
-	nodeData.msgID = data.msgID;
-	nodeData.payloadType = data.payloadType;
-
-
-	switch(nodeData.payloadType)
-	{
-	case FAN_REQ_PAYLOAD:
-	case FAN_RESP_PAYLOAD:
-		for(i = 0; i < MAX_FAN_PAYLOAD_SIZE; i++)
-		{
-			if(data.ipAddr[i] == 0)
-				strcpy(nodeData.payload.fanMsg.frame, data.payload.fanMsg.frame);
-		}
-		break;
-	default:
-		ERR("Error: Unknown payload type. Line: %d, file: %s", __LINE__, __FILE__);
-	}
-
-	nodeData.priority = data.priority;
-	m_mutex.unlock();
+   m_mutex.unlock();
 }
 
 
@@ -540,47 +375,102 @@ addDataToNode(CTaskQueData &nodeData, CTaskQueData data)
  *
  *
  *****************************************************************************/
-void CTaskQue::
-extractDataFromNode(CTaskQueData &data, CTaskQueData nodeData)
+void  CMyTaskQue::
+extractDataFromNode(CMyTaskQueData &data,  CMyTaskQueData nodeData)
 {
 
-	int i;
-
 	m_mutex.lock();
-	data.finalReplyDest = nodeData.finalReplyDest;
-	data.fromTask = nodeData.fromTask;
 
-	// Check if it is possible to copy IP addr
-	for(i = 0; i < MAX_IP_ADDR_STR_SIZE; i++)
-	{
-		if(nodeData.ipAddr[i]== 0)
-			strcpy(data.ipAddr, nodeData.ipAddr);
-	}
+    data.stockSymbol = nodeData.stockSymbol;
+    data.endDate  = nodeData.endDate;
+    data.startDate  = nodeData.startDate;
 
-	data.mainMsgType = nodeData.mainMsgType;
-	data.msgCreateTime = nodeData.msgCreateTime;
-	data.msgID = nodeData.msgID;
-	data.payloadType = nodeData.payloadType;
+    copyXYPlotData(data.stockPrice.data, nodeData.stockPrice.data);
+    copyXYPlotData(data.avgShortData.data, nodeData.avgShortData.data);
+    copyXYPlotData(data.avgMidData.data, nodeData.avgMidData.data);
+    copyXYPlotData(data.avgLongData.data, nodeData.avgLongData.data);
+    copyXYPlotData(data.macdData.data, nodeData.macdData.data);
+    copyXYPlotData(data.rsiData.data, nodeData.rsiData.data);
+    copyXYPlotData(data.stochasticsData.data, nodeData.stochasticsData.data);
 
-	switch(nodeData.payloadType)
-	{
-	case FAN_REQ_PAYLOAD:
-	case FAN_RESP_PAYLOAD:
-		for(i = 0; i < MAX_FAN_PAYLOAD_SIZE; i++)
-		{
-				if(nodeData.payload.fanMsg.frame[i] == 0)
-					strcpy(data.payload.fanMsg.frame, nodeData.payload.fanMsg.frame);
-		}
-		break;
-	default:
-		ERR("Error: Unknown payload type Line: %d, file: %s", __LINE__, __FILE__);
-	}
-
-
-	data.priority = nodeData.priority;
-	m_mutex.unlock();
+    m_mutex.unlock();
 }
 
+
+
+/***************************************************************************
+ *
+ * Function: ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************************/
+void CMyTaskQue::
+copyXYPlotData(CYahooStockPlotUtil::XYPlotData_ST &outData, CYahooStockPlotUtil::XYPlotData_ST inData)
+{
+    copyDataVectorData(outData.x, inData.x);
+    copyDataVectorData(outData.y, inData.y);
+    copyDataVectorData(outData.xDate, inData.xDate);
+
+    copyDataVectorData(outData.indicator1, inData.indicator1);
+    copyDataVectorData(outData.indicator2, inData.indicator2);
+    copyDataVectorData(outData.indicator3, inData.indicator3);
+    copyDataVectorData(outData.indicator4, inData.indicator4);
+    copyDataVectorData(outData.indicator5, inData.indicator5);
+}
+
+
+/***************************************************************************
+ *
+ * Function: ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************************/
+void CMyTaskQue::copyDataVectorData(QVector <QString> &outData, QVector <QString> inData)
+{
+    int i;
+
+    if((false == inData.isEmpty()))
+    {
+        for(i = 0; i < inData.size(); i++)
+        {
+            outData[i] = inData[i];
+        }
+    }
+
+
+}
+
+
+/***************************************************************************
+ *
+ * Function: ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************************/
+void CMyTaskQue::copyDataVectorData(QVector <double> &outData, QVector <double> inData)
+{
+    int i;
+
+    if((false == inData.isEmpty()))
+    {
+        for(i = 0; i < inData.size(); i++)
+        {
+            outData[i] = inData[i];
+        }
+    }
+}
 
 
 
@@ -596,23 +486,14 @@ extractDataFromNode(CTaskQueData &data, CTaskQueData nodeData)
  *
  *
  *****************************************************************************/
-bool CTaskQue::getNodeData(TaskQueMsgType_ET comMsgType, CTaskQueData &data)
+bool  CMyTaskQue::getNodeData(CMyTaskQueData &data)
 {
 	bool res;
 
 	m_mutex.lock();
 	res = getFirst(data);
-	while(res)
-	{
-		if(comMsgType == data.mainMsgType)
-		{
-			m_mutex.unlock();
-			return true;
-		}
-		res = getNext(data);
-	}
 	m_mutex.unlock();
-	return false;
+    return res;
 }
 
 
@@ -626,13 +507,86 @@ bool CTaskQue::getNodeData(TaskQueMsgType_ET comMsgType, CTaskQueData &data)
  *
  *
  *****************************************************************************/
-void CTaskQue::resetData(CTaskQueData &data)
+void  CMyTaskQue::resetData(CMyTaskQueData &data)
 {
 	m_mutex.lock();
-	data.ipAddr[0] = 0;
-	data.payload.fanMsg.frame[0] = 0;
+
+    data.stockSymbol.clear();
+    data.endDate.clear();
+    data.startDate.clear();
+
+    data.stockPrice.data.x.clear();
+    data.stockPrice.data.y.clear();
+    data.stockPrice.data.xDate.clear();
+    data.stockPrice.data.indicator1.clear();
+    data.stockPrice.data.indicator2.clear();
+    data.stockPrice.data.indicator3.clear();
+    data.stockPrice.data.indicator4.clear();
+    data.stockPrice.data.indicator5.clear();
+
+
+    data.avgShortData.data.x.clear();
+    data.avgShortData.data.y.clear();
+    data.avgShortData.data.xDate.clear();
+    data.avgShortData.data.indicator1.clear();
+    data.avgShortData.data.indicator2.clear();
+    data.avgShortData.data.indicator3.clear();
+    data.avgShortData.data.indicator4.clear();
+    data.avgShortData.data.indicator5.clear();
+
+
+
+    data.avgMidData.data.x.clear();
+    data.avgMidData.data.y.clear();
+    data.avgMidData.data.xDate.clear();
+    data.avgMidData.data.indicator1.clear();
+    data.avgMidData.data.indicator2.clear();
+    data.avgMidData.data.indicator3.clear();
+    data.avgMidData.data.indicator4.clear();
+    data.avgMidData.data.indicator5.clear();
+
+
+    data.avgLongData.data.x.clear();
+    data.avgLongData.data.y.clear();
+    data.avgLongData.data.xDate.clear();
+    data.avgLongData.data.indicator1.clear();
+    data.avgLongData.data.indicator2.clear();
+    data.avgLongData.data.indicator3.clear();
+    data.avgLongData.data.indicator4.clear();
+    data.avgLongData.data.indicator5.clear();
+
+
+    data.macdData.data.x.clear();
+    data.macdData.data.y.clear();
+    data.macdData.data.xDate.clear();
+    data.macdData.data.indicator1.clear();
+    data.macdData.data.indicator2.clear();
+    data.macdData.data.indicator3.clear();
+    data.macdData.data.indicator4.clear();
+    data.macdData.data.indicator5.clear();
+
+    data.rsiData.data.x.clear();
+    data.rsiData.data.y.clear();
+    data.rsiData.data.xDate.clear();
+    data.rsiData.data.indicator1.clear();
+    data.rsiData.data.indicator2.clear();
+    data.rsiData.data.indicator3.clear();
+    data.rsiData.data.indicator4.clear();
+    data.rsiData.data.indicator5.clear();
+
+    data.stochasticsData.data.x.clear();
+    data.stochasticsData.data.y.clear();
+    data.stochasticsData.data.xDate.clear();
+    data.stochasticsData.data.indicator1.clear();
+    data.stochasticsData.data.indicator2.clear();
+    data.stochasticsData.data.indicator3.clear();
+    data.stochasticsData.data.indicator4.clear();
+    data.stochasticsData.data.indicator5.clear();
+
+
 	m_mutex.unlock();
 }
+
 
 
 
@@ -647,15 +601,15 @@ void CTaskQue::resetData(CTaskQueData &data)
  *
  *
  *****************************************************************************/
-bool CTaskQue::createNewNode(CTaskQueLink **newLink)
+bool  CMyTaskQue::createNewNode( CMyTaskQueLink **newLink)
 {
 	m_mutex.lock();
 
-	(*newLink) = new CTaskQueLink;
+    (*newLink) = new  CMyTaskQueLink;
 
 	if(!(*newLink))
 	{
-		ERR("Internal Error: Could not create a new CTaskQueLink link");
+        qDebug() << "Internal Error: Could not create a new  CMyTaskQueLink link";
 		m_mutex.unlock();
 		return false;
 	}

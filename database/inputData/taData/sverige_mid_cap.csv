@@ -2,11 +2,12 @@ ACTI.ST	Active Biotech
 ADDT-B.ST	Addtech B
 ALIG.ST	Alimak Group AB
 Arcm.ST	Arcam AB
+ATT.ST	Attendo AB
 AZA.ST	Avanza Bank Holding
 BBTO-B.ST	B&B TOOLS B
 BACTI-B.ST	Bactiguard Holding AB
 BEIA-B.ST	Beijer Alma B
-BEIJ-B.ST	Beijer AB, G & L ser. B
+BEIJ-B.ST	Beijer Ref AB ser. B
 BESQ.ST	Besqab AB
 BILI-A.ST	Bilia A
 BIOG-B.ST	BioGaia B
@@ -16,14 +17,17 @@ BUFAB.ST	Bufab Holding AB
 BULTEN.ST	Bulten AB
 BURE.ST	Bure Equity
 BMAX.ST	Byggmax Group
+CAPIO.ST	Capio AB
 CATE.ST	Catena AB
 CCC.ST	Cavotec SA
 CLAS-B.ST	Clas Ohlson B
 CLA-B.ST	Cloetta B
+COMH.ST	Com Hem Holding AB
 COIC.ST	Concentric
 COLL.ST	Collector AB
 CORE.ST	Corem Property Group AB
 CRED-A.ST	Creades A
+DCAR.ST	D. Carnegie & Co AB B
 DIOS.ST	Diös Fastigheter
 DUNI.ST	Duni
 DUST.ST	Dustin Group
@@ -67,9 +71,10 @@ NOBINA.ST	Nobina AB
 NN-B.ST	Nordnet B
 NP3.ST	NP3 Fastigheter
 OASM.ST	Oasmia Pharmaceutical
-OEM-B.ST	OEM International B
+OEM-B.ST	OEM International AB ser. B
 OPUS.ST	Opus Group
 ORX.ST	Orexo
+PNDX-B.ST	Pandox AB ser. B
 PLAZ-B.ST	Platzer Fastigheter Holding B 
 PROE-B.ST	Proffice B
 QLRO.ST	Qliro Group AB (CDON)
@@ -78,6 +83,7 @@ RECI-B.ST	Recipharm
 REZT.ST	Rezidor Hotel Group
 SAGA-A.ST	Sagax A
 SAGA-B.ST	Sagax B
+SHOT.ST	Scandic Hotels Group AB
 SAS.ST	SAS
 SCST.ST	Scandi Standard
 SECT-B.ST	SECTRA B
@@ -92,6 +98,7 @@ TETY.ST	Tethys Oil
 THULE.ST	Thule Group
 TOBII.ST	Tobii
 TWW.ST	Transcom WorldWide
+TRAC-B.ST	Traction AB ser. B
 TRMO.ST	Transmode
 TRI.ST	Tribona
 TROAX.ST	Troax Group

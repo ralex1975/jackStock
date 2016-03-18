@@ -4,6 +4,7 @@
 #include "dbHndl.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "taBuySellTask.h"
 
 
 class TaBuySellIdicator
@@ -21,6 +22,7 @@ class TaBuySellIdicator
     CYahooStockPlotUtil::StockData_ST m_stochasticsData;
 
     bool buyAvg20Above50(QString stockSymbol);
+    taBuySellTask *m_taBuySellTask;
 
 
 public:
@@ -67,8 +69,7 @@ public:
     TaBuySellIdicator();
     bool buySignalAvgShortAboveMid(QString stockSymbol);
     bool sellSignalAvgShortAvgMidAvgLongAbovePrice(QString stockSymbol);
-    void sellSignalFastAvgCrossSlowAvg(double priseVal1,
-                                       double priseVal2,
+    void sellSignalFastAvgCrossSlowAvg(double priseVal2,
                                        double avgFastVal1,
                                       double avgFastVal2,
                                       double avgSlowVal1,
@@ -114,8 +115,7 @@ public:
     void resetBuySignals(BuySignalMomentumST &buySignals);
     void resetSellSignals(SellSignalMomentumST &sellSignals);
 
-    void buySignalFastAvgCrossSlowAvg(double priseVal1,
-                                      double priseVal2,
+    void buySignalFastAvgCrossSlowAvg(double priseVal2,
                                       double avgFastVal1,
                                       double avgFastVal2,
                                       double avgSlowVal1,

@@ -13,8 +13,9 @@
 //=====================================================================
 // Imported definitions
 //=====================================================================
-#include "../../inc/core/mutex.h"
-#include "../../inc/core/debug.h"
+#include "../../inc/myOs/mutex.h"
+
+
 
 
 /***************************************************************
@@ -27,27 +28,11 @@
  *
  *
  *****************************************************************/
-CMutex::CMutex()
+CMutex::CMutex():m_mutex(QMutex::Recursive)
 {
-	int res;
-	pthread_mutexattr_t attr;
-
-	//INFO("Mutex init\n");
-	res = pthread_mutexattr_init(&attr);
-	if(res)
-		ERR("Error: pthread_mutexattr_init()");
 
 
-	res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
-	if(res)
-		ERR("Error: pthread_mutexattr_settype()");
 
-
-	res = pthread_mutex_init(&m_mutex, &attr);
-	if (res)
-		ERR("Error: pthread_mutex_init()");
-
-	    pthread_mutexattr_destroy(&attr);
 }
 
 
@@ -64,8 +49,7 @@ CMutex::CMutex()
  *****************************************************************/
 CMutex::~CMutex()
 {
-	//INFO("Mutex destroy\n");
-	pthread_mutex_destroy(&m_mutex);
+
 }
 
 
@@ -79,10 +63,9 @@ CMutex::~CMutex()
  *
  *
  *****************************************************************/
-int CMutex::lock()
+void CMutex::lock()
 {
-	//INFO("Mutex lock\n");
-	return pthread_mutex_lock(&m_mutex);
+    m_mutex.lock();
 }
 
 
@@ -96,10 +79,9 @@ int CMutex::lock()
  *
  *
  *****************************************************************/
-int CMutex::unlock()
+void CMutex::unlock()
 {
-	//INFO("Mutex unlock\n");
-	return pthread_mutex_unlock(&m_mutex);
+    m_mutex.unlock();
 
 }
 

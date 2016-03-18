@@ -76,7 +76,11 @@ SOURCES += main.cpp\
     src/guiUtil/myTreeWidget.cpp \
     src/guiUtil/myLineEdit.cpp \
     src/TaBuySellIdicator/taBuySellIdicator.cpp \
-    leastSquareStaDlg.cpp
+    leastSquareStaDlg.cpp \
+    src/myOS/mutex.cpp \
+    src/myOS/semaphore.cpp \
+    src/myOS/mytaskQue.cpp \
+    src/TaBuySellIdicator/taBuySellTask.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -133,7 +137,11 @@ HEADERS  += WebBrowserTab.h \
     inc/guiUtil/myTreeWidget.h \
     inc/guiUtil/myLineEdit.h \
     inc/TaBuySellIdicator/taBuySellIdicator.h \
-    leastSquareStaDlg.h
+    leastSquareStaDlg.h \
+    inc/myOs/mutex.h \
+    inc/myOs/semaphore.h \
+    inc/myOs/mytaskQue.h \
+    inc/TaBuySellIdicator/taBuySellTask.h
 
 FORMS    += \
     WebBrowserTab.ui \

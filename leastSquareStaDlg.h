@@ -222,6 +222,8 @@ private slots:
     void on_tableViewLeastSquare_2_clicked(const QModelIndex &index);
     void on_GetDbDataButton_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::LeastSquaresTaDlg *ui;
 };

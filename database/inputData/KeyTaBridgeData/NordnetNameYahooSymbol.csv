@@ -8,6 +8,7 @@ Atrium Ljungberg AB ser. B|ATRLJ-B.ST|
 Autoliv Inc. SDB|ALIV-SDB.ST|
 Axfood AB|AXFO.ST|
 Axis AB|AXIS.ST|
+Beijer Ref AB ser. B|BEIJ-B.ST|
 BillerudKorsnäs AB|BILL.ST|
 Boliden AB|BOL.ST|
 Bulten AB|BULTEN.ST|
@@ -96,12 +97,12 @@ AAK AB|AAK.ST|
 Active Biotech AB|ACTI.ST|
 Addtech AB ser. B|ADDT-B.ST|
 Aerocrine AB ser. B|AERO-B.ST|
+Arcam AB|Arcm.ST|
 Alimak Group AB|ALIG.ST|
 Avanza Bank Holding AB|AZA.ST|
 B&B TOOLS AB ser. B|BBTO-B.ST|
 Besqab AB|BESQ.ST|
 Beijer Alma AB ser. B|BEIA-B.ST|
-Beijer AB, G & L ser. B|BEIJ-B.ST|
 BioGaia AB ser. B|BIOG-B.ST|
 Black Earth Farming SDB|BEF-SDB.ST|
 BlackPearl Resources SDB|PXXS-SDB.ST|
@@ -110,9 +111,12 @@ Bure Equity AB|BURE.ST|
 Byggmax Group AB|BMAX.ST|
 CDON Group AB|CDON.ST|
 Clas Ohlson AB ser. B|CLAS-B.ST|
+Capio AB|CAPIO.ST|
 Cloetta AB ser. B|CLA-B.ST|
+Com Hem Holding AB|COMH.ST|
 Concentric AB|COIC.ST|
 Creades AB A|CRED-A.ST|
+D. Carnegie & Co AB B|DCAR.ST|
 Diös Fastigheter AB|DIOS.ST|
 Duni AB|DUNI.ST|
 East Capital Explorer AB|ECEX.ST|
@@ -129,14 +133,17 @@ Haldex AB|HLDX.ST|
 Heba Fastighets AB ser. B|HEBA-B.ST|
 HiQ International AB|HIQ.ST|
 HMS Networks AB|HMS.ST|
+Inwido AB|INWI.ST|
 Indutrade AB|INDT.ST|
 JM AB|JM.ST|
 KappAhl AB|KAHL.ST|
 Klövern AB|KLOV.ST|
 Kungsleden AB|KLED.ST|
+Lagercrantz Group AB ser B|LAGR-B.ST|
 Lindab International AB|LIAB.ST|
 Lifco AB ser.B|LIFCO-B.ST|
 Loomis AB ser. B|LOOM-B.ST|
+Lucara Diamond Corp|LUC.ST|
 Medivir AB ser. B|MVIR-B.ST|
 Mekonomen AB|MEKO.ST|
 NetEnt AB ser. B|NET-B.ST|
@@ -144,6 +151,7 @@ Nobia AB|NOBI.ST|
 Nobina AB|NOBINA.ST|
 Nolato AB ser. B|NOLA-B.ST|
 Nordnet AB ser. B|NN-B.ST|
+OEM International AB ser. B|OEM-B.ST|
 Proffice AB ser. B|PROE-B.ST|
 Qliro Group AB|QLRO.ST|
 Rezidor Hotel Group AB|REZT.ST|
@@ -157,6 +165,7 @@ Swedol AB ser. B|SWOL-B.ST|
 Systemair AB|SYSR.ST|
 Tethys Oil AB|TETY.ST|
 Transmode AB|TRMO.ST|
+Traction AB ser. B|TRAC-B.ST|
 Tribona AB|TRI.ST|
 Unibet Group plc|UNIB-SDB.ST|
 Vostok Nafta Investment, SDB|VNIL-SDB.ST|
@@ -167,7 +176,7 @@ Klövern AB pref|KLOV-PREF.ST|
 Fast. Balder pref|BALD-PREF.ST|
 Securitas AB ser. B|SECU-B.ST|
 Sanitec Oyj|SNTC.ST|
-Nokia Corporation|NOKI-SEK.ST|
+Nokia Corporation|NOKI.ST|
 Platzer Fastigheter Holding B|PLAZ-B.ST|
 Ratos AB pref|RATO-PREF.ST|
 A.P. Møller - Mærsk A|MAERSK-A.CO|
@@ -178,6 +187,7 @@ Algeta|ALGETA.OL|
 Cargotec Oyj|CYJBF|
 Carlsberg A A/S|CARL-A.CO|
 Carlsberg B A/S|CARL-B.CO|
+Cavotec SA|CCC.ST|
 Chr. Hansen Holding A/S|CHR.CO|
 Coloplast B A/S|COLOB.CO|
 Corem Property Group AB|CORE.ST|
@@ -203,6 +213,7 @@ Odfjell Drilling|ODL.OL|
 Orkla|ORK.OL|
 Oasmia Pharmaceutical AB|OASM.ST|
 Pandora A/S|PNDORA.CO|
+Pandox AB ser. B|PNDX-B.ST|
 REC Silicon|REC.OL|
 Rockwool Int. A|ROCK-A.CO|
 Rockwool Int. B|ROCK-B.CO|
@@ -214,6 +225,7 @@ TDC A/S|TDC.CO|
 Telenor|TEL.OL|
 Topdanmark A/S|TOP.CO|
 Tryg A/S|TRYG.CO|
+Thule Group AB|THULE.ST|
 Vestas Wind Systems A/S|VWS.CO|
 William Demant Holding|WDH.CO|
 Yara International|YAR.OL|
@@ -224,6 +236,7 @@ Ambu A/S|AMBU-B.CO|
 Archer|ARCHER.OL|
 Arendals Fossekompani|AFK.OL|
 Atea|ATEA.OL|
+Attendo AB|ATT.ST|
 Auriga Industries B A/S|AURI-B.CO|
 Austevoll Seafood|AUSS.OL|
 Avocet Mining|AVM.OL|
@@ -267,14 +280,17 @@ Odfjell ser. A|ODF.OL|
 Odfjell ser. B|ODFB.OL|
 Olav Thon Eiendomsselskap|OLT.OL|
 Opera Software|OPERA.OL|
+Opus Group AB|OPUS.ST|
 Petroleum Geo-Services|PGS.OL|
 Polarcus|PLCS.OL|
 Prosafe|PRS.OL|
+Orexo AB|ORX.ST|
 Questerre Energy Corporation|QEC.OL|
 RaySearch Laboratories AB ser. B|RAY-B.ST|
 REC Solar|RECSOL.OL|
 Ringkjøbing Landbobank|RILBA.CO|
 Royal UNIBREW A/S|RBREW.CO|
+Scandic Hotels Group AB|SHOT.ST|
 Scandi Standard AB|SCST.ST|	
 SalMar|SALM.OL|
 Schibsted|SCH.OL|
@@ -298,6 +314,7 @@ Tomra Systems|TOM.OL|
 Tobii AB|TOBII.ST|
 Troax Group AB|TROAX.ST|
 United Int. Enterprises|UIE.CO|
+VBG GROUP AB ser. B|VBG-B.ST|
 Veidekke|VEI.OL|
 Veripos|VPOS.OL|
 Victoria Park AB ser. A|VICP-A.ST|
