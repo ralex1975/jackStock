@@ -500,29 +500,11 @@
     </font>
    </property>
   </widget>
-  <widget class="QCheckBox" name="smallCapCheckBox">
-   <property name="geometry">
-    <rect>
-     <x>520</x>
-     <y>560</y>
-     <width>210</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Small cap</string>
-   </property>
-  </widget>
   <widget class="QCheckBox" name="midCapCheckBox">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>540</y>
+     <x>110</x>
+     <y>610</y>
      <width>210</width>
      <height>22</height>
     </rect>
@@ -623,8 +605,8 @@
   <widget class="QCheckBox" name="largeCapCheckBox">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>520</y>
+     <x>10</x>
+     <y>610</y>
      <width>210</width>
      <height>22</height>
     </rect>
@@ -732,8 +714,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>1200</x>
-     <y>430</y>
+     <x>650</x>
+     <y>560</y>
      <width>121</width>
      <height>27</height>
     </rect>
@@ -744,14 +726,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Min Portfölj</string>
+    <string>Ladda data</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="showAllCheckBox">
    <property name="geometry">
     <rect>
-     <x>1090</x>
-     <y>430</y>
+     <x>520</x>
+     <y>560</y>
      <width>97</width>
      <height>22</height>
     </rect>
@@ -763,6 +745,16 @@
    </property>
    <property name="text">
     <string>Visa alla</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="stockListComboBoxSqrt">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>520</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
    </property>
   </widget>
   <zorder>largeCapCheckBox</zorder>
@@ -778,7 +770,6 @@
   <zorder>label_5</zorder>
   <zorder>lineEditYieldLSqrt</zorder>
   <zorder>lineEditPELSqrt</zorder>
-  <zorder>smallCapCheckBox</zorder>
   <zorder>midCapCheckBox</zorder>
   <zorder>label_17</zorder>
   <zorder>label_16</zorder>
@@ -792,6 +783,7 @@
   <zorder>selTimePeriodSliderLSqrt</zorder>
   <zorder>pushButton</zorder>
   <zorder>showAllCheckBox</zorder>
+  <zorder>stockListComboBoxSqrt</zorder>
  </widget>
  <customwidgets>
   <customwidget>

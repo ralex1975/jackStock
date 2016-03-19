@@ -9739,7 +9739,6 @@ bool CDbHndl::delAllTaStockData(void)
 bool CDbHndl::addStockListsToComboBox(QComboBox *comboBox)
 {
     QSqlRecord rec;
-    // QSqlQuery qry;
     QString str;
     int index;
 

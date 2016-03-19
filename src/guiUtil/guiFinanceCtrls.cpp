@@ -11,7 +11,7 @@
 
 #include "../../inc/guiUtil/guiFinanceCtrls.h"
 #include "../../inc/guiUtil/guiFinanceColor.h"
-
+#include "../../common.h"
 
 
 /**********************************************************************************
@@ -25,7 +25,8 @@
  *
  ********************************************************************************/
 GuiFinanceCtrls::GuiFinanceCtrls(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_comboBoxIndex(0)
 {
 
 }
@@ -251,5 +252,55 @@ void GuiFinanceCtrls::initStockList(QTreeWidget *treeWidget,
                                    header1, headerWidth1, hideCol1,
                                    header2, headerWidth2, hideCol2);
 }
+
+
+
+/*******************************************************************
+ *
+ * Function:    addAllStockListsToCombobox()
+ *
+ * Description: This function add all stocklist name stored in db
+ *              and add it to a combobox.
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::addAllStockListsToCombobox(QComboBox *comboBox)
+{
+    comboBox->clear();
+
+    // m_db.delAllTaStockLists();
+    // m_db.delAllTaStockNames();
+
+    if(false == m_db.addStockListsToComboBox(comboBox))
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Open file"), QString::fromUtf8("Fail to retrive any stocklist from db"));
+        return;
+    }
+
+    comboBox->setCurrentIndex(m_comboBoxIndex);
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:    addAllStockListsToCombobox()
+ *
+ * Description: This function retrieve current selected stocklist
+ *              name and id.
+ *
+ *
+ *
+ *******************************************************************/
+bool GuiFinanceCtrls::getStockListNameAndId(QComboBox *comboBox,
+                                            QString &stockListName,
+                                            int &stockListId)
+{
+    stockListName = comboBox->currentText().toUtf8();
+
+    return m_db.findTaStockListId(stockListName, stockListId);
+}
+
+
+
 
 
