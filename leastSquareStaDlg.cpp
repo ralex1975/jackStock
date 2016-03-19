@@ -161,6 +161,8 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
 }
 
 
+
+
 /**********************************************************************************
  *
  * Function:    tablePlusHeaderClicked()
@@ -1642,6 +1644,13 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
     CExtendedTable etMinus;
     TableColumnIndicatorInfo_ST headerList[CDbHndl::MAX_NOF_GPSEL_INDEX];
 
+    etPlus.setHorizontalFont(ui->tableViewLeastSquare, "Helvetica", 9);
+    etPlus.setVerticalFont(ui->tableViewLeastSquare, "Helvetica", 9);
+
+    etMinus.setHorizontalFont(ui->tableViewLeastSquare_2, "Helvetica", 9);
+    etMinus.setVerticalFont(ui->tableViewLeastSquare_2, "Helvetica", 9);
+
+
 
     nofCols = 0;
 
@@ -1649,8 +1658,8 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("Symbol      ");
     headerList[nofCols++].name = QString::fromUtf8("R");
     headerList[nofCols++].name = QString::fromUtf8("K");
-    headerList[nofCols++].name = QString::fromUtf8("T Köp/Sälj");
-    headerList[nofCols++].name = QString::fromUtf8("M Köp/Sälj");
+    headerList[nofCols++].name = QString::fromUtf8("T\nKöp/Sälj");
+    headerList[nofCols++].name = QString::fromUtf8("M\nKöp/Sälj");
 
 
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
@@ -1726,12 +1735,12 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
 
 
 
-            if(true == db.calc1dLeastSrqFitRParam(nofData,prodXXSum, prodYYSum, prodXYSum, r))
+            if(true == db.calc1dLeastSrqFitRParam(nofData,prodXXSum, prodYYSum, prodXYSum, r) || (true == ui->showAllCheckBox->isChecked()))
             {
-                if(true == db.calc1dLeastSrqFitParams(nofData, meanXSum, meanYSum, prodXXSum, prodYYSum, prodXYSum, m, k))
+                if(true == db.calc1dLeastSrqFitParams(nofData, meanXSum, meanYSum, prodXXSum, prodYYSum, prodXYSum, m, k) || (true == ui->showAllCheckBox->isChecked()))
                 {
 
-                    if(r > 0.7)
+                    if(r > 0.7 || (true == ui->showAllCheckBox->isChecked()))
                     {
                         // Add stock symbol Column 1
                         if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
@@ -2271,3 +2280,4 @@ void LeastSquaresTaDlg::on_pushButton_clicked()
     m_mutex.unlock();
 
 }
+
