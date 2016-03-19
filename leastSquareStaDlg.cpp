@@ -5,6 +5,7 @@
 #include "util.h"
 #include <QPalette>
 #include "inc/guiUtil/myLineEdit.h"
+#include "inc/guiUtil/guiFinanceCtrls.h"
 
 
 
@@ -129,9 +130,12 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
     m_singleStockDataReqStatus(STATUS_REQ_SINGLE_STOCK_IDLE),
     ui(new Ui::LeastSquaresTaDlg)
 {
-
+    GuiFinanceCtrls gfc;
 
     ui->setupUi(this);
+
+    gfc.addAllStockListsToCombobox(ui->stockListComboBoxSqrt);
+
 
     m_macdHist = new QwtPlotHistogram ();
 
@@ -1951,9 +1955,11 @@ void LeastSquaresTaDlg::on_pushButton_clicked()
     int len;
     int len1;
     int nofCols;
+    bool res;
     CDbHndl db;
     QString str;
     GuiFinanceColor gfc;
+    GuiFinanceCtrls gfic;
     CDbHndl::snapshotStockData_ST keyData;
     TaBuySellIdicator::SellSignalMovingAvgST sellSignals;
     TaBuySellIdicator::BuySignalMovingAvgST buySignals;
@@ -2002,9 +2008,27 @@ void LeastSquaresTaDlg::on_pushButton_clicked()
 
     QString stockListName;
     int stockListId;
-    stockListName = QString::fromUtf8("Min Portfolj");
+
+
+    res = gfic.getStockListNameAndId(ui->stockListComboBoxSqrt, stockListName, stockListId);
+
+
+    if(false == res)
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Aktielistor"), QString::fromUtf8("Fel ingen data hittad"));
+        return;
+    }
+
     if(true == db.findTaStockListId(stockListName, stockListId))
     {
+        int len = m_stockArr.size();
+        for( int i = 0; i < len; i++)
+        {
+            m_stockArr[i].data.x.clear();
+            m_stockArr[i].data.y.clear();
+        }
+
+        m_stockArr.clear();
 
         if(false == db.getAllSnapshotPlotStocksData(stockListName, m_stockArr))
         {

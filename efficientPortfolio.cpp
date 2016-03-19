@@ -12,6 +12,7 @@
 #include "dbHndl.h"
 #include "common.h"
 #include <QItemSelectionModel>
+#include "inc/guiUtil/guiFinanceCtrls.h"
 
 
 
@@ -27,15 +28,17 @@ EfficientPortfolio::EfficientPortfolio(QWidget *parent) :
     ui(new Ui::EfficientPortfolio),
     m_comboBoxIndex(0)
 {
+
     ui->setupUi(this);
 
     ui->checkBoxShowNumberInGraph->setChecked(false);
 
      m_plot.initPlotPicker(ui->qwtPlot);
-
      m_plot.initPlotZoomer(ui->qwtPlot);
-
      m_plot.enableZoomMode(true);
+
+
+
 
 
     // Just create dummy space so we can delete it later before we create the space we need
@@ -60,8 +63,6 @@ EfficientPortfolio::EfficientPortfolio(QWidget *parent) :
 
      connect(ui->tableView->horizontalHeader() , SIGNAL(sectionClicked(int)), this, SLOT(slotHorHeaderClicked(int)));
      connect(ui->tableView->verticalHeader() , SIGNAL(sectionClicked(int)), this, SLOT(slotVertHeaderClicked(int)));
-
-     //connect( ui->treeWidget , SIGNAL( itemClicked( QTreeWidgetItem*,int ) ), this, SLOT ( updateitem ( QTreeWidgetItem*,int ) ) );
 
      connect( ui->treeWidget->header(), SIGNAL( sectionDoubleClicked(int) ), this, SLOT( slotTreeHeaderDoubleClick(int) ) );
 
@@ -129,7 +130,6 @@ void EfficientPortfolio::slotVertHeaderClicked(int index)
         x++;
     }
 
-    //m_efficentBarGraphDlg.mainTraversTreeWidget(ui->treeWidget);
     m_efficentBarGraphDlg.initCorrelationTable(ui->treeWidget);
     m_efficentBarGraphDlg.show();
     m_efficentBarGraphDlg.plot();
@@ -773,8 +773,8 @@ void EfficientPortfolio::initStockList(void)
     QString column1 = QObject::tr("Sym");
     QString column2 = QObject::tr("Ink");
     QString column3 = QObject::tr("Std");
-    QString column4 = QObject::tr("Förv.\nRisk");
-    QString column5 = QObject::tr("Förv.\nAvkst");
+    QString column4 = QObject::tr("FÃ¶rv.\nRisk");
+    QString column5 = QObject::tr("FÃ¶rv.\nAvkst");
     QString column6 = QObject::tr("Min\nvikt");
     QString column7 = QObject::tr("Max\nvikt");
     QString column8 = QObject::tr("Vald\nvikt");
@@ -892,8 +892,8 @@ bool EfficientPortfolio::openStockListFile(QString filename)
 
             if(false == m_db.addTaStockList(stockListName))
             {
-                str.sprintf("Kan inte là?„gga till stockList");
-                QMessageBox::critical(NULL, QObject::tr("Là?„ga till stock list"), str.toLocal8Bit().constData());
+                str.sprintf("Kan inte lÃ ?Â„gga till stockList");
+                QMessageBox::critical(NULL, QObject::tr("LÃ ?Â„ga till stock list"), str.toLocal8Bit().constData());
                 return false;
             }
             else

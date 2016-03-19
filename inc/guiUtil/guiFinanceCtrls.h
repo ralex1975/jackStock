@@ -7,14 +7,22 @@
 
 #include "guiFinanceColor.h"
 #include "myTreeWidget.h"
-
+#include "../../dbHndl.h"
 
 
 class GuiFinanceCtrls : public QWidget
 {
     Q_OBJECT
+    int m_comboBoxIndex;
+    CDbHndl m_db;
+
 public:
     explicit GuiFinanceCtrls(QWidget *parent = 0);
+
+    void addAllStockListsToCombobox(QComboBox *comboBox);
+    bool getStockListNameAndId(QComboBox *comboBox, QString &stockListName, int &stockListId);
+
+
 
     //===============================================================================================
     // LineEdits
