@@ -142,7 +142,7 @@ QString TaBuySellIdicator::convMomentumSellSignalToNumber(SellSignalMomentumST &
  *
  *
  ****************************************************************/
-QString TaBuySellIdicator::convMomentumSellSignalToNumber(BuySignalMomentumST &buySignals)
+QString TaBuySellIdicator::convMomentumBuySignalToNumber(BuySignalMomentumST &buySignals)
 {
     QString buySignalNo = "0";
 
@@ -1003,3 +1003,132 @@ void TaBuySellIdicator::clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData
     stockData.data.indicator4.clear();
 
 }
+
+
+
+
+
+/*******************************************************************
+ *
+ * Function:    clearStockAndIndicatorTempMem()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void TaBuySellIdicator::
+faSellBuyIndicator(CDbHndl::snapshotStockData_ST keyData,
+                   double riskStdDev,
+                   FaBuyIndicatorStateET &buyIndicator,
+                   bool &sellIndicator)
+{
+    double doubleNumber;
+    CUtil cu;
+
+
+    buyIndicator = FA_IND_BUY_NOT_SET;
+    sellIndicator = false;
+
+    // sellBuySignal.meanReturns = meanReturns;
+    // sellBuySignal.stdDevRisk = riskStdDev;
+
+
+    if((riskStdDev >= 20) && buyIndicator != FA_IND_BUY_FALSE)
+    {
+        buyIndicator = FA_IND_BUY_FALSE;
+    }
+
+    //=====================
+    // no sell signal here
+    //=====================
+
+
+    // Vinst / utdelning
+    if(true == cu.number2double(keyData.earningsDividedByDividend, doubleNumber))
+    {
+        if((doubleNumber >= 0.9) && buyIndicator != FA_IND_BUY_FALSE)
+        {
+            buyIndicator = FA_IND_BUY_TRUE;
+        }
+        else
+        {
+            buyIndicator = FA_IND_BUY_FALSE;
+        }
+
+        //=====================
+        // no sell signal here
+        //=====================
+
+    }
+
+    if(true == cu.number2double(keyData.keyValuePE, doubleNumber))
+    {
+        if(doubleNumber >= 25 || doubleNumber < 0)
+        {
+            sellIndicator = true;
+        }
+
+
+        if((doubleNumber > 4) && (doubleNumber < 18) && buyIndicator != FA_IND_BUY_FALSE)
+        {
+            buyIndicator = FA_IND_BUY_TRUE;
+        }
+        else
+        {
+            buyIndicator = FA_IND_BUY_FALSE;
+        }
+    }
+
+
+
+    if(true == cu.number2double(keyData.keyValuePS, doubleNumber))
+    {
+        if(doubleNumber >= 3.7)
+        {
+            sellIndicator = true;
+        }
+
+        if((doubleNumber < 1.6) && buyIndicator != FA_IND_BUY_FALSE)
+        {
+            buyIndicator = FA_IND_BUY_TRUE;
+        }
+        else
+        {
+            buyIndicator = FA_IND_BUY_FALSE;
+        }
+
+    }
+
+
+    // Direktavkastning (Yield eller dividens)
+    if(true == cu.number2double(keyData.keyValueYield, doubleNumber))
+    {
+        if((doubleNumber > 2.9) && buyIndicator != FA_IND_BUY_FALSE)
+        {
+            buyIndicator = FA_IND_BUY_TRUE;
+        }
+        else
+        {
+            buyIndicator = FA_IND_BUY_FALSE;
+        }
+
+        //=====================
+        // no sell signal here
+        //=====================
+    }
+
+    // Eget kapital/ aktiepriset
+    if(true == cu.number2double(keyData.navDivLastStockPrice, doubleNumber))
+    {
+        if((doubleNumber > 0.8) && buyIndicator != FA_IND_BUY_FALSE)
+        {
+            buyIndicator = FA_IND_BUY_TRUE;
+        }
+        else
+        {
+            buyIndicator = FA_IND_BUY_FALSE;
+        }
+    }
+}
+
+

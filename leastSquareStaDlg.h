@@ -16,6 +16,9 @@
 #include "inc/guiUtil/guiFinanceCtrls.h"
 #include "inc/TaBuySellIdicator/taBuySellIdicator.h"
 
+#include <qwt_plot_marker.h>
+#include <qwt_plot_grid.h>
+
 
 namespace Ui {
 class LeastSquaresTaDlg;
@@ -117,7 +120,7 @@ class LeastSquaresTaDlg : public QDialog
      MyLineEdit m_mle;
 
 
-     QPalette *m_faDataPalette[FA_NOF_DATA];
+    QPalette *m_faDataPalette[FA_NOF_DATA];
     QMutex m_mutex;
     QString m_startDate;
     QString m_endDate;
@@ -145,18 +148,36 @@ class LeastSquaresTaDlg : public QDialog
     CYahooStockPlotUtil::PlotData_ST m_qwtStockPlotData;
 
     CYahooStockPlotUtil::PlotData_ST m_qwtsubPlotData;
+    CYahooStockPlotUtil::PlotData_ST m_qwtPlotRiskReturnsData;
+
+
+    CYahooStockPlotUtil m_plotRiskRetur;
+    CYahooStockPlotUtil::MinMaxAxisValues_ST m_minMaxReturPlotArr;
+    QwtPlotCurve *m_riskReturPlotArr;
+    QwtPlotMarker *m_riskReturTxtArr;
+    QwtPlotCurve *m_xAxisPlot;
+    QwtPlotGrid *m_plotGrid;
+    int m_nofRiskReturPlotData;
+
 
     QwtPlotHistogram *m_macdHist;
     QVector <QwtIntervalSample> m_macdHistData;
 
     // Is able to store a number of stocks and all its data. Data can be retrived.
     QVector <CYahooStockPlotUtil::StockData_ST> m_yStockArr;
+    QVector <CStockPlotUtil::StockData_ST> m_stockArr;
 
     // Is able to store one stock with data
     CYahooStockPlotUtil::StockData_ST m_stockData;
 
-
-    QVector <CStockPlotUtil::StockData_ST> m_stockArr;
+    void plotQwtData(int nofCurves, QwtPlot *qwtPlot);
+    void plotXAxis(QwtPlot *qwtPlot); // Risk & returns
+    void enterPlotLabel(int index, double x, double y, QwtPlot *qwtPlot); // Risk & returns
+    void updateMinMax(double x, double y); // Risk & returns
+    void addRiskReturnsPlotData(int row, double riskStdDev, double meanReturns);  // Risk & returns
+    bool createQwtPlotArrMemSpace(int nofStocks); // Risk & returns
+    void removeQwtPlotArrMemSpace(void);          // Risk & returns
+    bool calcRiskAndReturn(QString startDate, QString endDate, CDbHndl::EfficPortStockData_ST &data);
 
     void prepReqTaDataFromServer(QString stockName, QString stockSymbol, QString startDate, QString endDate);
     void displayStockData(bool addLastPrice = false, double lastPrice = 0);
@@ -184,14 +205,6 @@ class LeastSquaresTaDlg : public QDialog
                                  CYahooStockPlotUtil::PlotData_ST &qwtPlotData);
     void setFaEditControlTxtColor(QLineEdit *lineEdit, QPalette *palette, const QColor &color);
     void initFa3MinMaxPePrice(void);
-
-
-
-
-
-
-
-
 
 
 
@@ -225,6 +238,10 @@ private slots:
     void on_pushButton_clicked();
 
 
+
+    void on_SellSigPushButton_clicked();
+
+    void on_SellBuyBridgeListpushButton_2_clicked();
 
 private:
     Ui::LeastSquaresTaDlg *ui;
