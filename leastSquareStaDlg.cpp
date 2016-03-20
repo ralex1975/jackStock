@@ -141,9 +141,13 @@ LeastSquaresTaDlg::LeastSquaresTaDlg(QWidget *parent) :
     createQwtPlotArrMemSpace(2);
     m_nofRiskReturPlotData = 2;
 
-    m_plotRiskRetur.initPlotPicker(ui->qwtPlotLSqr_3);
-    m_plotRiskRetur.initPlotZoomer(ui->qwtPlotLSqr_3);
-    m_plotRiskRetur.enableZoomMode(true);
+    m_plotRiskReturBuy.initPlotPicker(ui->qwtPlotLSqr_3);
+    m_plotRiskReturBuy.initPlotZoomer(ui->qwtPlotLSqr_3);
+    m_plotRiskReturBuy.enableZoomMode(true);
+
+    m_plotRiskReturSell.initPlotPicker(ui->qwtPlotLSqr_4);
+    m_plotRiskReturSell.initPlotZoomer(ui->qwtPlotLSqr_4);
+    m_plotRiskReturSell.enableZoomMode(true);
 
 
     gfc.addAllStockListsToCombobox(ui->stockListComboBoxSqrt);
@@ -2455,11 +2459,16 @@ void LeastSquaresTaDlg::on_pushButton_clicked()
  *********************************************************************/
 void LeastSquaresTaDlg::removeQwtPlotArrMemSpace(void)
 {
-    delete [] m_riskReturPlotArr;
-    delete [] m_riskReturTxtArr;
-    delete m_xAxisPlot;
-    delete m_plotGrid;
+    delete [] m_riskReturPlotArrBuy;
+    delete [] m_riskReturPlotArrSell;
+    delete [] m_riskReturTxtArrBuy;
+    delete [] m_riskReturTxtArrSell;
+    delete m_xAxisPlotBuy;
+    delete m_xAxisPlotSell;
+    delete m_plotGridBuy;
+    delete m_plotGridSell;
 }
+
 
 
 /*********************************************************************
@@ -2472,39 +2481,72 @@ bool LeastSquaresTaDlg::createQwtPlotArrMemSpace(int nofStocks)
 {
 
     // Create variances covariances matrix space
-    m_riskReturPlotArr = new QwtPlotCurve [nofStocks + 5];
+    m_riskReturPlotArrBuy = new QwtPlotCurve [nofStocks + 5];
+    m_riskReturPlotArrSell = new QwtPlotCurve [nofStocks + 5];
     m_nofRiskReturPlotData = nofStocks;
 
-    if((m_riskReturPlotArr) == 0)
+    if((m_riskReturPlotArrBuy) == 0)
     {
         return false;
     }
 
-    m_riskReturTxtArr = new QwtPlotMarker [nofStocks + 5];
-
-    if((m_riskReturTxtArr) == 0)
-    {
-        return false;
-    }
-
-
-    m_xAxisPlot = new QwtPlotCurve;
-
-    if((m_xAxisPlot) == 0)
+    if((m_riskReturPlotArrSell) == 0)
     {
         return false;
     }
 
 
-    m_plotGrid = new QwtPlotGrid;
+    m_riskReturTxtArrBuy = new QwtPlotMarker [nofStocks + 5];
 
-    if((m_plotGrid) == 0)
+    if((m_riskReturTxtArrBuy) == 0)
     {
         return false;
     }
+
+    m_riskReturTxtArrSell = new QwtPlotMarker [nofStocks + 5];
+
+    if((m_riskReturTxtArrSell) == 0)
+    {
+        return false;
+    }
+
+
+    m_xAxisPlotBuy = new QwtPlotCurve;
+
+    if((m_xAxisPlotBuy) == 0)
+    {
+        return false;
+    }
+
+
+    m_xAxisPlotSell = new QwtPlotCurve;
+
+    if((m_xAxisPlotSell) == 0)
+    {
+        return false;
+    }
+
+
+
+    m_plotGridBuy = new QwtPlotGrid;
+
+    if((m_plotGridBuy) == 0)
+    {
+        return false;
+    }
+
+    m_plotGridSell = new QwtPlotGrid;
+
+    if((m_plotGridSell) == 0)
+    {
+        return false;
+    }
+
 
     return true;
 }
+
+
 
 /*******************************************************************
  *
@@ -2514,30 +2556,33 @@ bool LeastSquaresTaDlg::createQwtPlotArrMemSpace(int nofStocks)
  *
  *
  *******************************************************************/
-void LeastSquaresTaDlg::updateMinMax(double x, double y)
+void LeastSquaresTaDlg::
+updateMinMax(double x,
+             double y,
+             CYahooStockPlotUtil::MinMaxAxisValues_ST &minMaxReturPlotArr)
 {
-    if(m_minMaxReturPlotArr.minMaxIsInit == false)
+    if(minMaxReturPlotArr.minMaxIsInit == false)
     {
-        m_minMaxReturPlotArr.minMaxIsInit = true;
-        m_minMaxReturPlotArr.maxX = x;
-        m_minMaxReturPlotArr.minX = x;
+        minMaxReturPlotArr.minMaxIsInit = true;
+        minMaxReturPlotArr.maxX = x;
+        minMaxReturPlotArr.minX = x;
 
-        m_minMaxReturPlotArr.maxY = y;
-        m_minMaxReturPlotArr.minY = y;
+        minMaxReturPlotArr.maxY = y;
+        minMaxReturPlotArr.minY = y;
     }
     else
     {
-        if(x > m_minMaxReturPlotArr.maxX)
-            m_minMaxReturPlotArr.maxX = x;
+        if(x > minMaxReturPlotArr.maxX)
+            minMaxReturPlotArr.maxX = x;
 
-        if(x < m_minMaxReturPlotArr.minX)
-            m_minMaxReturPlotArr.minX = x;
+        if(x < minMaxReturPlotArr.minX)
+            minMaxReturPlotArr.minX = x;
 
-        if(y > m_minMaxReturPlotArr.maxY)
-            m_minMaxReturPlotArr.maxY = y;
+        if(y > minMaxReturPlotArr.maxY)
+            minMaxReturPlotArr.maxY = y;
 
-        if(y < m_minMaxReturPlotArr.minY)
-            m_minMaxReturPlotArr.minY = y;
+        if(y < minMaxReturPlotArr.minY)
+            minMaxReturPlotArr.minY = y;
      }
 }
 
@@ -2551,7 +2596,8 @@ void LeastSquaresTaDlg::updateMinMax(double x, double y)
  *
  *
  *********************************************************************/
-void LeastSquaresTaDlg::enterPlotLabel(int index, double x, double y, QwtPlot *qwtPlot)
+void LeastSquaresTaDlg::
+enterPlotLabel(int index, double x, double y, QwtPlot *qwtPlot, QwtPlotMarker *riskReturTxtArr)
 {
     QString label;
     label.sprintf("%d.", index);
@@ -2562,10 +2608,10 @@ void LeastSquaresTaDlg::enterPlotLabel(int index, double x, double y, QwtPlot *q
     text.setBackgroundBrush(QColor(Qt::white));
 
 
-    m_riskReturTxtArr[index].setLabel( text );
-    m_riskReturTxtArr[index].setValue((x), y);
+    riskReturTxtArr[index].setLabel( text );
+    riskReturTxtArr[index].setValue((x), y);
 
-    m_riskReturTxtArr[index].attach(qwtPlot );
+    riskReturTxtArr[index].attach(qwtPlot);
 
 }
 
@@ -2581,13 +2627,24 @@ void LeastSquaresTaDlg::enterPlotLabel(int index, double x, double y, QwtPlot *q
  *
  *
  *******************************************************************/
-void LeastSquaresTaDlg::addRiskReturnsPlotData(int row, double x, double y)
+void LeastSquaresTaDlg::addRiskReturnsPlotData(int row, double x, double y, int plotNo)
 {
-
     qDebug() << "valid risk return";
-    updateMinMax(x, y);
-    m_riskReturPlotArr[row].setSamples(&x, &y, 1);
-    enterPlotLabel(row, x, y, ui->qwtPlotLSqr_3);
+
+
+    if(plotNo == 0)
+    {
+        updateMinMax(x, y, m_minMaxReturPlotArrBuy);
+        m_riskReturPlotArrBuy[row].setSamples(&x, &y, 1);
+        enterPlotLabel(row, x, y, ui->qwtPlotLSqr_3, m_riskReturTxtArrBuy);
+    }
+    else
+    {
+        updateMinMax(x, y, m_minMaxReturPlotArrSell);
+        m_riskReturPlotArrSell[row].setSamples(&x, &y, 1);
+        enterPlotLabel(row, x, y, ui->qwtPlotLSqr_4, m_riskReturTxtArrSell);
+    }
+
 }
 
 
@@ -2624,37 +2681,15 @@ calcRiskAndReturn(QString startDate,
 
     data.isValid = false;
 
-    db.efficPortfCalcMeanAndStdDev(startDate, endDate, data);
-    data.meanReturns = data.meanReturns *100;
-    data.riskStdDev = data.riskStdDev * 100;
-
-    if(data.isValid == true)
+    if(true == db.efficPortfCalcMeanAndStdDev(startDate, endDate, data))
     {
-        #if 0
-        qDebug() << "valid risk return" << data.stockName;
-        // Show data on graph
-        x = data.riskStdDev * 100;
-        y = data.meanReturns * 100;
-        updateMinMax(x, y);
-        m_riskReturPlotArr[row].setSamples(&x, &y, 1);
-        // qDebug() << data.riskStdDev <<  data.meanReturns;
+        data.meanReturns = data.meanReturns *100;
+        data.riskStdDev = data.riskStdDev * 100;
 
-        QString str;
-        if(ui->checkBoxShowNumberInGraph->isChecked()== true)
+        if(false == data.isValid)
         {
-            enterPlotLabel(row, x, y, ui->qwtPlot);
-            str.sprintf("%d ", row);
-            str += data.stockName;
+            qDebug() << "invalid risk return calc" << data.stockName;
         }
-        else
-        {
-            str = data.stockName;
-        }
-        #endif
-    }
-    else
-    {
-        qDebug() << "invalid risk return calc" << data.stockName;
     }
 
     return data.isValid;
@@ -3232,7 +3267,9 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
         removeQwtPlotArrMemSpace();
         createQwtPlotArrMemSpace(len);
         m_nofRiskReturPlotData = len;
-        m_minMaxReturPlotArr.minMaxIsInit = false;
+        m_minMaxReturPlotArrBuy.minMaxIsInit = false;
+        m_minMaxReturPlotArrSell.minMaxIsInit = false;
+
 
 
         // Init table
@@ -3293,6 +3330,12 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                     bool res = db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData);
                     if( true == res)
                     {
+                        if(j == 109 || j == 86)
+                        {
+                            j++;
+                            j--;
+                        }
+
                         riskReturnColor = Qt::magenta;
 
                         riskReturnData.stockSymbol = keyData.assetSymbol;
@@ -3300,9 +3343,17 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                         if(true == calcRiskAndReturn(startDate, endDate, riskReturnData))
                         {
                             riskReturnsIsValid = true;
-                            addRiskReturnsPlotData(j, riskReturnData.riskStdDev, riskReturnData.meanReturns);
 
                             tbsi.faSellBuyIndicator(keyData, riskReturnData.riskStdDev, buyIndicator, sellIndicator);
+                        }
+
+                        if(buyIndicator == TaBuySellIdicator::FA_IND_BUY_TRUE && riskReturnsIsValid == true)
+                        {
+                            addRiskReturnsPlotData(j, riskReturnData.riskStdDev, riskReturnData.meanReturns, 0);
+                        }
+                        else if(true == sellIndicator && riskReturnsIsValid == true)
+                        {
+                            addRiskReturnsPlotData(j, riskReturnData.riskStdDev, riskReturnData.meanReturns, 1);
                         }
 
                     }
@@ -3553,11 +3604,14 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
     }
 
     // Risk & return
-    plotXAxis(ui->qwtPlotLSqr_3);
-    plotQwtData(m_nofRiskReturPlotData, ui->qwtPlotLSqr_3);
+    plotXAxis(ui->qwtPlotLSqr_3, m_plotGridBuy, m_minMaxReturPlotArrBuy, m_xAxisPlotBuy);
+    plotXAxis(ui->qwtPlotLSqr_4, m_plotGridSell, m_minMaxReturPlotArrSell, m_xAxisPlotSell);
+    plotQwtData(m_nofRiskReturPlotData, ui->qwtPlotLSqr_3, m_riskReturPlotArrBuy);
+    plotQwtData(m_nofRiskReturPlotData, ui->qwtPlotLSqr_4, m_riskReturPlotArrSell);
 
     m_mutex.unlock();
 }
+
 
 /*********************************************************************
  * Function: ()
@@ -3565,18 +3619,18 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
  * Description: .
  *
  *********************************************************************/
-void LeastSquaresTaDlg::plotQwtData(int nofCurves, QwtPlot *qwtPlot)
+void LeastSquaresTaDlg::plotQwtData(int nofCurves, QwtPlot *qwtPlot, QwtPlotCurve *riskReturPlotArr)
 {
     CUtil cu;
 
     for(int i = 0; i < nofCurves; i++)
     {
-        m_riskReturPlotArr[i].setSymbol( new QwtSymbol( QwtSymbol::Ellipse, cu.getQColor((CUtil::ColorRgb_ET)i)
+        riskReturPlotArr[i].setSymbol( new QwtSymbol( QwtSymbol::Ellipse, cu.getQColor((CUtil::ColorRgb_ET)i)
                                                         /*Qt::black*/, QPen(cu.getQColor((CUtil::ColorRgb_ET)i)
                                                         /*Qt::red*/ ), QSize( 15, 15 ) ) );
 
-        m_riskReturPlotArr[i].setPen( QPen( Qt::black) );
-        m_riskReturPlotArr[i].attach(qwtPlot);
+        riskReturPlotArr[i].setPen( QPen( Qt::black) );
+        riskReturPlotArr[i].attach(qwtPlot);
     }
     qwtPlot->replot();
 }
@@ -3590,40 +3644,43 @@ void LeastSquaresTaDlg::plotQwtData(int nofCurves, QwtPlot *qwtPlot)
  * Description: Risk & return
  *
  *********************************************************************/
-void LeastSquaresTaDlg::plotXAxis(QwtPlot *qwtPlot)
+void LeastSquaresTaDlg::
+plotXAxis(QwtPlot *qwtPlot,
+          QwtPlotGrid *plotGrid,
+          CYahooStockPlotUtil::MinMaxAxisValues_ST &minMaxReturPlotArr,
+          QwtPlotCurve *xAxisPlot)
 {
-    //QwtPlotGrid *grid = new QwtPlotGrid;
-    m_plotGrid->enableXMin(true);
-    m_plotGrid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    m_plotGrid->setMinPen(QPen(Qt::darkYellow, 0 , Qt::DotLine));
-    m_plotGrid->attach(qwtPlot);
+    plotGrid->enableXMin(true);
+    plotGrid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
+    plotGrid->setMinPen(QPen(Qt::darkYellow, 0 , Qt::DotLine));
+    plotGrid->attach(qwtPlot);
 
     double x[2];
     double y[2];
 
     double minX, minY, maxX, maxY;
 
-    if(m_minMaxReturPlotArr.minX >= 0)
-        minX = m_minMaxReturPlotArr.minX*0.9;
+    if(minMaxReturPlotArr.minX >= 0)
+        minX = minMaxReturPlotArr.minX*0.9;
     else
-        minX = m_minMaxReturPlotArr.minX*1.1;
+        minX = minMaxReturPlotArr.minX*1.1;
 
 
-    if(m_minMaxReturPlotArr.minY >= 0)
-        minY = m_minMaxReturPlotArr.minY*0.9;
+    if(minMaxReturPlotArr.minY >= 0)
+        minY = minMaxReturPlotArr.minY*0.9;
     else
-        minY = m_minMaxReturPlotArr.minY*1.1;
+        minY = minMaxReturPlotArr.minY*1.1;
 
-    if(m_minMaxReturPlotArr.maxX >= 0)
-        maxX = m_minMaxReturPlotArr.maxX*1.1;
+    if(minMaxReturPlotArr.maxX >= 0)
+        maxX = minMaxReturPlotArr.maxX*1.1;
     else
-        maxX = m_minMaxReturPlotArr.maxX*0.9;
+        maxX = minMaxReturPlotArr.maxX*0.9;
 
 
-    if(m_minMaxReturPlotArr.maxY >= 0)
-        maxY = m_minMaxReturPlotArr.maxY*1.1;
+    if(minMaxReturPlotArr.maxY >= 0)
+        maxY = minMaxReturPlotArr.maxY*1.1;
     else
-        maxY = m_minMaxReturPlotArr.maxY*0.9;
+        maxY = minMaxReturPlotArr.maxY*0.9;
 
 
 
@@ -3631,8 +3688,9 @@ void LeastSquaresTaDlg::plotXAxis(QwtPlot *qwtPlot)
     x[1] = maxX;
     y[0] = 0;
     y[1] = 0;
-    m_xAxisPlot->setSamples(x,y, 2);
-    m_xAxisPlot->setPen(QPen( Qt::black, 2));
+
+    xAxisPlot->setSamples(x,y, 2);
+    xAxisPlot->setPen(QPen( Qt::black, 2));
 
 
     qwtPlot->setAxisScale(QwtPlot::xBottom,
@@ -3642,6 +3700,6 @@ void LeastSquaresTaDlg::plotXAxis(QwtPlot *qwtPlot)
                           minY,
                           (maxY)); // Max av % satser
 
-    m_xAxisPlot->attach(qwtPlot);
+    xAxisPlot->attach(qwtPlot);
 
 }

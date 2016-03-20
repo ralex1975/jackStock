@@ -148,15 +148,21 @@ class LeastSquaresTaDlg : public QDialog
     CYahooStockPlotUtil::PlotData_ST m_qwtStockPlotData;
 
     CYahooStockPlotUtil::PlotData_ST m_qwtsubPlotData;
-    CYahooStockPlotUtil::PlotData_ST m_qwtPlotRiskReturnsData;
+    //CYahooStockPlotUtil::PlotData_ST m_qwtPlotRiskReturnsData;
 
 
-    CYahooStockPlotUtil m_plotRiskRetur;
-    CYahooStockPlotUtil::MinMaxAxisValues_ST m_minMaxReturPlotArr;
-    QwtPlotCurve *m_riskReturPlotArr;
-    QwtPlotMarker *m_riskReturTxtArr;
-    QwtPlotCurve *m_xAxisPlot;
-    QwtPlotGrid *m_plotGrid;
+    CYahooStockPlotUtil m_plotRiskReturBuy;
+    CYahooStockPlotUtil m_plotRiskReturSell;
+    CYahooStockPlotUtil::MinMaxAxisValues_ST m_minMaxReturPlotArrBuy;
+    CYahooStockPlotUtil::MinMaxAxisValues_ST m_minMaxReturPlotArrSell;
+    QwtPlotCurve *m_riskReturPlotArrBuy;
+    QwtPlotCurve *m_riskReturPlotArrSell;
+    QwtPlotMarker *m_riskReturTxtArrBuy;
+    QwtPlotMarker *m_riskReturTxtArrSell;
+    QwtPlotCurve *m_xAxisPlotBuy;
+    QwtPlotCurve *m_xAxisPlotSell;
+    QwtPlotGrid *m_plotGridBuy;
+    QwtPlotGrid *m_plotGridSell;
     int m_nofRiskReturPlotData;
 
 
@@ -170,11 +176,14 @@ class LeastSquaresTaDlg : public QDialog
     // Is able to store one stock with data
     CYahooStockPlotUtil::StockData_ST m_stockData;
 
-    void plotQwtData(int nofCurves, QwtPlot *qwtPlot);
-    void plotXAxis(QwtPlot *qwtPlot); // Risk & returns
-    void enterPlotLabel(int index, double x, double y, QwtPlot *qwtPlot); // Risk & returns
-    void updateMinMax(double x, double y); // Risk & returns
-    void addRiskReturnsPlotData(int row, double riskStdDev, double meanReturns);  // Risk & returns
+    void plotQwtData(int nofCurves, QwtPlot *qwtPlot, QwtPlotCurve *riskReturPlotArr);
+    void plotXAxis(QwtPlot *qwtPlot,
+              QwtPlotGrid *plotGrid,
+              CYahooStockPlotUtil::MinMaxAxisValues_ST &minMaxReturPlotArr,
+              QwtPlotCurve *xAxisPlot); // Risk & returns
+    void enterPlotLabel(int index, double x, double y, QwtPlot *qwtPlot, QwtPlotMarker *riskReturTxtArr); // Risk & returns
+    void updateMinMax(double x, double y, CYahooStockPlotUtil::MinMaxAxisValues_ST &minMaxReturPlotArr); // Risk & returns
+    void addRiskReturnsPlotData(int row, double riskStdDev, double meanReturns , int plotNo);  // Risk & returns
     bool createQwtPlotArrMemSpace(int nofStocks); // Risk & returns
     void removeQwtPlotArrMemSpace(void);          // Risk & returns
     bool calcRiskAndReturn(QString startDate, QString endDate, CDbHndl::EfficPortStockData_ST &data);
