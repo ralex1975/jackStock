@@ -64,9 +64,20 @@ public:
         bool MidAvgRiseAboveLongAvg;
     };
 
+    enum FaBuyIndicatorStateET
+    {
+        FA_IND_BUY_NOT_SET,
+        FA_IND_BUY_FALSE,
+        FA_IND_BUY_TRUE
+    };
+
 
 
     TaBuySellIdicator();
+    void faSellBuyIndicator(CDbHndl::snapshotStockData_ST keyData,
+                            double riskStdDev,
+                            FaBuyIndicatorStateET &buyIndicator,
+                            bool &sellIndicator);
     bool buySignalAvgShortAboveMid(QString stockSymbol);
     bool sellSignalAvgShortAvgMidAvgLongAbovePrice(QString stockSymbol);
     void sellSignalFastAvgCrossSlowAvg(double priseVal2,
@@ -87,7 +98,7 @@ public:
     bool getBuySignals(QString stockSymbol);
     void clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData_ST &stockData);
 
-    QString convMomentumSellSignalToNumber(BuySignalMomentumST &buySignals);
+    QString convMomentumBuySignalToNumber(BuySignalMomentumST &buySignals);
     QString convMomentumSellSignalToNumber(SellSignalMomentumST &sellSignals);
 
 

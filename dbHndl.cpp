@@ -1272,7 +1272,12 @@ bool CDbHndl::addFa2NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
 
                 profitIncomeDiv1000 = rec.value("netProfitAfterTax").toDouble() / 1000.0;
                 tmp.sprintf("%.0f", profitIncomeDiv1000);
+                if(profitIncomeDiv1000 > 0)
+                    item->setTextColor(2, Qt::darkGreen);
+                else
+                    item->setTextColor(2, Qt::red);
                 item->setText(2, tmp);
+
 
 
                 if(profitRefIsInit == true)
@@ -1292,7 +1297,7 @@ bool CDbHndl::addFa2NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
                     item->setText(3, tmp);
 
                     if(growth*100 >= 10)
-                        item->setTextColor(3, Qt::green);
+                        item->setTextColor(3, Qt::darkGreen);
                     else if(growth*100 < 10 && growth*100 >= 0)
                         item->setTextColor(3, cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3));
                     else
@@ -1913,7 +1918,12 @@ bool CDbHndl::addFa2operatingIncomeToTreeWidget(QTreeWidget *treeWidget,
 
                 operatingIncomeDiv1000 = rec.value("operatingIncome").toDouble() / 1000.0;
                 tmp.sprintf("%.0f", operatingIncomeDiv1000);
+                if(operatingIncomeDiv1000 >= 0)
+                    item->setTextColor(2, Qt::darkGreen);
+                else
+                    item->setTextColor(2, Qt::red);
                 item->setText(2, tmp);
+
 
 
                 if(operatingCostRefIsInit == true)
@@ -1932,7 +1942,7 @@ bool CDbHndl::addFa2operatingIncomeToTreeWidget(QTreeWidget *treeWidget,
                     tmp.sprintf("%.2f", growth*100);
                     item->setText(3, tmp);
                     if(growth*100 >= 10)
-                        item->setTextColor(3, Qt::green);
+                        item->setTextColor(3, Qt::darkGreen);
                     else if(growth*100 < 10 && growth*100 >= 0)
                         item->setTextColor(3, cu.getQColor((CUtil::ColorRgb_ET) CUtil::YELLOW_3));
                     else

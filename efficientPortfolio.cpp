@@ -33,12 +33,9 @@ EfficientPortfolio::EfficientPortfolio(QWidget *parent) :
 
     ui->checkBoxShowNumberInGraph->setChecked(false);
 
-     m_plot.initPlotPicker(ui->qwtPlot);
-     m_plot.initPlotZoomer(ui->qwtPlot);
-     m_plot.enableZoomMode(true);
-
-
-
+    m_plot.initPlotPicker(ui->qwtPlot);
+    m_plot.initPlotZoomer(ui->qwtPlot);
+    m_plot.enableZoomMode(true);
 
 
     // Just create dummy space so we can delete it later before we create the space we need
@@ -153,7 +150,9 @@ void EfficientPortfolio::slotHorHeaderClicked(int index)
 /*********************************************************************
  * Function: ()
  *
- * Description: .
+ * Description:
+ *
+ *
  *
  *********************************************************************/
 bool EfficientPortfolio::createMemSpace(int nofStocks)
@@ -261,7 +260,6 @@ void EfficientPortfolio::initDateCtrls(void)
     CUtil cu;
 
     QString endDate = "2013-12-30";
-    //QString startDate = "2012-12-31";
     QString startDate = "2013-01-20";
     int nofYears = -1;
 
@@ -773,8 +771,8 @@ void EfficientPortfolio::initStockList(void)
     QString column1 = QObject::tr("Sym");
     QString column2 = QObject::tr("Ink");
     QString column3 = QObject::tr("Std");
-    QString column4 = QObject::tr("FÃ¶rv.\nRisk");
-    QString column5 = QObject::tr("FÃ¶rv.\nAvkst");
+    QString column4 = QObject::tr("Förv.\nRisk");
+    QString column5 = QObject::tr("Förv.\nAvkst");
     QString column6 = QObject::tr("Min\nvikt");
     QString column7 = QObject::tr("Max\nvikt");
     QString column8 = QObject::tr("Vald\nvikt");

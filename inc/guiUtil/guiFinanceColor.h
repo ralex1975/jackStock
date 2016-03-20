@@ -27,6 +27,10 @@ class GuiFinanceColor
 public:
     GuiFinanceColor();
     ~GuiFinanceColor();
+
+    Qt::GlobalColor getColorRiskReturns(double riskStdDev, double meanReturns);
+
+
     QColor getColorEarningsDivDividend(QString inValue);
     QColor getColorEarningsDivDividend(QString inValue, Qt::GlobalColor &gClolor);
     void setTxtColorEarningsDivDividend(QString inValue, QLineEdit *outValue);

@@ -5,6 +5,7 @@
 
 
 
+
 /**********************************************************************************
  *
  * Function:        GuiFinanceColor()
@@ -45,6 +46,44 @@ GuiFinanceColor::~GuiFinanceColor()
         delete m_faDataPalette[i];
     }
 }
+
+
+
+/**********************************************************************************
+ *
+ * Function:    setTxtColorEarningsDivDividend()
+ *
+ *
+ * Description: Vinst/Utdelning
+ *
+ *
+ *
+ ********************************************************************************/
+Qt::GlobalColor GuiFinanceColor::getColorRiskReturns(double riskStdDev, double meanReturns)
+{
+    Qt::GlobalColor riskReturnColor = Qt::darkYellow;
+
+
+    if((riskStdDev) > 20 || (meanReturns) < 0)
+    {
+        riskReturnColor = Qt::red;
+    }
+    else if((riskStdDev) >= 15 && (riskStdDev) <= 20|| (meanReturns) > 0)
+    {
+        riskReturnColor = Qt::magenta;
+    }
+    else if((riskStdDev) > 10 && (riskStdDev) < 15 && (meanReturns) > 0)
+    {
+        riskReturnColor = Qt::darkYellow;
+    }
+    else if((riskStdDev) <= 10 && (meanReturns) > 7)
+    {
+        riskReturnColor = Qt::darkGreen;
+    }
+
+    return riskReturnColor;
+}
+
 
 
 /**********************************************************************************

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
+  <widget class="QTabWidget" name="Avkastning">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -266,6 +266,26 @@
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>Page</string>
+    </attribute>
+    <widget class="QwtPlot" name="qwtPlotLSqr_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>481</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QTabWidget" name="tabWidget_2">
    <property name="geometry">
@@ -437,9 +457,9 @@
   <widget class="QPushButton" name="GetDbDataButton">
    <property name="geometry">
     <rect>
-     <x>1200</x>
+     <x>1180</x>
      <y>400</y>
-     <width>121</width>
+     <width>141</width>
      <height>27</height>
     </rect>
    </property>
@@ -449,7 +469,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Ladda data</string>
+    <string>Ladda bridge data</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -714,7 +734,7 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>650</x>
+     <x>680</x>
      <y>560</y>
      <width>121</width>
      <height>27</height>
@@ -757,8 +777,44 @@
     </rect>
    </property>
   </widget>
+  <widget class="QPushButton" name="SellSigPushButton">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>590</y>
+     <width>121</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sälj/ köp lista</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="SellBuyBridgeListpushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>590</y>
+     <width>151</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sälj/köp bridge list</string>
+   </property>
+  </widget>
   <zorder>largeCapCheckBox</zorder>
-  <zorder>tabWidget</zorder>
+  <zorder>Avkastning</zorder>
   <zorder>tabWidget_2</zorder>
   <zorder>treeWidget_6LSqrt</zorder>
   <zorder>label_6</zorder>
@@ -784,6 +840,8 @@
   <zorder>pushButton</zorder>
   <zorder>showAllCheckBox</zorder>
   <zorder>stockListComboBoxSqrt</zorder>
+  <zorder>SellSigPushButton</zorder>
+  <zorder>SellBuyBridgeListpushButton_2</zorder>
  </widget>
  <customwidgets>
   <customwidget>
