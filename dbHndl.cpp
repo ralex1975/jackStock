@@ -1111,11 +1111,11 @@ bool CDbHndl::getDebtToEquityRatio(QString assetSymbol, double &debtToEquityRati
                     return false;
                 }
 
-                // double denominator = fixedAssets + currentAssets + equity;
-                // if(denominator == 0)
-                // {
-                //    denominator = 0.001;
-                //}
+                double denominator = /*fixedAssets + currentAssets +*/ equity;
+                 if(denominator == 0)
+                {
+                    denominator = 0.001;
+                }
                 debtToEquityRatio = liabilities / equity * 100;
             }
         }
