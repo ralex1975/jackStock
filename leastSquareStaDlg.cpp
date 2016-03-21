@@ -3218,7 +3218,7 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
 
     headerList[nofCols++].name = QString::fromUtf8("Företag     ");
     headerList[nofCols++].name = QString::fromUtf8("Symbol      ");
-    headerList[nofCols++].name = QString::fromUtf8("R");
+    headerList[nofCols++].name = QString::fromUtf8("Skuld/\nEget Kap");
     headerList[nofCols++].name = QString::fromUtf8("K");
     headerList[nofCols++].name = QString::fromUtf8("T Köp /\nSälj");
     headerList[nofCols++].name = QString::fromUtf8("M Köp /\nSälj");
@@ -3449,11 +3449,43 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                         // Add stockname column 0
                         etPlus.addDataSetTextColor(ui->tableViewLeastSquare, m_stockArr[j].stockName, rowPlus, 0, Qt::black);
 
+                        if(keyData.assetSymbol.compare(QString::fromUtf8("Öresund, Investment AB")) == 0)
+                        {
+                            j++;
+                            j--;
+                        }
 
 
                         // Add R on column 2
-                        str.sprintf("%.2f", r);
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::black);
+                        // ajn 160321cstr.sprintf("%.2f", r);
+                        // ajn 160321cetPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Q   t::black);
+                         double debtToEquityRatio = 0;
+                         if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
+                         {
+                             str.sprintf("%.2f", debtToEquityRatio);
+
+                             // This is totaly dept so we set 75 instead of 50
+                             if(debtToEquityRatio > 75.0)
+                             {
+                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::red);
+                             }
+                             else if(debtToEquityRatio > 50.0 && debtToEquityRatio < 75.0)
+                             {
+                                 etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::magenta);
+                             }
+                             else
+                             {
+                                 etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::darkGreen);
+                             }
+
+
+                         }
+                         else
+                         {
+                             str = " ";
+                             etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::black);
+                         }
+
 
                         // Add K on column 3
                         str.sprintf("%.2f", k);
@@ -3478,13 +3510,6 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                             if(true == riskReturnsIsValid)
                             {
                                 riskReturnColor = Qt::magenta;
-
-                                 #if 0
-                                CDbHndl::EfficPortStockData_ST riskReturnData;
-                                riskReturnData.stockSymbol = keyData.assetSymbol;
-
-                                calcRiskAndReturn(startDate, endDate, riskReturnData);
-                                #endif
 
                                 // Add risk & returns index
                                 QString str1;
@@ -3576,8 +3601,32 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                             etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, m_stockArr[j].stockName, rowMinus, 0, Qt::black);
 
                             // Add R on Column 2
-                            str.sprintf("%.2f", r);
-                            etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::black);
+                            // ajn 160321 str.sprintf("%.2f", r);
+                            // ajn 160321 etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::black);
+
+                            double debtToEquityRatio = 0;
+                            if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
+                            {
+                                str.sprintf("%.2f", debtToEquityRatio);
+                                if(debtToEquityRatio > 75.0)
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::red);
+                                }
+                                else if(debtToEquityRatio > 50.0 && debtToEquityRatio < 75.0)
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::magenta);
+                                }
+                                else
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::darkGreen);
+                                }
+                            }
+                            else
+                            {
+                                str = " ";
+                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::black);
+                            }
+
 
                             // Add K on Column 3
                             str.sprintf("%.2f", k);

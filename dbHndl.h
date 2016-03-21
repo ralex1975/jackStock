@@ -348,7 +348,7 @@ public:
 
 
 
-
+    bool getDebtToEquityRatio(QString assetSymbol, double &debtToEquityRatio);
     bool delAllTblMainHelpSection(void);
     bool delAllTblSubHelpSection(void);
     bool delAllTblHelpSectionTxt(void);

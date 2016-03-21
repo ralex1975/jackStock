@@ -249,13 +249,13 @@ parseBalance(QTextStream &inStream, int &dateIndex)
         case SUB_STATE_TH_END:
             if(str.compare(TAG_FIXED_ASSETS) == 0)
             {
-               // qDebug() << "str" << str;
+               qDebug() << "str" << str;
                m_subState = SUB_STATE_TD_END;
                m_mainState = STATE_GET_RESULT_NUMBER;
             }
             else if(str.compare(TAG_TH_END) == 0)
             {
-               // qDebug() << "str" << str;
+               qDebug() << "str" << str;
                m_subState = SUB_STATE_TH_START;
             }
             break;
@@ -263,7 +263,7 @@ parseBalance(QTextStream &inStream, int &dateIndex)
         case SUB_STATE_TH_START:
             if(str.compare(TAG_FIXED_ASSETS) == 0)
             {
-               // qDebug() << "str" << str;
+               qDebug() << "str" << str;
                m_subState = SUB_STATE_TD_END;
                m_mainState = STATE_GET_RESULT_NUMBER;
             }
@@ -824,7 +824,7 @@ readFile(QString filename, QString assetName)
                 for(k = 0; k < m_resultProfitLossNumberArr.size(); k++)
                 {
                     //dataArr[j].currentAssets = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
-                    dataArr[j].currentAssets = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
+                    dataArr[k].currentAssets = m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
                     qDebug() << "currentAssets" << m_resultProfitLossNumberArr.at(k).toDouble(&isValid);
 
                     if(false == isValid)

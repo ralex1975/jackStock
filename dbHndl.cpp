@@ -974,6 +974,161 @@ bool CDbHndl::createTable(void)
 
 }
 
+
+
+/*****************************************************************
+ *
+ * Function:		getDebtToEquityRatio()
+ *
+ * Description:		Debt/Equity < 0.5 is good
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::getDebtToEquityRatio(QString assetSymbol, double &debtToEquityRatio)
+{
+    QSqlRecord rec;
+    QString str;
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    double fixedAssets;
+    double currentAssets;
+    double equity;
+    double liabilities;
+
+
+
+    assetSymbol.trimmed();
+
+    QByteArray ba = assetSymbol.toLocal8Bit();
+    const char *c_assetSymbol = ba.data();
+
+
+    str.sprintf("SELECT TblNordnetBalanceIncomeSheet.assetName, "
+                       "TblNordnetBalanceIncomeSheet.fixedAssets, "       // Anläggningstillgångar
+                       "TblNordnetBalanceIncomeSheet.currentAssets, "     // Omsättningstillgångar
+                       "TblNordnetBalanceIncomeSheet.equity, "            // Eget kapital
+                       "TblNordnetBalanceIncomeSheet.liabilities, "       // Skulder
+                       "TblNordnetYahooBridge.assetSymbol, "
+                       "TblNordnetYahooBridge.assetName "
+               "FROM    TblNordnetBalanceIncomeSheet, TblNordnetYahooBridge "
+               "WHERE   TblNordnetYahooBridge.assetName == TblNordnetBalanceIncomeSheet.assetName AND "
+                       "LOWER(TblNordnetYahooBridge.assetSymbol) = LOWER('%s');",
+                        c_assetSymbol);
+
+
+
+
+    qry.prepare(str);
+
+    qDebug() << str;
+
+    if( !qry.exec() )
+    {
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("fixedAssets").isNull()==true || (rec.value("currentAssets").isNull()==true) ||
+              (rec.value("equity").isNull() ==true) || (rec.value("liabilities").isNull() ==true))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                CUtil cu;
+                QString number;
+                bool res;
+
+
+
+                number= (QString) rec.value("fixedAssets").toString();
+                res = cu.number2double(number, fixedAssets);
+
+                if(res == false)
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+
+                number = (QString) rec.value("currentAssets").toString();
+
+                res = cu.number2double(number, currentAssets);
+
+                if(res == false)
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                number = (QString) rec.value("equity").toString();
+
+                res = cu.number2double(number, equity);
+
+                if(res == false)
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                number = (QString) rec.value("liabilities").toString();
+
+                res = cu.number2double(number, liabilities);
+
+                if(res == false)
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                // double denominator = fixedAssets + currentAssets + equity;
+                // if(denominator == 0)
+                // {
+                //    denominator = 0.001;
+                //}
+                debtToEquityRatio = liabilities / equity * 100;
+            }
+        }
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
 //========
 
 /*****************************************************************
