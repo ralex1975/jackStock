@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -52,7 +52,7 @@
     <widget class="QLineEdit" name="lineEditStartDateLSqrt">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>60</x>
        <y>10</y>
        <width>91</width>
        <height>21</height>
@@ -472,9 +472,9 @@
   <widget class="QPushButton" name="GetDbDataButton">
    <property name="geometry">
     <rect>
-     <x>1180</x>
+     <x>1090</x>
      <y>400</y>
-     <width>141</width>
+     <width>201</width>
      <height>27</height>
     </rect>
    </property>
@@ -484,7 +484,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Ladda bridge data</string>
+    <string>Trend, Ladda bridge data</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -749,8 +749,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>560</y>
+     <x>520</x>
+     <y>570</y>
      <width>121</width>
      <height>27</height>
     </rect>
@@ -761,15 +761,15 @@
     </font>
    </property>
    <property name="text">
-    <string>Ladda data</string>
+    <string>Trend, Ladda data</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="showAllCheckBox">
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>560</y>
-     <width>97</width>
+     <y>520</y>
+     <width>121</width>
      <height>22</height>
     </rect>
    </property>
@@ -779,14 +779,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Visa alla</string>
+    <string>Visa alla (Trend)</string>
    </property>
   </widget>
   <widget class="QComboBox" name="stockListComboBoxSqrt">
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>520</y>
+     <y>540</y>
      <width>251</width>
      <height>27</height>
     </rect>
@@ -795,8 +795,8 @@
   <widget class="QPushButton" name="SellSigPushButton">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>590</y>
+     <x>650</x>
+     <y>570</y>
      <width>121</width>
      <height>27</height>
     </rect>
@@ -813,9 +813,9 @@
   <widget class="QPushButton" name="SellBuyBridgeListpushButton_2">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>590</y>
-     <width>151</width>
+     <x>1090</x>
+     <y>430</y>
+     <width>201</width>
      <height>27</height>
     </rect>
    </property>
