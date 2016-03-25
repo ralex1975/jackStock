@@ -87,6 +87,22 @@ class ImportData : public QDialog
         TimePeriodDays_ET timePeriod;
     };
 
+    enum YahooKeyStatEt
+    {
+     YKS_STATE_READ_FILE,
+     YKS_STATE_FIND_TOKEN,
+     YKS_STATE_SPLIT_STR,
+     YKS_STATE_FIND_DATA_TOKEN,
+     YKS_STATE_END_DATA_TOKEN
+    };
+
+
+    YahooKeyStatEt m_yksState;
+
+
+    bool readYahooKeyStatistics(QString filename);
+
+
     HttpWindow m_hw1;
     bool m_waitOnServerResp;
     QString m_startDate;
@@ -197,6 +213,10 @@ private slots:
     void on_pushButDescription_clicked();
     void on_pushButParseCompanyInfo_clicked();
     // void on_pushButtImportKeyTaBridgeData_toggled(bool checked);
+    void on_pushButton_clicked();
+
+
+
 };
 
 #endif // IMPORTDATA_H

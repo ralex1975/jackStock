@@ -1647,6 +1647,16 @@ void ImportData::slotReqNextCompanyDescriptionData()
 }
 
 
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
 void ImportData::on_pushButParseCompanyInfo_clicked()
 {
     QString path;
@@ -1660,3 +1670,300 @@ void ImportData::on_pushButParseCompanyInfo_clicked()
     QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
 
 }
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::on_pushButton_clicked()
+{
+    QString path;
+    path = QDir::currentPath();
+    qDebug() << path;
+
+    QString filename("database/inputData/Yahoo/keyStatistics/ABB_Key_Statistics.html");
+    readYahooKeyStatistics(filename);
+}
+
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool ImportData::readYahooKeyStatistics(QString filename)
+{
+    QString outFilename("YahooKeyStat1.txt");
+    QFile file(filename);
+    QFile outFile(outFilename);
+
+    QString str;
+    QString errStr = QString("Fail to open file: %1").arg(filename);
+
+
+
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        return false;
+    }
+
+    if(!outFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        return false;
+    }
+
+
+    QTextStream out(&outFile);   // we will serialize the data into the file
+    QTextStream inStream(&file);
+
+    inStream.setCodec("UTF-8");
+    out.setCodec("UTF-8");
+
+
+    int mainStrIndex;
+    QString tmpStr;
+    QString mainStr;
+    QString subStr;
+    QString startToken("<td class=\"yfnc_tablehead1\" width=\"74%\">");
+
+    QString startDataToken("<td class=\"yfnc_tabledata1\">");
+
+    int startTokenLen = startToken.length();
+    int startDataTokenLen = startDataToken.length();
+    int startIndex;
+    int nofchars;
+    bool found;
+
+    m_yksState = YKS_STATE_READ_FILE;
+
+    while(!inStream.atEnd())
+    {
+        switch(m_yksState)
+        {
+        case YKS_STATE_READ_FILE:
+            mainStr = inStream.readLine();
+            mainStrIndex = mainStr.indexOf(startToken);
+            if((mainStrIndex > -1) && (mainStr.length() > 0))
+            {
+                qDebug() << mainStr;
+                m_yksState = YKS_STATE_FIND_TOKEN;
+            }
+            break;
+
+        case YKS_STATE_FIND_TOKEN:
+            found = false;
+            mainStrIndex = mainStr.indexOf(startToken);
+            startIndex = mainStrIndex + startTokenLen;
+
+            if(mainStrIndex > -1)
+            {
+                for(int i = startIndex; i < mainStr.length(); i++)
+                {
+                    if(mainStr.at(i) == '<')
+                    {
+                        nofchars = i - startIndex;
+                        if(nofchars >= 0)
+                        {
+                            subStr = mainStr.mid(startIndex, nofchars);
+                            qDebug() << subStr;
+                            out << subStr.toUtf8() << "\n";
+                            mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
+                            found = true;
+                            m_yksState = YKS_STATE_FIND_DATA_TOKEN;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(found == false)
+            {
+                m_yksState = YKS_STATE_READ_FILE;
+            }
+           break;
+
+
+         case YKS_STATE_FIND_DATA_TOKEN:
+            found = false;
+            mainStrIndex = mainStr.indexOf(startDataToken);
+            startIndex = mainStrIndex + startDataTokenLen;
+            tmpStr = mainStr.right(mainStr.length() - startIndex);
+
+            if(mainStrIndex > -1)
+            {
+                for(int i = startIndex; i < mainStr.length(); i++)
+                {
+                    if(mainStr.at(i) == '<')
+                    {
+                        nofchars = i - startIndex;
+                        if(nofchars >= 0)
+                        {
+                            subStr = mainStr.mid(startIndex, nofchars);
+                            qDebug() << subStr;
+                            out << subStr.toUtf8() << "\n";
+                            mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startDataTokenLen));
+                            found = true;
+                            m_yksState = YKS_STATE_FIND_TOKEN;
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+            if(found == false)
+            {
+                m_yksState = YKS_STATE_READ_FILE;
+            }
+            break;
+
+        }
+
+
+    }
+
+
+
+    QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+    file.close();
+    outFile.close();
+    return true;
+}
+
+#if 0
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool ImportData::readYahooKeyStatistics(QString filename)
+{
+    QString outFilename("YahooKeyStat1.txt");
+    QFile file(filename);
+    QFile outFile(outFilename);
+
+    QString str;
+    QString errStr = QString("Fail to open file: %1").arg(filename);
+
+
+
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        return false;
+    }
+
+    if(!outFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        return false;
+    }
+
+
+    QTextStream out(&outFile);   // we will serialize the data into the file
+    QTextStream inStream(&file);
+
+    inStream.setCodec("UTF-8");
+    out.setCodec("UTF-8");
+
+
+    int mainStrIndex;
+    int mainStrEndIndex;
+    QString tmpStr;
+    QString mainStr;
+    QString subStr;
+    QString startToken("<td class=\"yfnc_tablehead1\"");
+    //QString endToken("</td>");
+    QString endToken("<");
+    int startTokenLen = startToken.length();
+    int subStrIndex;
+
+    m_yksState = YKS_STATE_READ_FILE;
+
+    while(!inStream.atEnd())
+    {
+        switch(m_yksState)
+        {
+        case YKS_STATE_READ_FILE:
+            mainStr = inStream.readLine();
+            mainStrIndex = mainStr.indexOf(startToken);
+            if((mainStrIndex > -1) && (mainStr.length() > 0))
+            {
+                qDebug() << mainStr;
+                m_yksState = YKS_STATE_FIND_TOKEN;
+            }
+            break;
+
+        case YKS_STATE_FIND_TOKEN:
+            mainStrIndex = mainStr.indexOf(startToken);
+
+            if(mainStrIndex > -1)
+            {
+                tmpStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
+                mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
+
+                if(mainStr.length() > 0)
+                {
+                    mainStrEndIndex = mainStr.indexOf(endToken);
+                    if(mainStrEndIndex > 0)
+                    {
+                        subStr = mainStr.left(mainStrEndIndex);
+                        m_yksState = YKS_STATE_SPLIT_STR;
+                    }
+                    else
+                    {
+                        m_yksState = YKS_STATE_READ_FILE;
+                    }
+                }
+            }
+            else
+            {
+                m_yksState = YKS_STATE_READ_FILE;
+            }
+            break;
+
+        case YKS_STATE_SPLIT_STR:
+            subStrIndex = subStr.indexOf(">");
+            if(subStrIndex > -1)
+            {
+                subStr = subStr.mid(subStrIndex + 1, subStr.length());
+                qDebug() << subStr;
+                out << subStr.toUtf8() << "\n";
+                m_yksState = YKS_STATE_FIND_TOKEN;
+            }
+            break;
+        }
+
+
+    }
+
+
+
+    QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+    file.close();
+    outFile.close();
+    return true;
+}
+#endif
+
+
