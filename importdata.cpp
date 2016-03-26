@@ -1688,9 +1688,73 @@ void ImportData::on_pushButton_clicked()
     path = QDir::currentPath();
     qDebug() << path;
 
-    QString filename("database/inputData/Yahoo/keyStatistics/ABB_Key_Statistics.html");
+    // QString filename("database/inputData/Yahoo/keyStatistics/ABB_Key_Statistics.html");
+    //QString filename("database/inputData/Yahoo/keyStatistics/KLOV-B.ST_Key Statistics.html");
+    QString filename("database/inputData/Yahoo/keyStatistics/UNIB-SDB.ST_Key_Statistics.html");
     readYahooKeyStatistics(filename);
 }
+
+const QString ImportData::yahooKeyStatisticsArr[YAHOO_KEY_STATISTICS_ARR_SIZE] =
+{
+    QString::fromUtf8("Market Cap"),
+    QString::fromUtf8("Enterprise Value"),
+    QString::fromUtf8("Trailing P/E"),
+    QString::fromUtf8("Forward P/E"),
+    QString::fromUtf8("PEG Ratio"),
+    QString::fromUtf8("Price/Sales"),
+    QString::fromUtf8("Price/Book"),
+    QString::fromUtf8("Enterprise Value/Revenue"),
+    QString::fromUtf8("Enterprise Value/EBITDA"),
+    QString::fromUtf8("Fiscal Year Ends"),
+    QString::fromUtf8("Most Recent Quarter"),
+    QString::fromUtf8("Profit Margin"),
+    QString::fromUtf8("Operating Margin"),
+    QString::fromUtf8("Return on Assets"),
+    QString::fromUtf8("Return on Equity"),
+    QString::fromUtf8("Revenue"),
+    QString::fromUtf8("Revenue Per Share"),
+    QString::fromUtf8("Qtrly Revenue Growth"),
+    QString::fromUtf8("Gross Profit"),
+    QString::fromUtf8("EBITDA"),
+    QString::fromUtf8("Net Income Avl to Common"),
+    QString::fromUtf8("Diluted EPS"),
+    QString::fromUtf8("Qtrly Earnings Growth"),
+    QString::fromUtf8("Total Cash"),
+    QString::fromUtf8("Total Cash Per Share"),
+    QString::fromUtf8("Total Debt"),
+    QString::fromUtf8("Total Debt/Equity"),
+    QString::fromUtf8("Current Ratio"),
+    QString::fromUtf8("Book Value Per Share"),
+    QString::fromUtf8("Operating Cash Flow"),
+    QString::fromUtf8("Levered Free Cash Flow"),
+    QString::fromUtf8("Beta"),
+    QString::fromUtf8("52-Week Change"),
+    QString::fromUtf8("S&amp;P500 52-Week Change"),
+    QString::fromUtf8("52-Week High"),
+    QString::fromUtf8("52-Week Low"),
+    QString::fromUtf8("50-Day Moving Average"),
+    QString::fromUtf8("200-Day Moving Average"),
+    QString::fromUtf8("Avg Vol (3 month)"),
+    QString::fromUtf8("Avg Vol (10 day)"),
+    QString::fromUtf8("Shares Outstanding"),
+    QString::fromUtf8("Float"),
+    QString::fromUtf8("% Held by Insiders"),
+    QString::fromUtf8("% Held by Institutions"),
+    QString::fromUtf8("Shares Short"),
+    QString::fromUtf8("Short Ratio"),
+    QString::fromUtf8("Short % of Float"),
+    QString::fromUtf8("Shares Short (prior month)"),
+    QString::fromUtf8("Forward Annual Dividend Rate"),
+    QString::fromUtf8("Forward Annual Dividend Yield"),
+    QString::fromUtf8("Trailing Annual Dividend Yield"),
+    QString::fromUtf8("Trailing Annual Dividend Yield"),
+    QString::fromUtf8("5 Year Average Dividend Yield"),
+    QString::fromUtf8("Payout Ratio"),
+    QString::fromUtf8("Dividend Date"),
+    QString::fromUtf8("Ex-Dividend Date"),
+    QString::fromUtf8("Last Split Factor"),
+    QString::fromUtf8("Last Split Date")
+};
 
 
 
@@ -1748,6 +1812,7 @@ bool ImportData::readYahooKeyStatistics(QString filename)
     int startIndex;
     int nofchars;
     bool found;
+    int n = 0;
 
     m_yksState = YKS_STATE_READ_FILE;
 
@@ -1781,9 +1846,22 @@ bool ImportData::readYahooKeyStatistics(QString filename)
                         {
                             subStr = mainStr.mid(startIndex, nofchars);
                             qDebug() << subStr;
+                            // QString::size_type pos = yahooKeyStatisticsArr[n+1].toStdString().find(subStr.toStdString());
+                            qWarning() << subStr.contains(yahooKeyStatisticsArr[n]);
+
+                            if(false == subStr.contains(yahooKeyStatisticsArr[n]))
+                            {
+                                str = QString::fromUtf8("Fail to parse: ");
+                                str += yahooKeyStatisticsArr[n];
+                                QMessageBox::information(this, QString::fromUtf8("Fail:"), str);
+
+                                return false;
+                            }
+
                             out << subStr.toUtf8() << "\n";
                             mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
                             found = true;
+                            n++;
                             m_yksState = YKS_STATE_FIND_DATA_TOKEN;
                             break;
                         }
@@ -1839,7 +1917,7 @@ bool ImportData::readYahooKeyStatistics(QString filename)
 
 
 
-    QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+    QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
     file.close();
     outFile.close();
     return true;
