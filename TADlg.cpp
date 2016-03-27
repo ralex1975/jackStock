@@ -345,9 +345,9 @@ void CTADlg::on_pushButSelStockList_clicked()
 void CTADlg::initStockList(void)
 {
 
-    QString column0 = QObject::tr("Namn");
-    QString column1 = QObject::tr("Symbol");
-    QString column2 = QObject::tr("Notera");
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Symbol");
+    QString column2 = QString::fromUtf8("Notera");
 
     ui->treeWidgetStockList->setColumnCount(3);
     ui->treeWidgetStockList->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -579,7 +579,7 @@ void CTADlg::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
     else
     {
         m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-        QMessageBox::information(this, tr("Vänta"), tr("Vänta Processar redan data.."));
+        QMessageBox::information(this, QString::fromUtf8("Vänta"), QString::fromUtf8("Vänta Processar redan data.."));
     }
 }
 
@@ -1316,12 +1316,10 @@ void CTADlg::slotReqSingleStockDataFromServer()
 
     QString filename = DWLD_PATH_TA_LIST_FILE;
 
-//    QString startDate;
     QString startYear;
     QString startMonth;
     QString startDay;
 
-  //  QString endDate;
     QString endYear;
     QString endMonth;
     QString endDay;
@@ -1333,8 +1331,6 @@ void CTADlg::slotReqSingleStockDataFromServer()
 
         QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
         const char *c_reqStockSymbol = ba1.data();
-
-  //      m_reqStartDate = "2013-12-01";
 
         cu.splitDate(m_reqStartDate, startYear, startMonth, startDay);
 
@@ -1349,12 +1345,10 @@ void CTADlg::slotReqSingleStockDataFromServer()
                     startDay.toInt(),
                     startYear.toInt());
 
-    //    qDebug() << startDate;
         qDebug() << startYear;
         qDebug() << startMonth;
         qDebug() << startDay;
 
-      //  qDebug() << endDate;
         qDebug() << endYear;
         qDebug() << endMonth;
         qDebug() << endDay;
@@ -1448,7 +1442,7 @@ setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int v
 
     if(false == cu.dateIsValid(endDate))
     {
-         QMessageBox::information(this, tr("Datum"), QString::fromUtf8("1. Slut datum felaktigt"));
+         QMessageBox::information(this, QString::fromUtf8("Datum"), QString::fromUtf8("1. Slut datum felaktigt"));
         return;
     }
 

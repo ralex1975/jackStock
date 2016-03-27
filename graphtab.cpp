@@ -73,7 +73,7 @@ void GraphTab::on_SelectButton_clicked()
 
     if(m_qwtStockPlotData.nofStocksToPlot >= CStockPlotUtil::MAX_NOF_PLOT_COLORS)
     {
-        QMessageBox::information(0, QObject::tr("Förmånga object.Kan inte lägga till fler"), QObject::tr("Kan inte lägga till fler objekt"));
+        QMessageBox::information(0, QString::fromUtf8("Förmånga object.Kan inte lägga till fler"), QString::fromUtf8("Kan inte lägga till fler objekt"));
         return;
     }
 
@@ -83,7 +83,7 @@ void GraphTab::on_SelectButton_clicked()
     // Has this object already been selected?
     if(m_spu.findStock(m_qwtStockPlotData, oneStock.stockName)== true)
     {
-        QMessageBox::information(0, QObject::tr("Objektet visas redan"), QObject::tr("Objektet visas redan"));
+        QMessageBox::information(0, QString::fromUtf8("Objektet visas redan"), QString::fromUtf8("Objektet visas redan"));
         return;
     }
 
@@ -133,7 +133,7 @@ void GraphTab::on_removePlotButton_clicked()
     }
     else
     {
-        QMessageBox::information(0, QObject::tr("Kan inte ta bort Aktie"), QObject::tr("Minst en aktie måste väljas i listan"));
+        QMessageBox::information(0, QString::fromUtf8("Kan inte ta bort Aktie"), QString::fromUtf8("Minst en aktie måste väljas i listan"));
     }
 }
 #endif
@@ -158,7 +158,7 @@ void GraphTab::on_removePlotButton_clicked()
     }
     else
     {
-        QMessageBox::information(0, QObject::tr("Kan inte ta bort Aktie"), QObject::tr("Minst en aktie måste väljas i listan"));
+        QMessageBox::information(0, QString::fromUtf8("Kan inte ta bort Aktie"), QString::fromUtf8("Minst en aktie måste väljas i listan"));
     }
 }
 

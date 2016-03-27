@@ -40,8 +40,9 @@ public:
     struct StockData_ST
     {
         QString stockName;
+        QString stockSymbol;
         XYPlotData_ST data;
-        int nofData;
+        //int nofData;
     };
 
     struct MinMaxAxisValues_ST

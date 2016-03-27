@@ -25,16 +25,16 @@
 
 
 //#define PRICE_MAX_NOF_STOCK_DATA 10
-#define TAG_START_COMPANY_NAME QObject::tr("&marketplace=11\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME1 QObject::tr("&marketplace=14\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME2 QObject::tr("&marketplace=15\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME3 QObject::tr("&marketplace=24\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME QString::fromUtf8("&marketplace=11\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME1 QString::fromUtf8("&marketplace=14\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME2 QString::fromUtf8("&marketplace=15\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME3 QString::fromUtf8("&marketplace=24\" class=\"underline\">")
 
 
 #define TAG_START_COMPANY_NAME_LEN strlen("&marketplace=11\" class=\"underline\">")
-#define TAG_END_COMPANY_NAME QObject::tr("</a></div></td>")
+#define TAG_END_COMPANY_NAME QString::fromUtf8("</a></div></td>")
 
-#define TAG_PRICE_START_END_PART_SECOND_DATA QObject::tr("%</DIV></TD>")
+#define TAG_PRICE_START_END_PART_SECOND_DATA QString::fromUtf8("%</DIV></TD>")
 
 #define MAX_NOF_START_DATA_TAGS 5
 #define MAX_STR_LEN_START_DATA_TAGS 200
@@ -170,7 +170,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -186,7 +186,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
         {
             if(result.length() < 1)
             {
-                QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Company name is empty");
+                QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Company name is empty");
                 db.m_snapshotStockData.companyName.clear();
             }
             else
@@ -208,7 +208,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case LAST_PRICE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Last price is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Last price is empty");
                             db.m_snapshotStockData.lastPrice.clear();
                         }
                         else
@@ -220,7 +220,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case PRICE_CHANGE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Price change is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Price change is empty");
                             db.m_snapshotStockData.priceChange.clear();
                         }
                         else
@@ -232,7 +232,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case PROCENT_CHANGE_ONE_DAY:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Price change one day is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Price change one day is empty");
                             db.m_snapshotStockData.procentChangeOneDay.clear();
                         }
                         else
@@ -245,7 +245,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case BID_PRICE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Bid Price is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Bid Price is empty");
                             db.m_snapshotStockData.bidPrice.clear();
                         }
                         else
@@ -258,7 +258,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case OFFER_PRICE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Offer Price is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Offer Price is empty");
                             db.m_snapshotStockData.offerPrice.clear();
                         }
                         else
@@ -270,7 +270,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case HIGHEST_PRICE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Highest Price is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Highest Price is empty");
                             db.m_snapshotStockData.highestPrice.clear();
                         }
                         else
@@ -282,7 +282,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case LOWEST_PRICE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Lowest Price is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Lowest Price is empty");
                             db.m_snapshotStockData.lowestPrice.clear();
                         }
                         else
@@ -294,7 +294,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case VOLUME:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Volume is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Volume is empty");
                             db.m_snapshotStockData.volume.clear();
                         }
                         else
@@ -305,7 +305,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case CURRENCY:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Currency is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Currency is empty");
                             db.m_snapshotStockData.currency.clear();
                         }
                         else
@@ -317,7 +317,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                     case TIME:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Price Parser Error"), "Time is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Price Parser Error"), "Time is empty");
                             db.m_snapshotStockData.time.clear();
                         }
                         else
@@ -328,7 +328,7 @@ bool CParsePriceData::parseStockPrices(QString filename, CDbHndl &db)
                         }
                         break;
                     default:
-                        QMessageBox::critical(NULL, QObject::tr("Parser Error"),  QObject::tr("Invalid parsing state"));
+                        QMessageBox::critical(NULL, QString::fromUtf8("Parser Error"),  QString::fromUtf8("Invalid parsing state"));
                     }
 
                     qDebug() << i << "Data:" << result << ", ";

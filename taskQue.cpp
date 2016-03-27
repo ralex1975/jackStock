@@ -376,7 +376,7 @@ bool CTaskQue::createNewNode(CTaskQueLink **newLink)
 	if(!(*newLink))
 	{
         //ERR("Internal Error: Could not create a new CTaskQueLink link");
-        QMessageBox::critical(NULL, QObject::tr("CTaskQue::createNewNode()"), QObject::tr("Internal Error: Could not create a new CTaskQueLink link"));
+        QMessageBox::critical(NULL, QString::fromUtf8("CTaskQue::createNewNode()"), QString::fromUtf8("Internal Error: Could not create a new CTaskQueLink link"));
 		return false;
 	}
 

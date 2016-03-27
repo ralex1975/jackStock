@@ -80,7 +80,8 @@ SOURCES += main.cpp\
     src/myOS/mutex.cpp \
     src/myOS/semaphore.cpp \
     src/myOS/mytaskQue.cpp \
-    src/TaBuySellIdicator/taBuySellTask.cpp
+    src/TaBuySellIdicator/taBuySellTask.cpp \
+    src/GetHtmlPage/getYahooKeyStatistics.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -141,7 +142,8 @@ HEADERS  += WebBrowserTab.h \
     inc/myOs/mutex.h \
     inc/myOs/semaphore.h \
     inc/myOs/mytaskQue.h \
-    inc/TaBuySellIdicator/taBuySellTask.h
+    inc/TaBuySellIdicator/taBuySellTask.h \
+    inc/GetHtmlPage/getYahooKeyStatistics.h
 
 FORMS    += \
     WebBrowserTab.ui \

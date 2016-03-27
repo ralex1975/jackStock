@@ -225,7 +225,7 @@ addStockToPlot(CYahooStockPlotUtil::PlotData_ST &allPlotData,
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Kan inte visa fler grafer (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("Lägga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Lägga till graf"), str);
         delete x;
         delete y;
         return false;
@@ -309,7 +309,7 @@ addIndicatorToPlot(CYahooStockPlotUtil::PlotData_ST &allPlotData,
     if(colorIndex >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Kan inte visa fler grafer (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("Lägga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Lägga till graf"), str);
         delete x;
         delete y;
         return false;
@@ -343,7 +343,7 @@ addIndicatorToPlot(CYahooStockPlotUtil::PlotData_ST &allPlotData,
             break;
         default:
             str.sprintf("Invalid indicator selected");
-            QMessageBox::information(NULL, QObject::tr("Plot indicator"), str);
+            QMessageBox::information(NULL, QString::fromUtf8("Plot indicator"), str);
             delete x;
             delete y;
             return false;
@@ -421,14 +421,14 @@ addStockToListWidget(CYahooStockPlotUtil::StockData_ST &stock,  int index, QList
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Kan inte lägga till aktie (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("Lägga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Lägga till graf"), str);
         return false;
     }
 
     if(index < 0)
     {
         str.sprintf("Kan inte aktie index förlite (Max = %d)", index);
-        QMessageBox::information(NULL, QObject::tr("Lägga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Lägga till graf"), str);
         return false;
     }
     QString s = QString::fromUtf8(stock.stockName.toStdString().c_str());
@@ -611,14 +611,14 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Felaktigt index för inte vara större (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("Förstort index"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
         return false;
     }
 
     if(index < 0)
     {
         str.sprintf("Felaktigt index. (Max = %d)", index);
-        QMessageBox::information(NULL, QObject::tr("Index förlite"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Index förlite"), str);
         return false;
     }
 
@@ -702,14 +702,14 @@ plotDataSetXScaleStep(CYahooStockPlotUtil::PlotData_ST &allPlotData,
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Felaktigt index för inte vara större (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("Förstort index"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
         return false;
     }
 
     if(index < 0)
     {
         str.sprintf("Felaktigt index. (Max = %d)", index);
-        QMessageBox::information(NULL, QObject::tr("Index förlite"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Index förlite"), str);
         return false;
     }
 
@@ -831,14 +831,14 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Felaktigt index för inte vara större (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("Förstort index"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
         return false;
     }
 
     if(index < 0)
     {
         str.sprintf("Felaktigt index. (Max = %d)", index);
-        QMessageBox::information(NULL, QObject::tr("Index förlite"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Index förlite"), str);
         return false;
     }
 

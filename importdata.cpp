@@ -17,21 +17,21 @@
 #include "parsekeytabridgedata.h"
 #include "parsecompdescription.h"
 
-
+#include "inc/guiUtil/guiFinanceCtrls.h"
 
 
 
 
 #define TIME_2_MIN ((int)120000)
 
-#define TAG_START_COMPANY_NAME QObject::tr("&marketplace=11\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME1 QObject::tr("&marketplace=14\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME2 QObject::tr("&marketplace=15\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME3 QObject::tr("&marketplace=24\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME QString::fromUtf8("&marketplace=11\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME1 QString::fromUtf8("&marketplace=14\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME2 QString::fromUtf8("&marketplace=15\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME3 QString::fromUtf8("&marketplace=24\" class=\"underline\">")
 
 
 #define TAG_START_COMPANY_NAME_LEN strlen("&marketplace=11\" class=\"underline\">")
-#define TAG_END_COMPANY_NAME QObject::tr("</a></div></td>")
+#define TAG_END_COMPANY_NAME QString::fromUtf8("</a></div></td>")
 
 const ImportData::TimePeriodDays_ST ImportData::m_timePeriodDaysArr[ImportData::MAX_NOF_TIME_PERIOD_DAYS_ITEMS] =
 {
@@ -62,8 +62,13 @@ const ImportData::TimePeriodDays_ST ImportData::m_timePeriodDaysArr[ImportData::
  ****************************************************************/
 ImportData::ImportData(QWidget *parent) :
     QDialog(parent),
+    m_hw1(parent),
+    m_gyks(parent),
     ui(new Ui::ImportData)
 {
+    GuiFinanceCtrls gfc;
+
+
     ui->setupUi(this);
     m_waitOnServerResp = false;
     m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
@@ -73,6 +78,9 @@ ImportData::ImportData(QWidget *parent) :
 
     // Init time period
     initTimePeriodCtrls(TIME_PERIOD_DAYS_1_YEAR);
+
+    gfc.addAllStockListsToCombobox(ui->stockListComboBoxSqrt);
+
 }
 
 /****************************************************************
@@ -140,7 +148,7 @@ bool ImportData::readFile(QString filename)
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -243,7 +251,7 @@ void ImportData::slotReqNextCompanyData()
     QUrl url;
 
 
-    //QMessageBox::information(NULL, QObject::tr("Hämta data"), QString::fromUtf8("Filen hämtad"));
+    //QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Filen hämtad"));
     m_timeoutTimer->stop();
 
     if(m_companyListIndex < m_companyList.count()-1)
@@ -266,7 +274,7 @@ void ImportData::slotReqNextCompanyData()
             data = m_companyList.at(m_companyListIndex);
             if(m_companyListIndex >= m_companyList.count()-2)
             {
-                QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+                QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
                 return;
             }
 
@@ -291,7 +299,7 @@ void ImportData::slotReqNextCompanyData()
                 m_companyListIndex++;
                 if(m_companyListIndex >= m_companyList.count()-2)
                 {
-                    QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+                    QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
                     return;
                 }
             }
@@ -311,7 +319,7 @@ void ImportData::slotReqNextCompanyData()
     }
     else
     {
-        QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+        QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
     }
 
 
@@ -354,7 +362,7 @@ void ImportData::slotHtmlPageIsRecv(int number)
         if(m_displayFinish== true)
         {
             m_displayFinish = false;
-            QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+            QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
         }
     }
 }
@@ -411,7 +419,7 @@ void ImportData::on_pushButtonReqCompInfo_clicked()
         m_sendNextReq = true;
 
     }
-    //QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+    //QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
 
 }
 
@@ -443,12 +451,12 @@ void ImportData::on_pushButtonParseCompanyIds_clicked()
     //qDebug() << filename;
     if(false == ppd.readFile(filename))
     {
-        QMessageBox::information(this, QObject::tr("Error"), QObject::tr("Fail to parse company Ids"));
+        QMessageBox::information(this, QString::fromUtf8("Error"), QString::fromUtf8("Fail to parse company Ids"));
         killTimer(m_timerId);
     }
     else
     {
-        QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+        QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
         killTimer(m_timerId);
     }
 
@@ -513,11 +521,11 @@ void ImportData::on_pushButInit_clicked()
 
     if(m_importYahooTaDataThread == 0)
     {
-        QMessageBox::information(NULL, QObject::tr("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
+        QMessageBox::information(NULL, QString::fromUtf8("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
     }
     else
     {
-        QMessageBox::information(NULL, QObject::tr("Success"), QObject::tr("Finish"));
+        QMessageBox::information(NULL, QString::fromUtf8("Success"), QString::fromUtf8("Finish"));
     }
 
 }
@@ -818,9 +826,9 @@ void ImportData::findDateList(QString stockSymbol, bool &isUpdate)
 void ImportData::initStockList(void)
 {
 
-    QString column0 = QObject::tr("Namn");
-    QString column1 = QObject::tr("Symbol");
-    QString column2 = QObject::tr("Notera");
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Symbol");
+    QString column2 = QString::fromUtf8("Notera");
 
     ui->treeWidget->setColumnCount(3);
     ui->treeWidget->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -918,7 +926,7 @@ bool ImportData::openStockListFile(QString filename)
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         QString errStr = QString("Fail to open file: %1").arg(filename);
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -948,7 +956,7 @@ bool ImportData::openStockListFile(QString filename)
             if(false == m_db.addTaStockList(stockListName))
             {
                 str.sprintf("Kan inte lägga till stockList");
-                QMessageBox::critical(NULL, QObject::tr("Läga till stock list"), str.toLocal8Bit().constData());
+                QMessageBox::critical(NULL, QString::fromUtf8("Läga till stock list"), str.toLocal8Bit().constData());
                 return false;
             }
             else
@@ -1123,7 +1131,7 @@ bool ImportData::openStockNameFile(QString filename, QString stockListName)
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         QString errStr = QString("Fail to open file: %1").arg(filename);
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -1153,7 +1161,7 @@ bool ImportData::openStockNameFile(QString filename, QString stockListName)
             qDebug() << stockName;
         }
 
-        // QString stockListName = QObject::tr("Stockholm OMX");
+        // QString stockListName = QString::fromUtf8("Stockholm OMX");
 
         if(true == m_db.findTaStockListId(stockListName, stockListId, true))
         {
@@ -1580,7 +1588,7 @@ void ImportData::slotCompanyDescriptionHtmlPageIsRecv(int number)
         if(m_displayFinish== true)
         {
             m_displayFinish = false;
-            QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+            QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
         }
     }
 }
@@ -1608,7 +1616,7 @@ void ImportData::slotReqNextCompanyDescriptionData()
 
 
 
-    //QMessageBox::information(NULL, QObject::tr("Hämta data"), QString::fromUtf8("Filen hämtad"));
+    //QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Filen hämtad"));
     m_timeoutTimer->stop();
 
     if(m_companyListIndex < m_companyList.count()-1)
@@ -1639,7 +1647,7 @@ void ImportData::slotReqNextCompanyDescriptionData()
     }
     else
     {
-        QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+        QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
     }
 
 
@@ -1667,7 +1675,7 @@ void ImportData::on_pushButParseCompanyInfo_clicked()
     path = PATH_COMPANY_HIST_INFO;
     data.AssetName.trimmed();
     pce.readFile(path, data.AssetName);
-    QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
+    QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
 
 }
 
@@ -1684,364 +1692,33 @@ void ImportData::on_pushButParseCompanyInfo_clicked()
  ****************************************************************/
 void ImportData::on_pushButton_clicked()
 {
+    bool res;
+    GuiFinanceCtrls gfic;
+    QString stockListName;
+    int stockListId;
+
+    res = gfic.getStockListNameAndId(ui->stockListComboBoxSqrt, stockListName, stockListId);
+
+
+    if(false == res)
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Aktielistor"), QString::fromUtf8("Fel ingen data hittad"));
+        return;
+    }
+
+
+    m_gyks.getYahooKeyStatisticsInDb(stockListName, stockListId);
+
+
+
     QString path;
     path = QDir::currentPath();
     qDebug() << path;
 
+
     // QString filename("database/inputData/Yahoo/keyStatistics/ABB_Key_Statistics.html");
     //QString filename("database/inputData/Yahoo/keyStatistics/KLOV-B.ST_Key Statistics.html");
-    QString filename("database/inputData/Yahoo/keyStatistics/UNIB-SDB.ST_Key_Statistics.html");
-    readYahooKeyStatistics(filename);
+    //QString filename("database/inputData/Yahoo/keyStatistics/UNIB-SDB.ST_Key_Statistics.html");
+    //gyks.parseYahooKeyStatistics(filename);
 }
-
-const QString ImportData::yahooKeyStatisticsArr[YAHOO_KEY_STATISTICS_ARR_SIZE] =
-{
-    QString::fromUtf8("Market Cap"),
-    QString::fromUtf8("Enterprise Value"),
-    QString::fromUtf8("Trailing P/E"),
-    QString::fromUtf8("Forward P/E"),
-    QString::fromUtf8("PEG Ratio"),
-    QString::fromUtf8("Price/Sales"),
-    QString::fromUtf8("Price/Book"),
-    QString::fromUtf8("Enterprise Value/Revenue"),
-    QString::fromUtf8("Enterprise Value/EBITDA"),
-    QString::fromUtf8("Fiscal Year Ends"),
-    QString::fromUtf8("Most Recent Quarter"),
-    QString::fromUtf8("Profit Margin"),
-    QString::fromUtf8("Operating Margin"),
-    QString::fromUtf8("Return on Assets"),
-    QString::fromUtf8("Return on Equity"),
-    QString::fromUtf8("Revenue"),
-    QString::fromUtf8("Revenue Per Share"),
-    QString::fromUtf8("Qtrly Revenue Growth"),
-    QString::fromUtf8("Gross Profit"),
-    QString::fromUtf8("EBITDA"),
-    QString::fromUtf8("Net Income Avl to Common"),
-    QString::fromUtf8("Diluted EPS"),
-    QString::fromUtf8("Qtrly Earnings Growth"),
-    QString::fromUtf8("Total Cash"),
-    QString::fromUtf8("Total Cash Per Share"),
-    QString::fromUtf8("Total Debt"),
-    QString::fromUtf8("Total Debt/Equity"),
-    QString::fromUtf8("Current Ratio"),
-    QString::fromUtf8("Book Value Per Share"),
-    QString::fromUtf8("Operating Cash Flow"),
-    QString::fromUtf8("Levered Free Cash Flow"),
-    QString::fromUtf8("Beta"),
-    QString::fromUtf8("52-Week Change"),
-    QString::fromUtf8("S&amp;P500 52-Week Change"),
-    QString::fromUtf8("52-Week High"),
-    QString::fromUtf8("52-Week Low"),
-    QString::fromUtf8("50-Day Moving Average"),
-    QString::fromUtf8("200-Day Moving Average"),
-    QString::fromUtf8("Avg Vol (3 month)"),
-    QString::fromUtf8("Avg Vol (10 day)"),
-    QString::fromUtf8("Shares Outstanding"),
-    QString::fromUtf8("Float"),
-    QString::fromUtf8("% Held by Insiders"),
-    QString::fromUtf8("% Held by Institutions"),
-    QString::fromUtf8("Shares Short"),
-    QString::fromUtf8("Short Ratio"),
-    QString::fromUtf8("Short % of Float"),
-    QString::fromUtf8("Shares Short (prior month)"),
-    QString::fromUtf8("Forward Annual Dividend Rate"),
-    QString::fromUtf8("Forward Annual Dividend Yield"),
-    QString::fromUtf8("Trailing Annual Dividend Yield"),
-    QString::fromUtf8("Trailing Annual Dividend Yield"),
-    QString::fromUtf8("5 Year Average Dividend Yield"),
-    QString::fromUtf8("Payout Ratio"),
-    QString::fromUtf8("Dividend Date"),
-    QString::fromUtf8("Ex-Dividend Date"),
-    QString::fromUtf8("Last Split Factor"),
-    QString::fromUtf8("Last Split Date")
-};
-
-
-
-/****************************************************************
- *
- * Function:    ()
- *
- * Description:
- *
- *
- *
- *
- ****************************************************************/
-bool ImportData::readYahooKeyStatistics(QString filename)
-{
-    QString outFilename("YahooKeyStat1.txt");
-    QFile file(filename);
-    QFile outFile(outFilename);
-
-    QString str;
-    QString errStr = QString("Fail to open file: %1").arg(filename);
-
-
-
-    if(!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
-        return false;
-    }
-
-    if(!outFile.open(QFile::WriteOnly | QFile::Text))
-    {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
-        return false;
-    }
-
-
-    QTextStream out(&outFile);   // we will serialize the data into the file
-    QTextStream inStream(&file);
-
-    inStream.setCodec("UTF-8");
-    out.setCodec("UTF-8");
-
-
-    int mainStrIndex;
-    QString tmpStr;
-    QString mainStr;
-    QString subStr;
-    QString startToken("<td class=\"yfnc_tablehead1\" width=\"74%\">");
-
-    QString startDataToken("<td class=\"yfnc_tabledata1\">");
-
-    int startTokenLen = startToken.length();
-    int startDataTokenLen = startDataToken.length();
-    int startIndex;
-    int nofchars;
-    bool found;
-    int n = 0;
-
-    m_yksState = YKS_STATE_READ_FILE;
-
-    while(!inStream.atEnd())
-    {
-        switch(m_yksState)
-        {
-        case YKS_STATE_READ_FILE:
-            mainStr = inStream.readLine();
-            mainStrIndex = mainStr.indexOf(startToken);
-            if((mainStrIndex > -1) && (mainStr.length() > 0))
-            {
-                qDebug() << mainStr;
-                m_yksState = YKS_STATE_FIND_TOKEN;
-            }
-            break;
-
-        case YKS_STATE_FIND_TOKEN:
-            found = false;
-            mainStrIndex = mainStr.indexOf(startToken);
-            startIndex = mainStrIndex + startTokenLen;
-
-            if(mainStrIndex > -1)
-            {
-                for(int i = startIndex; i < mainStr.length(); i++)
-                {
-                    if(mainStr.at(i) == '<')
-                    {
-                        nofchars = i - startIndex;
-                        if(nofchars >= 0)
-                        {
-                            subStr = mainStr.mid(startIndex, nofchars);
-                            qDebug() << subStr;
-                            // QString::size_type pos = yahooKeyStatisticsArr[n+1].toStdString().find(subStr.toStdString());
-                            qWarning() << subStr.contains(yahooKeyStatisticsArr[n]);
-
-                            if(false == subStr.contains(yahooKeyStatisticsArr[n]))
-                            {
-                                str = QString::fromUtf8("Fail to parse: ");
-                                str += yahooKeyStatisticsArr[n];
-                                QMessageBox::information(this, QString::fromUtf8("Fail:"), str);
-
-                                return false;
-                            }
-
-                            out << subStr.toUtf8() << "\n";
-                            mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
-                            found = true;
-                            n++;
-                            m_yksState = YKS_STATE_FIND_DATA_TOKEN;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if(found == false)
-            {
-                m_yksState = YKS_STATE_READ_FILE;
-            }
-           break;
-
-
-         case YKS_STATE_FIND_DATA_TOKEN:
-            found = false;
-            mainStrIndex = mainStr.indexOf(startDataToken);
-            startIndex = mainStrIndex + startDataTokenLen;
-            tmpStr = mainStr.right(mainStr.length() - startIndex);
-
-            if(mainStrIndex > -1)
-            {
-                for(int i = startIndex; i < mainStr.length(); i++)
-                {
-                    if(mainStr.at(i) == '<')
-                    {
-                        nofchars = i - startIndex;
-                        if(nofchars >= 0)
-                        {
-                            subStr = mainStr.mid(startIndex, nofchars);
-                            qDebug() << subStr;
-                            out << subStr.toUtf8() << "\n";
-                            mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startDataTokenLen));
-                            found = true;
-                            m_yksState = YKS_STATE_FIND_TOKEN;
-                            break;
-                        }
-
-                    }
-                }
-            }
-
-            if(found == false)
-            {
-                m_yksState = YKS_STATE_READ_FILE;
-            }
-            break;
-
-        }
-
-
-    }
-
-
-
-    QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
-    file.close();
-    outFile.close();
-    return true;
-}
-
-#if 0
-/****************************************************************
- *
- * Function:    ()
- *
- * Description:
- *
- *
- *
- *
- ****************************************************************/
-bool ImportData::readYahooKeyStatistics(QString filename)
-{
-    QString outFilename("YahooKeyStat1.txt");
-    QFile file(filename);
-    QFile outFile(outFilename);
-
-    QString str;
-    QString errStr = QString("Fail to open file: %1").arg(filename);
-
-
-
-    if(!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
-        return false;
-    }
-
-    if(!outFile.open(QFile::WriteOnly | QFile::Text))
-    {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
-        return false;
-    }
-
-
-    QTextStream out(&outFile);   // we will serialize the data into the file
-    QTextStream inStream(&file);
-
-    inStream.setCodec("UTF-8");
-    out.setCodec("UTF-8");
-
-
-    int mainStrIndex;
-    int mainStrEndIndex;
-    QString tmpStr;
-    QString mainStr;
-    QString subStr;
-    QString startToken("<td class=\"yfnc_tablehead1\"");
-    //QString endToken("</td>");
-    QString endToken("<");
-    int startTokenLen = startToken.length();
-    int subStrIndex;
-
-    m_yksState = YKS_STATE_READ_FILE;
-
-    while(!inStream.atEnd())
-    {
-        switch(m_yksState)
-        {
-        case YKS_STATE_READ_FILE:
-            mainStr = inStream.readLine();
-            mainStrIndex = mainStr.indexOf(startToken);
-            if((mainStrIndex > -1) && (mainStr.length() > 0))
-            {
-                qDebug() << mainStr;
-                m_yksState = YKS_STATE_FIND_TOKEN;
-            }
-            break;
-
-        case YKS_STATE_FIND_TOKEN:
-            mainStrIndex = mainStr.indexOf(startToken);
-
-            if(mainStrIndex > -1)
-            {
-                tmpStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
-                mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startTokenLen));
-
-                if(mainStr.length() > 0)
-                {
-                    mainStrEndIndex = mainStr.indexOf(endToken);
-                    if(mainStrEndIndex > 0)
-                    {
-                        subStr = mainStr.left(mainStrEndIndex);
-                        m_yksState = YKS_STATE_SPLIT_STR;
-                    }
-                    else
-                    {
-                        m_yksState = YKS_STATE_READ_FILE;
-                    }
-                }
-            }
-            else
-            {
-                m_yksState = YKS_STATE_READ_FILE;
-            }
-            break;
-
-        case YKS_STATE_SPLIT_STR:
-            subStrIndex = subStr.indexOf(">");
-            if(subStrIndex > -1)
-            {
-                subStr = subStr.mid(subStrIndex + 1, subStr.length());
-                qDebug() << subStr;
-                out << subStr.toUtf8() << "\n";
-                m_yksState = YKS_STATE_FIND_TOKEN;
-            }
-            break;
-        }
-
-
-    }
-
-
-
-    QMessageBox::information(this, QObject::tr("Finish"), QObject::tr("Finish"));
-    file.close();
-    outFile.close();
-    return true;
-}
-#endif
-
 

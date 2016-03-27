@@ -21,8 +21,9 @@
 
 #include "importYahooTaData.h"
 #include <QString>
+#include "inc/GetHtmlPage/getYahooKeyStatistics.h"
 
-#define YAHOO_KEY_STATISTICS_ARR_SIZE 58
+
 
 
 
@@ -89,18 +90,6 @@ class ImportData : public QDialog
         TimePeriodDays_ET timePeriod;
     };
 
-    enum YahooKeyStatEt
-    {
-     YKS_STATE_READ_FILE,
-     YKS_STATE_FIND_TOKEN,
-     YKS_STATE_FIND_DATA_TOKEN,
-    };
-
-
-    YahooKeyStatEt m_yksState;
-
-
-    bool readYahooKeyStatistics(QString filename);
 
 
     HttpWindow m_hw1;
@@ -109,6 +98,8 @@ class ImportData : public QDialog
     QString m_endDate;
     QString m_endDateRef;
     int m_timePeriodDaysInc;
+    GetYahooKeyStatistics m_gyks;
+
 
 
 
@@ -141,9 +132,6 @@ class ImportData : public QDialog
 
     
 public:
-
-    static const QString yahooKeyStatisticsArr[YAHOO_KEY_STATISTICS_ARR_SIZE];
-
     static const TimePeriodDays_ST m_timePeriodDaysArr[MAX_NOF_TIME_PERIOD_DAYS_ITEMS];
     explicit ImportData(QWidget *parent = 0);
     ~ImportData();

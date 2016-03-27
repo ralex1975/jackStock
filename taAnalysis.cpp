@@ -71,7 +71,7 @@ TaAnalysis::TaAnalysis(QWidget *parent) :
 
     if(m_importYahooTaDataThread == 0)
     {
-        QMessageBox::information(NULL, QObject::tr("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
+        QMessageBox::information(NULL, QString::fromUtf8("Create thread"), QString::fromUtf8("Fail to create Ta Import Data thread"));
     }
 
     // Init time period
@@ -324,9 +324,9 @@ void TaAnalysis::initFa3MinMaxPePrice(void)
 void TaAnalysis::initStockList(void)
 {
 
-    QString column0 = QObject::tr("Namn");
-    QString column1 = QObject::tr("Symbol");
-    QString column2 = QObject::tr("Notera");
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Symbol");
+    QString column2 = QString::fromUtf8("Notera");
 
     ui->treeWidget->setColumnCount(3);
     ui->treeWidget->setSelectionMode(QAbstractItemView::SingleSelection);

@@ -550,9 +550,9 @@ void FaTab::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
 void FaTab::initStockList(void)
 {
 
-    QString column0 = QObject::tr("Namn");
-    QString column1 = QObject::tr("Symbol");
-    QString column2 = QObject::tr("Notera");
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Symbol");
+    QString column2 = QString::fromUtf8("Notera");
 
     ui->treeWidgetStockList->setColumnCount(3);
     ui->treeWidgetStockList->setSelectionMode(QAbstractItemView::SingleSelection);

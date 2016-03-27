@@ -76,7 +76,7 @@ void CLinkedList::createNewNode(CLinkedListLnk **newLink)
 
 	if(!(*newLink))
 	{
-        QMessageBox::critical(NULL, QObject::tr("Fail to create node"), QObject::tr("Could not create a new CLinkedListLnk link"));
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to create node"), QString::fromUtf8("Could not create a new CLinkedListLnk link"));
 		exit(0);
 	}
 

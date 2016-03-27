@@ -10,13 +10,13 @@
 #include "util.h"
 #include "dbHndl.h"
 
-#define TAG_START_COMPANY_NAME QObject::tr("&marketplace=11\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME1 QObject::tr("&marketplace=14\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME2 QObject::tr("&marketplace=15\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME3 QObject::tr("&marketplace=24\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME QString::fromUtf8("&marketplace=11\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME1 QString::fromUtf8("&marketplace=14\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME2 QString::fromUtf8("&marketplace=15\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME3 QString::fromUtf8("&marketplace=24\" class=\"underline\">")
 
 #define TAG_START_COMPANY_NAME_LEN strlen("&marketplace=11\" class=\"underline\">")
-#define TAG_END_COMPANY_NAME QObject::tr("</a></div></td>")
+#define TAG_END_COMPANY_NAME QString::fromUtf8("</a></div></td>")
 
 #define TAG_BALANS_RAKNING QString::fromUtf8("flerårsöversikt")
 #define TAG_RESULT_CALC QString::fromUtf8("Resultaträkning (kSEK)")
@@ -636,7 +636,7 @@ readFile(QString filename, QString assetName)
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
