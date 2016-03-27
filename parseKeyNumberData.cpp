@@ -21,16 +21,16 @@
 
 
 //#define MAX_NOF_STOCK_DATA 7
-#define TAG_START_COMPANY_NAME QObject::tr("&marketplace=11\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME1 QObject::tr("&marketplace=14\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME2 QObject::tr("&marketplace=15\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME3 QObject::tr("&marketplace=24\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME QString::fromUtf8("&marketplace=11\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME1 QString::fromUtf8("&marketplace=14\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME2 QString::fromUtf8("&marketplace=15\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME3 QString::fromUtf8("&marketplace=24\" class=\"underline\">")
 
 
 #define TAG_START_COMPANY_NAME_LEN strlen("&marketplace=11\" class=\"underline\">")
-#define TAG_END_COMPANY_NAME QObject::tr("</a></div></td>")
+#define TAG_END_COMPANY_NAME QString::fromUtf8("</a></div></td>")
 
-#define TAG_START_END_PART_SECOND_DATA QObject::tr("</td>")
+#define TAG_START_END_PART_SECOND_DATA QString::fromUtf8("</td>")
 
 
 #define MAX_NOF_START_DATA_TAGS 2
@@ -83,7 +83,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -100,7 +100,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
 
             if(result.length() < 1)
             {
-                QMessageBox::critical(NULL, QObject::tr("Key Numbers Parser Error"), "Company name is empty");
+                QMessageBox::critical(NULL, QString::fromUtf8("Key Numbers Parser Error"), "Company name is empty");
                 db.m_snapshotStockData.companyName.clear();
             }
             else
@@ -120,7 +120,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_PE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "PE is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "PE is empty");
                             db.m_snapshotStockData.keyValuePE.clear();
                         }
                         else
@@ -132,7 +132,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_PS:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "PS is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "PS is empty");
                             db.m_snapshotStockData.keyValuePS.clear();
                         }
                         else
@@ -144,7 +144,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_EARNINGS_PER_SHARE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "Earnings Per Share is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "Earnings Per Share is empty");
                             db.m_snapshotStockData.keyValueEarningsPerShare.clear();
                         }
                         else
@@ -156,7 +156,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_NAV_PER_SHARE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "NAV Per Share is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "NAV Per Share is empty");
                             db.m_snapshotStockData.keyValueNAVPerShare.clear();
                         }
                         else
@@ -168,7 +168,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_DIVIDEND_PER_SHARE:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "Dividend Per Share is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "Dividend Per Share is empty");
                             db.m_snapshotStockData.keyValueDividendPerShare.clear();
                         }
                         else
@@ -180,7 +180,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_YIELD:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "Yield is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "Yield is empty");
                             db.m_snapshotStockData.keyValueYield.clear();
                         }
                         else
@@ -192,7 +192,7 @@ parseStockKeyNumberData(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET 
                     case KEY_VALUE_COURSE_PER_JEK:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Key numbers Parser Error"), "Course Per JEK is empty");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Key numbers Parser Error"), "Course Per JEK is empty");
                             db.m_snapshotStockData.keyValueCoursePerJEK.clear();
                         }
                         else

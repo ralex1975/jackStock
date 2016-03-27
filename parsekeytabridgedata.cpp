@@ -34,7 +34,7 @@ bool ParseKeyTaBridgeData::readFile(QString filename)
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -61,7 +61,7 @@ bool ParseKeyTaBridgeData::readFile(QString filename)
         else
         {
             errStr.sprintf("Line=%s, Name=%s, symbol=%s\n", result.toAscii().constData(), stockName.toAscii().constData(), stockSymbol.toAscii().constData());
-            QMessageBox::critical(NULL, QObject::tr("Fail to parse keyTaBridgeData"), errStr);
+            QMessageBox::critical(NULL, QString::fromUtf8("Fail to parse keyTaBridgeData"), errStr);
         }
     }
 

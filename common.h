@@ -29,6 +29,8 @@
 
 #define PATH_COMPANY_HIST_INFO "database/inputData/companyInfo/companyInfo.html"
 
+#define PATH_REQ_YAHOO_KEY_STAT_HTML_PAGE "database/inputData/Yahoo/keyStatistics/reqHtmlPage.html";
+
 
 enum DataParseSel_ET
 {

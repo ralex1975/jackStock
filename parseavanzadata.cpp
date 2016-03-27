@@ -52,7 +52,7 @@ bool CParseAvanzaData::parseData(QString filename)
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         QString errStr = QString("Fail to open file: %1").arg(filename);
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -90,7 +90,7 @@ bool CParseAvanzaData::parseData(QString filename)
                                                     result.assetPrice,
                                                     result.currency))
              {
-                 // QMessageBox::critical(NULL, QObject::tr("Insert Avanza data"), QObject::tr("Fail to insert Avanza data"));
+                 // QMessageBox::critical(NULL, QString::fromUtf8("Insert Avanza data"), QString::fromUtf8("Fail to insert Avanza data"));
                  // file.close();
                  // cdh.closeDb();
                  // return false;
@@ -98,7 +98,7 @@ bool CParseAvanzaData::parseData(QString filename)
          }
      }
 
-     QMessageBox::information(NULL, QObject::tr("Read file"), QObject::tr("Finish reading file"));
+     QMessageBox::information(NULL, QString::fromUtf8("Read file"), QString::fromUtf8("Finish reading file"));
      file.close();
      // cdh.closeDb();
      return true;
@@ -212,7 +212,7 @@ bool CParseAvanzaData::validNofParsedTockens(const int i, const int maxNofLineTo
     }
     else
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to parse line"), QObject::tr("Error parse line: Invalid number of tockens"));
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to parse line"), QString::fromUtf8("Error parse line: Invalid number of tockens"));
         res = false;
     }
     return res;
@@ -274,7 +274,7 @@ bool CParseAvanzaData::updateResult(QString subresult, parserData_ST &result, in
             qDebug() << "result.currency =" << result.currency << "\n";
             break;
         default:
-            QMessageBox::critical(NULL, QObject::tr("Line Parser Error"), QObject::tr("Line Parser Error: Unknown tocken"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Line Parser Error"), QString::fromUtf8("Line Parser Error: Unknown tocken"));
             res = false;
             break;
         }

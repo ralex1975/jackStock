@@ -152,7 +152,7 @@ void CTableTab::sectionClicked1(int logicalIndex)
     else
     {
         //logicalIndex = logicalIndex;
-        //QMessageBox::information(NULL, QObject::tr("Header clicked"), QObject::tr("Header clicked") );
+        //QMessageBox::information(NULL, QString::fromUtf8("Header clicked"), QString::fromUtf8("Header clicked") );
 
 
         if(true == db.filter1DividendGetColumnSortParameter(logicalIndex, sortParam))
@@ -161,26 +161,26 @@ void CTableTab::sectionClicked1(int logicalIndex)
             // db.openDb(PATH_JACK_STOCK_DB);
             db.createTabelTabFilter(m_filterCtrls);
 
-            //QMessageBox::information(NULL, QObject::tr("sortOrder"), m_tableHeaderList[logicalIndex].sortOrder );
+            //QMessageBox::information(NULL, QString::fromUtf8("sortOrder"), m_tableHeaderList[logicalIndex].sortOrder );
 
 
             db.debugPrintFilter();
 
 
-            if(m_tableHeaderList[logicalIndex].sortOrder.compare(QObject::tr(SQL_STR_DESC)) ==  0)
+            if(m_tableHeaderList[logicalIndex].sortOrder.compare(QString::fromUtf8(SQL_STR_DESC)) ==  0)
             {
                m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_ASC;
-               //QMessageBox::information(NULL, QObject::tr(SQL_STR_ASC), m_tableHeaderList[logicalIndex].sortOrder);
+               //QMessageBox::information(NULL, QString::fromUtf8(SQL_STR_ASC), m_tableHeaderList[logicalIndex].sortOrder);
             }
-            else if(m_tableHeaderList[logicalIndex].sortOrder.compare(QObject::tr(SQL_STR_ASC)) ==  0)
+            else if(m_tableHeaderList[logicalIndex].sortOrder.compare(QString::fromUtf8(SQL_STR_ASC)) ==  0)
             {
                 m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
-                //QMessageBox::information(NULL, QObject::tr(SQL_STR_DESC), m_tableHeaderList[logicalIndex].sortOrder);
+                //QMessageBox::information(NULL, QString::fromUtf8(SQL_STR_DESC), m_tableHeaderList[logicalIndex].sortOrder);
             }
             else
             {
                 m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
-                QMessageBox::information(NULL, QObject::tr("SQL_STR_?"), m_tableHeaderList[logicalIndex].sortOrder);
+                QMessageBox::information(NULL, QString::fromUtf8("SQL_STR_?"), m_tableHeaderList[logicalIndex].sortOrder);
             }
 
 
@@ -202,7 +202,7 @@ void CTableTab::sectionClicked1(int logicalIndex)
     }
     else
     {
-       QMessageBox::information(NULL, QObject::tr("sortParam"), QObject::tr("Error: fail to sort") );
+       QMessageBox::information(NULL, QString::fromUtf8("sortParam"), QString::fromUtf8("Error: fail to sort") );
     }
 
     }
@@ -322,7 +322,7 @@ void CTableTab::on_FilterData_clicked()
 
     if(false == db.filter1Dividend(this, ui->tableView, &m_filterCtrls))
     {
-        QMessageBox::information(NULL, QObject::tr("Filter fel"), "Inget filter kunde skapas");
+        QMessageBox::information(NULL, QString::fromUtf8("Filter fel"), "Inget filter kunde skapas");
         return;
     }
 
@@ -473,7 +473,7 @@ getUrlToSnapshopParseData(int result, QUrl &url, QUrl &ur2, QUrl &ur3)
             break;
 
         case PDATASEL_SMALL_CAP:
-            QMessageBox::information(NULL, QObject::tr("Selection"), QObject::tr("Not implemented"));
+            QMessageBox::information(NULL, QString::fromUtf8("Selection"), QString::fromUtf8("Not implemented"));
             break;
         }
 
@@ -501,7 +501,7 @@ getUrlToSnapshopParseData(int result, QUrl &url, QUrl &ur2, QUrl &ur3)
             break;
 
         case PDATASEL_SMALL_CAP:
-            QMessageBox::information(NULL, QObject::tr("Selection"), QObject::tr("Not implemented"));
+            QMessageBox::information(NULL, QString::fromUtf8("Selection"), QString::fromUtf8("Not implemented"));
             break;
 
         }
@@ -531,7 +531,7 @@ getUrlToSnapshopParseData(int result, QUrl &url, QUrl &ur2, QUrl &ur3)
             break;
 
         case PDATASEL_SMALL_CAP:
-            QMessageBox::information(NULL, QObject::tr("Selection"), QObject::tr("Not implemented"));
+            QMessageBox::information(NULL, QString::fromUtf8("Selection"), QString::fromUtf8("Not implemented"));
             break;
         }
         break;
@@ -558,7 +558,7 @@ getUrlToSnapshopParseData(int result, QUrl &url, QUrl &ur2, QUrl &ur3)
            break;
 
        case PDATASEL_SMALL_CAP:
-           QMessageBox::information(NULL, QObject::tr("Selection"), QObject::tr("Not implemented"));
+           QMessageBox::information(NULL, QString::fromUtf8("Selection"), QString::fromUtf8("Not implemented"));
            break;
        }
        break;
@@ -585,14 +585,14 @@ getUrlToSnapshopParseData(int result, QUrl &url, QUrl &ur2, QUrl &ur3)
             break;
 
         case PDATASEL_SMALL_CAP:
-            QMessageBox::information(NULL, QObject::tr("Selection"), QObject::tr("Not implemented"));
+            QMessageBox::information(NULL, QString::fromUtf8("Selection"), QString::fromUtf8("Not implemented"));
             break;
         }
 
         break;
 
     default:
-        QMessageBox::information(NULL, QObject::tr("Selection"), QObject::tr("Invalid selection"));
+        QMessageBox::information(NULL, QString::fromUtf8("Selection"), QString::fromUtf8("Invalid selection"));
         return false;
     }
 

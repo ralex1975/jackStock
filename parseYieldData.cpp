@@ -20,14 +20,14 @@
 
 //#define YIELD_MAX_NOF_STOCK_DATA 9
 
-#define TAG_YIELD_START_COMPANY_NAME  QObject::tr("&marketplace=11\" class=\"underline\">")
-#define TAG_YIELD_START_COMPANY_NAME1 QObject::tr("&marketplace=14\" class=\"underline\">")
-#define TAG_YIELD_START_COMPANY_NAME2 QObject::tr("&marketplace=15\" class=\"underline\">")
-#define TAG_YIELD_START_COMPANY_NAME3 QObject::tr("&marketplace=24\" class=\"underline\">")
+#define TAG_YIELD_START_COMPANY_NAME  QString::fromUtf8("&marketplace=11\" class=\"underline\">")
+#define TAG_YIELD_START_COMPANY_NAME1 QString::fromUtf8("&marketplace=14\" class=\"underline\">")
+#define TAG_YIELD_START_COMPANY_NAME2 QString::fromUtf8("&marketplace=15\" class=\"underline\">")
+#define TAG_YIELD_START_COMPANY_NAME3 QString::fromUtf8("&marketplace=24\" class=\"underline\">")
 
 
-#define TAG_YIELD_START_END_PART_FIRST_DATA QObject::tr("</a></div></td>")
-#define TAG_YIELD_START_END_PART_SECOND_DATA QObject::tr("%</div></td>")
+#define TAG_YIELD_START_END_PART_FIRST_DATA QString::fromUtf8("</a></div></td>")
+#define TAG_YIELD_START_END_PART_SECOND_DATA QString::fromUtf8("%</div></td>")
 
 
 
@@ -100,7 +100,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -119,7 +119,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
         {
             if(result.length() < 1)
             {
-                QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "Company name is empty");
+                QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "Company name is empty");
                 db.m_snapshotStockData.companyName.clear();
             }
             else
@@ -139,7 +139,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_1_DAY:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 1 day");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 1 day");
                             db.m_snapshotStockData.procentChangeOneDay.clear();
                         }
                         else
@@ -152,7 +152,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_1_WEEK:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 1 week");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 1 week");
                             db.m_snapshotStockData.procentChangeOneWeek.clear();
                         }
                         else
@@ -164,7 +164,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_1_MONTH:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 1 month");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 1 month");
                             db.m_snapshotStockData.procentChange1Month.clear();
                         }
                         else
@@ -176,7 +176,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_3_MONTH:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 3 month");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 3 month");
                             db.m_snapshotStockData.procentChange3Month.clear();
                         }
                         else
@@ -188,7 +188,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_6_MONTH:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 6 month");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 6 month");
                             db.m_snapshotStockData.procentChange6Month.clear();
                         }
                         else
@@ -200,7 +200,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_1_YEAR:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 1 year");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 1 year");
                             db.m_snapshotStockData.procentChange1Year.clear();
                         }
                         else
@@ -212,7 +212,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_2_YEAR:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 2 year");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 2 year");
                             db.m_snapshotStockData.procentChange2Year.clear();
                         }
                         else
@@ -224,7 +224,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_3_YEAR:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 3 year");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 3 year");
                             db.m_snapshotStockData.procentChange3Year.clear();
                         }
                         else
@@ -236,7 +236,7 @@ parseStockYields(QString filename, CDbHndl &db, CDbHndl::DbInsertMode_ET dbUpdat
                     case PROCENT_CHANGE_5_YEAR:
                         if(result.length() < 1)
                         {
-                            QMessageBox::critical(NULL, QObject::tr("Yields Parser Error"), "percent change 5 year");
+                            QMessageBox::critical(NULL, QString::fromUtf8("Yields Parser Error"), "percent change 5 year");
                             db.m_snapshotStockData.procentChange5Year.clear();
                         }
                         else

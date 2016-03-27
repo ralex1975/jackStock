@@ -11,14 +11,14 @@
 #include "dbHndl.h"
 
 //#define PRICE_MAX_NOF_STOCK_DATA 10
-#define TAG_START_COMPANY_NAME QObject::tr("&marketplace=11\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME1 QObject::tr("&marketplace=14\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME2 QObject::tr("&marketplace=15\" class=\"underline\">")
-#define TAG_START_COMPANY_NAME3 QObject::tr("&marketplace=24\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME QString::fromUtf8("&marketplace=11\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME1 QString::fromUtf8("&marketplace=14\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME2 QString::fromUtf8("&marketplace=15\" class=\"underline\">")
+#define TAG_START_COMPANY_NAME3 QString::fromUtf8("&marketplace=24\" class=\"underline\">")
 
 
 #define TAG_START_COMPANY_NAME_LEN strlen("&marketplace=11\" class=\"underline\">")
-#define TAG_END_COMPANY_NAME QObject::tr("</a></div></td>")
+#define TAG_END_COMPANY_NAME QString::fromUtf8("</a></div></td>")
 
 
 /****************************************************************
@@ -84,7 +84,7 @@ bool nordnetParseCompanyId::readFile(QString filename)
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 
@@ -179,5 +179,5 @@ void nordnetParseCompanyId::slotHtmlPageIsRecv(int number)
     number = number;
     m_waitOnServerResp = false;
 
-    QMessageBox::information(NULL, QObject::tr("Hämta data"), QString::fromUtf8("Filen hämtad"));
+    QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Filen hämtad"));
 }

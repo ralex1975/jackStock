@@ -73,7 +73,7 @@ readFile(QString filename, QString assetName, QString assetSymbol)
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 

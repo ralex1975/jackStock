@@ -142,21 +142,6 @@ void HttpWindow::httpFinished()
     // All data is received flush and close file
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     file->flush();
     file->close();
 

@@ -411,7 +411,7 @@ void TabHelp::on_pushButRemoveMsg_clicked()
     QString sub;
 
     if (QMessageBox::No == QMessageBox::question(NULL,
-                                                 QObject::tr("Ta bort"),
+                                                 QString::fromUtf8("Ta bort"),
                                                  QString::fromUtf8("Vill du ta bort inlägget?"),
                                                  QMessageBox::Yes | QMessageBox::No))
     {
@@ -452,8 +452,8 @@ void TabHelp::on_pushButRemoveMainSectionFromDb_clicked()
     int mainHelpSectionId;
 
     if (QMessageBox::No == QMessageBox::question(NULL,
-                                                 QObject::tr("Ta bort"),
-                                                 QObject::tr("Vill du ta Huvudkategorin?"),
+                                                 QString::fromUtf8("Ta bort"),
+                                                 QString::fromUtf8("Vill du ta Huvudkategorin?"),
                                                  QMessageBox::Yes | QMessageBox::No))
     {
         return;

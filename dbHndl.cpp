@@ -253,7 +253,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4a"), QObject::tr("Fail create TblMainHelpSection"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4a"), QString::fromUtf8("Fail create TblMainHelpSection"));
         }
         closeDb();
         m_mutex.unlock();
@@ -261,6 +261,93 @@ bool CDbHndl::createTable(void)
     }
 
     qry.finish();
+
+
+
+    //===================================================================
+    // TblYahooKeyStatistics
+    //===================================================================
+    tmp.sprintf("CREATE TABLE IF NOT EXISTS TblYahooKeyStatistics "
+                " (StockSymbol VARCHAR(255) UNIQUE PRIMARY KEY, "
+                " MarketCap VARCHAR(255), "
+                " EnterpriseValue VARCHAR(255), "
+                " TrailingPe VARCHAR(255), "
+                " ForwardPe VARCHAR(255), "
+                " PEGRatio VARCHAR(255), "
+                " PriceDivSales VARCHAR(255), "
+                " PriceDivBook VARCHAR(255), "
+                " EnterpriseValueDivRevenue VARCHAR(255), "
+                " EnterpriseValueDivEBITDA VARCHAR(255), "
+                " FiscalYearEnds VARCHAR(255), "
+                " MostRecentQuarter VARCHAR(255), "
+                " ProfitMargin VARCHAR(255), "
+                " OperatingMargin VARCHAR(255), "
+                " ReturnOnAssets VARCHAR(255), "
+                " ReturnOnEquity VARCHAR(255), "
+                " Revenue VARCHAR(255), "
+                " RevenuePerShare VARCHAR(255), "
+                " QtrlyRevenueGrowth VARCHAR(255), "
+                " GrossProfit VARCHAR(255), "
+                " EBITDA VARCHAR(255), "
+                " NetIncomeAvlToCommon VARCHAR(255), "
+                " DilutedEPS VARCHAR(255), "
+                " QtrlyEarningsGrowth VARCHAR(255), "
+                " TotalCash VARCHAR(255), "
+                " TotalCashPerShare VARCHAR(255), "
+                " TotalDebt VARCHAR(255), "
+                " TotalDebtDivEquity VARCHAR(255), "
+                " CurrentRatio VARCHAR(255), "
+                " BookValuePerShare VARCHAR(255), "
+                " OperatingCashFlow VARCHAR(255), "
+                " LeveredFreeCashFlow VARCHAR(255), "
+                " Beta VARCHAR(255), "
+                " Week52Change VARCHAR(255), "
+                " S_And_P500_52WeekChange VARCHAR(255), "
+                " ProcentHeldbyInsiders VARCHAR(255), "
+                " ProcentHeldbyInstitutions VARCHAR(255), "
+                " SharesShort VARCHAR(255), "
+                " ShortRatio VARCHAR(255), "
+                " ShortProcentOfFloat VARCHAR(255), "
+                " SharesShortPriorMonth VARCHAR(255), "
+                " ForwardAnnualDividendRate VARCHAR(255), "
+                " ForwardAnnualDividendYield VARCHAR(255), "
+                " Week52High VARCHAR(255), "
+                " Week52Low VARCHAR(255), "
+                " Day50MovingAverage VARCHAR(255), "
+                " Day200MovingAverage VARCHAR(255), "
+                " AvgVol3Month VARCHAR(255), "
+                " AvgVol10Day VARCHAR(255), "
+                " SharesOutstanding VARCHAR(255), "
+                " Float_ VARCHAR(255), "
+                " TrailingAnnualDividendYield VARCHAR(255), "
+                " TrailingAnnualDividendYield1 VARCHAR(255), "
+                " Year5AverageDividendYield VARCHAR(255), "
+                " PayoutRatio VARCHAR(255), "
+                " DividendDate VARCHAR(255), "
+                " ExDividendDate VARCHAR(255), "
+                " LastSplitFactor VARCHAR(255), "
+                " LastSplitDate VARCHAR(255));");
+
+    qDebug() << tmp;
+
+    qry.prepare(tmp);
+
+    res = execSingleCmd(qry);
+
+    if(res == false)
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4b"), QString::fromUtf8("Fail create TblYahooKeyStatistics"));
+        }
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+
+    qry.finish();
+
 
 
 
@@ -281,7 +368,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4b"), QObject::tr("Fail create TblSubHelpSection"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4b"), QString::fromUtf8("Fail create TblSubHelpSection"));
         }
         closeDb();
         m_mutex.unlock();
@@ -312,7 +399,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4c"), QObject::tr("Fail create TblHelpSectionTxt"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4c"), QString::fromUtf8("Fail create TblHelpSectionTxt"));
         }
         closeDb();
         m_mutex.unlock();
@@ -345,7 +432,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb3"), QObject::tr("Fail create TblNordnetCompanyDescription"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblNordnetCompanyDescription"));
         }
         closeDb();
         m_mutex.unlock();
@@ -388,7 +475,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb3"), QObject::tr("Fail create TblYahooTaStockName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblYahooTaStockName"));
         }
         closeDb();
         m_mutex.unlock();
@@ -418,7 +505,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb3"), QObject::tr("Fail create TblYahooTaStockName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblYahooTaStockName"));
         }
         closeDb();
         m_mutex.unlock();
@@ -451,7 +538,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb3"), QObject::tr("Fail create TblYahooTaStockName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblYahooTaStockName"));
         }
         closeDb();
         m_mutex.unlock();
@@ -489,7 +576,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb3"), QObject::tr("Fail create TblYahooTaStockName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblYahooTaStockName"));
         }
         closeDb();
         m_mutex.unlock();
@@ -523,7 +610,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb3"), QObject::tr("Fail create TblYahooTaStockName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblYahooTaStockName"));
         }
         closeDb();
         m_mutex.unlock();
@@ -557,7 +644,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb2"), QObject::tr("Fail create TblYahooTaData"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb2"), QString::fromUtf8("Fail create TblYahooTaData"));
         }
         closeDb();
         m_mutex.unlock();
@@ -585,7 +672,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4bb1"), QObject::tr("Fail create TblYahooNordetIntercon"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb1"), QString::fromUtf8("Fail create TblYahooNordetIntercon"));
         }
         closeDb();
         m_mutex.unlock();
@@ -612,7 +699,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4a"), QObject::tr("Fail create TblAvanzaAccount"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4a"), QString::fromUtf8("Fail create TblAvanzaAccount"));
         }
         closeDb();
         m_mutex.unlock();
@@ -642,7 +729,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4b"), QObject::tr("Fail create TblAvanzaAssetName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4b"), QString::fromUtf8("Fail create TblAvanzaAssetName"));
         }
         closeDb();
         m_mutex.unlock();
@@ -674,7 +761,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4c"), QObject::tr("Fail create TblAvanzaAssetData"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4c"), QString::fromUtf8("Fail create TblAvanzaAssetData"));
         }
         closeDb();
         m_mutex.unlock();
@@ -708,7 +795,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 3"), QObject::tr("Fail create table"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
         }
         closeDb();
         m_mutex.unlock();
@@ -734,7 +821,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 3"), QObject::tr("Fail create table"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
         }
         closeDb();
         m_mutex.unlock();
@@ -767,7 +854,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 3"), QObject::tr("Fail create table"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
         }
         closeDb();
         m_mutex.unlock();
@@ -826,7 +913,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 3"), QObject::tr("Fail create table"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
         }
         closeDb();
         m_mutex.unlock();
@@ -881,7 +968,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail create table"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail create table"));
         }
         closeDb();
         m_mutex.unlock();
@@ -912,7 +999,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 4"), QObject::tr("Fail create TblFilterNameSDSnapshot"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4"), QString::fromUtf8("Fail create TblFilterNameSDSnapshot"));
         }
         closeDb();
         m_mutex.unlock();
@@ -960,7 +1047,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 5"), tmp);
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 5"), tmp);
         }
         closeDb();
         m_mutex.unlock();
@@ -1034,7 +1121,7 @@ bool CDbHndl::getDebtToEquityRatio(QString assetSymbol, double &debtToEquityRati
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -1160,7 +1247,7 @@ bool CDbHndl::delAllTblNordnetCompanyDescription(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -1211,7 +1298,7 @@ bool CDbHndl::getNordnetCompanyDescription(NordnetCompanyDescription_ST &data,
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -1314,7 +1401,7 @@ insertNordnetCompanyDescriptionData(NordnetCompanyDescription_ST data, bool dbIs
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -1389,7 +1476,7 @@ bool CDbHndl::addFa2NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -1528,7 +1615,7 @@ bool CDbHndl::addFa3NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -1643,7 +1730,7 @@ bool CDbHndl::addFa3MinMaxPEAndPrice(QTreeWidget *treeWidget, QTreeWidget *treeW
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -1867,7 +1954,7 @@ bool CDbHndl::addFa3MinMaxPEAndPrice(QTreeWidget *treeWidget, QTreeWidget *treeW
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -2039,7 +2126,7 @@ bool CDbHndl::addFa2operatingIncomeToTreeWidget(QTreeWidget *treeWidget,
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -2188,7 +2275,7 @@ bool CDbHndl::getYahooTaMinMaxAvgPrice(QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -2301,7 +2388,7 @@ insertNordnetBalanceAndIncomeData(NordnetBalanceIncomeSheet_ST data, bool dbIsHa
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -2359,7 +2446,7 @@ bool CDbHndl::getAllMainHelpSectionNames(QComboBox *comboBox)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -2436,7 +2523,7 @@ bool CDbHndl::getAllSubHelpSectionNames(QComboBox *comboBox, int mainHelpSection
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -2508,7 +2595,7 @@ bool CDbHndl::delAllTblMainHelpSection(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error delete TblMainHelpSection"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error delete TblMainHelpSection"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -2553,7 +2640,7 @@ bool CDbHndl::delAllTblSubHelpSection(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1b"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1b"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -2601,7 +2688,7 @@ bool CDbHndl::delAllTblHelpSectionTxt(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error delete TblHelpSectionTxt"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error delete TblHelpSectionTxt"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -2718,7 +2805,7 @@ findMainHelpSectionInTblHelpSectionTxt(QString  mainHelpSectionName,
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+                QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
             }
             qDebug() << qry.lastError();
             closeDb();
@@ -2802,7 +2889,7 @@ bool CDbHndl::findMainHelpSectionName(QString  mainHelpSectionName, int &mainHel
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -3158,7 +3245,7 @@ bool CDbHndl::findSubHelpSectionName(QString subHelpSectionName, int &subHelpSec
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -3229,7 +3316,7 @@ bool CDbHndl::getTotNofAvanzaPortfolioRecords(int &nofRow)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 8a"), (QString) qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 8a"), (QString) qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -3245,7 +3332,7 @@ bool CDbHndl::getTotNofAvanzaPortfolioRecords(int &nofRow)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 9a"), QObject::tr("No data received"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 9a"), QString::fromUtf8("No data received"));
         }
         closeDb();
         m_mutex.unlock();
@@ -3310,7 +3397,7 @@ bool CDbHndl::listAllAvanzaPortfolioRecords(QObject *thisPointer, int rows, int 
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), (QString)qry.lastError().text().toLocal8Bit().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), (QString)qry.lastError().text().toLocal8Bit().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -3331,7 +3418,7 @@ bool CDbHndl::listAllAvanzaPortfolioRecords(QObject *thisPointer, int rows, int 
             {
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("Aktie list"), QObject::tr("Aktie listan saknas"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Aktie list"), QString::fromUtf8("Aktie listan saknas"));
                 }
                 qry.finish();
                 closeDb();
@@ -3421,7 +3508,7 @@ getHelpSectionTxt(int mainHelpSectionId, int subHelpSectionId, QString &helpSect
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), (QString) qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), (QString) qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -3487,8 +3574,8 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
        findSubHelpSectionName(subHelpSectionName, subHelpSectionId) == true)
     {
         if (QMessageBox::No == QMessageBox::question(NULL,
-                                                     QObject::tr("Text already exist"),
-                                                     QObject::tr("Text already exist update?"),
+                                                     QString::fromUtf8("Text already exist"),
+                                                     QString::fromUtf8("Text already exist update?"),
                                                      QMessageBox::Yes | QMessageBox::No))
         {
             return true;
@@ -3498,7 +3585,7 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("insertHelpSectionTxt"), QObject::tr("Fail to update insertHelpSectionTxt"));
+                QMessageBox::critical(NULL, QString::fromUtf8("insertHelpSectionTxt"), QString::fromUtf8("Fail to update insertHelpSectionTxt"));
             }
             return false;
         }
@@ -3512,7 +3599,7 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("insertHelpSectionTxt"), QObject::tr("Fail to insert MainSection"));
+                QMessageBox::critical(NULL, QString::fromUtf8("insertHelpSectionTxt"), QString::fromUtf8("Fail to insert MainSection"));
             }
             return false;
         }
@@ -3522,7 +3609,7 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("insertHelpSectionTxt"), QObject::tr("Fail to find main section"));
+                QMessageBox::critical(NULL, QString::fromUtf8("insertHelpSectionTxt"), QString::fromUtf8("Fail to find main section"));
             }
             return false;
         }
@@ -3537,7 +3624,7 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("insertHelpSectionTxt"), QObject::tr("Fail to insert sub section name"));
+                QMessageBox::critical(NULL, QString::fromUtf8("insertHelpSectionTxt"), QString::fromUtf8("Fail to insert sub section name"));
             }
             return false;
         }
@@ -3546,7 +3633,7 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("insertHelpSectionTxt"), QObject::tr("Fail to find subSectionName"));
+                QMessageBox::critical(NULL, QString::fromUtf8("insertHelpSectionTxt"), QString::fromUtf8("Fail to find subSectionName"));
             }
             return false;
         }
@@ -3577,7 +3664,7 @@ insertHelpSectionTxt(QString mainHelpSectionName, QString subHelpSectionName, QS
                 qDebug() << qry.lastError();
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("Database Error HelpSectionTxt"), qry.lastError().text().toLatin1().constData());
+                    QMessageBox::critical(NULL, QString::fromUtf8("Database Error HelpSectionTxt"), qry.lastError().text().toLatin1().constData());
                 }
                 closeDb();
                 m_mutex.unlock();
@@ -3652,7 +3739,7 @@ insertAvanzaAssetData(QString date,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -3707,7 +3794,7 @@ insertSubHelpSection(QString subHelpSectionName, int mainHelpSectionId)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -3762,7 +3849,7 @@ insertMainHelpSection(QString mainHelpSectionName)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -3812,7 +3899,7 @@ bool CDbHndl::delAllTblNordnetBalanceIncomeSheet(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -3866,7 +3953,7 @@ bool CDbHndl::getListWithNordnetStockId(QList <CompanyNameAndId_ST> &companyList
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 26"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 26"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -3971,7 +4058,7 @@ insertNordnetStockIdData(QString assetId,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -4024,7 +4111,7 @@ bool CDbHndl::delAllTblNordnetStockIds(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -4088,20 +4175,6 @@ getAllSnapshotPlotStocksData(QString stockListName,
     qDebug() << str;
 
 
-#if 0
-    str.sprintf("SELECT companyName,"
-                "procentChangeOneDay,"
-                "procentChangeOneWeek,"
-                "procentChange1Month,"
-                "procentChange3Month,"
-                "procentChange6Month,"
-                "procentChange1Year,"
-                "procentChange2Year,"
-                "procentChange3Year,"
-                "procentChange5Year"
-                " FROM TblStockDataSnapshot "
-                " ORDER BY companyName;");
-#endif
 
 
     qry.prepare(str);
@@ -4110,7 +4183,7 @@ getAllSnapshotPlotStocksData(QString stockListName,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
     }
@@ -4139,6 +4212,21 @@ getAllSnapshotPlotStocksData(QString stockListName,
                 data.stockName = rec.value("companyName").toString();
                 qDebug() << rec.value("companyName").toString();
                 qDebug() << rec.value("taStockListId").toString();
+            }
+
+
+            if(rec.value("stockSymbol").isNull() == true)
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                found1 = true;
+                data.stockSymbol = rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockSymbol").toString();
             }
 
 
@@ -4294,7 +4382,7 @@ bool CDbHndl::assetSymbolGetKeyDataUseBridge(QString snapshotAssetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -4430,7 +4518,7 @@ bool CDbHndl::companynameGetKeyDataUseBridge(QString snapshotCompanyName,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -4562,7 +4650,7 @@ bool CDbHndl::getKeyDataUseBridge(QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -4694,7 +4782,7 @@ insertKeyTaBridgeData(QString assetName,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -4750,7 +4838,7 @@ bool CDbHndl::delAllTblNordnetYahooBridge(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -4887,7 +4975,7 @@ efficPortfCreateVarianceArr(const QString startDate,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         stockData.isValid = false;
@@ -5056,7 +5144,7 @@ efficPortfCalcMeanAndStdDev(const QString startDate,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         stockData.isValid = false;
@@ -5207,7 +5295,7 @@ bool CDbHndl::delAllTblYahooTaStockName(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa3"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa3"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -5257,7 +5345,7 @@ bool CDbHndl::delAllTblTmpEfficPortTreeWidget(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa3"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa3"), qry.lastError().text().toLatin1().constData());
         }
         if(dbIsHandledExternly == false)
         {
@@ -5346,7 +5434,7 @@ insertTmpEfficPortTreeWidgetData(QString assetName,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -5448,7 +5536,7 @@ addTmpEfficPortDataToTreeWidget(QTreeWidget *treeWidget,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
 
@@ -5551,7 +5639,7 @@ bool CDbHndl::delAllTblYahooTaData(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa2"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -5599,7 +5687,7 @@ bool CDbHndl::delAllTblYahooNordetIntercon(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1aa1"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1aa1"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -5685,7 +5773,7 @@ bool CDbHndl::getLatestDateYahooTaData(QString &date, QString assetSymbol, bool 
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -5789,7 +5877,7 @@ bool CDbHndl::findYahooTaData(QString date,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -5906,7 +5994,7 @@ bool CDbHndl::findYahooTaStockSymbol(QString assetSymbol, int &assetNameId, bool
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -6037,7 +6125,7 @@ bool CDbHndl::insertYahooStockName(QString assetName,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
         if(dbIsHandledExternly==false)
         {
@@ -6137,7 +6225,7 @@ bool CDbHndl::insertYahooStockData(QString date,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -6216,7 +6304,7 @@ bool CDbHndl::getYahooTaPriceData(QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -6490,7 +6578,7 @@ bool CDbHndl::getYahooTaLeastSqrFit(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -6707,7 +6795,7 @@ bool CDbHndl::getYahooTaLeastSqrFit(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -7012,7 +7100,7 @@ bool CDbHndl::getYahooTaBoillingerBand(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -7367,7 +7455,7 @@ bool CDbHndl::calcMacdMovAvg(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -7645,7 +7733,7 @@ bool CDbHndl::getYahooTaRateOfChange(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -7991,7 +8079,7 @@ bool CDbHndl::getYahooTaRsi(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -8239,7 +8327,7 @@ bool CDbHndl::getYahooTaStochastics(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -8526,7 +8614,7 @@ bool CDbHndl::getYahooTaMovingAverage(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -8742,7 +8830,7 @@ bool CDbHndl::getYahooTaMomentum(const QString assetSymbol,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -8916,7 +9004,7 @@ bool CDbHndl::delAllTblAvanzaAccount(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1a"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1a"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -8962,7 +9050,7 @@ bool CDbHndl::delAllTblAvanzaAssetName(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1b"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1b"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9011,7 +9099,7 @@ bool CDbHndl::delAllTblAvanzaAssetData(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1b"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1b"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9059,7 +9147,7 @@ bool CDbHndl::findAvanzaAccount(int account)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -9145,7 +9233,7 @@ bool CDbHndl::findAvanzaAssetName(int account, QString assetName)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -9215,7 +9303,7 @@ bool CDbHndl::getTotNofAvanzaPortfolioRecords(int &nofRow)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 8a"), (QString) qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 8a"), (QString) qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9231,7 +9319,7 @@ bool CDbHndl::getTotNofAvanzaPortfolioRecords(int &nofRow)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 9a"), QObject::tr("No data received"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 9a"), QString::fromUtf8("No data received"));
         }
         closeDb();
         m_mutex.unlock();
@@ -9297,7 +9385,7 @@ bool CDbHndl::listAllAvanzaPortfolioRecords(QObject *thisPointer, int rows, int 
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), (QString)qry.lastError().text().toLocal8Bit().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), (QString)qry.lastError().text().toLocal8Bit().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -9318,7 +9406,7 @@ bool CDbHndl::listAllAvanzaPortfolioRecords(QObject *thisPointer, int rows, int 
             {
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("Aktie list"), QObject::tr("Aktie listan saknas"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Aktie list"), QString::fromUtf8("Aktie listan saknas"));
                 }
                 qry.finish();
                 closeDb();
@@ -9414,7 +9502,7 @@ bool CDbHndl::findAvanzaData(int account, QString assetName, QString date)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), (QString) qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), (QString) qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -9491,7 +9579,7 @@ insertAvanzaAssetData(QString account,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Convert Avanza account"), QObject::tr("Fail to convert Avanza account from string to int"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Convert Avanza account"), QString::fromUtf8("Fail to convert Avanza account from string to int"));
         }
         return false;
     }
@@ -9504,7 +9592,7 @@ insertAvanzaAssetData(QString account,
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("Insert Avanza account"), QObject::tr("Fail to insert Avvanza account data"));
+                QMessageBox::critical(NULL, QString::fromUtf8("Insert Avanza account"), QString::fromUtf8("Fail to insert Avvanza account data"));
             }
             return false;
         }
@@ -9518,7 +9606,7 @@ insertAvanzaAssetData(QString account,
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("Insert Avanza Asset Name"), QObject::tr("Fail to insert Avanza Asset Name"));
+                QMessageBox::critical(NULL, QString::fromUtf8("Insert Avanza Asset Name"), QString::fromUtf8("Fail to insert Avanza Asset Name"));
             }
             return false;
         }
@@ -9526,7 +9614,7 @@ insertAvanzaAssetData(QString account,
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("convert Avanza price"), QObject::tr("Fail to convert Avvanza price to double"));
+                QMessageBox::critical(NULL, QString::fromUtf8("convert Avanza price"), QString::fromUtf8("Fail to convert Avvanza price to double"));
             }
             return false;
         }
@@ -9536,7 +9624,7 @@ insertAvanzaAssetData(QString account,
             {
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("Insert Avanza asset data"), QObject::tr("Fail to insert Avvanza asset data"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Insert Avanza asset data"), QString::fromUtf8("Fail to insert Avvanza asset data"));
                 }
                 return false;
             }
@@ -9550,7 +9638,7 @@ insertAvanzaAssetData(QString account,
             {
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("convert Avanza price"), QObject::tr("Fail to convert Avvanza price to double"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("convert Avanza price"), QString::fromUtf8("Fail to convert Avvanza price to double"));
                 }
                 return false;
             }
@@ -9558,7 +9646,7 @@ insertAvanzaAssetData(QString account,
             {
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("Insert Avanza asset data"), QObject::tr("Fail to insert Avvanza asset data"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Insert Avanza asset data"), QString::fromUtf8("Fail to insert Avvanza asset data"));
                 }
                 return false;
             }
@@ -9665,7 +9753,7 @@ insertAvanzaAssetData(QString date,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9720,7 +9808,7 @@ insertAvanzaAssetName(int account, QString assetName)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9772,7 +9860,7 @@ insertAvanzaAccount(int account)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9825,7 +9913,7 @@ bool CDbHndl::delAllTaStockLists(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9871,7 +9959,7 @@ bool CDbHndl::delAllTaStockData(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -9926,7 +10014,7 @@ bool CDbHndl::addStockListsToComboBox(QComboBox *comboBox)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -10019,7 +10107,7 @@ bool CDbHndl::addStockSymbolAndNameInTreeWidget(QTreeWidget *treeWidget,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -10137,7 +10225,7 @@ bool CDbHndl::addStockSymbolAndNameInTreeWidget1(QTreeWidget *treeWidget,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -10264,7 +10352,7 @@ bool CDbHndl::addStockSymbolAndNameInArr(QVector<CDbHndl::StockNameAndSymbolST> 
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -10379,7 +10467,7 @@ bool CDbHndl::addStockSymbolAndNameInTreeWidget1(QTreeWidget *treeWidget,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         closeDb();
@@ -10476,7 +10564,7 @@ bool CDbHndl::findTaStockListId(QString stockListName, int &stockListId, bool db
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
         if(dbIsHandledExternly == false)
@@ -10601,7 +10689,7 @@ bool CDbHndl::delAllTaStockNames(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -10828,7 +10916,7 @@ getAllSnapshotPlotStocksData(QVector <CStockPlotUtil::StockData_ST> &stockArr)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
     }
@@ -11004,7 +11092,7 @@ getOneSnapshotStock(CStockPlotUtil::StockData_ST &stock, CStockPlotUtil::MinMaxA
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
 
         qDebug() << qry.lastError();
@@ -11211,7 +11299,7 @@ bool CDbHndl::delAllUserSelSnapshotData(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -11266,7 +11354,7 @@ bool CDbHndl::userSelSnapshotDataIsInitialized(void)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("db error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
         }
         qDebug() << qry.lastError();
     }
@@ -11528,8 +11616,8 @@ bool CDbHndl::saveUserSelectStockParamsInDb(QStandardItemModel *tableModel)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), qry.lastError().text().toLatin1().constData());
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), str);
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), str);
         }
         closeDb();
         m_mutex.unlock();
@@ -11633,7 +11721,7 @@ void CDbHndl::initKeyNumberListFromDb(QTableView *tableView, QStandardItemModel 
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 26"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 26"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -11655,7 +11743,7 @@ void CDbHndl::initKeyNumberListFromDb(QTableView *tableView, QStandardItemModel 
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("ERROR: IsInitialized is NULL"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("ERROR: IsInitialized is NULL"));
         }
         return;
     }
@@ -11665,7 +11753,7 @@ void CDbHndl::initKeyNumberListFromDb(QTableView *tableView, QStandardItemModel 
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("ERROR: NofUserSelectedSnapshotData is NULL"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("ERROR: NofUserSelectedSnapshotData is NULL"));
         }
         return;
     }
@@ -11679,7 +11767,7 @@ void CDbHndl::initKeyNumberListFromDb(QTableView *tableView, QStandardItemModel 
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("ERROR: str1 is NULL"));
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("ERROR: str1 is NULL"));
             }
             return;
         }
@@ -11708,7 +11796,7 @@ void CDbHndl::initKeyNumberListFromDb(QTableView *tableView, QStandardItemModel 
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("ERROR: str2 is NULL"));
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("ERROR: str2 is NULL"));
             }
             return;
         }
@@ -12596,7 +12684,7 @@ bool CDbHndl::delAllStockSnapshotData(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 1"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 1"), qry.lastError().text().toLatin1().constData());
         }
         if(dbIsHandledExternly == false)
         {
@@ -12648,7 +12736,7 @@ bool CDbHndl::delAllFilterStockSnapshotData(void)
     {
         qDebug() << qry.lastError();
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 2"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 2"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -12858,8 +12946,8 @@ bool CDbHndl::insertFilterDataInDb(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 6"), qry.lastError().text().toLatin1().constData());
-            QMessageBox::critical(NULL, QObject::tr("Database Error 6a"), str);
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 6"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 6a"), str);
         }
         closeDb();
         m_mutex.unlock();
@@ -12917,7 +13005,7 @@ bool  CDbHndl::dbDataSetFilterComboSel(CDbHndl::TableTabWidget_ST *tableTabW)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 7"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 7"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -12972,7 +13060,7 @@ bool  CDbHndl::dbDataSetFilterComboSel(CDbHndl::TableTabWidget_ST *tableTabW)
             {
                 if(m_disableMsgBoxes == false)
                 {
-                    QMessageBox::critical(NULL, QObject::tr("Error Combobox index"), QObject::tr("Error Combobox index to big"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Error Combobox index"), QString::fromUtf8("Error Combobox index to big"));
                 }
                 qry.finish();
                 closeDb();
@@ -13038,7 +13126,7 @@ bool CDbHndl::getNofStockSnapshotTblRecords(int &nofRow)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 8"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 8"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -13054,7 +13142,7 @@ bool CDbHndl::getNofStockSnapshotTblRecords(int &nofRow)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 9"), QObject::tr("No data received"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 9"), QString::fromUtf8("No data received"));
         }
         closeDb();
         m_mutex.unlock();
@@ -13117,7 +13205,7 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 10"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 10"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -13137,9 +13225,9 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("addCustomerSnabshotData()"), QObject::tr("Error: Stock name missing"));
+                QMessageBox::critical(NULL, QString::fromUtf8("addCustomerSnabshotData()"), QString::fromUtf8("Error: Stock name missing"));
             }
-            data.stockName = QObject::tr("-");
+            data.stockName = QString::fromUtf8("-");
         }
         else
         {
@@ -13151,9 +13239,9 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("addCustomerSnabshotData()"), QObject::tr("Error: DividendPerShare is missing"));
+                QMessageBox::critical(NULL, QString::fromUtf8("addCustomerSnabshotData()"), QString::fromUtf8("Error: DividendPerShare is missing"));
             }
-            data.keyValueDividendPerShare = QObject::tr("-");
+            data.keyValueDividendPerShare = QString::fromUtf8("-");
         }
         else
         {
@@ -13165,9 +13253,9 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("addCustomerSnabshotData()"), QObject::tr("Error: EarningsPerShare is missing"));
+                QMessageBox::critical(NULL, QString::fromUtf8("addCustomerSnabshotData()"), QString::fromUtf8("Error: EarningsPerShare is missing"));
             }
-            data.keyValueEarningsPerShare = QObject::tr("-");
+            data.keyValueEarningsPerShare = QString::fromUtf8("-");
         }
         else
         {
@@ -13179,9 +13267,9 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("addCustomerSnabshotData()"), QObject::tr("Error: NAVPerShare is missing"));
+                QMessageBox::critical(NULL, QString::fromUtf8("addCustomerSnabshotData()"), QString::fromUtf8("Error: NAVPerShare is missing"));
             }
-            data.keyValueNAVPerShare = QObject::tr("-");
+            data.keyValueNAVPerShare = QString::fromUtf8("-");
         }
         else
         {
@@ -13193,9 +13281,9 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("addCustomerSnabshotData()"), QObject::tr("Error: lastPrice is missing"));
+                QMessageBox::critical(NULL, QString::fromUtf8("addCustomerSnabshotData()"), QString::fromUtf8("Error: lastPrice is missing"));
             }
-            data.lastPrice = QObject::tr("-");
+            data.lastPrice = QString::fromUtf8("-");
         }
         else
         {
@@ -13203,26 +13291,26 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
         }
 
 
-        if(data.keyValueEarningsPerShare.compare(QObject::tr("-")) != 0 && data.keyValueDividendPerShare.compare(QObject::tr("-")) != 0)
+        if(data.keyValueEarningsPerShare.compare(QString::fromUtf8("-")) != 0 && data.keyValueDividendPerShare.compare(QString::fromUtf8("-")) != 0)
         {
             str.sprintf("%.3lf", (data.keyValueEarningsPerShare.toDouble() / data.keyValueDividendPerShare.toDouble()));
             data.earningsDividedByDividend = str;
         }
         else
         {
-            data.earningsDividedByDividend = QObject::tr("-");
+            data.earningsDividedByDividend = QString::fromUtf8("-");
         }
 
 
 
-        if(data.lastPrice.compare(QObject::tr("-")) != true && data.keyValueNAVPerShare.compare(QObject::tr("-")) != true)
+        if(data.lastPrice.compare(QString::fromUtf8("-")) != true && data.keyValueNAVPerShare.compare(QString::fromUtf8("-")) != true)
         {
             str.sprintf("%.3lf", data.keyValueNAVPerShare.toDouble() / data.lastPrice.toDouble());
             data.navDivLastStockPrice = str;
         }
         else
         {
-            data.navDivLastStockPrice = QObject::tr("-");
+            data.navDivLastStockPrice = QString::fromUtf8("-");
         }
 
         m_lst.addNodeLast(data);
@@ -13255,7 +13343,7 @@ bool CDbHndl::addCustomerSnabshotData(bool dbIsHandledExternly)
             qDebug() << qry.lastError();
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::critical(NULL, QObject::tr("Database Error 12"), qry.lastError().text().toLatin1().constData());
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error 12"), qry.lastError().text().toLatin1().constData());
             }
             m_lst.deleteList();
             if(dbIsHandledExternly == false)
@@ -13344,7 +13432,7 @@ bool CDbHndl::insertOneRowKeyNumberData(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 14"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 14"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -13423,7 +13511,7 @@ bool CDbHndl::updateOneRowKeyNumberData(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 16"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 16"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -13514,7 +13602,7 @@ bool CDbHndl::insertOneRowYieldData(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 18"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 18"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -13572,7 +13660,7 @@ bool CDbHndl::findStockName(QString stockName, bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 26"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 26"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -13756,7 +13844,7 @@ bool CDbHndl::insertOneRowPriceData(bool dbIsHandledExternly)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 20"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 20"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -13879,7 +13967,7 @@ filterAndSortCreateSqlQry(QString &str, QString sortParam, QString sortOrder)
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::information(NULL, QObject::tr("Error"), QObject::tr("false == filterAndSortCreateWherePart(tmp, sortParam, sortOrder)") );
+            QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("false == filterAndSortCreateWherePart(tmp, sortParam, sortOrder)") );
         }
         return false;
     }
@@ -13987,7 +14075,7 @@ bool CDbHndl::filter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHn
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::information(NULL, QObject::tr("Fail 1 filterAndSortCreateSqlQry()"), str );
+                QMessageBox::information(NULL, QString::fromUtf8("Fail 1 filterAndSortCreateSqlQry()"), str );
             }
 
             closeDb();
@@ -14001,7 +14089,7 @@ bool CDbHndl::filter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHn
         {
             if(m_disableMsgBoxes == false)
             {
-                QMessageBox::information(NULL, QObject::tr("Fail 2 filterAndSortCreateSqlQry()"), str );
+                QMessageBox::information(NULL, QString::fromUtf8("Fail 2 filterAndSortCreateSqlQry()"), str );
             }
 
             closeDb();
@@ -14019,7 +14107,7 @@ bool CDbHndl::filter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHn
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 22"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 22"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -14143,7 +14231,7 @@ initFilter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHndl::TableT
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 23"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 23"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -14205,17 +14293,17 @@ bool  CDbHndl::copyDbPriceToTable(QObject *thisPointer, QTableView *tableView)
 
     m_maxTableColumns = 0;
 
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Company");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Price");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("+/-");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("%");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Bid");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Offer");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Highest");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Lowest");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Volume");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Currency");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Time");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Company");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Price");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("+/-");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("%");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Bid");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Offer");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Highest");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Lowest");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Volume");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Currency");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Time");
 
     // et.addHeaders(tableView/*, headerList*/);
     et.addHeaders(tableView, m_tableHeaderList, m_maxTableColumns);
@@ -14250,7 +14338,7 @@ bool  CDbHndl::copyDbPriceToTable(QObject *thisPointer, QTableView *tableView)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 24"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 24"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();
@@ -14358,16 +14446,16 @@ bool  CDbHndl::copyDbYieldToTable(QObject *thisPointer, QTableView *tableView)
 
     m_maxTableColumns = 0;
 
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Company");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("1 Day");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("1 Week");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("1 Month");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("3 Month");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("6 Month");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("1 Year");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("2 Year");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("3 Year");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("5 Year");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Company");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("1 Day");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("1 Week");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("1 Month");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("3 Month");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("6 Month");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("1 Year");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("2 Year");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("3 Year");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("5 Year");
 
 
     //et.addHeaders(tableView, headerList);
@@ -14403,7 +14491,7 @@ bool  CDbHndl::copyDbYieldToTable(QObject *thisPointer, QTableView *tableView)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 25"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 25"), qry.lastError().text().toLatin1().constData());
         }
 
         closeDb();
@@ -14504,14 +14592,14 @@ bool  CDbHndl::copyDbKeyNumberToTable(QObject *thisPointer, QTableView *tableVie
 
     m_maxTableColumns = 0;
 
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Company");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("PE");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("PS");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Earn/Share");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("NAV/Share");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Div/Share");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Yield");
-    m_tableHeaderList[m_maxTableColumns++].name = QObject::tr("Course/JEK");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Company");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("PE");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("PS");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Earn/Share");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("NAV/Share");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Div/Share");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Yield");
+    m_tableHeaderList[m_maxTableColumns++].name = QString::fromUtf8("Course/JEK");
 
 
 
@@ -14545,7 +14633,7 @@ bool  CDbHndl::copyDbKeyNumberToTable(QObject *thisPointer, QTableView *tableVie
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QObject::tr("Database Error 26"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 26"), qry.lastError().text().toLatin1().constData());
         }
         closeDb();
         m_mutex.unlock();

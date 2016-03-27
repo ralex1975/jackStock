@@ -576,8 +576,8 @@ CJackStock::CJackStock(QWidget *parent) :
 
     ui->setupUi(this);
 
-    QString column0 = QObject::tr("Namn");
-    QString column1 = QObject::tr("Symbol");
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Symbol");
     ui->treeWidget->setColumnWidth(0, 170);
 
     ui->treeWidget->setColumnCount(2);
@@ -592,7 +592,7 @@ CJackStock::CJackStock(QWidget *parent) :
 
     for(int i = 0; i < CUtil::MAX_NOF_RGB_COLORS; i++)
     {
-        column0.sprintf("%s",  colorArr[i]); // = QObject::tr("R�d");
+        column0.sprintf("%s",  colorArr[i]); // = QString::fromUtf8("R�d");
 
         QTreeWidgetItem *item = new QTreeWidgetItem;
         item->setText(0, column0);
@@ -633,7 +633,7 @@ void CJackStock::on_pushButtImportKeyTaBridgeData_clicked()
     filename = "/home/ajn/Documents/swProj/MyQtProj/JackStockProj/JackStock/database/inputData/KeyTaBridgeData/NordnetNameYahooSymbol.csv";
 
     pktd.ParseKeyTaBridgeData::readFile(filename/*, CDbHndl &db*/);
-    QMessageBox::information(NULL, QObject::tr("keyData"), QObject::tr("Finish"));
+    QMessageBox::information(NULL, QString::fromUtf8("keyData"), QString::fromUtf8("Finish"));
 }
 
 void CJackStock::on_pushButtTestKeyData_clicked()
@@ -643,7 +643,7 @@ void CJackStock::on_pushButtTestKeyData_clicked()
     CDbHndl::snapshotStockData_ST keyData;
 
     cd.getKeyDataUseBridge(assetSymbol, keyData);
-    QMessageBox::information(NULL, QObject::tr("keyData"), keyData.companyName);
+    QMessageBox::information(NULL, QString::fromUtf8("keyData"), keyData.companyName);
 
 }
 

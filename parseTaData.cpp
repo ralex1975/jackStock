@@ -70,7 +70,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         QString errStr = QString("Fail to open file: %1").arg(filename);
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         db.closeDb(true);
         return false;
     }
@@ -83,7 +83,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
         if(false == db.insertYahooStockName(assetName, assetSymbol, assetNameId, dbIsHandledExternly))
         {
             db.closeDb(true);
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail to insert assetName in TA list"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert assetName in TA list"));
             return false;
         }
     }
@@ -109,7 +109,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
                  if(myStringList.length() != 7)
                  {
                     db.closeDb(true);
-                    QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail to insert data in TA list"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
                     return false;
                  }
 
@@ -127,7 +127,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
                                                          dbIsHandledExternly))
                      {
                         db.closeDb(true);
-                        QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail to insert data in TA list"));
+                        QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
                         return false;
                      }
 
@@ -140,7 +140,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
      }
 
      db.closeDb(true);
-    // QMessageBox::information(NULL, QObject::tr("Read file"), QObject::tr("Finish reading file"));
+    // QMessageBox::information(NULL, QString::fromUtf8("Read file"), QString::fromUtf8("Finish reading file"));
      file.close();
      return true;
 }
@@ -187,7 +187,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         QString errStr = QString("Fail to open file: %1").arg(filename);
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         db.closeDb(true);
         return false;
     }
@@ -200,7 +200,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
         if(false == db.insertYahooStockName(assetName, assetSymbol, assetNameId, dbIsHandledExternly))
         {
             db.closeDb(true);
-            QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail to insert assetName in TA list"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert assetName in TA list"));
             return false;
         }
     }
@@ -226,7 +226,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
                  if(myStringList.length() != 7)
                  {
                     db.closeDb(true);
-                    QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail to insert data in TA list"));
+                    QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
                     return false;
                  }
 
@@ -244,7 +244,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
                                                          dbIsHandledExternly))
                      {
                         db.closeDb(true);
-                        QMessageBox::critical(NULL, QObject::tr("Database Error"), QObject::tr("Fail to insert data in TA list"));
+                        QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
                         return false;
                      }
 
@@ -257,7 +257,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
      }
 
      db.closeDb(true);
-    // QMessageBox::information(NULL, QObject::tr("Read file"), QObject::tr("Finish reading file"));
+    // QMessageBox::information(NULL, QString::fromUtf8("Read file"), QString::fromUtf8("Finish reading file"));
      file.close();
      return true;
 }

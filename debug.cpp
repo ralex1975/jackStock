@@ -13,7 +13,7 @@ void debugInit(void)
 
     if(!file.open(QFile::WriteOnly | QFile::Text))
     {
-         QMessageBox::critical(NULL, QObject::tr("Debug error"), QObject::tr("Unable to open debug file"));
+         QMessageBox::critical(NULL, QString::fromUtf8("Debug error"), QString::fromUtf8("Unable to open debug file"));
          return;
     }
 
@@ -33,7 +33,7 @@ void debugPrintToFile(QString debugStr, int line, QString fileName)
 
     if(!file.open(QFile::Append | QFile::Text))
     {
-         QMessageBox::critical(NULL, QObject::tr("Debug error"), QObject::tr("Unable to open debug file"));
+         QMessageBox::critical(NULL, QString::fromUtf8("Debug error"), QString::fromUtf8("Unable to open debug file"));
          return;
     }
 

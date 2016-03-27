@@ -79,7 +79,7 @@ void Portfolio::on_pushButton_clicked()
 
     if(path.isNull() == false)
     {
-        // QMessageBox::information(NULL, QObject::tr("Path"), path);
+        // QMessageBox::information(NULL, QString::fromUtf8("Path"), path);
         pad.parseData(path);
 
     }
@@ -124,7 +124,7 @@ addHeaders(QTableView *tableView, Portfolio::TableColumnIndicatorInfo_ST *tableH
     if(maxNofData > m_model->columnCount())
     {
         debugStr.sprintf("Invalid number of columns maxNofData=%d > %d=m_model->columnCount()", maxNofData, m_model->columnCount());
-        QMessageBox::critical(NULL, QObject::tr("Error: Create Table"), debugStr );
+        QMessageBox::critical(NULL, QString::fromUtf8("Error: Create Table"), debugStr );
         return;
     }
 
@@ -142,7 +142,7 @@ void Portfolio::on_ResetDatabaseButton_clicked()
     CDbHndl db;
 
     QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(this, QObject::tr("Remove database data"), QObject::tr("Remove database data?"),
+      reply = QMessageBox::question(this, QString::fromUtf8("Remove database data"), QString::fromUtf8("Remove database data?"),
                                     QMessageBox::Yes|QMessageBox::No);
 
     if(reply == QMessageBox::Yes)

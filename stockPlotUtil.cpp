@@ -179,7 +179,7 @@ bool CStockPlotUtil::addStockToPlot(PlotData_ST &allPlotData,
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Kan inte visa fler grafer (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("L?gga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("L?gga till graf"), str);
         return false;
     }
 
@@ -257,14 +257,14 @@ bool CStockPlotUtil::addStockToListWidget(CStockPlotUtil::StockData_ST &stock,  
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Kan inte l?gga till aktie (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("L?gga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("L?gga till graf"), str);
         return false;
     }
 
     if(index < 0)
     {
         str.sprintf("Kan inte aktie index f?rlite (Max = %d)", index);
-        QMessageBox::information(NULL, QObject::tr("L?gga till graf"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("L?gga till graf"), str);
         return false;
     }
     QString s = QString::fromUtf8(stock.stockName.toStdString().c_str());
@@ -289,7 +289,7 @@ bool CStockPlotUtil::removePlotFromStock(PlotData_ST &allPlotData, QString stock
     QString str;
 
     str.sprintf("allPlotData.nofStocksToPlot =%d", allPlotData.nofStocksToPlot);
-    QMessageBox::information(NULL, QObject::tr("L?gga till graf"), str);
+    QMessageBox::information(NULL, QString::fromUtf8("L?gga till graf"), str);
 
 
     for(int i = 0; i < allPlotData.nofStocksToPlot; i++)
@@ -376,14 +376,14 @@ bool CStockPlotUtil::plotData(PlotData_ST &allPlotData, QwtPlot *qwtPlot, int in
     if(index >= MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Felaktigt index f?r inte vara st?rre (Max = %d)", MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QObject::tr("F?rstort index"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("F?rstort index"), str);
         return false;
     }
 
     if(index < 0)
     {
         str.sprintf("Felaktigt index. (Max = %d)", index);
-        QMessageBox::information(NULL, QObject::tr("Index f?rlite"), str);
+        QMessageBox::information(NULL, QString::fromUtf8("Index f?rlite"), str);
         return false;
     }
 

@@ -1278,7 +1278,7 @@ void LeastSquaresTaDlg::on_tableViewLeastSquare_clicked(const QModelIndex &index
     }
     else
     {
-        QMessageBox::information(NULL, QObject::tr("Tabell"), QString::fromUtf8("Symbolen saknas"));
+        QMessageBox::information(NULL, QString::fromUtf8("Tabell"), QString::fromUtf8("Symbolen saknas"));
         return;
     }
 
@@ -1612,7 +1612,7 @@ void LeastSquaresTaDlg::on_tableViewLeastSquare_2_clicked(const QModelIndex &ind
     }
     else
     {
-        QMessageBox::information(NULL, QObject::tr("Tabell"), QString::fromUtf8("Symbolen saknas"));
+        QMessageBox::information(NULL, QString::fromUtf8("Tabell"), QString::fromUtf8("Symbolen saknas"));
         return;
     }
 
@@ -2131,14 +2131,17 @@ void LeastSquaresTaDlg::on_pushButton_clicked()
     }
 
 
-    // Used by risk & returns plot
-    removeQwtPlotArrMemSpace();
-    createQwtPlotArrMemSpace(len);
 
 
     if(true == db.findTaStockListId(stockListName, stockListId))
     {
         int len = m_stockArr.size();
+
+        // Used by risk & returns plot
+        removeQwtPlotArrMemSpace();
+        createQwtPlotArrMemSpace(len);
+
+
         for( int i = 0; i < len; i++)
         {
             m_stockArr[i].data.x.clear();

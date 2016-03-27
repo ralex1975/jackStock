@@ -173,7 +173,7 @@ void importYahooTaData::run()
     if(!(*file)->open(QFile::ReadOnly | QFile::Text))
     {
         QString errStr = QString("Fail to open file: %1").arg(filename);
-        QMessageBox::critical(NULL, QObject::tr("Fail to open file"), errStr);
+        QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
 

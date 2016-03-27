@@ -105,8 +105,8 @@
 
          if (!proc->waitForStarted())
          {
-             QMessageBox::critical(0, QObject::tr("Simple Text Viewer"),
-                 QObject::tr("Unable to launch Qt Assistant (%1)").arg(app));
+             QMessageBox::critical(0, QString::fromUtf8("Simple Text Viewer"),
+                 QString::fromUtf8("Unable to launch Qt Assistant (%1)").arg(app));
              return false;
          }
      }
