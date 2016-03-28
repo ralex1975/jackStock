@@ -97,6 +97,131 @@ struct NordnetCompanyDescription_ST
 };
 
 
+enum YahooKeyStatisticsET
+{
+    MARKETCAP,                  // 0
+    ENTERPRISEVALUE,            // 1
+    TRAILINGPE,                 // 2
+    FORWARDPE,                  // 3
+    PEGRATIO,                   // 4
+    PRICEDIVSALES,              // 5
+    PRICEDIVBOOK,               // 6
+    ENTERPRISEVALUEDIVREVENUE,  // 7
+    ENTERPRISEVALUEDIVEBITDA,   // 8
+    FISCALYEARENDS,             // 9
+    MOSTRECENTQUARTER,          // 10
+    PROFITMARGIN,               // 11
+    OPERATINGMARGIN,            // 12
+    RETURNONASSETS,             // 13
+    RETURNONEQUITY,             // 14
+    REVENUE,                    // 15
+    REVENUEPERSHARE,            // 16
+    QTRLYREVENUEGROWTH,         // 17
+    GROSSPROFIT,                // 18
+    EBITDA,                     // 19
+    NETINCOMEAVLTOCOMMON,       // 20
+    DILUTEDEPS,                 // 21
+    QTRLYEARNINGSGROWTH,        // 22
+    TOTALCASH,                  // 23
+    TOTALCASHPERSHARE,          // 24
+    TOTALDEBT,                  // 25
+    TOTALDEBTDIVEQUITY,         // 26
+    CURRENTRATIO,               // 27
+    BOOKVALUEPERSHARE,          // 28
+    OPERATINGCASHFLOW,          // 29
+    LEVEREDFREECASHFLOW,        // 30
+    BETA,                       // 31
+    WEEK52CHANGE,               // 32
+    S_AND_P500_52WEEKCHANGE,    // 33
+    WEEK52HIGH,                 // 34
+    WEEK52LOW,                  // 35
+    DAY50MOVINGAVERAGE,         // 36
+    DAY200MOVINGAVERAGE,        // 37
+    AVGVOL3MONTH,               // 38
+    AVGVOL10DAY,                // 39
+    SHARESOUTSTANDING,          // 40
+    FLOAT_,                     // 41
+    PROCENTHELDBYINSIDERS,      // 42
+    PROCENTHELDBYINSTITUTIONS,  // 43
+    SHARESSHORT,                // 44
+    SHORTRATIO,                 // 45
+    SHORTPROCENTOFFLOAT,        // 46
+    SHARESSHORTPRIORMONTH,      // 47
+    FORWARDANNUALDIVIDENDRATE,  // 48
+    FORWARDANNUALDIVIDENDYIELD, // 49
+    TRAILINGANNUALDIVIDENDYIELD,    // 50
+    TRAILINGANNUALDIVIDENDYIELD1,   // 51
+    YEAR5AVERAGEDIVIDENDYIELD,      // 52
+    PAYOUTRATIO,                // 53
+    DIVIDENDDATE,               // 54
+    EXDIVIDENDDATE,             // 55
+    LASTSPLITFACTOR,            // 56
+    LASTSPLITDATE,              // 57
+    STOCKSYMBOL                 // 58
+};
+
+struct YahooKeyStatisticsST
+{
+    QString StockSymbol;
+    QString MarketCap;
+    QString EnterpriseValue;
+    QString TrailingPe;
+    QString ForwardPe;
+    QString PEGRatio;
+    QString PriceDivSales;
+    QString PriceDivBook;
+    QString EnterpriseValueDivRevenue;
+    QString EnterpriseValueDivEBITDA;
+    QString FiscalYearEnds;
+    QString MostRecentQuarter;
+    QString ProfitMargin;
+    QString OperatingMargin;
+    QString ReturnOnAssets;
+    QString ReturnOnEquity;
+    QString Revenue;
+    QString RevenuePerShare;
+    QString QtrlyRevenueGrowth;
+    QString GrossProfit;
+    QString EBITDA;
+    QString NetIncomeAvlToCommon;
+    QString DilutedEPS;
+    QString QtrlyEarningsGrowth;
+    QString TotalCash;
+    QString TotalCashPerShare;
+    QString TotalDebt;
+    QString TotalDebtDivEquity;
+    QString CurrentRatio;
+    QString BookValuePerShare;
+    QString OperatingCashFlow;
+    QString LeveredFreeCashFlow;
+    QString Beta;
+    QString Week52Change;
+    QString S_And_P500_52WeekChange;
+    QString ProcentHeldbyInsiders;
+    QString ProcentHeldbyInstitutions;
+    QString SharesShort;
+    QString ShortRatio;
+    QString ShortProcentOfFloat;
+    QString SharesShortPriorMonth;
+    QString ForwardAnnualDividendRate;
+    QString ForwardAnnualDividendYield;
+    QString Week52High;
+    QString Week52Low;
+    QString Day50MovingAverage;
+    QString Day200MovingAverage;
+    QString AvgVol3Month;
+    QString AvgVol10Day;
+    QString SharesOutstanding;
+    QString Float_;
+    QString TrailingAnnualDividendYield;
+    QString TrailingAnnualDividendYield1;
+    QString Year5AverageDividendYield;
+    QString PayoutRatio;
+    QString DividendDate;
+    QString ExDividendDate;
+    QString LastSplitFactor;
+    QString LastSplitDate;
+};
 
 
 class CDbHndl//: public CDbBase
@@ -333,6 +458,11 @@ public:
         QString name;
         QString symbol;
     };
+
+    bool getYahooKeyData(QString stockSymbol, double &totalDebtDivEquity, double &currentRatio);
+    bool delAllTblYahooKeyStatistics(void);
+    bool insertYahooKeyStatistics(YahooKeyStatisticsST data, bool dbIsHandledExternly=false);
+
 
     bool addStockSymbolAndNameInArr(QVector<CDbHndl::StockNameAndSymbolST> &stockNameAndSymbolArr,
                                     int stockListId,

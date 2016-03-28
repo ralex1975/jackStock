@@ -1696,7 +1696,7 @@ void ImportData::on_pushButton_clicked()
     GuiFinanceCtrls gfic;
     QString stockListName;
     int stockListId;
-
+    CDbHndl  db;
     res = gfic.getStockListNameAndId(ui->stockListComboBoxSqrt, stockListName, stockListId);
 
 
@@ -1706,14 +1706,8 @@ void ImportData::on_pushButton_clicked()
         return;
     }
 
-
+    db.delAllTblYahooKeyStatistics();
     m_gyks.getYahooKeyStatisticsInDb(stockListName, stockListId);
-
-
-
-    QString path;
-    path = QDir::currentPath();
-    qDebug() << path;
 
 
     // QString filename("database/inputData/Yahoo/keyStatistics/ABB_Key_Statistics.html");
@@ -1722,3 +1716,34 @@ void ImportData::on_pushButton_clicked()
     //gyks.parseYahooKeyStatistics(filename);
 }
 
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description: No erase of data
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::on_pushButton_2_clicked()
+{
+    bool res;
+    GuiFinanceCtrls gfic;
+    QString stockListName;
+    int stockListId;
+    CDbHndl  db;
+    res = gfic.getStockListNameAndId(ui->stockListComboBoxSqrt, stockListName, stockListId);
+
+
+    if(false == res)
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Aktielistor"), QString::fromUtf8("Fel ingen data hittad"));
+        return;
+    }
+
+    m_gyks.getYahooKeyStatisticsInDb(stockListName, stockListId);
+
+
+}

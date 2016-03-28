@@ -1671,11 +1671,11 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
     int intMonth = -12;
 
 
-    etPlus.setHorizontalFont(ui->tableViewLeastSquare, "Helvetica", 9);
-    etPlus.setVerticalFont(ui->tableViewLeastSquare, "Helvetica", 9);
+    etPlus.setHorizontalFont(ui->tableViewLeastSquare, "Helvetica", 8);
+    etPlus.setVerticalFont(ui->tableViewLeastSquare, "Helvetica", 8);
 
-    etMinus.setHorizontalFont(ui->tableViewLeastSquare_2, "Helvetica", 9);
-    etMinus.setVerticalFont(ui->tableViewLeastSquare_2, "Helvetica", 9);
+    etMinus.setHorizontalFont(ui->tableViewLeastSquare_2, "Helvetica", 8);
+    etMinus.setVerticalFont(ui->tableViewLeastSquare_2, "Helvetica", 8);
 
 
 
@@ -2796,6 +2796,9 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nAvkst");
     headerList[nofCols++].name = QString::fromUtf8("index");
+    headerList[nofCols++].name = QString::fromUtf8("balans-\nlikvd.");
+
+
 
     CUtil cu;
     QString startDate;
@@ -3047,7 +3050,10 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
                     // ajn 160321cstr.sprintf("%.2f", r);
                     // ajn 160321cetPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Q   t::black);
                      double debtToEquityRatio = 0;
-                     if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
+                     double currentRatio = 0;
+                     if(true == db.getYahooKeyData(keyData.assetSymbol, debtToEquityRatio, currentRatio))
+
+                     //if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
                      {
                          str.sprintf("%.2f", debtToEquityRatio);
 
@@ -3063,6 +3069,23 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
                          else
                          {
                              etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::darkGreen);
+                         }
+
+
+                         str.sprintf("%.2f", currentRatio);
+
+                         // This is totaly dept so we set 75 instead of 50
+                         if(currentRatio > 1.5)
+                         {
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 14, Qt::darkGreen);
+                         }
+                         else if(currentRatio > 1.0 && currentRatio < 1.5)
+                         {
+                             etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 14, Qt::magenta);
+                         }
+                         else
+                         {
+                             etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 14, Qt::red);
                          }
 
 
@@ -3191,7 +3214,9 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
                         // ajn 160321 etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::black);
 
                         double debtToEquityRatio = 0;
-                        if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
+                        double currentRatio = 0;
+                        if(true == db.getYahooKeyData(keyData.assetSymbol, debtToEquityRatio, currentRatio))
+                        // if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
                         {
                             str.sprintf("%.2f", debtToEquityRatio);
                             if(debtToEquityRatio > 150.0)
@@ -3205,6 +3230,23 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
                             else
                             {
                                 etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::darkGreen);
+                            }
+
+
+                            str.sprintf("%.2f", currentRatio);
+
+                            // This is totaly dept so we set 75 instead of 50
+                            if(currentRatio > 1.5)
+                            {
+                               etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 14, Qt::darkGreen);
+                            }
+                            else if(currentRatio > 1.0 && currentRatio < 1.5)
+                            {
+                                etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 14, Qt::magenta);
+                            }
+                            else
+                            {
+                                etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 14, Qt::red);
                             }
                         }
                         else
@@ -4015,7 +4057,9 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                         // ajn 160321cstr.sprintf("%.2f", r);
                         // ajn 160321cetPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Q   t::black);
                          double debtToEquityRatio = 0;
-                         if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
+                         double currentRatio = 0;
+                         if(true == db.getYahooKeyData(keyData.assetSymbol, debtToEquityRatio, currentRatio))
+                         //if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
                          {
                              str.sprintf("%.2f", debtToEquityRatio);
 
@@ -4031,6 +4075,22 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                              else
                              {
                                  etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 2, Qt::darkGreen);
+                             }
+
+                             str.sprintf("%.2f", currentRatio);
+
+                             // This is totaly dept so we set 75 instead of 50
+                             if(currentRatio > 1.5)
+                             {
+                                etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 14, Qt::darkGreen);
+                             }
+                             else if(currentRatio > 1.0 && currentRatio < 1.5)
+                             {
+                                 etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 14, Qt::magenta);
+                             }
+                             else
+                             {
+                                 etPlus.addDataSetTextColor(ui->tableViewLeastSquare, str, rowPlus, 14, Qt::red);
                              }
 
 
@@ -4160,7 +4220,9 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                             // ajn 160321 etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::black);
 
                             double debtToEquityRatio = 0;
-                            if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
+                            double currentRatio = 0;
+                            if(true == db.getYahooKeyData(keyData.assetSymbol, debtToEquityRatio, currentRatio))
+                            //if(true == db.getDebtToEquityRatio(keyData.assetSymbol, debtToEquityRatio))
                             {
                                 str.sprintf("%.2f", debtToEquityRatio);
                                 if(debtToEquityRatio > 150.0)
@@ -4175,6 +4237,24 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
                                 {
                                     etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 2, Qt::darkGreen);
                                 }
+
+
+                                str.sprintf("%.2f", currentRatio);
+
+                                // This is totaly dept so we set 75 instead of 50
+                                if(currentRatio > 1.5)
+                                {
+                                   etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 14, Qt::darkGreen);
+                                }
+                                else if(currentRatio > 1.0 && currentRatio < 1.5)
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 14, Qt::magenta);
+                                }
+                                else
+                                {
+                                    etMinus.addDataSetTextColor(ui->tableViewLeastSquare_2, str, rowMinus, 14, Qt::red);
+                                }
+
                             }
                             else
                             {

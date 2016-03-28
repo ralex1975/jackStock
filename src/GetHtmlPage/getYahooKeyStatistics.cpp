@@ -2,7 +2,7 @@
 #include <QMessageBox>
 #include <QtCore>
 #include <QMessageBox>
-#include "dbHndl.h"
+
 
 const QString GetYahooKeyStatistics::yahooKeyStatisticsArr[YAHOO_KEY_STATISTICS_ARR_SIZE] =
 {
@@ -230,15 +230,22 @@ void GetYahooKeyStatistics::reqNextYahooKeyStatisticsFile(QString stockSymbol)
  *
  *
  ****************************************************************/
-bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename)
+bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename, QString stockSymbol)
 {
     QString outFilename("YahooKeyStat1.txt");
     QFile file(filename);
     QFile outFile(outFilename);
+    YahooKeyStatisticsET parseIndex = MARKETCAP;
+    int pIndex = 0;
+    CDbHndl db;
+
+
+
 
     QString str;
     QString errStr = QString("Fail to open file: %1").arg(filename);
 
+    m_interimStorage.StockSymbol = stockSymbol;
 
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
@@ -287,7 +294,7 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename)
             mainStrIndex = mainStr.indexOf(startToken);
             if((mainStrIndex > -1) && (mainStr.length() > 0))
             {
-                qDebug() << mainStr;
+                // qDebug() << mainStr;
                 m_yksState = YKS_STATE_FIND_TOKEN;
             }
             break;
@@ -307,8 +314,7 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename)
                         if(nofchars >= 0)
                         {
                             subStr = mainStr.mid(startIndex, nofchars);
-                            qDebug() << subStr;
-                            // QString::size_type pos = yahooKeyStatisticsArr[n+1].toStdString().find(subStr.toStdString());
+                            qDebug() << subStr  << "i0" << pIndex;
                             qWarning() << subStr.contains(yahooKeyStatisticsArr[n]);
 
                             if(false == subStr.contains(yahooKeyStatisticsArr[n]))
@@ -354,7 +360,10 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename)
                         if(nofchars >= 0)
                         {
                             subStr = mainStr.mid(startIndex, nofchars);
-                            qDebug() << subStr;
+                            interimStorageYahooKeyStatistics(subStr, parseIndex, m_interimStorage);
+                            pIndex++;
+                            parseIndex = static_cast<YahooKeyStatisticsET> (pIndex);
+                            qDebug() << subStr << "i" << pIndex -1;
                             out << subStr.toUtf8() << "\n";
                             mainStr = mainStr.right(mainStr.length() - (mainStrIndex + startDataTokenLen));
                             found = true;
@@ -376,12 +385,207 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename)
 
     }
 
-
+    db.insertYahooKeyStatistics(m_interimStorage);
 
     //QMessageBox::information(NULL, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
     file.close();
     outFile.close();
     return true;
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:    interimStorageYahooKeyStatistics()
+ *
+ * Description:
+ *
+ * Note: do not add stock symbol here.
+ *
+ *
+ *******************************************************************/
+void GetYahooKeyStatistics::
+interimStorageYahooKeyStatistics(QString data, YahooKeyStatisticsET i, YahooKeyStatisticsST &interimStorage)
+{
+
+    switch(i)
+    {
+    case MARKETCAP:
+        interimStorage.MarketCap = data;
+        break;
+    case ENTERPRISEVALUE:
+        interimStorage.EnterpriseValue = data;
+        break;
+    case TRAILINGPE:
+        interimStorage.TrailingPe = data;
+        break;
+    case FORWARDPE:
+        interimStorage.ForwardPe = data;
+        break;
+    case PEGRATIO:
+        interimStorage.PEGRatio = data;
+        break;
+    case PRICEDIVSALES:
+        interimStorage.PriceDivSales = data;
+        break;
+    case PRICEDIVBOOK:
+        interimStorage.PriceDivBook = data;
+        break;
+    case ENTERPRISEVALUEDIVREVENUE:
+        interimStorage.EnterpriseValueDivRevenue = data;
+        break;
+    case ENTERPRISEVALUEDIVEBITDA:
+        interimStorage.EnterpriseValueDivEBITDA = data;
+        break;
+    case FISCALYEARENDS:
+        interimStorage.FiscalYearEnds = data;
+        break;
+    case MOSTRECENTQUARTER:
+        interimStorage.MostRecentQuarter = data;
+        break;
+    case PROFITMARGIN:
+        interimStorage.ProfitMargin = data;
+        break;
+    case OPERATINGMARGIN:
+        interimStorage.OperatingMargin = data;
+        break;
+    case RETURNONASSETS:
+        interimStorage.ReturnOnAssets = data;
+        break;
+    case RETURNONEQUITY:
+        interimStorage.ReturnOnEquity = data;
+        break;
+    case REVENUE:
+        interimStorage.Revenue = data;
+        break;
+    case REVENUEPERSHARE:
+        interimStorage.RevenuePerShare = data;
+        break;
+    case QTRLYREVENUEGROWTH:
+        interimStorage.QtrlyRevenueGrowth = data;
+        break;
+    case GROSSPROFIT:
+        interimStorage.GrossProfit = data;
+        break;
+    case EBITDA:
+        interimStorage.EBITDA = data;
+        break;
+    case NETINCOMEAVLTOCOMMON:
+        interimStorage.NetIncomeAvlToCommon = data;
+        break;
+    case DILUTEDEPS:
+        interimStorage.DilutedEPS = data;
+        break;
+    case QTRLYEARNINGSGROWTH:
+        interimStorage.QtrlyEarningsGrowth = data;
+        break;
+    case TOTALCASH:
+        interimStorage.TotalCash = data;
+        break;
+    case TOTALCASHPERSHARE:
+        interimStorage.TotalCashPerShare = data;
+        break;
+    case TOTALDEBT:
+        interimStorage.TotalDebt = data;
+        break;
+    case TOTALDEBTDIVEQUITY:
+        interimStorage.TotalDebtDivEquity = data;
+        break;
+    case CURRENTRATIO:
+        interimStorage.CurrentRatio = data;
+        break;
+    case BOOKVALUEPERSHARE:
+        interimStorage.BookValuePerShare = data;
+        break;
+    case OPERATINGCASHFLOW:
+        interimStorage.OperatingCashFlow = data;
+        break;
+    case LEVEREDFREECASHFLOW:
+        interimStorage.LeveredFreeCashFlow = data;
+        break;
+    case BETA:
+        interimStorage.Beta = data;
+        break;
+    case WEEK52CHANGE:
+        interimStorage.Week52Change = data;
+        break;
+    case S_AND_P500_52WEEKCHANGE:
+        interimStorage.S_And_P500_52WeekChange = data;
+        break;
+    case PROCENTHELDBYINSIDERS:
+        interimStorage.ProcentHeldbyInsiders = data;
+        break;
+    case PROCENTHELDBYINSTITUTIONS:
+        interimStorage.ProcentHeldbyInstitutions = data;
+    break;
+    case SHARESSHORT:
+        interimStorage.SharesShort = data;
+        break;
+    case SHORTRATIO:
+        interimStorage.ShortRatio = data;
+        break;
+    case SHORTPROCENTOFFLOAT:
+        interimStorage.ShortProcentOfFloat = data;
+        break;
+    case SHARESSHORTPRIORMONTH:
+        interimStorage.SharesShortPriorMonth = data;
+        break;
+    case FORWARDANNUALDIVIDENDRATE:
+        interimStorage.ForwardAnnualDividendRate = data;
+        break;
+    case FORWARDANNUALDIVIDENDYIELD:
+        interimStorage.ForwardAnnualDividendYield = data;
+        break;
+    case WEEK52HIGH:
+        interimStorage.Week52High = data;
+        break;
+    case WEEK52LOW:
+        interimStorage.Week52Low = data;
+        break;
+    case DAY50MOVINGAVERAGE:
+        interimStorage.Day50MovingAverage = data;
+        break;
+    case DAY200MOVINGAVERAGE:
+        interimStorage.Day200MovingAverage = data;
+    break;
+    case AVGVOL3MONTH:
+        interimStorage.AvgVol3Month = data;
+        break;
+    case AVGVOL10DAY:
+        interimStorage.AvgVol10Day = data;
+        break;
+    case SHARESOUTSTANDING:
+        interimStorage.SharesOutstanding = data;
+        break;
+    case  FLOAT_:
+        interimStorage.Float_ = data;
+        break;
+    case TRAILINGANNUALDIVIDENDYIELD:
+        interimStorage.TrailingAnnualDividendYield = data;
+        break;
+    case TRAILINGANNUALDIVIDENDYIELD1:
+        interimStorage.TrailingAnnualDividendYield1 = data;
+        break;
+    case YEAR5AVERAGEDIVIDENDYIELD:
+        interimStorage.Year5AverageDividendYield = data;
+        break;
+    case PAYOUTRATIO:
+        interimStorage.PayoutRatio = data;
+        break;
+    case DIVIDENDDATE:
+        interimStorage.DividendDate = data;
+        break;
+    case EXDIVIDENDDATE:
+        interimStorage.ExDividendDate = data;
+        break;
+    case LASTSPLITFACTOR:
+        interimStorage.LastSplitFactor = data;
+        break;
+    case LASTSPLITDATE:
+        interimStorage.LastSplitDate = data;
+        break;
+    }
 }
 
 
@@ -406,8 +610,8 @@ void GetYahooKeyStatistics::slotHtmlPageIsRecv(int number)
     if(m_sendNextReq == true)
     {
          m_sendNextReq = false;
-         // m_timeoutTimer->singleShot(400, this, SLOT(slotReqNextCompanyData()));
-         slotReqNextCompanyData();
+         m_timeoutTimer->singleShot(200, this, SLOT(slotReqNextCompanyData()));
+         //slotReqNextCompanyData();
     }
 
 }
@@ -424,18 +628,19 @@ void GetYahooKeyStatistics::slotHtmlPageIsRecv(int number)
  *******************************************************************/
 void GetYahooKeyStatistics::slotReqNextCompanyData()
 {
-    // QString path = PATH_REQ_YAHOO_KEY_STAT_HTML_PAGE;
+    QString path = PATH_REQ_YAHOO_KEY_STAT_HTML_PAGE;
 
     // Parse data
-    //parseYahooKeyStatistics(path);
+    parseYahooKeyStatistics(path, m_stockArr[m_stockArrIndex].stockSymbol);
     m_waitOnServerResp = false;
 
     m_stockArrIndex++;
     if(m_stockArrIndex < m_stockArr.size() - 1)
     {
         qDebug() << "next symbol " << m_stockArr[m_stockArrIndex].stockSymbol << m_stockArrIndex;
+
         // Request next html page
-            reqNextYahooKeyStatisticsFile(m_stockArr[m_stockArrIndex].stockSymbol);
+        reqNextYahooKeyStatisticsFile(m_stockArr[m_stockArrIndex].stockSymbol);
 
     }
     else

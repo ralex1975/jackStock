@@ -336,6 +336,42 @@
       </rect>
      </property>
     </widget>
+    <widget class="QLineEdit" name="StockSymbolYKSLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>40</y>
+       <width>113</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>70</y>
+       <width>241</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Get Next Yahoo Key Statistics</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>80</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No erase of data</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

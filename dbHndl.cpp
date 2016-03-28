@@ -1063,6 +1063,437 @@ bool CDbHndl::createTable(void)
 
 
 
+
+/*****************************************************************
+ *
+ * Function:		getYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::getYahooKeyData(QString stockSymbol, double &totalDebtDivEquity, double &currentRatio)
+{
+    QSqlRecord rec;
+    QString str;
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    stockSymbol.trimmed();
+
+    QByteArray ba = stockSymbol.toLocal8Bit();
+    const char *c_stockSymbol = ba.data();
+
+
+    str.sprintf("SELECT TotalDebtDivEquity, "
+                       "CurrentRatio "
+               "FROM    TblYahooKeyStatistics "
+               "WHERE   LOWER(StockSymbol) = LOWER('%s');",
+                        c_stockSymbol);
+
+
+    qry.prepare(str);
+
+    qDebug() << str;
+
+    if( !qry.exec() )
+    {
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("TotalDebtDivEquity").isNull()==true || (rec.value("CurrentRatio").isNull()==true))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                CUtil cu;
+                QString number;
+                bool res;
+
+
+
+                number= (QString) rec.value("TotalDebtDivEquity").toString();
+                res = cu.number2double(number, totalDebtDivEquity);
+
+                if(res == false)
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+
+                number = (QString) rec.value("CurrentRatio").toString();
+
+                res = cu.number2double(number, currentRatio);
+
+                if(res == false)
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		delAllTblYahooKeyStatistics()
+ *
+ * Description:		This function delete all data
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::delAllTblYahooKeyStatistics(void)
+{
+    QString str;
+    // QSqlQuery qry;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+    // Create sql question
+    str.sprintf("DELETE "
+                "FROM TblYahooKeyStatistics;");
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error delete TblMainHelpSection"), qry.lastError().text().toLatin1().constData());
+        }
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertYahooKeyStatistics(YahooKeyStatisticsST data, bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(true == data.StockSymbol.isEmpty())
+    {
+        return false;
+    }
+
+    if(true == data.MarketCap.isEmpty())
+    {
+        data.MarketCap = " ";
+    }
+
+#if 0
+    data.EnterpriseValue.toLocal8Bit().constData(),
+    data.TrailingPe.toLocal8Bit().constData(),
+    data.ForwardPe.toLocal8Bit().constData(),
+    data.PEGRatio.toLocal8Bit().constData(),
+    data.PriceDivSales.toLocal8Bit().constData(),
+    data.PriceDivBook.toLocal8Bit().constData(),
+    data.EnterpriseValueDivRevenue.toLocal8Bit().constData(),
+    data.EnterpriseValueDivEBITDA.toLocal8Bit().constData(), // 10
+    data.FiscalYearEnds.toLocal8Bit().constData(),
+    data.MostRecentQuarter.toLocal8Bit().constData(),
+    data.ProfitMargin.toLocal8Bit().constData(),
+    data.OperatingMargin.toLocal8Bit().constData(),
+    data.ReturnOnAssets.toLocal8Bit().constData(),
+    data.ReturnOnEquity.toLocal8Bit().constData(),
+    data.Revenue.toLocal8Bit().constData(),
+    data.RevenuePerShare.toLocal8Bit().constData(),
+    data.QtrlyRevenueGrowth.toLocal8Bit().constData(),
+    data.GrossProfit.toLocal8Bit().constData(),
+    data.EBITDA.toLocal8Bit().constData(),
+    data.NetIncomeAvlToCommon.toLocal8Bit().constData(),
+    data.DilutedEPS.toLocal8Bit().constData(),
+    data.QtrlyEarningsGrowth.toLocal8Bit().constData(),
+    data.TotalCash.toLocal8Bit().constData(),
+    data.TotalCashPerShare.toLocal8Bit().constData(),
+    data.TotalDebt.toLocal8Bit().constData(),
+    data.TotalDebtDivEquity.toLocal8Bit().constData(),
+    data.CurrentRatio.toLocal8Bit().constData(),
+    data.BookValuePerShare.toLocal8Bit().constData(),  // 30
+    data.OperatingCashFlow.toLocal8Bit().constData(),
+    data.LeveredFreeCashFlow.toLocal8Bit().constData(),
+    data.Beta.toLocal8Bit().constData(),
+    data.Week52Change.toLocal8Bit().constData(),
+    data.S_And_P500_52WeekChange.toLocal8Bit().constData(),
+    data.ProcentHeldbyInsiders.toLocal8Bit().constData(),
+    data.ProcentHeldbyInstitutions.toLocal8Bit().constData(),
+    data.SharesShort.toLocal8Bit().constData(),
+    data.ShortRatio.toLocal8Bit().constData(),
+    data.ShortProcentOfFloat.toLocal8Bit().constData(),    // 40
+    data.SharesShortPriorMonth.toLocal8Bit().constData(),
+    data.ForwardAnnualDividendRate.toLocal8Bit().constData(),
+    data.ForwardAnnualDividendYield.toLocal8Bit().constData(),
+    data.Week52High.toLocal8Bit().constData(),
+    data.Week52Low.toLocal8Bit().constData(),
+    data.Day50MovingAverage.toLocal8Bit().constData(),
+    data.Day200MovingAverage.toLocal8Bit().constData(),
+    data.AvgVol3Month.toLocal8Bit().constData(),
+    data.AvgVol10Day.toLocal8Bit().constData(),
+    data.SharesOutstanding.toLocal8Bit().constData(),  // 50
+    data.Float_.toLocal8Bit().constData(),
+    data.TrailingAnnualDividendYield.toLocal8Bit().constData(),
+    data.TrailingAnnualDividendYield1.toLocal8Bit().constData(),
+    data.Year5AverageDividendYield.toLocal8Bit().constData(),
+    data.PayoutRatio.toLocal8Bit().constData(),
+    data.DividendDate.toLocal8Bit().constData(),
+    data.ExDividendDate.toLocal8Bit().constData(),
+    data.LastSplitFactor.toLocal8Bit().constData(),
+    data.LastSplitDate.toLocal8Bit().constData()
+#endif
+
+#if 0
+    if(!(data.assetName.size() >  0 /*&&
+       data.assetSymbol.size() >  0 &&
+       data.sector.size() >  0 &&
+       data.bransch.size() >  0 &&
+       data.executiveDirector.size() >  0 &&
+       data.businessDescription.size() > 0*/))
+    {
+        return false;
+    }
+#endif
+
+
+    if(dbIsHandledExternly==false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+
+
+    QSqlQuery qry(m_db);
+
+
+    str.sprintf("INSERT INTO TblYahooKeyStatistics "
+                " (StockSymbol, "
+                " MarketCap, "
+                " EnterpriseValue, "
+                " TrailingPe, "
+                " ForwardPe, "
+                " PEGRatio, "
+                " PriceDivSales, "
+                " PriceDivBook, "
+                " EnterpriseValueDivRevenue, "
+                " EnterpriseValueDivEBITDA, " // 10
+                " FiscalYearEnds, "
+                " MostRecentQuarter, "
+                " ProfitMargin, "
+                " OperatingMargin, "
+                " ReturnOnAssets, "
+                " ReturnOnEquity, "
+                " Revenue, "
+                " RevenuePerShare, "
+                " QtrlyRevenueGrowth, "
+                " GrossProfit, "
+                " EBITDA, "
+                " NetIncomeAvlToCommon, "
+                " DilutedEPS, "
+                " QtrlyEarningsGrowth, "
+                " TotalCash, "
+                " TotalCashPerShare, "
+                " TotalDebt, "
+                " TotalDebtDivEquity, "
+                " CurrentRatio, "
+                " BookValuePerShare, "  // 30
+                " OperatingCashFlow, "
+                " LeveredFreeCashFlow, "
+                " Beta, "
+                " Week52Change, "
+                " S_And_P500_52WeekChange, "
+                " ProcentHeldbyInsiders, "
+                " ProcentHeldbyInstitutions, "
+                " SharesShort, "
+                " ShortRatio, "
+                " ShortProcentOfFloat, "    // 40
+                " SharesShortPriorMonth, "
+                " ForwardAnnualDividendRate, "
+                " ForwardAnnualDividendYield, "
+                " Week52High, "
+                " Week52Low, "
+                " Day50MovingAverage, "
+                " Day200MovingAverage, "
+                " AvgVol3Month, "
+                " AvgVol10Day, "
+                " SharesOutstanding, "  // 50
+                " Float_, "
+                " TrailingAnnualDividendYield, "
+                " TrailingAnnualDividendYield1, "
+                " Year5AverageDividendYield, "
+                " PayoutRatio, "
+                " DividendDate, "
+                " ExDividendDate, "
+                " LastSplitFactor, "
+                " LastSplitDate) "  // 59
+
+                " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+                        data.StockSymbol.toLocal8Bit().constData(),
+                        data.MarketCap.toLocal8Bit().constData(),
+                        data.EnterpriseValue.toLocal8Bit().constData(),
+                        data.TrailingPe.toLocal8Bit().constData(),
+                        data.ForwardPe.toLocal8Bit().constData(),
+                        data.PEGRatio.toLocal8Bit().constData(),
+                        data.PriceDivSales.toLocal8Bit().constData(),
+                        data.PriceDivBook.toLocal8Bit().constData(),
+                        data.EnterpriseValueDivRevenue.toLocal8Bit().constData(),
+                        data.EnterpriseValueDivEBITDA.toLocal8Bit().constData(), // 10
+                        data.FiscalYearEnds.toLocal8Bit().constData(),
+                        data.MostRecentQuarter.toLocal8Bit().constData(),
+                        data.ProfitMargin.toLocal8Bit().constData(),
+                        data.OperatingMargin.toLocal8Bit().constData(),
+                        data.ReturnOnAssets.toLocal8Bit().constData(),
+                        data.ReturnOnEquity.toLocal8Bit().constData(),
+                        data.Revenue.toLocal8Bit().constData(),
+                        data.RevenuePerShare.toLocal8Bit().constData(),
+                        data.QtrlyRevenueGrowth.toLocal8Bit().constData(),
+                        data.GrossProfit.toLocal8Bit().constData(),
+                        data.EBITDA.toLocal8Bit().constData(),
+                        data.NetIncomeAvlToCommon.toLocal8Bit().constData(),
+                        data.DilutedEPS.toLocal8Bit().constData(),
+                        data.QtrlyEarningsGrowth.toLocal8Bit().constData(),
+                        data.TotalCash.toLocal8Bit().constData(),
+                        data.TotalCashPerShare.toLocal8Bit().constData(),
+                        data.TotalDebt.toLocal8Bit().constData(),
+                        data.TotalDebtDivEquity.toLocal8Bit().constData(),
+                        data.CurrentRatio.toLocal8Bit().constData(),
+                        data.BookValuePerShare.toLocal8Bit().constData(),  // 30
+                        data.OperatingCashFlow.toLocal8Bit().constData(),
+                        data.LeveredFreeCashFlow.toLocal8Bit().constData(),
+                        data.Beta.toLocal8Bit().constData(),
+                        data.Week52Change.toLocal8Bit().constData(),
+                        data.S_And_P500_52WeekChange.toLocal8Bit().constData(),
+                        data.ProcentHeldbyInsiders.toLocal8Bit().constData(),
+                        data.ProcentHeldbyInstitutions.toLocal8Bit().constData(),
+                        data.SharesShort.toLocal8Bit().constData(),
+                        data.ShortRatio.toLocal8Bit().constData(),
+                        data.ShortProcentOfFloat.toLocal8Bit().constData(),    // 40
+                        data.SharesShortPriorMonth.toLocal8Bit().constData(),
+                        data.ForwardAnnualDividendRate.toLocal8Bit().constData(),
+                        data.ForwardAnnualDividendYield.toLocal8Bit().constData(),
+                        data.Week52High.toLocal8Bit().constData(),
+                        data.Week52Low.toLocal8Bit().constData(),
+                        data.Day50MovingAverage.toLocal8Bit().constData(),
+                        data.Day200MovingAverage.toLocal8Bit().constData(),
+                        data.AvgVol3Month.toLocal8Bit().constData(),
+                        data.AvgVol10Day.toLocal8Bit().constData(),
+                        data.SharesOutstanding.toLocal8Bit().constData(),  // 50
+                        data.Float_.toLocal8Bit().constData(),
+                        data.TrailingAnnualDividendYield.toLocal8Bit().constData(),
+                        data.TrailingAnnualDividendYield1.toLocal8Bit().constData(),
+                        data.Year5AverageDividendYield.toLocal8Bit().constData(),
+                        data.PayoutRatio.toLocal8Bit().constData(),
+                        data.DividendDate.toLocal8Bit().constData(),
+                        data.ExDividendDate.toLocal8Bit().constData(),
+                        data.LastSplitFactor.toLocal8Bit().constData(),
+                        data.LastSplitDate.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("Delete"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+
 /*****************************************************************
  *
  * Function:		getDebtToEquityRatio()

@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QTimer>
 #include "stockPlotUtil.h"
+#include "dbHndl.h"
 
 #define YAHOO_KEY_STATISTICS_ARR_SIZE 58
 
@@ -36,6 +37,7 @@ class GetYahooKeyStatistics : public QObject
     bool m_sendNextReq;
     QTimer *m_timeoutTimer;
     bool m_waitOnServerResp;
+    YahooKeyStatisticsST m_interimStorage;
 
 
 
@@ -47,7 +49,7 @@ public:
     explicit GetYahooKeyStatistics(QObject *parent = 0);
     ~GetYahooKeyStatistics();
 
-    bool parseYahooKeyStatistics(QString filename);
+    bool parseYahooKeyStatistics(QString filename, QString stockSymbol);
     void getYahooKeyStatisticsInDb(QString stockListName, int stockListId);
 
 
@@ -56,7 +58,9 @@ private:
     QVector <CStockPlotUtil::StockData_ST> m_stockArr;
     int m_stockArrIndex;
     void reqNextYahooKeyStatisticsFile(QString stockSymbol);
-    void slotReqNextCompanyData();
+    //void slotReqNextCompanyData();
+    void interimStorageYahooKeyStatistics(QString data, YahooKeyStatisticsET i, YahooKeyStatisticsST &interimStorage);
+
 
 
 
@@ -65,10 +69,10 @@ signals:
 
 public slots:
     void slotHtmlPageIsRecv(int number);
-    // void slotReqNextCompanyData();
+
 
 private slots:
-
+    void slotReqNextCompanyData();
 
 
 };
