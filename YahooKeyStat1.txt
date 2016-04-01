@@ -1,87 +1,87 @@
 Market Cap (intraday)
 
 Enterprise Value (Mar 28, 2016)
-10.89B
+281.36B
 Trailing P/E (ttm, intraday):
-19.33
+11.65
 Forward P/E (fye Dec 31, 2017)
 N/A
 PEG Ratio (5 yr expected)
 N/A
 Price/Sales (ttm):
-1.16
+0.57
 Price/Book (mrq):
-2.70
+2.14
 Enterprise Value/Revenue (ttm)
-1.11
+0.90
 Enterprise Value/EBITDA (ttm)
-12.26
+10.40
 Fiscal Year Ends:
 Dec 31
 Most Recent Quarter (mrq):
 Dec 31, 2015
 Profit Margin (ttm):
-6.14%
+4.82%
 Operating Margin (ttm):
-8.01%
+6.50%
 Return on Assets (ttm):
-6.31%
+3.35%
 Return on Equity (ttm):
-14.89%
+18.23%
 Revenue (ttm):
-9.85B
+312.52B
 Revenue Per Share (ttm):
-127.10
+153.95
 Qtrly Revenue Growth (yoy):
-14.40%
+2.80%
 Gross Profit (ttm):
-1.71B
+69.28B
 EBITDA (ttm)
-888.00M
+27.06B
 Net Income Avl to Common (ttm):
-605.20M
+15.06B
 Diluted EPS (ttm):
-7.63
+7.41
 Qtrly Earnings Growth (yoy):
-11.80%
-Total Cash (mrq):
-264.30M
-Total Cash Per Share (mrq):
-3.41
-Total Debt (mrq):
-0.00
-Total Debt/Equity (mrq):
 N/A
+Total Cash (mrq):
+24.39B
+Total Cash Per Share (mrq):
+12.01
+Total Debt (mrq):
+132.61B
+Total Debt/Equity (mrq):
+154.90
 Current Ratio (mrq):
-1.21
+1.00
 Book Value Per Share (mrq):
-54.46
+41.26
 Operating Cash Flow (ttm):
-522.80M
+25.90B
 Levered Free Cash Flow (ttm):
-811.62M
+10.65B
 Beta:
 N/A
 52-Week Change
-22.92%
+N/A
 S&amp;P500 52-Week Change
--1.22%
-52-Week High (Mar 23, 2016)
-149.00
-52-Week Low (Aug 24, 2015)
-107.00
+N/A
+52-Week High 
+120.50
+52-Week Low 
+71.30
 50-Day Moving Average
-139.15
+N/A
 200-Day Moving Average
-131.53
+N/A
 Avg Vol (3 month)
-60,326
+N/A
 Avg Vol (10 day)
-24,885
+N/A
 Shares Outstanding
-74.08M
+1.54B
 Float:
-74.10M
+1.85B
 % Held by Insiders
 N/A
 % Held by Institutions
@@ -99,9 +99,9 @@ N/A
 Forward Annual Dividend Yield
 N/A
 Trailing Annual Dividend Yield
-3.50
+N/A
 Trailing Annual Dividend Yield
-2.40%
+N/A
 5 Year Average Dividend Yield
 N/A
 Payout Ratio
@@ -111,6 +111,6 @@ N/A
 Ex-Dividend Date
 N/A
 Last Split Factor (new per old)
-2:1
+5:1
 Last Split Date
-Jun 13, 2014
+Apr 26, 2007
