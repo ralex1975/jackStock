@@ -3830,6 +3830,7 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nAvkst");
     headerList[nofCols++].name = QString::fromUtf8("index");
+    headerList[nofCols++].name = QString::fromUtf8("balans-\nlikvd.");
 
 
     cu.getCurrentDate(endDate);

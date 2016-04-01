@@ -2008,12 +2008,16 @@ bool CDbHndl::addFa2NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
 
 /****************************************************************
  *
- * Function:    addStockSymbolAndNameInTreeWidget1()
+ * Function:    addFa3NetProfitAfterTaxToTreeWidget()
  *
- * Description: This combobox has a checkbox
+ * Description: Page 3
+ *              Vinstmarginal, ränta på eget kapital
  *
- *
- *
+ *              Vinstmarginal =  Rörelseresultat efter avskrivningar / Rörelseintäkter
+ *              operatingIncomeAfterDepDivTotalSales = operatingIncomeAfterDepDivTotalSales / operatingIncome;
+ *              
+ *              Årets resultat efter skatt/Eget kapital
+ *              netProfitAfterTax / equity * 100
  *
  ****************************************************************/
 bool CDbHndl::addFa3NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,

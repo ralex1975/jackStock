@@ -75,13 +75,13 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>10</y>
+     <y>20</y>
      <width>1061</width>
      <height>581</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -91,9 +91,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>40</y>
        <width>341</width>
-       <height>211</height>
+       <height>301</height>
       </rect>
      </property>
      <property name="font">
@@ -354,7 +354,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>250</y>
+       <y>350</y>
        <width>361</width>
        <height>17</height>
       </rect>
@@ -372,7 +372,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>270</y>
+       <y>370</y>
        <width>361</width>
        <height>17</height>
       </rect>
@@ -438,7 +438,7 @@
        <x>10</x>
        <y>40</y>
        <width>351</width>
-       <height>201</height>
+       <height>301</height>
       </rect>
      </property>
      <column>
@@ -484,8 +484,8 @@
     <widget class="QLabel" name="labelCalcTrendline_2">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>270</y>
+       <x>-10</x>
+       <y>380</y>
        <width>361</width>
        <height>17</height>
       </rect>
@@ -503,7 +503,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>250</y>
+       <y>360</y>
        <width>361</width>
        <height>17</height>
       </rect>
