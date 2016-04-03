@@ -2925,11 +2925,7 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
 
                 if( true == res)
                 {
-                    if(m_stockArr[j].stockName.compare(QString::fromUtf8("Lundbergföretagen AB, L E ser. B"))== 0)
-                    {
-                            j++;
-                            j--;
-                    }
+
 
                     riskReturnColor = Qt::magenta;
 
