@@ -13,6 +13,7 @@ class keyIndicators_3 : public QDialog
 {
     Q_OBJECT
 
+    bool m_showWithoutFilter;
     CExtendedTable m_ynokd;
     QVector <CDbHndl::YahooNordnetOutputkeyData_ST> m_stockArr;
 
