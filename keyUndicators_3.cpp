@@ -20,8 +20,12 @@
  ****************************************************************/
 keyIndicators_3::keyIndicators_3(QWidget *parent) :
     QDialog(parent),
+    m_showWithoutFilter(false),
     ui(new Ui::keyIndicators_3)
 {
+    GuiFinanceCtrls gfc;
+
+
     ui->setupUi(this);
 
     ui->PeCheckBoxKey3->setChecked(true);
@@ -52,8 +56,9 @@ keyIndicators_3::keyIndicators_3(QWidget *parent) :
     ui->yieldCheckBoxKey3->setChecked(true);
     ui->YieldLineEditKey3->insert(QString::fromUtf8("4,0"));
 
+     ui->turnOffFilterpushButtonKey3->setText(QString::fromUtf8("Filter påslaget"));
 
-    GuiFinanceCtrls gfc;
+
 
 
     gfc.addAllStockListsToCombobox(ui->stockListscomboBoxKey3);
@@ -137,6 +142,32 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
     inData.yieldIsValid = ui->yieldCheckBoxKey3->isChecked();
     inData.yield = ui->YieldLineEditKey3->text();
 
+    if(m_showWithoutFilter == true)
+    {
+        inData.peMaxIsValid = false;
+        inData.peMinIsValid = false;
+
+        inData.psIsValid = false;
+
+        // Vinst/Direktavkastning
+        inData.earningsToDividendRatioIsValid = false;
+
+        // Substans / Aktie pris
+        inData.netAssetValueToPriceRatioIsValid = false;
+
+        // Pris / eget kapital
+        inData.priceToJEKRatioIsValid= false;
+
+        inData.totalDebtDivEquityIsValid = false;
+
+        inData.currentRatioIsValid = false;
+
+        inData.yieldIsValid = false;
+
+    }
+
+
+
 
     headerList[nofCols++].name = QString::fromUtf8("Företag     ");
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
@@ -153,10 +184,10 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
     headerList[nofCols++].name = QString::fromUtf8("Avkast.\n eget kap.");
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nAvkst");
-    headerList[nofCols++].name = QString::fromUtf8("Idag");
     headerList[nofCols++].name = QString::fromUtf8("Idag %");
-    headerList[nofCols++].name = QString::fromUtf8("Max pris\n1 år");
+    headerList[nofCols++].name = QString::fromUtf8("Idag");
     headerList[nofCols++].name = QString::fromUtf8("Min pris\n1år");
+    headerList[nofCols++].name = QString::fromUtf8("Max pris\n1 år");
     headerList[nofCols++].name = QString::fromUtf8("volym");
     headerList[nofCols++].name = QString::fromUtf8("Symbol      ");
 
@@ -286,5 +317,16 @@ void keyIndicators_3::tableHeaderClicked(int column)
 
 void keyIndicators_3::on_turnOffFilterpushButtonKey3_clicked()
 {
+
+    if(m_showWithoutFilter == true)
+    {
+        m_showWithoutFilter = false;
+        ui->turnOffFilterpushButtonKey3->setText(QString::fromUtf8("Filter påslaget"));
+    }
+    else
+    {
+        m_showWithoutFilter = true;
+        ui->turnOffFilterpushButtonKey3->setText(QString::fromUtf8("Filter avstängt"));
+    }
 
 }
