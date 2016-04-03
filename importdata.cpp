@@ -242,6 +242,7 @@ parseCompanyName(QTextStream &inStream, QString &result)
  ****************************************************************/
 void ImportData::slotReqNextCompanyData()
 {
+    bool found = false;
     QString path;
     ParseCompanyEconomyInfo pce;
 
@@ -254,29 +255,22 @@ void ImportData::slotReqNextCompanyData()
     //QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Filen hämtad"));
     m_timeoutTimer->stop();
 
-    if(m_companyListIndex < m_companyList.count()-1)
+    // Parse data and add in database
+    data = m_companyList.at(m_companyListIndex);
+    path = PATH_COMPANY_HIST_INFO;
+    data.AssetName.trimmed();
+    pce.readFile(path, data.AssetName);
+
+    m_companyListIndex++;
+    qDebug() << "m_companyListIndex B" << m_companyListIndex;
+
+    if(m_companyListIndex < m_companyList.count())
     {
-        m_oldCompanyListIndex = m_companyListIndex;
-        data = m_companyList.at(m_companyListIndex);
-        m_companyListIndex++;
-        qDebug() << "m_companyListIndex" << m_companyListIndex;
-
-
-        path = PATH_COMPANY_HIST_INFO;
-        data.AssetName.trimmed();
-        pce.readFile(path, data.AssetName);
-
-            // Parse file
-        bool found = false;
+        found = false;
         do
         {
             found = false;
             data = m_companyList.at(m_companyListIndex);
-            if(m_companyListIndex >= m_companyList.count()-2)
-            {
-                QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
-                return;
-            }
 
 
             // SKa tas bort fixa parser buggen istället
@@ -297,21 +291,24 @@ void ImportData::slotReqNextCompanyData()
             {
                 found = true;
                 m_companyListIndex++;
-                if(m_companyListIndex >= m_companyList.count()-2)
+                #if 1
+                if(m_companyListIndex >= m_companyList.count()-1)
                 {
                     QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
                     return;
                 }
+                #endif
             }
 
         }while(found == true);
 
-        path = PATH_COMPANY_HIST_INFO;
         assetId = data.assetId;
         assetId.trimmed();
         qDebug() << "aa name: " << data.AssetName << "Id: " << data.assetId;
+
         req.sprintf("https://www.nordnet.se/mux/web/marknaden/aktiehemsidan/nyckeltal.html?identifier=%s&marketplace=11", assetId.toAscii().constData());
         url = req;
+
         m_waitOnServerResp = false;
         reqHtmlFile(path, url);
         m_sendNextReq = true;
@@ -342,24 +339,20 @@ void ImportData::slotHtmlPageIsRecv(int number)
     number = number;
     m_waitOnServerResp = false;
 
-    if(m_companyListIndex < m_companyList.count()-1)
+    if(m_companyListIndex < m_companyList.count())
     {
         m_timeoutTimer->stop();
         if(m_sendNextReq == true)
         {
-            if(m_oldCompanyListIndex <= m_companyListIndex)
-            {
-                qDebug() << "Index" << m_companyListIndex << "count" << m_companyList.count()-2;
-                m_timeoutTimer->singleShot(200, this, SLOT(slotReqNextCompanyData()));
-                m_sendNextReq = false;
-                m_oldCompanyListIndex = m_companyListIndex;
-            }
+            qDebug() << "Index" << m_companyListIndex << "count" << m_companyList.count();
+            m_timeoutTimer->singleShot(200, this, SLOT(slotReqNextCompanyData()));
+            m_sendNextReq = false;
         }
     }
     else
     {
         m_timeoutTimer->stop();
-        if(m_displayFinish== true)
+        if(m_displayFinish == true)
         {
             m_displayFinish = false;
             QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
@@ -386,7 +379,6 @@ void ImportData::on_pushButtonReqCompInfo_clicked()
     CompanyNameAndId_ST data;
     QString req;
     QString assetId;
-    m_oldCompanyListIndex = -1;
     m_displayFinish = true;
 
     m_companyList.clear();
@@ -1500,7 +1492,6 @@ void ImportData::on_pushButDescription_clicked()
     CompanyNameAndId_ST data;
     QString req;
     QString assetId;
-    m_oldCompanyListIndex = -1;
     m_displayFinish = true;
 
     m_companyList.clear();
@@ -1555,7 +1546,7 @@ void ImportData::reqCompanyDescriptionHtmlFile(QString path, QUrl url)
 
 /*******************************************************************
  *
- * Function:    slotHtmlPageIsRecv()
+ * Function:    slotCompanyDescriptionHtmlPageIsRecv()
  *
  * Description: This function is invoked when a html page is
  *              completely received.
@@ -1568,24 +1559,20 @@ void ImportData::slotCompanyDescriptionHtmlPageIsRecv(int number)
     number = number;
     m_waitOnServerResp = false;
 
-    if(m_companyListIndex < m_companyList.count()-1)
+    if(m_companyListIndex < m_companyList.count())
     {
         m_timeoutTimer->stop();
         if(m_sendNextReq == true)
         {
-            if(m_oldCompanyListIndex <= m_companyListIndex)
-            {
-                qDebug() << "Index" << m_companyListIndex << "count" << m_companyList.count()-2;
-                m_timeoutTimer->singleShot(200, this, SLOT(slotReqNextCompanyDescriptionData()));
-                m_sendNextReq = false;
-                m_oldCompanyListIndex = m_companyListIndex;
-            }
+            qDebug() << "Index" << m_companyListIndex << "count" << m_companyList.count();
+            m_timeoutTimer->singleShot(200, this, SLOT(slotReqNextCompanyDescriptionData()));
+            m_sendNextReq = false;
         }
     }
     else
     {
         m_timeoutTimer->stop();
-        if(m_displayFinish== true)
+        if(m_displayFinish == true)
         {
             m_displayFinish = false;
             QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
@@ -1614,31 +1601,29 @@ void ImportData::slotReqNextCompanyDescriptionData()
 
     parseCompDescription pcd;
 
-
-
-    //QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Filen hämtad"));
     m_timeoutTimer->stop();
 
-    if(m_companyListIndex < m_companyList.count()-1)
+    // Parse data and data in database
+    path = DWLD_PATH_FA_TA_COMPANY_DESCRIPTION;
+    data = m_companyList.at(m_companyListIndex);
+    data.AssetName.trimmed();
+    pcd.readFile(path, data.AssetName, data.assetId);
+
+
+
+    if(m_companyListIndex < m_companyList.count() - 1)
     {
-        m_oldCompanyListIndex = m_companyListIndex;
-        data = m_companyList.at(m_companyListIndex);
+        // Request next stock
         m_companyListIndex++;
-        qDebug() << "m_companyListIndex" << m_companyListIndex;
-
-
-        path = DWLD_PATH_FA_TA_COMPANY_DESCRIPTION;
-
-        data.AssetName.trimmed();
-        pcd.readFile(path, data.AssetName, data.assetId);
-
-            // Parse file
+        qDebug() << "m_companyListIndex A" << m_companyListIndex;
         data = m_companyList.at(m_companyListIndex);
-        path = DWLD_PATH_FA_TA_COMPANY_DESCRIPTION;
         assetId = data.assetId;
         assetId.trimmed();
+
         qDebug() << "name: " << data.AssetName << "Id: " << data.assetId;
+
         req.sprintf("https://www.nordnet.se/mux/web/marknaden/aktiehemsidan/bolagsfakta.html?identifier=%s&marketplace=11", assetId.toAscii().constData());
+
         url = req;
         m_waitOnServerResp = false;
         reqCompanyDescriptionHtmlFile(path, url);

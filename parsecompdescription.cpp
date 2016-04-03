@@ -130,6 +130,7 @@ readFile(QString filename, QString assetName, QString assetSymbol)
                 }
                 else
                 {
+                    file.close();
                     return false;
                 }
             }
