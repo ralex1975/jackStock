@@ -1510,6 +1510,36 @@ bool CUtil::number2double(QString number, double &doubleNumber)
 
 
 /*********************************************************************
+ * Function: number2double()
+ *
+ * Description: Convert qstring to int.
+ *
+ *********************************************************************/
+bool CUtil::number2double(QString number, QString &doubleNumber)
+{
+    int i;
+    int len;
+
+    if(number.isNull() == true)
+        return false;
+
+    number.replace(',','.');
+
+    len = number.length();
+
+    for(i = 0; i < len; i++)
+    {
+        if(!(((number.at(i)>= '0') && (number.at(i)<= '9')) || (number.at(i)== '.') || number.at(0) == '-'))
+            return false;
+    }
+
+    doubleNumber = number;
+
+    return true;
+}
+
+
+/*********************************************************************
  * Function: dateIsValid()
  *
  * Description: yyyy-mm-dd.

@@ -142,6 +142,7 @@ const CDbHndl::StockIndicatorlLookUpTable_ST CDbHndl::m_gpSelLookUpTable[CDbHndl
 
 
 
+
 const unsigned short CDbHndl::MASK_GPCOMP_GREATER =            0x01;
 const unsigned short CDbHndl::MASK_GPCOMP_GREATER_OR_EQUAL =   0x02;
 const unsigned short CDbHndl::MASK_GPCOMP_EQUAL =              0x04;
@@ -1243,77 +1244,6 @@ insertYahooKeyStatistics(YahooKeyStatisticsST data, bool dbIsHandledExternly)
         data.MarketCap = " ";
     }
 
-#if 0
-    data.EnterpriseValue.toLocal8Bit().constData(),
-    data.TrailingPe.toLocal8Bit().constData(),
-    data.ForwardPe.toLocal8Bit().constData(),
-    data.PEGRatio.toLocal8Bit().constData(),
-    data.PriceDivSales.toLocal8Bit().constData(),
-    data.PriceDivBook.toLocal8Bit().constData(),
-    data.EnterpriseValueDivRevenue.toLocal8Bit().constData(),
-    data.EnterpriseValueDivEBITDA.toLocal8Bit().constData(), // 10
-    data.FiscalYearEnds.toLocal8Bit().constData(),
-    data.MostRecentQuarter.toLocal8Bit().constData(),
-    data.ProfitMargin.toLocal8Bit().constData(),
-    data.OperatingMargin.toLocal8Bit().constData(),
-    data.ReturnOnAssets.toLocal8Bit().constData(),
-    data.ReturnOnEquity.toLocal8Bit().constData(),
-    data.Revenue.toLocal8Bit().constData(),
-    data.RevenuePerShare.toLocal8Bit().constData(),
-    data.QtrlyRevenueGrowth.toLocal8Bit().constData(),
-    data.GrossProfit.toLocal8Bit().constData(),
-    data.EBITDA.toLocal8Bit().constData(),
-    data.NetIncomeAvlToCommon.toLocal8Bit().constData(),
-    data.DilutedEPS.toLocal8Bit().constData(),
-    data.QtrlyEarningsGrowth.toLocal8Bit().constData(),
-    data.TotalCash.toLocal8Bit().constData(),
-    data.TotalCashPerShare.toLocal8Bit().constData(),
-    data.TotalDebt.toLocal8Bit().constData(),
-    data.TotalDebtDivEquity.toLocal8Bit().constData(),
-    data.CurrentRatio.toLocal8Bit().constData(),
-    data.BookValuePerShare.toLocal8Bit().constData(),  // 30
-    data.OperatingCashFlow.toLocal8Bit().constData(),
-    data.LeveredFreeCashFlow.toLocal8Bit().constData(),
-    data.Beta.toLocal8Bit().constData(),
-    data.Week52Change.toLocal8Bit().constData(),
-    data.S_And_P500_52WeekChange.toLocal8Bit().constData(),
-    data.ProcentHeldbyInsiders.toLocal8Bit().constData(),
-    data.ProcentHeldbyInstitutions.toLocal8Bit().constData(),
-    data.SharesShort.toLocal8Bit().constData(),
-    data.ShortRatio.toLocal8Bit().constData(),
-    data.ShortProcentOfFloat.toLocal8Bit().constData(),    // 40
-    data.SharesShortPriorMonth.toLocal8Bit().constData(),
-    data.ForwardAnnualDividendRate.toLocal8Bit().constData(),
-    data.ForwardAnnualDividendYield.toLocal8Bit().constData(),
-    data.Week52High.toLocal8Bit().constData(),
-    data.Week52Low.toLocal8Bit().constData(),
-    data.Day50MovingAverage.toLocal8Bit().constData(),
-    data.Day200MovingAverage.toLocal8Bit().constData(),
-    data.AvgVol3Month.toLocal8Bit().constData(),
-    data.AvgVol10Day.toLocal8Bit().constData(),
-    data.SharesOutstanding.toLocal8Bit().constData(),  // 50
-    data.Float_.toLocal8Bit().constData(),
-    data.TrailingAnnualDividendYield.toLocal8Bit().constData(),
-    data.TrailingAnnualDividendYield1.toLocal8Bit().constData(),
-    data.Year5AverageDividendYield.toLocal8Bit().constData(),
-    data.PayoutRatio.toLocal8Bit().constData(),
-    data.DividendDate.toLocal8Bit().constData(),
-    data.ExDividendDate.toLocal8Bit().constData(),
-    data.LastSplitFactor.toLocal8Bit().constData(),
-    data.LastSplitDate.toLocal8Bit().constData()
-#endif
-
-#if 0
-    if(!(data.assetName.size() >  0 /*&&
-       data.assetSymbol.size() >  0 &&
-       data.sector.size() >  0 &&
-       data.bransch.size() >  0 &&
-       data.executiveDirector.size() >  0 &&
-       data.businessDescription.size() > 0*/))
-    {
-        return false;
-    }
-#endif
 
 
     if(dbIsHandledExternly==false)
@@ -1489,6 +1419,487 @@ insertYahooKeyStatistics(YahooKeyStatisticsST data, bool dbIsHandledExternly)
 
 
 
+
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:     This function set unused search parameters
+ *                  to excessive values.
+ *
+ *
+ *****************************************************************/
+void CDbHndl::
+setNordnetYahooInputNonValidKeyData(YahooNordnetInputkeyData_ST &inData)
+{
+    // Search criterias min, max values
+
+    // Normal value > 5
+    if(false == inData.peMinIsValid)
+    {
+        inData.peMin = "-1000.0";
+    }
+
+    // Normal value < 15
+    if(false == inData.peMaxIsValid)
+    {
+        inData.peMax = "1000.0";
+    }
+
+    // Normal value < 0.75
+    if(false == inData.psIsValid)
+    {
+        inData.psValue = "1000.0";
+    }
+
+    // Normal value > 2.0
+    if(false == inData.earningsToDividendRatioIsValid)
+    {
+        inData.earningsToDividendRatio = "-1000.0";
+    }
+
+
+    // Normal value < 1.0
+    if(false == inData.priceToJEKRatioIsValid)
+    {
+        inData.priceToJEKRatio = "1000.0";
+    }
+
+
+    // Normal value < 0.5
+    if(false == inData.totalDebtDivEquityIsValid)
+    {
+        inData.totalDebtDivEquity = "1000.0";
+    }
+
+    // Normal value > 1.5
+    if(false == inData.currentRatioIsValid)
+    {
+        inData.currentRatio = "-1000.0";
+    }
+
+
+    // Normal value > 1
+    if(false == inData.netAssetValueToPriceRatioIsValid)
+    {
+        inData.netAssetValueToPriceRatio = "-1000.0";
+    }
+
+
+    // Normal value > 4
+    if(false == inData.yieldIsValid)
+    {
+        inData.yield = "-1000.0";
+    }
+
+ }
+
+
+#if 0
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
+                       QVector <YahooNordnetOutputkeyData_ST> &stockArr,
+                       bool dbIsHandledExternly)
+{
+
+    YahooNordnetOutputkeyData_ST outData;
+
+    // set unused search parameters to excessive values.
+    setNordnetYahooInputNonValidKeyData(inData);
+
+
+    QSqlRecord rec;
+    QString str;
+    CUtil cu;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+   cu.number2double(inData.currentRatio, inData.currentRatio);
+   cu.number2double(inData.earningsToDividendRatio, inData.earningsToDividendRatio);
+   cu.number2double(inData.netAssetValueToPriceRatio, inData.netAssetValueToPriceRatio);
+   cu.number2double(inData.peMax, inData.peMax);
+   cu.number2double(inData.peMin, inData.peMin);
+   cu.number2double(inData.priceToJEKRatio, inData.priceToJEKRatio);
+   cu.number2double(inData.psValue, inData.psValue);
+   cu.number2double(inData.totalDebtDivEquity, inData.totalDebtDivEquity);
+   cu.number2double(inData.yield, inData.yield);
+  bool found = false;
+
+ // " FROM TblNordnetYahooBridge, TblStockDataSnapshot, TblYahooKeyStatistics, TblTaStockList, TblTaStockName  "
+
+
+    str.sprintf("SELECT TblNordnetYahooBridge.*, TblStockDataSnapshot.*, TblYahooKeyStatistics.*, "
+                "       TblTaStockList.taStockListId, TblTaStockList.stockListName, "
+                "       TblTaStockName.taStockListId, TblTaStockName.stockName, TblTaStockName.stockSymbol "
+
+                " FROM  TblTaStockList, TblTaStockName, blStockDataSnapshot, TblNordnetYahooBridge, TblYahooKeyStatistics "
+
+            #if 0
+                " FROM  TblTaStockList "
+                " LEFT JOIN TblTaStockName ON TblTaStockList.taStockListId = TblTaStockName.taStockListId "
+                " LEFT JOIN blStockDataSnapshot ON  lower(TblTaStockName.stockName) = lower(blStockDataSnapshot.companyName) "
+                " LEFT JOIN TblNordnetYahooBridge ON lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) "
+                " LEFT JOIN TblYahooKeyStatistics ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) "
+        #endif
+
+
+//--------------------------------------------
+             #if 0
+                " FROM   blStockDataSnapshot  "
+
+                " LEFT JOIN TblNordnetYahooBridge ON lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                " LEFT JOIN TblYahooKeyStatistics ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
+                " LEFT JOIN TblTaStockName ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblTaStockName.stockSymbol) AND "
+                " LEFT JOIN TblTaStockName ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblTaStockName.stockSymbol) AND "
+                " LEFT JOIN TblTaStockList ON TblTaStockName.taStockListId = TblTaStockList.taStockListId "
+            #endif
+
+
+                " WHERE CAST(TblStockDataSnapshot.keyValuePE AS REAL) >= %s AND "
+                "       CAST(TblStockDataSnapshot.keyValuePE AS REAL) <= %s AND  "
+                "       CAST(TblStockDataSnapshot.keyValuePS AS REAL) <= %s AND  "
+                "       CAST(TblStockDataSnapshot.earningsDividedByDividend AS REAL) >= %s AND   "
+                "       CAST(TblStockDataSnapshot.keyValueCoursePerJEK AS REAL) <= %s AND   "
+                "       CAST(TblYahooKeyStatistics.TotalDebtDivEquity AS REAL) <= %s AND   "
+                "       CAST(TblYahooKeyStatistics.CurrentRatio AS REAL) >= %s AND "
+                "       CAST(TblStockDataSnapshot.navDivLastStockPrice AS REAL) >= %s AND "
+                "       CAST(TblStockDataSnapshot.keyValueYield AS REAL) >= %s AND "
+
+         #if 0
+                " TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
+                " lower(TblTaStockName.stockName) = lower(blStockDataSnapshot.companyName) AND "
+                " lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                " lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
+#endif
+
+                "       TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
+                "       TblTaStockName.stockSymbol = TblNordnetYahooBridge.assetSymbol AND "
+                "       lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                "       lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
+
+
+
+
+
+                "       TblTaStockList.taStockListId = %d AND "
+                "       lower(TblTaStockList.stockListName) = lower('%s');",
+                                                                           inData.peMin.toLocal8Bit().constData(),
+                                                                           inData.peMax.toLocal8Bit().constData(),
+                                                                           inData.psValue.toLocal8Bit().constData(),
+                                                                           inData.earningsToDividendRatio.toLocal8Bit().constData(),
+                                                                           inData.priceToJEKRatio.toLocal8Bit().constData(),
+                                                                           inData.totalDebtDivEquity.toLocal8Bit().constData(),
+                                                                           inData.currentRatio.toLocal8Bit().constData(),
+                                                                           inData.netAssetValueToPriceRatio.toLocal8Bit().constData(),
+                                                                           inData.yield.toLocal8Bit().constData(),
+                                                                           inData.stockListId,
+                                                                           inData.stockList.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("StockSymbol").isNull() == true ||
+               rec.value("TotalDebtDivEquity").isNull() == true ||
+               rec.value("CurrentRatio").isNull() == true ||
+
+               rec.value("ProfitMargin").isNull() == true ||
+               rec.value("OperatingMargin").isNull() == true ||
+               rec.value("ReturnOnAssets").isNull() == true ||
+               rec.value("ReturnOnEquity").isNull() == true ||
+               rec.value("Week52High").isNull() == true ||
+               rec.value("Week52Low").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                    //return true;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+               found = true;
+                qDebug() << rec.value("companyName").toString() << "\n";
+
+                outData.stockSymbol = rec.value("stockSymbol").toString();
+                outData.companyName = rec.value("companyName").toString();
+                outData.lastPrice = rec.value("lastPrice").toString();
+                outData.procentChangeOneDay = rec.value("procentChangeOneDay").toString();
+                outData.volume = rec.value("volume").toString();
+                outData.totalDebtToEquityRatio = rec.value("TotalDebtDivEquity").toString();
+                outData.currentRatio = rec.value("CurrentRatio").toString();
+                outData.earningsToDividendRatio = rec.value("earningsDividedByDividend").toString();
+                outData.pe = rec.value("keyValuePE").toString();
+                outData.ps = rec.value("keyValuePS").toString();
+                outData.netAssetValueToPriceRatio = rec.value("navDivLastStockPrice").toString();
+                outData.yield = rec.value("keyValueYield").toString();
+                outData.priceToJEKRatio = rec.value("keyValueCoursePerJEK").toString();
+                outData.profitMargin = rec.value("ProfitMargin").toString();
+                outData.operatingMargin = rec.value("OperatingMargin").toString();
+                outData.returnOnAssets = rec.value("ReturnOnAssets").toString();
+                outData.returnOnEquity = rec.value("ReturnOnEquity").toString();
+                outData.week52High = rec.value("Week52High").toString();
+                outData.week52Low = rec.value("Week52Low").toString();
+
+                stockArr.append(outData);
+
+            }
+        }
+
+
+
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+#endif
+
+
+#if 1
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
+                       QVector <YahooNordnetOutputkeyData_ST> &stockArr,
+                       bool dbIsHandledExternly)
+{
+
+    YahooNordnetOutputkeyData_ST outData;
+
+    // set unused search parameters to excessive values.
+    setNordnetYahooInputNonValidKeyData(inData);
+
+
+    QSqlRecord rec;
+    QString str;
+    CUtil cu;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+   cu.number2double(inData.currentRatio, inData.currentRatio);
+   cu.number2double(inData.earningsToDividendRatio, inData.earningsToDividendRatio);
+   cu.number2double(inData.netAssetValueToPriceRatio, inData.netAssetValueToPriceRatio);
+   cu.number2double(inData.peMax, inData.peMax);
+   cu.number2double(inData.peMin, inData.peMin);
+   cu.number2double(inData.priceToJEKRatio, inData.priceToJEKRatio);
+   cu.number2double(inData.psValue, inData.psValue);
+   cu.number2double(inData.totalDebtDivEquity, inData.totalDebtDivEquity);
+   cu.number2double(inData.yield, inData.yield);
+  bool found = false;
+
+
+    str.sprintf("SELECT TblNordnetYahooBridge.*, TblStockDataSnapshot.*, TblYahooKeyStatistics.*, "
+                "       TblTaStockList.taStockListId, TblTaStockList.stockListName, "
+                "       TblTaStockName.taStockListId, TblTaStockName.stockSymbol, TblTaStockName.stockName "
+                " FROM TblNordnetYahooBridge, TblStockDataSnapshot, TblYahooKeyStatistics, TblTaStockList, TblTaStockName  "
+
+                " WHERE CAST(TblStockDataSnapshot.keyValuePE AS REAL) >= %s AND "
+                "       CAST(TblStockDataSnapshot.keyValuePE AS REAL) <= %s AND  "
+                "       CAST(TblStockDataSnapshot.keyValuePS AS REAL) <= %s AND  "
+                "       CAST(TblStockDataSnapshot.earningsDividedByDividend AS REAL) >= %s AND   "
+                "       CAST(TblStockDataSnapshot.keyValueCoursePerJEK AS REAL) <= %s AND   "
+                "       CAST(TblYahooKeyStatistics.TotalDebtDivEquity AS REAL) <= %s AND   "
+                "       CAST(TblYahooKeyStatistics.CurrentRatio AS REAL) >= %s AND "
+                "       CAST(TblStockDataSnapshot.navDivLastStockPrice AS REAL) >= %s AND "
+                "       CAST(TblStockDataSnapshot.keyValueYield AS REAL) >= %s AND "
+                "       TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
+                "       TblTaStockName.stockSymbol = TblNordnetYahooBridge.assetSymbol AND "
+                "       TblTaStockList.taStockListId = %d AND "
+                "       lower(TblTaStockList.stockListName) = lower('%s') AND "
+                "       lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                "       lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol);",
+                                                                           inData.peMin.toLocal8Bit().constData(),
+                                                                           inData.peMax.toLocal8Bit().constData(),
+                                                                           inData.psValue.toLocal8Bit().constData(),
+                                                                           inData.earningsToDividendRatio.toLocal8Bit().constData(),
+                                                                           inData.priceToJEKRatio.toLocal8Bit().constData(),
+                                                                           inData.totalDebtDivEquity.toLocal8Bit().constData(),
+                                                                           inData.currentRatio.toLocal8Bit().constData(),
+                                                                           inData.netAssetValueToPriceRatio.toLocal8Bit().constData(),
+                                                                           inData.yield.toLocal8Bit().constData(),
+                                                                           inData.stockListId,
+                                                                           inData.stockList.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("StockSymbol").isNull() == true ||
+               rec.value("TotalDebtDivEquity").isNull() == true ||
+               rec.value("CurrentRatio").isNull() == true ||
+
+               rec.value("ProfitMargin").isNull() == true ||
+               rec.value("OperatingMargin").isNull() == true ||
+               rec.value("ReturnOnAssets").isNull() == true ||
+               rec.value("ReturnOnEquity").isNull() == true ||
+               rec.value("Week52High").isNull() == true ||
+               rec.value("Week52Low").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                    //return true;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+               found = true;
+                qDebug() << rec.value("companyName").toString() << "\n";
+
+                outData.stockSymbol = rec.value("stockSymbol").toString();
+                outData.companyName = rec.value("companyName").toString();
+                outData.lastPrice = rec.value("lastPrice").toString();
+                outData.procentChangeOneDay = rec.value("procentChangeOneDay").toString();
+                outData.volume = rec.value("volume").toString();
+                outData.totalDebtToEquityRatio = rec.value("TotalDebtDivEquity").toString();
+                outData.currentRatio = rec.value("CurrentRatio").toString();
+                outData.earningsToDividendRatio = rec.value("earningsDividedByDividend").toString();
+                outData.pe = rec.value("keyValuePE").toString();
+                outData.ps = rec.value("keyValuePS").toString();
+                outData.netAssetValueToPriceRatio = rec.value("navDivLastStockPrice").toString();
+                outData.yield = rec.value("keyValueYield").toString();
+                outData.priceToJEKRatio = rec.value("keyValueCoursePerJEK").toString();
+                outData.profitMargin = rec.value("ProfitMargin").toString();
+                outData.operatingMargin = rec.value("OperatingMargin").toString();
+                outData.returnOnAssets = rec.value("ReturnOnAssets").toString();
+                outData.returnOnEquity = rec.value("ReturnOnEquity").toString();
+                outData.week52High = rec.value("Week52High").toString();
+                outData.week52Low = rec.value("Week52Low").toString();
+
+                stockArr.append(outData);
+
+            }
+        }
+
+
+
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+#endif
 
 
 
@@ -2008,12 +2419,16 @@ bool CDbHndl::addFa2NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
 
 /****************************************************************
  *
- * Function:    addStockSymbolAndNameInTreeWidget1()
+ * Function:    addFa3NetProfitAfterTaxToTreeWidget()
  *
- * Description: This combobox has a checkbox
+ * Description: Page 3
+ *              Vinstmarginal, ränta på eget kapital
  *
- *
- *
+ *              Vinstmarginal =  Rörelseresultat efter avskrivningar / Rörelseintäkter
+ *              operatingIncomeAfterDepDivTotalSales = operatingIncomeAfterDepDivTotalSales / operatingIncome;
+ *              
+ *              Årets resultat efter skatt/Eget kapital
+ *              netProfitAfterTax / equity * 100
  *
  ****************************************************************/
 bool CDbHndl::addFa3NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,

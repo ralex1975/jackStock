@@ -313,6 +313,23 @@ public:
         QLineEdit *IndicatorValueLineEdit[MAX_NOF_TABLE_TAB_GUI_SEL_CTRLS];
     };
 
+
+    enum YNSortKeyStringIndexET
+    {
+        YNSORT_PE,
+        YNSORT_PS,
+        YNSORT_EARNING_TO_DIVIDENT_RATIO,
+        YNSORT_PRICE_TO_JEK_RATIO,
+        YNSORT_TOTAL_DEBT_TO_EQUITY_RATIO,
+        YNSORT_CURRENT_RATIO,
+        YNSORT_NET_ASSET_VALUE_TO_PRICE_RATIO,
+        YNSORT_YIELD,
+        YNSORT_NOF_DATA
+    };
+
+
+
+
 private:
 
     enum StateBollingerBand_ET
@@ -458,6 +475,108 @@ public:
         QString name;
         QString symbol;
     };
+
+
+
+
+
+    struct YahooNordnetOutputkeyData_ST
+    {
+        QString companyName;
+        QString stockSymbol;
+        QString pe;
+        QString ps;
+        QString profitMargin;               // Vinstmarginal
+        QString operatingMargin;            // Rörelsemarginal
+        QString returnOnAssets;             // Räntabilitet på totalt kapital
+        QString returnOnEquity;             // Avkastning på eget kapital
+        QString week52High;                 // Högsta pris under 52 veckor
+        QString week52Low;                  // Lägst pris under 52 veckor
+        QString netAssetValueToPriceRatio;	// Substansvärde / Kurs
+        QString totalDebtToEquityRatio;		// Skuld/Eget kapital
+        QString currentRatio; 				// Balanslikviditet
+        QString lastPrice;
+        QString procentChangeOneDay;
+        QString volume;
+        QString earningsToDividendRatio;
+        QString yield;
+        QString priceToJEKRatio;
+    };
+
+
+
+
+
+    enum YahooNordnetOutputkeyData_ET
+    {
+        YNOI_COMPANYNAME,
+        YNOI_PE,
+        YNOI_PS,
+        YNOI_YIELD,
+        YNOI_EARNINGSTODIVIDENDRATIO,
+        YNOI_NETASSETVALUETOPRICERATIO,     // SUBSTANSVÄRDE / KURS
+        YNOI_PRICETOJEKRATIO,
+        YNOI_TOTALDEBTTOEQUITYRATIO,		// SKULD/EGET KAPITAL
+        YNOI_CURRENTRATIO,                  // BALANSLIKVIDITET
+        YNOI_PROFITMARGIN,                  // VINSTMARGINAL
+        YNOI_OPERATINGMARGIN,               // RÖRELSEMARGINAL
+        YNOI_RETURNONASSETS,                // RÄNTABILITET PÅ TOTALT KAPITAL
+        YNOI_RETURNONEQUITY,                // AVKASTNING PÅ EGET KAPITAL
+        YNOI_EXPECTED_RISK,
+        YNOI_EXPECTED_RETURNS,
+        YNOI_LASTPRICE,
+        YNOI_PROCENTCHANGEONEDAY,
+        YNOI_WEEK52HIGH,                 // HÖGSTA PRIS UNDER 52 VECKOR
+        YNOI_WEEK52LOW,                  // LÄGST PRIS UNDER 52 VECKOR
+        YNOI_VOLUME,
+        YNOI_COMPANY_SYMBOL,
+        YNOI_NOF_ITEMS
+    };
+
+
+
+    struct YahooNordnetInputkeyData_ST
+    {
+       QString stockList;
+       int stockListId;
+       QString stockSymbol;
+       QString sortOrder;			// "ASC", "DESC"
+
+       // Search criterias min, max values
+       bool peMinIsValid;
+       QString peMin;
+
+       bool peMaxIsValid;
+       QString peMax;
+
+       bool psIsValid;
+       QString psValue;
+
+       bool earningsToDividendRatioIsValid;
+       QString earningsToDividendRatio;
+
+       bool priceToJEKRatioIsValid;
+       QString priceToJEKRatio;
+
+       bool totalDebtDivEquityIsValid;
+       QString totalDebtDivEquity;
+
+       bool currentRatioIsValid;
+       QString currentRatio;
+
+       bool netAssetValueToPriceRatioIsValid;
+       QString netAssetValueToPriceRatio;
+
+       bool yieldIsValid;
+       QString yield;
+     };
+
+
+
+    void setNordnetYahooInputNonValidKeyData(YahooNordnetInputkeyData_ST &inData);
+    bool getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
+                           QVector <YahooNordnetOutputkeyData_ST> &stockArr,
+                           bool dbIsHandledExternly = false);
 
     bool getYahooKeyData(QString stockSymbol, double &totalDebtDivEquity, double &currentRatio);
     bool delAllTblYahooKeyStatistics(void);

@@ -81,7 +81,8 @@ SOURCES += main.cpp\
     src/myOS/semaphore.cpp \
     src/myOS/mytaskQue.cpp \
     src/TaBuySellIdicator/taBuySellTask.cpp \
-    src/GetHtmlPage/getYahooKeyStatistics.cpp
+    src/GetHtmlPage/getYahooKeyStatistics.cpp \
+    keyUndicators_3.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -143,7 +144,8 @@ HEADERS  += WebBrowserTab.h \
     inc/myOs/semaphore.h \
     inc/myOs/mytaskQue.h \
     inc/TaBuySellIdicator/taBuySellTask.h \
-    inc/GetHtmlPage/getYahooKeyStatistics.h
+    inc/GetHtmlPage/getYahooKeyStatistics.h \
+    keyIndicators_3.h
 
 FORMS    += \
     WebBrowserTab.ui \
@@ -163,6 +165,7 @@ FORMS    += \
     efficentbargraphdlg.ui \
     fatab.ui \
     fatab.ui \
-    leastsquarestadlg.ui
+    leastsquarestadlg.ui \
+    keyIndicators_3.ui
 
 

@@ -1311,6 +1311,7 @@ public:
     bool calcMean(double inputData[], int nofData, double &mean);
     bool number2Int(QString number, int &intNumber);
     bool number2double(QString number, double &doubleNumber);
+    bool number2double(QString number, QString &doubleNumber);
     bool dateIsValid(QString date);
     void getCurrentDate(QString &date);
     bool splitDate(QString date, QString &year, QString &month, QString &day);
