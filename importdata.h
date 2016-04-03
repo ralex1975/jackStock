@@ -113,7 +113,6 @@ class ImportData : public QDialog
     StatusReqSingleStockData_ET m_singleStockDataReqStatus;
     QList <CompanyNameAndId_ST> m_companyList;
     int m_companyListIndex;
-    int m_oldCompanyListIndex;
     Ui::ImportData *ui;
     int m_timerId;
     QTimer *m_timeoutTimer;

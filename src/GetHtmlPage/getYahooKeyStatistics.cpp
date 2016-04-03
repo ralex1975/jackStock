@@ -635,7 +635,7 @@ void GetYahooKeyStatistics::slotReqNextCompanyData()
     m_waitOnServerResp = false;
 
     m_stockArrIndex++;
-    if(m_stockArrIndex < m_stockArr.size() - 1)
+    if(m_stockArrIndex < m_stockArr.size())
     {
         qDebug() << "next symbol " << m_stockArr[m_stockArrIndex].stockSymbol << m_stockArrIndex;
 

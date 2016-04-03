@@ -1547,15 +1547,20 @@ getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
                 "       TblTaStockList.taStockListId, TblTaStockList.stockListName, "
                 "       TblTaStockName.taStockListId, TblTaStockName.stockName, TblTaStockName.stockSymbol "
 
-                " FROM  TblTaStockList, TblTaStockName, blStockDataSnapshot, TblNordnetYahooBridge, TblYahooKeyStatistics "
+              //  " FROM  TblTaStockList, TblTaStockName, TblStockDataSnapshot, TblNordnetYahooBridge, TblYahooKeyStatistics "
 
-            #if 0
+            #if 1
                 " FROM  TblTaStockList "
                 " LEFT JOIN TblTaStockName ON TblTaStockList.taStockListId = TblTaStockName.taStockListId "
-                " LEFT JOIN blStockDataSnapshot ON  lower(TblTaStockName.stockName) = lower(blStockDataSnapshot.companyName) "
+                " LEFT JOIN blStockDataSnapshot ON  lower(TblTaStockName.stockName) = lower(TblStockDataSnapshot.companyName) "
                 " LEFT JOIN TblNordnetYahooBridge ON lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) "
                 " LEFT JOIN TblYahooKeyStatistics ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) "
         #endif
+
+                " TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
+                " lower(TblTaStockName.stockName) = lower(TblStockDataSnapshot.companyName) AND "
+                " lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                " lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
 
 
 //--------------------------------------------
@@ -1581,17 +1586,19 @@ getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
                 "       CAST(TblStockDataSnapshot.keyValueYield AS REAL) >= %s AND "
 
          #if 0
+         #if 1
                 " TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
-                " lower(TblTaStockName.stockName) = lower(blStockDataSnapshot.companyName) AND "
+                " lower(TblTaStockName.stockName) = lower(TblStockDataSnapshot.companyName) AND "
                 " lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
                 " lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
-#endif
+        #else
 
                 "       TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
                 "       TblTaStockName.stockSymbol = TblNordnetYahooBridge.assetSymbol AND "
                 "       lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
                 "       lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
-
+        #endif
+        #endif
 
 
 
