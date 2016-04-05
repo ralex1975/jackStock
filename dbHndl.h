@@ -32,6 +32,7 @@
 #include "fifo.h"
 #include "common.h"
 #include "linkedList.h"
+// #include "extendedTable.h"
 
 #include "inc/guiUtil/guiFinanceColor.h"
 #include "inc/guiUtil/myTreeWidget.h"
@@ -223,6 +224,8 @@ struct YahooKeyStatisticsST
     QString LastSplitDate;
 };
 
+
+class CExtendedTable;
 
 class CDbHndl//: public CDbBase
 {
@@ -589,11 +592,28 @@ public:
                                      char *sortOrder);
 
 
+    bool getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *tableView);
+
+    bool deleteDataFromProgressMyPortfolio(QString year, QString month);
+
+
+
+    bool insertProgressMyPortfolioData(QString year,
+                                  QString month,
+                                  QString marketValue,
+                                  QString addedMoney,
+                                  QString receivedDivident,
+                                       bool dbIsHandledExternly=false);
+
+    bool delAllTblProgressMyPortfolio(void);
+
 
 
     bool delAllTblNordnetCompanyDescription(void);
     bool insertNordnetCompanyDescriptionData(NordnetCompanyDescription_ST data, bool dbIsHandledExternly=false);
     bool getNordnetCompanyDescription(NordnetCompanyDescription_ST &data, QString assetName);
+
+
 
 
 

@@ -82,7 +82,8 @@ SOURCES += main.cpp\
     src/myOS/mytaskQue.cpp \
     src/TaBuySellIdicator/taBuySellTask.cpp \
     src/GetHtmlPage/getYahooKeyStatistics.cpp \
-    keyUndicators_3.cpp
+    keyUndicators_3.cpp \
+    adminMyPortFolio.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -145,7 +146,8 @@ HEADERS  += WebBrowserTab.h \
     inc/myOs/mytaskQue.h \
     inc/TaBuySellIdicator/taBuySellTask.h \
     inc/GetHtmlPage/getYahooKeyStatistics.h \
-    keyIndicators_3.h
+    keyIndicators_3.h \
+    adminMyPortFolio.h
 
 FORMS    += \
     WebBrowserTab.ui \
@@ -166,6 +168,7 @@ FORMS    += \
     fatab.ui \
     fatab.ui \
     leastsquarestadlg.ui \
-    keyIndicators_3.ui
+    keyIndicators_3.ui \
+    adminmyportfolio.ui
 
 

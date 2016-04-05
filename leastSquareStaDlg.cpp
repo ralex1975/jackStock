@@ -926,7 +926,9 @@ void LeastSquaresTaDlg::addStockIndicatorToPlot(int indicatorIndex,
  *
  *
  *******************************************************************/
-void LeastSquaresTaDlg::updateMinMaxXAxisScales(CYahooStockPlotUtil::MinMaxAxisValues_ST &axis, CYahooStockPlotUtil::MinMaxAxisValues_ST &qwtPlotAxis)
+void LeastSquaresTaDlg::
+updateMinMaxXAxisScales(CYahooStockPlotUtil::MinMaxAxisValues_ST &axis,
+                        CYahooStockPlotUtil::MinMaxAxisValues_ST &qwtPlotAxis)
 {
     CYahooStockPlotUtil cy;
 
