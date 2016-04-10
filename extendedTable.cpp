@@ -230,6 +230,33 @@ void CExtendedTable::getOneData(QTableView *tableView, const QModelIndex &index,
 
 
 /*******************************************************************
+ *
+ * Function:    getOneData()
+ *
+ * Description: Get one data from tableView.
+ *
+ * Create slot: on_tableView_clicked()
+ *
+ *******************************************************************/
+void CExtendedTable::getOneData(QTableView *tableView, int row, int col, QString &data)
+{
+
+   // QVariant vData;
+   if(row > tableView->model()->rowCount() || col > tableView->model()->columnCount())
+   {
+       QMessageBox::critical(NULL, QString::fromUtf8("3Error: Get Table Data 3"), QString::fromUtf8("Invalid table index") );
+       return;
+   }
+
+   if(true == tableView->model()->index(row, col).isValid())
+   {
+       // vData = tableView->model()->item(row, col)->text();
+       data = tableView->model()->index(row, col).data().toString();
+   }
+}
+
+
+/*******************************************************************
 *
 * Function:    getOneData()
 *

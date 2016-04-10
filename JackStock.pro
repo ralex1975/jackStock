@@ -82,8 +82,9 @@ SOURCES += main.cpp\
     src/myOS/mytaskQue.cpp \
     src/TaBuySellIdicator/taBuySellTask.cpp \
     src/GetHtmlPage/getYahooKeyStatistics.cpp \
-    keyUndicators_3.cpp \
-    adminMyPortFolio.cpp
+    adminMyPortFolio.cpp \
+    keyIndicators_3.cpp \
+    stockAnalysisTab.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -147,7 +148,8 @@ HEADERS  += WebBrowserTab.h \
     inc/TaBuySellIdicator/taBuySellTask.h \
     inc/GetHtmlPage/getYahooKeyStatistics.h \
     keyIndicators_3.h \
-    adminMyPortFolio.h
+    adminMyPortFolio.h \
+    stockAnalysisTab.h
 
 FORMS    += \
     WebBrowserTab.ui \
@@ -169,6 +171,7 @@ FORMS    += \
     fatab.ui \
     leastsquarestadlg.ui \
     keyIndicators_3.ui \
-    adminmyportfolio.ui
+    adminmyportfolio.ui \
+    stockanalysistab.ui
 
 

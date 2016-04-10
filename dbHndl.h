@@ -592,17 +592,20 @@ public:
                                      char *sortOrder);
 
 
-    bool getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *tableView);
 
+    bool getMinDateProgressMyPortfolio(int &year, int &month);
+    bool getNowRowsProgressMyPortfolioData(int &nofRows);
+    bool getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *tableView);
     bool deleteDataFromProgressMyPortfolio(QString year, QString month);
 
 
 
     bool insertProgressMyPortfolioData(QString year,
-                                  QString month,
-                                  QString marketValue,
-                                  QString addedMoney,
-                                  QString receivedDivident,
+                                       QString month,
+                                       QString marketValue,
+                                       QString addedMoney,
+                                       QString receivedDivident,
+                                       QString withdrawing,
                                        bool dbIsHandledExternly=false);
 
     bool delAllTblProgressMyPortfolio(void);

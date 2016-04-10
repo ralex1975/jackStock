@@ -1314,6 +1314,7 @@ public:
     bool number2double(QString number, QString &doubleNumber);
     bool dateIsValid(QString date);
     void getCurrentDate(QString &date);
+    int  calcDeltaMonth(int year, int month, int minYear, int minMonth);
     bool splitDate(QString date, QString &year, QString &month, QString &day);
     bool addDays(QString inputDate, QString &outputDate, int day);
     bool addMonth(QString inputDate, QString &outputDate, int intMonth);

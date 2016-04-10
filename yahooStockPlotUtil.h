@@ -133,9 +133,11 @@ public:
     void initMinMaxAxis(CYahooStockPlotUtil::MinMaxAxisValues_ST inputAxis, CYahooStockPlotUtil::MinMaxAxisValues_ST &outputAxis);
     void addOneIntervalBarData(QVector<QwtIntervalSample> &rangeData, CYahooStockPlotUtil::MinMaxAxisValues_ST &axisMinMax, double x, double minY, double maxY);
     void plotIntervalBarData(QwtPlot *qwtPlot, const QString &title, const QVector<QwtIntervalSample> &samples, const QColor &color);
-    //void deleteIntervalBarData(QwtPlot *qwtPlot, QVector<QwtIntervalSample>& samples);
     void deleteIntervalBarData(QwtPlot *qwtPlot, QwtPlotIntervalCurve &intervalCurve,
                           QVector<QwtIntervalSample>& samples);
+
+    //void deleteAllPlotData(CYahooStockPlotUtil::PlotData_ST &allPlotData, QwtPlot *qwtPlot);
+
 
 
 };

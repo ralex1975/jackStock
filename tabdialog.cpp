@@ -30,6 +30,7 @@
 #include <QVBoxLayout>
 #include "keyIndicators_3.h"
 #include "adminMyPortFolio.h"
+#include "stockAnalysisTab.h"
 
 
 TabDialog *g_TabDialog;
@@ -75,7 +76,10 @@ TabDialog::TabDialog(QWidget *parent)
     tabWidget->addTab(new CJackStock(parent), QString::fromUtf8("Färgtest"));
     tabWidget->addTab(new LeastSquaresTaDlg(parent), QString::fromUtf8("Nyckeltal2"));
     tabWidget->addTab(new keyIndicators_3(parent), QString::fromUtf8("Nyckeltal3"));
-    tabWidget->addTab(new AdminMyPortfolio(parent), QString::fromUtf8("Portföljutv."));
+    tabWidget->addTab(new AdminMyPortfolio(parent), QString::fromUtf8("Portföljutveckling"));
+    tabWidget->addTab(new StockAnalysisTab(parent), QString::fromUtf8("Analys"));
+
+
 
 
 

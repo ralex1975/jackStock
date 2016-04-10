@@ -1666,6 +1666,9 @@ bool CUtil::addMonth(QString inputDate, QString &outputDate, int intMonth)
  *
  * Description: .
  *
+ *
+ *
+ *
  *********************************************************************/
 bool CUtil::addYear(QString inputDate, QString &outputDate, int intYear)
 {
@@ -1687,6 +1690,27 @@ bool CUtil::addYear(QString inputDate, QString &outputDate, int intYear)
     qDebug() << "Year outputDate" << outputDate;
     return true;
 }
+
+
+
+/*********************************************************************
+ * Function:    calcDeltaMonth()
+ *
+ * Description: .
+ *
+ *
+ *
+ *
+ *********************************************************************/
+int CUtil::calcDeltaMonth(int year, int month, int minYear, int minMonth)
+{
+    int maxMonths = year * 12 + month;
+    int minMonths = minYear * 12 + minMonth;
+    int resMonth = maxMonths - minMonths;
+
+   return resMonth;
+}
+
 
 /*********************************************************************
  * Function: nofDaysBeteenDates()
