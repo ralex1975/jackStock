@@ -27,6 +27,7 @@ private:
 
 public:
     CExtendedTable();
+    void getOneData(QTableView *tableView, int row, int col, QString &data);
     void addHeaders(QTableView *tableView, TableColumnIndicatorInfo_ST *tableHeaderList, int maxNofData);
     void addHorzVertHeaders(QTableView *tableView, QVector <CDbHndl::EfficPortStockData_ST> stockArr1, int maxNofData);
     void addHeaders(QTableView *tableView);

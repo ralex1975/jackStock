@@ -992,7 +992,8 @@ bool TaBuySellIdicator::buySignalAvgShortAboveMid(QString stockSymbol)
  *
  *
  *******************************************************************/
-void TaBuySellIdicator::clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData_ST &stockData)
+void TaBuySellIdicator::
+clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData_ST &stockData)
 {
     stockData.data.x.clear();
     stockData.data.y.clear();
@@ -1001,6 +1002,7 @@ void TaBuySellIdicator::clearStockAndIndicatorMem(CYahooStockPlotUtil::StockData
     stockData.data.indicator2.clear();
     stockData.data.indicator3.clear();
     stockData.data.indicator4.clear();
+    stockData.data.indicator5.clear();
 
 }
 

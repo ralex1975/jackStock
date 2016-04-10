@@ -132,7 +132,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>250</y>
+     <y>300</y>
      <width>99</width>
      <height>27</height>
     </rect>
@@ -144,9 +144,9 @@
   <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>200</x>
      <y>10</y>
-     <width>1121</width>
+     <width>381</width>
      <height>591</height>
     </rect>
    </property>
@@ -164,7 +164,102 @@
     <string>Radera</string>
    </property>
   </widget>
+  <widget class="QwtPlot" name="qwtPlot">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>40</y>
+     <width>731</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlot_2">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>360</y>
+     <width>731</width>
+     <height>231</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>250</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Uttag</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="withdrawingLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>270</y>
+     <width>113</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="marketValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>10</y>
+     <width>111</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Marknadsvärde</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="InvestedMoneyLabel">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>10</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Investerat kapital</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="valueIncreaseLabel">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>10</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Värdeökning</string>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -452,7 +452,8 @@ bool CDbHndl::createTable(void)
                 " Month INTEGER, "
                 " MarketValue REAL, "
                 " AddedMoney REAL, "
-                " ReceivedDivident REAL)");
+                " ReceivedDivident REAL,"
+                " Withdrawing REAL)");
 
     qry.prepare(tmp);
 
@@ -464,7 +465,7 @@ bool CDbHndl::createTable(void)
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblYahooTaStockName"));
+            QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4bb3"), QString::fromUtf8("Fail create TblProgressMyPortfolio"));
         }
         closeDb();
         m_mutex.unlock();
@@ -2224,6 +2225,102 @@ bool CDbHndl::getNordnetCompanyDescription(NordnetCompanyDescription_ST &data,
 
 
 
+
+/****************************************************************
+ *
+ * Function:    getAllProgressMyPortfolioData()
+ *
+ * Description:
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::getMinDateProgressMyPortfolio(int &year, int &month)
+{
+    QSqlRecord rec;
+    QString str;
+    QString tmp;
+    CUtil cu;
+    int row;
+    int col;
+
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    str.sprintf(" SELECT YearMonthTxt, Year, Month "
+                " FROM TblProgressMyPortfolio "
+                " WHERE "
+                " CAST(YearMonthTxt AS REAL) = (SELECT MIN(CAST(YearMonthTxt AS REAL)) FROM TblProgressMyPortfolio);");
+
+    qry.prepare(str);
+
+    qDebug() << str;
+
+    if( !qry.exec() )
+    {
+        //table.deleteAllData(tableView);
+
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error MyPortfolio"), qry.lastError().text().toUtf8().constData());
+        }
+
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        //table.deleteAllData(tableView);
+
+        row = 0;
+        col = 0;
+
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("YearMonthTxt").isNull() == true)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("db error MyPortfolio  1"), QString::fromUtf8("Key info is missing in db"));
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                 if(false == rec.value("Year").isNull())
+                 {
+                    year = rec.value("Year").toInt();
+                 }
+
+                 if(false == rec.value("Month").isNull())
+                 {
+                    month = rec.value("month").toInt();
+
+                 }
+            }
+        }
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+
+
 /*****************************************************************
  *
  * Function:		delAllTblProgressMyPortfolio()
@@ -2270,130 +2367,6 @@ bool CDbHndl::delAllTblProgressMyPortfolio(void)
 
 
 
-#if 0
-/****************************************************************
- *
- * Function:    ()
- *
- * Description:
- *
- *
- *
- *
- *
- ****************************************************************/
-bool CDbHndl::
-insertProgressMyPortfolioData(QString year,
-                              QString month,
-                              QString marketValue,
-                              QString addedMoney,
-                              QString receivedDivident,
-                              bool dbIsHandledExternly)
-{
-    QString str;
-    QString yearMonth;
-
-    if(!(year.size() >  0 ))
-    {
-        QMessageBox::information(NULL, QString::fromUtf8("Fel"), QString::fromUtf8("Ange år"));
-        return false;
-    }
-
-    if(!(month.size() >  0 ))
-    {
-        QMessageBox::information(NULL, QString::fromUtf8("Fel"), QString::fromUtf8("Ange Månad"));
-        return false;
-
-    }
-
-    if(!(marketValue.size() >  0 ))
-    {
-        marketValue = "0.0";
-
-    }
-
-    if(!(addedMoney.size() >  0 ))
-    {
-        addedMoney = "0.0";
-
-    }
-
-
-    if(!(receivedDivident.size() >  0 ))
-    {
-        receivedDivident = "0.0";
-
-    }
-
-
-   yearMonth.sprintf("%4d%02d", year.toInt(), month.toInt());
-
-
-
-    if(dbIsHandledExternly==false)
-    {
-        m_mutex.lock();
-        openDb(PATH_JACK_STOCK_DB);
-    }
-
-
-    QSqlQuery qry(m_db);
-
-
-    str.sprintf("INSERT OR REPLACE INTO TblProgressMyPortfolio "
-                " (YearMonthTxt, Year, Month, MarketValue, AddedMoney, ReceivedDivident) "
-                " VALUES('%s', %d, %d, %.2f, %.2f, %.2f); "
-                " UPDATE TblProgressMyPortfolio  "
-                " SET Year = %d, Month = %d, MarketValue = %.2f, AddedMoney = %.2f, ReceivedDivident = %.2f "
-                " WHERE YearMonthTxt = '%s';",
-
-                yearMonth.toLocal8Bit().constData(),
-                year.toInt(),
-                month.toInt(),
-                marketValue.toDouble(),
-                addedMoney.toDouble(),
-                receivedDivident.toDouble(),
-
-                year.toInt(),
-                month.toInt(),
-                marketValue.toDouble(),
-                addedMoney.toDouble(),
-                receivedDivident.toDouble(),
-                yearMonth.toLocal8Bit().constData());
-
-
-
-    qDebug() << str << "\n";
-    qry.prepare(str);
-
-
-    if(!qry.exec())
-    {
-        qDebug() << qry.lastError();
-        if(m_disableMsgBoxes == false)
-        {
-            QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), qry.lastError().text().toLatin1().constData());
-        }
-
-        if(dbIsHandledExternly == false)
-        {
-            closeDb();
-            m_mutex.unlock();
-        }
-        return false;
-    }
-
-
-    qry.finish();
-    if(dbIsHandledExternly == false)
-    {
-        closeDb();
-        m_mutex.unlock();
-    }
-
-    return true;
-}
-#endif
 
 /****************************************************************
  *
@@ -2441,6 +2414,94 @@ bool CDbHndl::deleteDataFromProgressMyPortfolio(QString year, QString month)
     return true;
 }
 
+
+/****************************************************************
+ *
+ * Function:    getNofData()
+ *
+ * Description:
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::getNowRowsProgressMyPortfolioData(int &nofRows)
+{
+    QSqlRecord rec;
+    QString str;
+
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    str.sprintf("SELECT Count(*), YearMonthTxt  "
+                " FROM TblProgressMyPortfolio;");
+
+    qry.prepare(str);
+
+    qDebug() << str;
+
+    if( !qry.exec() )
+    {
+        //table.deleteAllData(tableView);
+
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error MyPortfolio"), qry.lastError().text().toUtf8().constData());
+        }
+
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("YearMonthTxt").isNull() == true)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("db error MyPortfolio  1"), QString::fromUtf8("Key info is missing in db"));
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                // Nof data
+                if(false == rec.value(0).isNull())
+                {
+                   nofRows = rec.value(0).toInt();
+                }
+                else
+                {
+                    qry.finish();
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return true;
+}
+
+
+
 /****************************************************************
  *
  * Function:    getAllProgressMyPortfolioData()
@@ -2455,7 +2516,6 @@ bool CDbHndl::getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *t
     QSqlRecord rec;
     QString str;
     QString tmp;
-    CUtil cu;
     int row;
     int col;
 
@@ -2467,7 +2527,7 @@ bool CDbHndl::getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *t
 
 
 
-    str.sprintf("SELECT YearMonthTxt, Year, Month, MarketValue, AddedMoney, ReceivedDivident "
+    str.sprintf("SELECT YearMonthTxt, Year, Month, MarketValue, AddedMoney, ReceivedDivident, Withdrawing "
                 " FROM TblProgressMyPortfolio "
                 " ORDER BY CAST(YearMonthTxt AS REAL) DESC;");
 
@@ -2511,7 +2571,7 @@ bool CDbHndl::getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *t
             }
             else
             {
-                 if(false == rec.value("Year").isNull())
+                  if(false == rec.value("Year").isNull())
                  {
                     tmp = (QString)rec.value("Year").toString().toUtf8();
 
@@ -2551,6 +2611,16 @@ bool CDbHndl::getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *t
 
                     table.addDataSetTextColor(tableView, tmp, row, col, Qt::black);
                  }
+                 col++;
+
+
+                 if(false == rec.value("Withdrawing").isNull())
+                 {
+                    tmp = (QString)rec.value("Withdrawing").toString().toUtf8();
+
+                    table.addDataSetTextColor(tableView, tmp, row, col, Qt::black);
+                 }
+
                  col = 0;
                  row++;
             }
@@ -2585,6 +2655,7 @@ insertProgressMyPortfolioData(QString year,
                               QString marketValue,
                               QString addedMoney,
                               QString receivedDivident,
+                              QString withdrawing,
                               bool dbIsHandledExternly)
 {
     QString str;
@@ -2623,6 +2694,13 @@ insertProgressMyPortfolioData(QString year,
     }
 
 
+    if(!(withdrawing.size() >  0 ))
+    {
+        withdrawing = "0.0";
+    }
+
+
+
 
     yearMonth.sprintf("%4d%02d", year.toInt(), month.toInt());
 
@@ -2638,15 +2716,16 @@ insertProgressMyPortfolioData(QString year,
 
 
     str.sprintf("INSERT OR REPLACE INTO TblProgressMyPortfolio "
-                " (YearMonthTxt, Year, Month, MarketValue, AddedMoney, ReceivedDivident) "
+                " (YearMonthTxt, Year, Month, MarketValue, AddedMoney, ReceivedDivident, Withdrawing) "
                 " VALUES('%s', "
-                " %d, %d, %.2f, %.2f, %.2f); ",
+                " %d, %d, %.2f, %.2f, %.2f, %.2f); ",
                        yearMonth.toLocal8Bit().constData(),
                        year.toInt(),
                        month.toInt(),
                        marketValue.toDouble(),
                        addedMoney.toDouble(),
-                       receivedDivident.toDouble());
+                       receivedDivident.toDouble(),
+                       withdrawing.toDouble());
 
 
 

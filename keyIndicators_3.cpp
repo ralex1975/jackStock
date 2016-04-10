@@ -29,23 +29,23 @@ keyIndicators_3::keyIndicators_3(QWidget *parent) :
     ui->setupUi(this);
 
     ui->PeCheckBoxKey3->setChecked(true);
-    ui->peMaxLineEditKey3->insert(QString::fromUtf8("15,0"));
-    ui->peMinLineEditKey3->insert(QString::fromUtf8("5,0"));
+    ui->peMaxLineEditKey3->insert(QString::fromUtf8("16,0"));
+    ui->peMinLineEditKey3->insert(QString::fromUtf8("4,0"));
 
     ui->PsCheckBoxKey3->setChecked(true);
     ui->psLineEditKey3->insert(QString::fromUtf8("1,5"));
 
     // Vinst/Direktavkastning
     ui->earningsToDividendRatioCheckBoxKey3->setChecked(true);
-    ui->earningsToDividendRatioLineEditKey3->insert(QString::fromUtf8("1,0"));
+    ui->earningsToDividendRatioLineEditKey3->insert(QString::fromUtf8("1,5"));
 
     // Substans / Aktie pris
     ui->netAssetValueToPriceRatioCheckBoxKey3->setChecked(true);
-    ui->netAssetValueToPriceRatioLineEditKey3->insert(QString::fromUtf8("1,0"));
+    ui->netAssetValueToPriceRatioLineEditKey3->insert(QString::fromUtf8("0,8"));
 
     // Pris / eget kapital
     ui->priceToNetEquityRatioCheckBoxKey3->setChecked(true);
-    ui->priceToNetEquityRatioLineEditKey3->insert(QString::fromUtf8("1,0"));
+    ui->priceToNetEquityRatioLineEditKey3->insert(QString::fromUtf8("1,2"));
 
     ui->totalDebtToEquityRatioCheckBoxKey3->setChecked(false);
     ui->totalDebtToEquityRatioLineEditKey3->insert(QString::fromUtf8("75,0"));
@@ -54,7 +54,7 @@ keyIndicators_3::keyIndicators_3(QWidget *parent) :
     ui->currentRatioLineEditKey3->insert(QString::fromUtf8("1.5"));
 
     ui->yieldCheckBoxKey3->setChecked(true);
-    ui->YieldLineEditKey3->insert(QString::fromUtf8("4,0"));
+    ui->YieldLineEditKey3->insert(QString::fromUtf8("3,5"));
 
      ui->turnOffFilterpushButtonKey3->setText(QString::fromUtf8("Filter påslaget"));
 

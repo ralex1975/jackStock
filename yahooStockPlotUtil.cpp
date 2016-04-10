@@ -826,7 +826,7 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
          bool useAutoScale)
 {
     QString str;
-    QString tmp;
+    // QString tmp;
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -1009,6 +1009,27 @@ addOneIntervalBarData(QVector<QwtIntervalSample> &rangeData,
     rangeData.append(QwtIntervalSample(x, QwtInterval(minY, maxY)));
 }
 
+
+
+#if 0
+/*******************************************************************
+ *
+ * Function:    deleteAllPlotData()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void CYahooStockPlotUtil::
+deleteAllPlotData(CYahooStockPlotUtil::PlotData_ST &allPlotData, QwtPlot *qwtPlot)
+{
+    for(int i = 0; i < PLOT_INDEX_MAX; i++)
+    {
+        m_plot.removePlotData(allPlotData, i, qwtPlot);
+    }
+
+}
+#endif
 
 
 /*****************************************************************

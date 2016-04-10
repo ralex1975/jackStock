@@ -179,12 +179,12 @@
       <rect>
        <x>20</x>
        <y>450</y>
-       <width>181</width>
+       <width>211</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>Substansvärde / Kurs</string>
+      <string>Substansvärde / Kurs (min)</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="netAssetValueToPriceRatioLineEditKey3">

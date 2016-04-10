@@ -25,6 +25,16 @@
 #include <QMessageBox>
 
 
+
+/*******************************************************************
+ *
+ * Function:    CTableTab()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
 CTableTab::CTableTab(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CTableTab)
@@ -108,7 +118,7 @@ CTableTab::CTableTab(QWidget *parent) :
  *
  * Function:    ~CTableTab()
  *
- * Description: Constructor
+ * Description:
  *
  *
  *
