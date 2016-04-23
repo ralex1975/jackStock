@@ -575,6 +575,49 @@ public:
      };
 
 
+    bool insertMainAnalysisData(QString stockName,
+                                QString stockSymbol,
+                                int &mainAnalysisId,
+                                bool dbIsHandledExternly = false);
+
+
+
+    bool insertMainAnalysisDate(QString date,
+                           int mainAnalysisId,
+                           int &analysisDateId,
+                           bool dbIsHandledExternly = false);
+
+
+    bool insertAnalysisData(int analysisDateId,
+                       QString companyDescription,
+                       QString bigEnoughAnswer,
+                       QString bigEnoughComment,
+                       QString strongFinancialPositionAnswer,
+                       QString strongFinancialPositionComment,
+                       QString earningStabilityAnswer,
+                       QString earningStabilityComment,
+                       QString dividendStabilityAnswer,
+                       QString dividendStabilityComment,
+                       QString earningGrowthAnswer,
+                       QString earningGrowthComment,
+                       QString keyValuePe,
+                       QString keyValuePs,
+                       QString keyValueNavPriceRatio,
+                       QString keyValueYield,
+                       QString keyValuePriceJEKRatio,
+                       QString keyValueerningsDividentRatio,
+                       QString keyValueTotalDebtEquityRatio,
+                       QString keyValueCurrentRatio,
+                       QString trustworthyLeadershipAnswer,
+                       QString trustworthyLeadershipComment,
+                       QString goodOwnershipAnswer,
+                       QString goodOwnershipComment,
+                       int &analysisDataId,
+                       bool dbIsHandledExternly = false);
+
+
+
+
 
     void setNordnetYahooInputNonValidKeyData(YahooNordnetInputkeyData_ST &inData);
     bool getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
@@ -594,7 +637,7 @@ public:
 
 
     bool getMinDateProgressMyPortfolio(int &year, int &month);
-    bool getNowRowsProgressMyPortfolioData(int &nofRows);
+    bool getNofRowsProgressMyPortfolioData(int &nofRows);
     bool getAllProgressMyPortfolioData(CExtendedTable &table, QTableView *tableView);
     bool deleteDataFromProgressMyPortfolio(QString year, QString month);
 

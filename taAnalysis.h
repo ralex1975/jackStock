@@ -117,7 +117,7 @@ public:
     {
         FA_PE,
         FA_PS,
-        FA_ERNING_DIV_DIVIDEN, // Visnt / utdelning
+        FA_ERNING_DIV_DIVIDEN, // Vinst / utdelning
         FA_NAV_DIV_LAST_PRICE, // Substans / Kurs
         FA_YIELD,
         FA_MEAN_RETURN,

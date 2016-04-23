@@ -140,9 +140,6 @@ const CDbHndl::StockIndicatorlLookUpTable_ST CDbHndl::m_gpSelLookUpTable[CDbHndl
 };
 
 
-
-
-
 const unsigned short CDbHndl::MASK_GPCOMP_GREATER =            0x01;
 const unsigned short CDbHndl::MASK_GPCOMP_GREATER_OR_EQUAL =   0x02;
 const unsigned short CDbHndl::MASK_GPCOMP_EQUAL =              0x04;
@@ -176,13 +173,12 @@ const CDbHndl::GPCompLookUpTable_ST CDbHndl::m_gpCompLookUpTable[MAX_NOF_GPCOMP_
 CDbHndl::CDbHndl():
     m_disableMsgBoxes(false)
 {
-    // m_db = QSqlDatabase::addDatabase("QMYSQL");
-    // m_db.setDatabaseName("jackStock.db");
+
 }
 
 /****************************************************************
  *
- * Function:    CDbHndl()
+ * Function:        disableMsgBoxes()
  *
  * Description:.
  *
@@ -199,7 +195,7 @@ void CDbHndl::disableMsgBoxes(bool status)
 
 /****************************************************************
  *
- * Function:    CDbHndl()
+ * Function:        ~CDbHndl()
  *
  * Description:.
  *
@@ -209,7 +205,7 @@ void CDbHndl::disableMsgBoxes(bool status)
  ****************************************************************/
 CDbHndl::~CDbHndl()
 {
-    // m_db.removeDatabase("QSQLITE");
+
 }
 
 
@@ -262,6 +258,269 @@ bool CDbHndl::createTable(void)
     }
 
     qry.finish();
+
+
+    //========================================================================
+    // Stock and company analysis
+    //========================================================================
+
+
+    //-----------------------------------------------------------------------
+    // TblMainAnalysis
+    //-----------------------------------------------------------------------
+    tmp.sprintf("CREATE TABLE IF NOT EXISTS TblMainAnalysis "
+                " (MainAnalysisId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                " stockName VARCHAR(255), "
+                " StockSymbol VARCHAR(255) NOT NULL UNIQUE);");
+
+    qDebug() << tmp;
+
+    qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblMainAnalysis"), QString::fromUtf8("Fail create TblMainHelpSection"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+        //-----------------------------------------------------------------------
+        // TblDateAnalysis
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateAnalysis "
+                    " (AnalysisDateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " AnalysisDate DATE, "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblMainHelpSection"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+        //-----------------------------------------------------------------------
+        // TblAnalysisDate
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblAnalysisData "
+                    " (AnalysisDataId INTEGER PRIMARY KEY AUTOINCREMENT , "
+                    " AnalysisDateId INTEGER, "                             // YYYY-MM-DD ID
+                    " companyDescription VARCHAR(255), "
+
+                    " bigEnoughAnswer VARCHAR(255), "
+                    " bigEnoughComment VARCHAR(255), "
+
+                    " strongFinancialPositionAnswer VARCHAR(255), "
+                    " strongFinancialPositionComment VARCHAR(255), "
+
+                    " earningStabilityAnswer VARCHAR(255), "
+                    " earningStabilityComment VARCHAR(255), "
+
+                    " dividendStabilityAnswer VARCHAR(255), "
+                    " dividendStabilityComment VARCHAR(255), "
+
+                    " earningGrowthAnswer VARCHAR(255), "
+                    " earningGrowthComment VARCHAR(255), "
+
+                    " keyValuePe VARCHAR(255), "
+                    " keyValuePs VARCHAR(255), "
+
+                    " keyValueNavPriceRatio VARCHAR(255), "
+                    " keyValueYield VARCHAR(255), "
+                    " keyValuePriceJEKRatio VARCHAR(255), "
+                    " keyValueerningsDividentRatio VARCHAR(255), "
+                    " keyValueTotalDebtEquityRatio VARCHAR(255), "
+                    " keyValueCurrentRatio VARCHAR(255), "
+                    " trustworthyLeadershipAnswer VARCHAR(255), "
+                    " trustworthyLeadershipComment VARCHAR(255), "
+                    " goodOwnershipAnswer VARCHAR(255), "
+                    " goodOwnershipComment VARCHAR(255));");
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblAnalysisData"), QString::fromUtf8("Fail create TblAnalysisData"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+
+                    //-----------------------------------------------------------------------
+                    // TblStrongFinancialPositionData
+                    //-----------------------------------------------------------------------
+                    tmp.sprintf("CREATE TABLE IF NOT EXISTS TblStrongFinancialPositionData "
+                                " (AnalysisDataId INTEGER, "
+                                " year_1 VARCHAR(255), "
+                                " currentAssets_1 VARCHAR(255), "
+                                " currentLiabilities_1 VARCHAR(255), "
+
+                                " year_2 VARCHAR(255), "
+                                " currentAssets_2 VARCHAR(255), "
+                                " currentLiabilities_2 VARCHAR(255), "
+
+                                " year_3 VARCHAR(255), "
+                                " currentAssets_3 VARCHAR(255), "
+                                " currentLiabilities_3 VARCHAR(255), "
+
+                                " year_4 VARCHAR(255), "
+                                " currentAssets_4 VARCHAR(255), "
+                                " currentLiabilities_4 VARCHAR(255), "
+
+                                " year_5 VARCHAR(255), "
+                                " currentAssets_5 VARCHAR(255), "
+                                " currentLiabilities_5 VARCHAR(255));");
+
+                            qry.prepare(tmp);
+
+                            res = execSingleCmd(qry);
+
+                            if(res == false)
+                            {
+                                qDebug() << qry.lastError();
+                                if(m_disableMsgBoxes == false)
+                                {
+                                    QMessageBox::critical(NULL, QString::fromUtf8("TblStrongFinancialPositionData"), QString::fromUtf8("Fail create TblStrongFinancialPositionData"));
+                                }
+                                closeDb();
+                                m_mutex.unlock();
+                                return false;
+                            }
+
+                            qry.finish();
+
+
+
+                    //-----------------------------------------------------------------------
+                    // TblEarningStabilityData
+                    //-----------------------------------------------------------------------
+                    tmp.sprintf("CREATE TABLE IF NOT EXISTS TblEarningStabilityData "
+                                " (AnalysisDataId INTEGER, "
+                                " year_1 VARCHAR(255), "
+                                " erning_1 VARCHAR(255), "
+                                " erningMargin_1 VARCHAR(255), "
+                                " sale_1 VARCHAR(255), "
+
+                                " year_2 VARCHAR(255), "
+                                " erning_2 VARCHAR(255), "
+                                " erningMargin_2 VARCHAR(255), "
+                                " sale_2 VARCHAR(255), "
+
+                                " year_3 VARCHAR(255), "
+                                " erning_3 VARCHAR(255), "
+                                " erningMargin_3 VARCHAR(255), "
+                                " sale_3 VARCHAR(255), "
+
+                                " year_4 VARCHAR(255), "
+                                " erning_4 VARCHAR(255), "
+                                " erningMargin_4 VARCHAR(255), "
+                                " sale_4 VARCHAR(255), "
+
+                                " year_5 VARCHAR(255), "
+                                " erning_5 VARCHAR(255), "
+                                " erningMargin_5 VARCHAR(255), "
+                                " sale_5 VARCHAR(255));");
+
+                            qry.prepare(tmp);
+
+                            res = execSingleCmd(qry);
+
+                            if(res == false)
+                            {
+                                qDebug() << qry.lastError();
+                                if(m_disableMsgBoxes == false)
+                                {
+                                    QMessageBox::critical(NULL, QString::fromUtf8("TblEarningStabilityData"), QString::fromUtf8("Fail create TblEarningStabilityData"));
+                                }
+                                closeDb();
+                                m_mutex.unlock();
+                                return false;
+                            }
+
+                            qry.finish();
+
+
+
+                        //-----------------------------------------------------------------------
+                        // TblDividendStabilityData
+                        //-----------------------------------------------------------------------
+                        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDividendStabilityData "
+                                    " (AnalysisDataId INTEGER, "
+                                    " year_1 VARCHAR(255), "
+                                    " dividend_1 VARCHAR(255), "
+
+                                    " year_2 VARCHAR(255), "
+                                    " dividend_2 VARCHAR(255), "
+
+                                    " year_3 VARCHAR(255), "
+                                    " dividend_3 VARCHAR(255), "
+
+                                    " year_4 VARCHAR(255), "
+                                    " dividend_4 VARCHAR(255), "
+
+                                    " year_5 VARCHAR(255), "
+                                    " dividend_5 VARCHAR(255));");
+
+                                qry.prepare(tmp);
+
+                                res = execSingleCmd(qry);
+
+                                if(res == false)
+                                {
+                                    qDebug() << qry.lastError();
+                                    if(m_disableMsgBoxes == false)
+                                    {
+                                        QMessageBox::critical(NULL, QString::fromUtf8("Database Error 4a"), QString::fromUtf8("Fail create TblMainHelpSection"));
+                                    }
+                                    closeDb();
+                                    m_mutex.unlock();
+                                    return false;
+                                }
+
+                                qry.finish();
+
+
+
+    //========================================================================
+
 
 
 
@@ -1098,6 +1357,306 @@ bool CDbHndl::createTable(void)
 
 
 
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::insertMainAnalysisData(QString stockName,
+                                     QString stockSymbol,
+                                     int &mainAnalysisId,
+                                     bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = stockName.toLocal8Bit();
+    const char *c_stockName = ba.data();
+
+    QByteArray ba1 = stockSymbol.toLocal8Bit();
+    const char *c_stockSymbol = ba1.data();
+
+
+    str.sprintf("INSERT INTO TblMainAnalysis "
+                "(StockSymbol, stockSymbol) "
+                " VALUES('%s', '%s');",
+                c_stockName,
+                c_stockSymbol);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblMainAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+        if(dbIsHandledExternly==false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    mainAnalysisId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertMainAnalysisDate(QString date,
+                       int mainAnalysisId,
+                       int &analysisDateId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT INTO TblDateAnalysis "
+                "(AnalysisDate, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+        if(dbIsHandledExternly==false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    analysisDateId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertAnalysisData(int analysisDateId,
+                   QString companyDescription,
+                   QString bigEnoughAnswer,
+                   QString bigEnoughComment,
+                   QString strongFinancialPositionAnswer,
+                   QString strongFinancialPositionComment,
+                   QString earningStabilityAnswer,
+                   QString earningStabilityComment,
+                   QString dividendStabilityAnswer,
+                   QString dividendStabilityComment,
+                   QString earningGrowthAnswer,
+                   QString earningGrowthComment,
+                   QString keyValuePe,
+                   QString keyValuePs,
+                   QString keyValueNavPriceRatio,
+                   QString keyValueYield,
+                   QString keyValuePriceJEKRatio,
+                   QString keyValueerningsDividentRatio,
+                   QString keyValueTotalDebtEquityRatio,
+                   QString keyValueCurrentRatio,
+                   QString trustworthyLeadershipAnswer,
+                   QString trustworthyLeadershipComment,
+                   QString goodOwnershipAnswer,
+                   QString goodOwnershipComment,
+                   int &analysisDataId,
+                   bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly==false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblAnalysisData "
+                " (AnalysisDateId, "
+                " companyDescription, "
+
+                " bigEnoughAnswer, "
+                " bigEnoughComment, "
+
+                " strongFinancialPositionAnswer, "
+                " strongFinancialPositionComment, "
+
+                " earningStabilityAnswer, "
+                " earningStabilityComment, "
+
+                " dividendStabilityAnswer, "
+                " dividendStabilityComment, "
+
+                " earningGrowthAnswer, "
+                " earningGrowthComment, "
+
+                " keyValuePe, "
+                " keyValuePs, "
+
+                 " keyValueNavPriceRatio, "
+                 " keyValueYield, "
+                 " keyValuePriceJEKRatio, "
+                 " keyValueerningsDividentRatio, "
+                 " keyValueTotalDebtEquityRatio, "
+                 " keyValueCurrentRatio, "
+                 " trustworthyLeadershipAnswer, "
+                 " trustworthyLeadershipComment, "
+                 " goodOwnershipAnswer, "
+                 " goodOwnershipComment) "
+                " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                       " '%s', '%s', '%s', '%s');",
+                        analysisDateId,
+                        companyDescription.toLocal8Bit().constData(),
+                        bigEnoughAnswer.toLocal8Bit().constData(),
+                        bigEnoughComment.toLocal8Bit().constData(),
+                        strongFinancialPositionAnswer.toLocal8Bit().constData(),
+                        strongFinancialPositionComment.toLocal8Bit().constData(),
+                        earningStabilityAnswer.toLocal8Bit().constData(),
+                        earningStabilityComment.toLocal8Bit().constData(),
+                        dividendStabilityAnswer.toLocal8Bit().constData(),
+                        dividendStabilityComment.toLocal8Bit().constData(),  // 10
+                        earningGrowthAnswer.toLocal8Bit().constData(),
+                        earningGrowthComment.toLocal8Bit().constData(),
+                        keyValuePe.toLocal8Bit().constData(),
+                        keyValuePs.toLocal8Bit().constData(),
+                        keyValueNavPriceRatio.toLocal8Bit().constData(),
+                        keyValueYield.toLocal8Bit().constData(),
+                        keyValuePriceJEKRatio.toLocal8Bit().constData(),
+                        keyValueerningsDividentRatio.toLocal8Bit().constData(),
+                        keyValueTotalDebtEquityRatio.toLocal8Bit().constData(),
+                        keyValueCurrentRatio.toLocal8Bit().constData(),              // 20
+                        trustworthyLeadershipAnswer.toLocal8Bit().constData(),
+                        trustworthyLeadershipComment.toLocal8Bit().constData(),
+                        goodOwnershipAnswer.toLocal8Bit().constData(),
+                        goodOwnershipComment.toLocal8Bit().constData());  // 24
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblAnalysisData"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    analysisDataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
 /*****************************************************************
  *
  * Function:		getYahooKeyData()
@@ -1528,233 +2087,6 @@ setNordnetYahooInputNonValidKeyData(YahooNordnetInputkeyData_ST &inData)
  }
 
 
-#if 0
-/*****************************************************************
- *
- * Function:		getNordnetYahooKeyData()
- *
- * Description:
- *
- *
- *
- *****************************************************************/
-bool CDbHndl::
-getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
-                       QVector <YahooNordnetOutputkeyData_ST> &stockArr,
-                       bool dbIsHandledExternly)
-{
-
-    YahooNordnetOutputkeyData_ST outData;
-
-    // set unused search parameters to excessive values.
-    setNordnetYahooInputNonValidKeyData(inData);
-
-
-    QSqlRecord rec;
-    QString str;
-    CUtil cu;
-
-    if(dbIsHandledExternly == false)
-    {
-        m_mutex.lock();
-        openDb(PATH_JACK_STOCK_DB);
-    }
-
-    QSqlQuery qry(m_db);
-
-   cu.number2double(inData.currentRatio, inData.currentRatio);
-   cu.number2double(inData.earningsToDividendRatio, inData.earningsToDividendRatio);
-   cu.number2double(inData.netAssetValueToPriceRatio, inData.netAssetValueToPriceRatio);
-   cu.number2double(inData.peMax, inData.peMax);
-   cu.number2double(inData.peMin, inData.peMin);
-   cu.number2double(inData.priceToJEKRatio, inData.priceToJEKRatio);
-   cu.number2double(inData.psValue, inData.psValue);
-   cu.number2double(inData.totalDebtDivEquity, inData.totalDebtDivEquity);
-   cu.number2double(inData.yield, inData.yield);
-  bool found = false;
-
- // " FROM TblNordnetYahooBridge, TblStockDataSnapshot, TblYahooKeyStatistics, TblTaStockList, TblTaStockName  "
-
-
-    str.sprintf("SELECT TblNordnetYahooBridge.*, TblStockDataSnapshot.*, TblYahooKeyStatistics.*, "
-                "       TblTaStockList.taStockListId, TblTaStockList.stockListName, "
-                "       TblTaStockName.taStockListId, TblTaStockName.stockName, TblTaStockName.stockSymbol "
-
-              //  " FROM  TblTaStockList, TblTaStockName, TblStockDataSnapshot, TblNordnetYahooBridge, TblYahooKeyStatistics "
-
-            #if 1
-                " FROM  TblTaStockList "
-                " LEFT JOIN TblTaStockName ON TblTaStockList.taStockListId = TblTaStockName.taStockListId "
-                " LEFT JOIN blStockDataSnapshot ON  lower(TblTaStockName.stockName) = lower(TblStockDataSnapshot.companyName) "
-                " LEFT JOIN TblNordnetYahooBridge ON lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) "
-                " LEFT JOIN TblYahooKeyStatistics ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) "
-        #endif
-
-                " TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
-                " lower(TblTaStockName.stockName) = lower(TblStockDataSnapshot.companyName) AND "
-                " lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
-                " lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
-
-
-//--------------------------------------------
-             #if 0
-                " FROM   blStockDataSnapshot  "
-
-                " LEFT JOIN TblNordnetYahooBridge ON lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
-                " LEFT JOIN TblYahooKeyStatistics ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
-                " LEFT JOIN TblTaStockName ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblTaStockName.stockSymbol) AND "
-                " LEFT JOIN TblTaStockName ON lower(TblNordnetYahooBridge.assetSymbol) = lower(TblTaStockName.stockSymbol) AND "
-                " LEFT JOIN TblTaStockList ON TblTaStockName.taStockListId = TblTaStockList.taStockListId "
-            #endif
-
-
-                " WHERE CAST(TblStockDataSnapshot.keyValuePE AS REAL) >= %s AND "
-                "       CAST(TblStockDataSnapshot.keyValuePE AS REAL) <= %s AND  "
-                "       CAST(TblStockDataSnapshot.keyValuePS AS REAL) <= %s AND  "
-                "       CAST(TblStockDataSnapshot.earningsDividedByDividend AS REAL) >= %s AND   "
-                "       CAST(TblStockDataSnapshot.keyValueCoursePerJEK AS REAL) <= %s AND   "
-                "       CAST(TblYahooKeyStatistics.TotalDebtDivEquity AS REAL) <= %s AND   "
-                "       CAST(TblYahooKeyStatistics.CurrentRatio AS REAL) >= %s AND "
-                "       CAST(TblStockDataSnapshot.navDivLastStockPrice AS REAL) >= %s AND "
-                "       CAST(TblStockDataSnapshot.keyValueYield AS REAL) >= %s AND "
-
-         #if 0
-         #if 1
-                " TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
-                " lower(TblTaStockName.stockName) = lower(TblStockDataSnapshot.companyName) AND "
-                " lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
-                " lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
-        #else
-
-                "       TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
-                "       TblTaStockName.stockSymbol = TblNordnetYahooBridge.assetSymbol AND "
-                "       lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
-                "       lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol) AND "
-        #endif
-        #endif
-
-
-
-
-                "       TblTaStockList.taStockListId = %d AND "
-                "       lower(TblTaStockList.stockListName) = lower('%s');",
-                                                                           inData.peMin.toLocal8Bit().constData(),
-                                                                           inData.peMax.toLocal8Bit().constData(),
-                                                                           inData.psValue.toLocal8Bit().constData(),
-                                                                           inData.earningsToDividendRatio.toLocal8Bit().constData(),
-                                                                           inData.priceToJEKRatio.toLocal8Bit().constData(),
-                                                                           inData.totalDebtDivEquity.toLocal8Bit().constData(),
-                                                                           inData.currentRatio.toLocal8Bit().constData(),
-                                                                           inData.netAssetValueToPriceRatio.toLocal8Bit().constData(),
-                                                                           inData.yield.toLocal8Bit().constData(),
-                                                                           inData.stockListId,
-                                                                           inData.stockList.toLocal8Bit().constData());
-
-
-    qDebug() << str << "\n";
-
-    qry.prepare(str);
-
-
-    if( !qry.exec() )
-    {
-        if(m_disableMsgBoxes == false)
-        {
-            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
-        }
-        qDebug() << qry.lastError();
-        if(dbIsHandledExternly == false)
-        {
-            closeDb();
-            m_mutex.unlock();
-        }
-        return false;
-    }
-    else
-    {
-        while(qry.next())
-        {
-            rec = qry.record();
-
-            if(rec.value("StockSymbol").isNull() == true ||
-               rec.value("TotalDebtDivEquity").isNull() == true ||
-               rec.value("CurrentRatio").isNull() == true ||
-
-               rec.value("ProfitMargin").isNull() == true ||
-               rec.value("OperatingMargin").isNull() == true ||
-               rec.value("ReturnOnAssets").isNull() == true ||
-               rec.value("ReturnOnEquity").isNull() == true ||
-               rec.value("Week52High").isNull() == true ||
-               rec.value("Week52Low").isNull() == true)
-            {
-
-                if(found == true)
-                {
-                    continue;
-                    //return true;
-                }
-                else
-                {
-                    qry.finish();
-                    if(dbIsHandledExternly == false)
-                    {
-                        closeDb();
-                        m_mutex.unlock();
-                    }
-
-                    return false;
-                }
-            }
-            else
-            {
-               found = true;
-                qDebug() << rec.value("companyName").toString() << "\n";
-
-                outData.stockSymbol = rec.value("stockSymbol").toString();
-                outData.companyName = rec.value("companyName").toString();
-                outData.lastPrice = rec.value("lastPrice").toString();
-                outData.procentChangeOneDay = rec.value("procentChangeOneDay").toString();
-                outData.volume = rec.value("volume").toString();
-                outData.totalDebtToEquityRatio = rec.value("TotalDebtDivEquity").toString();
-                outData.currentRatio = rec.value("CurrentRatio").toString();
-                outData.earningsToDividendRatio = rec.value("earningsDividedByDividend").toString();
-                outData.pe = rec.value("keyValuePE").toString();
-                outData.ps = rec.value("keyValuePS").toString();
-                outData.netAssetValueToPriceRatio = rec.value("navDivLastStockPrice").toString();
-                outData.yield = rec.value("keyValueYield").toString();
-                outData.priceToJEKRatio = rec.value("keyValueCoursePerJEK").toString();
-                outData.profitMargin = rec.value("ProfitMargin").toString();
-                outData.operatingMargin = rec.value("OperatingMargin").toString();
-                outData.returnOnAssets = rec.value("ReturnOnAssets").toString();
-                outData.returnOnEquity = rec.value("ReturnOnEquity").toString();
-                outData.week52High = rec.value("Week52High").toString();
-                outData.week52Low = rec.value("Week52Low").toString();
-
-                stockArr.append(outData);
-
-            }
-        }
-
-
-
-    }
-
-
-    qry.finish();
-    if(dbIsHandledExternly == false)
-    {
-        closeDb();
-        m_mutex.unlock();
-    }
-
-    if(found == true)
-    {
-        return true;
-    }
-
-    return false;
-}
-#endif
 
 
 #if 1
@@ -2424,7 +2756,7 @@ bool CDbHndl::deleteDataFromProgressMyPortfolio(QString year, QString month)
  *
  *
  ****************************************************************/
-bool CDbHndl::getNowRowsProgressMyPortfolioData(int &nofRows)
+bool CDbHndl::getNofRowsProgressMyPortfolioData(int &nofRows)
 {
     QSqlRecord rec;
     QString str;
@@ -15368,7 +15700,6 @@ addOneSlotTableHeaderData(int tableHeaderIndex, CDbHndl::GuiParamSelIndex_ET ind
     m_tableHeaderList[tableHeaderIndex].indicatorlMask = m_gpSelLookUpTable[indicatorIndex].indicatorlMask;
     m_tableHeaderList[tableHeaderIndex].name = (QString)m_gpSelLookUpTable[indicatorIndex].name;
     m_tableHeaderList[tableHeaderIndex].nameInDb = (QString)m_gpSelLookUpTable[indicatorIndex].nameInDb;
-    //m_tableHeaderList[tableHeaderIndex].sortOrder = (QString)m_gpSelLookUpTable[indicatorIndex].sortOrder;
     m_tableHeaderList[tableHeaderIndex].sortType = m_gpSelLookUpTable[indicatorIndex].sortType;
 }
 
@@ -15480,7 +15811,6 @@ bool CDbHndl::filter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHn
     QString str;
     CExtendedTable et;
 
-    //QSqlQuery qry;
     QSqlRecord rec;
     int row;
     int col;
