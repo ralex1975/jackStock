@@ -51,7 +51,7 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
     // Init columm head click event handlers for tableView
     horizHeaderTable = ui->tableView->horizontalHeader();
 
-    db.getNowRowsProgressMyPortfolioData(nofRows);
+    db.getNofRowsProgressMyPortfolioData(nofRows);
 
     db.getAllProgressMyPortfolioData(m_ynokd, ui->tableView);
 
@@ -257,7 +257,7 @@ void AdminMyPortfolio::on_addDataPushButton_clicked()
     }
 
     int nofRows;
-    db.getNowRowsProgressMyPortfolioData(nofRows);
+    db.getNofRowsProgressMyPortfolioData(nofRows);
     db.getAllProgressMyPortfolioData(m_ynokd, ui->tableView);
     plotPortfolioMarketValue(m_ynokd, nofRows);
 
@@ -339,7 +339,7 @@ void AdminMyPortfolio::addTableHead(void)
 
     int nofRows;
 
-    db.getNowRowsProgressMyPortfolioData(nofRows);
+    db.getNofRowsProgressMyPortfolioData(nofRows);
     db.getAllProgressMyPortfolioData(m_ynokd, ui->tableView);
     ui->tableView->resizeColumnsToContents();
 
