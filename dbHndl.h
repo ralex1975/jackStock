@@ -575,10 +575,20 @@ public:
      };
 
 
+    bool mainAnalysisDataExists(QString stockName,
+                                QString stockSymbol,
+                                int &mainAnalysisId);
+
+
     bool insertMainAnalysisData(QString stockName,
                                 QString stockSymbol,
                                 int &mainAnalysisId,
                                 bool dbIsHandledExternly = false);
+
+
+    bool mainAnalysisDateExists(QString date,
+                                int mainAnalysisId,
+                                int &analysisDateId);
 
 
 
@@ -623,6 +633,13 @@ public:
     bool getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
                            QVector <YahooNordnetOutputkeyData_ST> &stockArr,
                            bool dbIsHandledExternly = false);
+
+    bool getNordnetYahooSingleKeyData(QString stockSymbol,
+                                      int stockListId,
+                                      QString stockListName,
+                                      YahooNordnetOutputkeyData_ST &outData,
+                                      bool dbIsHandledExternly = false);
+
 
     bool getYahooKeyData(QString stockSymbol, double &totalDebtDivEquity, double &currentRatio);
     bool delAllTblYahooKeyStatistics(void);

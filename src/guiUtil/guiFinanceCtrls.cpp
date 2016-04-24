@@ -12,6 +12,26 @@
 #include "../../inc/guiUtil/guiFinanceCtrls.h"
 #include "../../inc/guiUtil/guiFinanceColor.h"
 #include "../../common.h"
+#include "../../util.h"
+
+
+
+const GuiFinanceCtrls::TimePeriodDays_ST GuiFinanceCtrls::m_timePeriodDaysArr[GuiFinanceCtrls::MAX_NOF_TIME_PERIOD_DAYS_ITEMS] =
+{
+    {QString::fromUtf8("AllaData"),       GuiFinanceCtrls::TIME_PERIOD_DAYS_ALL_DATA,},
+    {QString::fromUtf8("10 År"),          GuiFinanceCtrls::TIME_PERIOD_DAYS_10_YEAR,},
+    {QString::fromUtf8("7 År"),           GuiFinanceCtrls::TIME_PERIOD_DAYS_7_YEAR,},
+    {QString::fromUtf8("5 År"),           GuiFinanceCtrls::TIME_PERIOD_DAYS_5_YEAR,},
+    {QString::fromUtf8("3 År"),           GuiFinanceCtrls::TIME_PERIOD_DAYS_3_YEAR,},
+    {QString::fromUtf8("2 År"),           GuiFinanceCtrls::TIME_PERIOD_DAYS_2_YEAR,},
+    {QString::fromUtf8("1 År"),           GuiFinanceCtrls::TIME_PERIOD_DAYS_1_YEAR,},
+    {QString::fromUtf8("6 månader"),      GuiFinanceCtrls::TIME_PERIOD_DAYS_6_MONTH,},
+    {QString::fromUtf8("3 månader"),      GuiFinanceCtrls::TIME_PERIOD_DAYS_3_MONTH,},
+    {QString::fromUtf8("1 månader"),      GuiFinanceCtrls::TIME_PERIOD_DAYS_1_MONTH,},
+    {QString::fromUtf8("2 veckor"),       GuiFinanceCtrls::TIME_PERIOD_DAYS_2_WEEK,},
+    {QString::fromUtf8("1 vecka"),        GuiFinanceCtrls::TIME_PERIOD_DAYS_1_WEEK}
+};
+
 
 
 /**********************************************************************************
@@ -301,6 +321,223 @@ bool GuiFinanceCtrls::getStockListNameAndId(QComboBox *comboBox,
 }
 
 
+/*******************************************************************
+ *
+ * Function:    initStockList()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::initStockList1(QTreeWidget *treeWidgetStockList, bool hideSymbol)
+{
+
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Symbol");
+    QString column2 = QString::fromUtf8("Notera");
+
+    treeWidgetStockList->setColumnCount(3);
+    treeWidgetStockList->setSelectionMode(QAbstractItemView::SingleSelection);
+    treeWidgetStockList->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    if(QTreeWidgetItem* header = treeWidgetStockList->headerItem())
+    {
+        header->setText(0, column0.toLocal8Bit());
+        header->setText(1, column1.toLocal8Bit());
+        header->setText(2, column2.toLocal8Bit());
+    }
+
+    treeWidgetStockList->setColumnHidden(1, hideSymbol);
+
+}
+
+
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::getSelStockListItem(QTreeWidget *treeWidgetStockList,
+                                QString &stockName,
+                                QString &stockSymbol,
+                                const QModelIndex &index)
+{
+    treeWidgetStockList->setCurrentItem(treeWidgetStockList->topLevelItem(index.row()));
+    treeWidgetStockList->setFocus();
+
+    stockName.clear();
+    stockSymbol.clear();
+
+
+    stockName = treeWidgetStockList->currentItem()->text(STOCKLIST_NAME);
+    stockSymbol = treeWidgetStockList->currentItem()->text(STOCKLIST_SYMBOL);
+
+}
 
 
 
+
+/*******************************************************************
+ *
+ * Function:    initTimePeriodCtrls()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::initTimePeriodCtrls(int value,
+                                          QLineEdit *timePeriodLineEdit,
+                                          QLineEdit *setEndDateLineEdit,
+                                          QLineEdit *setStartDateLineEdit,
+                                          QSlider *selTimePeriodSlider)
+{
+    CUtil cu;
+
+    // Init to valid date
+    cu.getCurrentDate(m_startDate);
+    cu.getCurrentDate(m_endDate);
+    m_endDateRef = m_endDate;
+
+
+    m_timePeriodDaysInc = value;
+    timePeriodLineEdit->clear();
+    timePeriodLineEdit->insert((QString)m_timePeriodDaysArr[value].TxtTimePeriod.toLatin1());
+    selTimePeriodSlider->setValue(value);
+    setTimePeriodDaysUpdateStartStopDate(m_startDate, m_endDate, value, setEndDateLineEdit, setStartDateLineEdit);
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:    setTimePeriodDaysUpdateStart()
+ *
+ * Description: This function is used when user changes set
+ *              Time Period Slider position.
+ *
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::
+setTimePeriodDaysUpdateStartStopDate(QString &startDate,
+                                     QString &endDate,
+                                     int value,
+                                     QLineEdit *setEndDateLineEdit,
+                                     QLineEdit *setStartDateLineEdit)
+{
+    CUtil cu;
+    int intYear;
+    int intMonth;
+    int intDays;
+    int inc = 0;
+
+
+    if(false == cu.dateIsValid(endDate))
+    {
+         QMessageBox::information(this, tr("Datum"), QString::fromUtf8("1. Slut datum felaktigt"));
+        return;
+    }
+
+    inc = -m_timeSlideWindowInc;
+    cu.addDays(endDate, endDate, inc);
+
+
+    qDebug() << "sw" << m_timePeriodDaysArr[value].timePeriod;
+
+    switch(m_timePeriodDaysArr[value].timePeriod)
+    {
+    case TIME_PERIOD_DAYS_ALL_DATA:
+        // TBD
+        break;
+    case TIME_PERIOD_DAYS_10_YEAR:
+        intYear = -10;
+        cu.addYear(endDate, startDate, intYear);
+        break;
+    case TIME_PERIOD_DAYS_7_YEAR:
+        intYear = -7;
+        cu.addYear(endDate, startDate, intYear);
+        break;
+    case TIME_PERIOD_DAYS_5_YEAR:
+        intYear = -5;
+        cu.addYear(endDate, startDate, intYear);
+        break;
+    case TIME_PERIOD_DAYS_3_YEAR:
+        intYear = -3;
+        cu.addYear(endDate, startDate, intYear);
+        break;
+    case TIME_PERIOD_DAYS_2_YEAR:
+        intYear = -2;
+        cu.addYear(endDate, startDate, intYear);
+        break;
+    case TIME_PERIOD_DAYS_1_YEAR:
+        intYear = -1;
+        cu.addYear(endDate, startDate, intYear);
+        break;
+    case TIME_PERIOD_DAYS_6_MONTH:
+        intMonth = -6;
+        cu.addMonth(endDate, startDate, intMonth);
+        break;
+    case TIME_PERIOD_DAYS_3_MONTH:
+        intMonth = -3;
+        cu.addMonth(endDate, startDate, intMonth);
+        break;
+    case TIME_PERIOD_DAYS_1_MONTH:
+        intMonth = -1;
+        cu.addMonth(endDate, startDate, intMonth);
+        break;
+    case TIME_PERIOD_DAYS_2_WEEK:
+        intDays = -14;
+        cu.addDays(endDate, startDate, intDays);
+        break;
+    case TIME_PERIOD_DAYS_1_WEEK:
+        intDays = -7;
+        cu.addDays(endDate, startDate, intDays);
+        break;
+    default:
+        break;
+    }
+
+    qDebug() << "startTime" << startDate;
+    qDebug() << "endTime" << endDate;
+
+    setEndDateLineEdit->clear();
+    setStartDateLineEdit->clear();
+    setEndDateLineEdit->insert(endDate);
+    setStartDateLineEdit->insert(startDate);
+
+}
+
+
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *******************************************************************/
+bool GuiFinanceCtrls::
+calcRiskAndReturn(QString startDate,
+                  QString endDate,
+                  CDbHndl::EfficPortStockData_ST &data)
+{
+    CDbHndl db;
+    data.isValid = false;
+
+    if(true == db.efficPortfCalcMeanAndStdDev(startDate, endDate, data))
+    {
+        data.meanReturns = data.meanReturns *100;
+        data.riskStdDev = data.riskStdDev * 100;
+
+        if(false == data.isValid)
+        {
+            qDebug() << "invalid risk return calc" << data.stockName;
+        }
+    }
+
+    return data.isValid;
+}

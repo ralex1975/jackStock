@@ -16,11 +16,79 @@ class GuiFinanceCtrls : public QWidget
     int m_comboBoxIndex;
     CDbHndl m_db;
 
+    enum TimePeriodDays_ET
+    {
+        TIME_PERIOD_DAYS_ALL_DATA,
+        TIME_PERIOD_DAYS_10_YEAR,
+        TIME_PERIOD_DAYS_7_YEAR,
+        TIME_PERIOD_DAYS_5_YEAR,
+        TIME_PERIOD_DAYS_3_YEAR,
+        TIME_PERIOD_DAYS_2_YEAR,
+        TIME_PERIOD_DAYS_1_YEAR,
+        TIME_PERIOD_DAYS_6_MONTH,
+        TIME_PERIOD_DAYS_3_MONTH,
+        TIME_PERIOD_DAYS_1_MONTH,
+        TIME_PERIOD_DAYS_2_WEEK,
+        TIME_PERIOD_DAYS_1_WEEK,
+        MAX_NOF_TIME_PERIOD_DAYS_ITEMS
+    };
+
+    enum StockListColName_ET
+    {
+        STOCKLIST_NAME = 0,
+        STOCKLIST_SYMBOL = 1
+    };
+
+    struct TimePeriodDays_ST
+    {
+        QString TxtTimePeriod;
+        TimePeriodDays_ET timePeriod;
+    };
+
+
+    int m_timeSlideWindowInc;
+    int m_timePeriodDaysInc;
+    static const TimePeriodDays_ST m_timePeriodDaysArr[MAX_NOF_TIME_PERIOD_DAYS_ITEMS];
+
+    QString m_startDate;
+    QString m_endDate;
+    QString m_endDateRef;
+
+
+
+
 public:
     explicit GuiFinanceCtrls(QWidget *parent = 0);
 
+    void getSelStockListItem(QTreeWidget *treeWidgetStockList,
+                             QString &stockName,
+                             QString &stockSymbol,
+                             const QModelIndex &index);
+
+
+    void initStockList1(QTreeWidget *treeWidgetStockList, bool hideSymbol=true);
+
+
+    void initTimePeriodCtrls(int value,
+                             QLineEdit *timePeriodLineEdit,
+                             QLineEdit *setEndDateLineEdit,
+                             QLineEdit *setStartDateLineEdit,
+                             QSlider *selTimePeriodSlider);
+
+    void setTimePeriodDaysUpdateStartStopDate(QString &startDate,
+                                         QString &endDate,
+                                         int value,
+                                         QLineEdit *setEndDateLineEdit,
+                                         QLineEdit *setStartDateLineEdit);
+
+
     void addAllStockListsToCombobox(QComboBox *comboBox);
     bool getStockListNameAndId(QComboBox *comboBox, QString &stockListName, int &stockListId);
+
+
+    bool calcRiskAndReturn(QString startDate,
+                           QString endDate,
+                           CDbHndl::EfficPortStockData_ST &data);
 
 
 

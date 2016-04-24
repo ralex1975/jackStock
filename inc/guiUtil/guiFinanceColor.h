@@ -39,6 +39,9 @@ public:
     QColor getColorNavDivStockPrice(QString inValue, Qt::GlobalColor &gColor);
     void setTxtColorNavDivStockPrice(QString inValue, QLineEdit *outValue);
 
+    QColor getColorCurrentRatio(QString currentRatio, Qt::GlobalColor &gColor);
+    QColor getColorDebtToEquityRatio(QString debtToEquityRatio, Qt::GlobalColor &gColor);
+
     QColor getColorPe(QString pe);
     QColor getColorPe(QString pe, Qt::GlobalColor &gColor);
     void setTxtColorPe(QString inValue, QLineEdit *outValue, QString assetType = "");
