@@ -1800,23 +1800,23 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
                         if(true == db.companynameGetKeyDataUseBridge(m_stockArr[j].stockName, keyData))
                         {
                             Qt::GlobalColor color1 = Qt::black;
-                        Qt::GlobalColor riskReturnColor = Qt::magenta;
+                            Qt::GlobalColor riskReturnColor = Qt::magenta;
 
-                        CDbHndl::EfficPortStockData_ST riskReturnData;
-                        riskReturnData.stockSymbol = keyData.assetSymbol;
+                            CDbHndl::EfficPortStockData_ST riskReturnData;
+                            riskReturnData.stockSymbol = keyData.assetSymbol;
 
-                        calcRiskAndReturn(startDate, endDate, riskReturnData);
+                            calcRiskAndReturn(startDate, endDate, riskReturnData);
 
-                        riskReturnColor = gfc.getColorRiskReturns(riskReturnData.riskStdDev, riskReturnData.meanReturns);
+                            riskReturnColor = gfc.getColorRiskReturns(riskReturnData.riskStdDev, riskReturnData.meanReturns);
 
-                        QString riskStr;
-                        riskStr.sprintf("%.3f", riskReturnData.riskStdDev);
+                            QString riskStr;
+                            riskStr.sprintf("%.3f", riskReturnData.riskStdDev);
 
-                        QString returnStr;
-                        returnStr.sprintf("%.3f", riskReturnData.meanReturns);
+                            QString returnStr;
+                            returnStr.sprintf("%.3f", riskReturnData.meanReturns);
 
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, riskStr, rowPlus, 11, riskReturnColor);
-                        etPlus.addDataSetTextColor(ui->tableViewLeastSquare, returnStr, rowPlus, 12, riskReturnColor);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, riskStr, rowPlus, 11, riskReturnColor);
+                            etPlus.addDataSetTextColor(ui->tableViewLeastSquare, returnStr, rowPlus, 12, riskReturnColor);
 
                             gfc.getColorPe(keyData.keyValuePE, color1);
                             etPlus.addDataSetTextColor(ui->tableViewLeastSquare, keyData.keyValuePE, rowPlus, 6, color1);

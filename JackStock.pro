@@ -84,7 +84,8 @@ SOURCES += main.cpp\
     src/GetHtmlPage/getYahooKeyStatistics.cpp \
     adminMyPortFolio.cpp \
     keyIndicators_3.cpp \
-    stockAnalysisTab.cpp
+    stockAnalysisTab.cpp \
+    extendedLineEdit.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -149,7 +150,8 @@ HEADERS  += WebBrowserTab.h \
     inc/GetHtmlPage/getYahooKeyStatistics.h \
     keyIndicators_3.h \
     adminMyPortFolio.h \
-    stockAnalysisTab.h
+    stockAnalysisTab.h \
+    extendedLineEdit.h
 
 FORMS    += \
     WebBrowserTab.ui \

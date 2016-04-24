@@ -1356,6 +1356,97 @@ bool CDbHndl::createTable(void)
 
 
 
+/****************************************************************
+ *
+ * Function:    getMainAnalysisData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::mainAnalysisDataExists(QString stockName,
+                                     QString stockSymbol,
+                                     int &mainAnalysisId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = stockName.toLocal8Bit();
+    const char *c_stockName = ba.data();
+
+    QByteArray ba1 = stockSymbol.toLocal8Bit();
+    const char *c_stockSymbol = ba1.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblMainAnalysis "
+                " WHERE stockName = '%s' AND StockSymbol = '%s';",
+                c_stockName,
+                c_stockSymbol);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblMainAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("stockName").isNull() == true || true == rec.value("StockSymbol").isNull())
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                mainAnalysisId = rec.value("MainAnalysisId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
 
 
 /****************************************************************
@@ -1392,7 +1483,7 @@ bool CDbHndl::insertMainAnalysisData(QString stockName,
 
 
     str.sprintf("INSERT INTO TblMainAnalysis "
-                "(StockSymbol, stockSymbol) "
+                "(stockName, StockSymbol) "
                 " VALUES('%s', '%s');",
                 c_stockName,
                 c_stockSymbol);
@@ -1429,6 +1520,93 @@ bool CDbHndl::insertMainAnalysisData(QString stockName,
 
     return true;
 }
+
+
+
+/****************************************************************
+ *
+ * Function:    getMainAnalysisData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::mainAnalysisDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &analysisDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateAnalysis "
+                " WHERE AnalysisDate = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblMainAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("AnalysisDate").isNull() == true || true == rec.value("MainAnalysisId").isNull())
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                mainAnalysisId = rec.value("AnalysisDateId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
 
 
 
@@ -2089,7 +2267,6 @@ setNordnetYahooInputNonValidKeyData(YahooNordnetInputkeyData_ST &inData)
 
 
 
-#if 1
 /*****************************************************************
  *
  * Function:		getNordnetYahooKeyData()
@@ -2271,7 +2448,162 @@ getNordnetYahooKeyData(YahooNordnetInputkeyData_ST inData,
 
     return false;
 }
-#endif
+
+
+
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getNordnetYahooSingleKeyData(QString stockSymbol,
+                             int stockListId,
+                             QString stockListName,
+                       YahooNordnetOutputkeyData_ST &outData,
+                       bool dbIsHandledExternly)
+{
+
+
+
+
+    QSqlRecord rec;
+    QString str;
+    CUtil cu;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblNordnetYahooBridge.*, TblStockDataSnapshot.*, TblYahooKeyStatistics.*, "
+                "       TblTaStockList.taStockListId, TblTaStockList.stockListName, "
+                "       TblTaStockName.taStockListId, TblTaStockName.stockSymbol, TblTaStockName.stockName "
+                " FROM TblNordnetYahooBridge, TblStockDataSnapshot, TblYahooKeyStatistics, TblTaStockList, TblTaStockName  "
+
+                " WHERE "
+                "       TblTaStockList.taStockListId = TblTaStockName.taStockListId AND "
+                "       TblTaStockName.stockSymbol = TblNordnetYahooBridge.assetSymbol AND "
+                "       TblTaStockList.taStockListId = %d AND "
+                "       lower(TblTaStockList.stockListName) = lower('%s') AND "
+                "       lower(TblNordnetYahooBridge.assetSymbol) = lower('%s') AND "
+                "       lower(TblStockDataSnapshot.companyName) = lower(TblNordnetYahooBridge.assetName) AND "
+                "       lower(TblNordnetYahooBridge.assetSymbol) = lower(TblYahooKeyStatistics.StockSymbol);",
+                                                                           stockListId,
+                                                                           stockListName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("StockSymbol").isNull() == true ||
+               rec.value("TotalDebtDivEquity").isNull() == true ||
+               rec.value("CurrentRatio").isNull() == true ||
+
+               rec.value("ProfitMargin").isNull() == true ||
+               rec.value("OperatingMargin").isNull() == true ||
+               rec.value("ReturnOnAssets").isNull() == true ||
+               rec.value("ReturnOnEquity").isNull() == true ||
+               rec.value("Week52High").isNull() == true ||
+               rec.value("Week52Low").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                    //return true;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+               found = true;
+                qDebug() << rec.value("companyName").toString() << "\n";
+
+                outData.stockSymbol = rec.value("stockSymbol").toString();
+                outData.companyName = rec.value("companyName").toString();
+                outData.lastPrice = rec.value("lastPrice").toString();
+                outData.procentChangeOneDay = rec.value("procentChangeOneDay").toString();
+                outData.volume = rec.value("volume").toString();
+                outData.totalDebtToEquityRatio = rec.value("TotalDebtDivEquity").toString();
+                outData.currentRatio = rec.value("CurrentRatio").toString();
+                outData.earningsToDividendRatio = rec.value("earningsDividedByDividend").toString();
+                outData.pe = rec.value("keyValuePE").toString();
+                outData.ps = rec.value("keyValuePS").toString();
+                outData.netAssetValueToPriceRatio = rec.value("navDivLastStockPrice").toString();
+                outData.yield = rec.value("keyValueYield").toString();
+                outData.priceToJEKRatio = rec.value("keyValueCoursePerJEK").toString();
+                outData.profitMargin = rec.value("ProfitMargin").toString();
+                outData.operatingMargin = rec.value("OperatingMargin").toString();
+                outData.returnOnAssets = rec.value("ReturnOnAssets").toString();
+                outData.returnOnEquity = rec.value("ReturnOnEquity").toString();
+                outData.week52High = rec.value("Week52High").toString();
+                outData.week52Low = rec.value("Week52Low").toString();
+            }
+        }
+
+
+
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
 
 
 

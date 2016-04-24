@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "inc/guiUtil/guiFinanceCtrls.h"
 #include "inc/guiUtil/guiFinanceCtrls.h"
+#include "util.h"
 
 
 
@@ -111,6 +112,30 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
     int stockListId;
     CDbHndl::YahooNordnetInputkeyData_ST inData;
     CDbHndl::YahooNordnetOutputkeyData_ST resData;
+
+
+
+    CUtil cu;
+    QString startDate;
+    QString endDate;
+    QString riskStr;
+    QString returnStr;
+    int intMonth = -12;
+
+    Qt::GlobalColor color = Qt::magenta;
+    CDbHndl::EfficPortStockData_ST riskReturnData;
+
+
+
+    cu.getCurrentDate(endDate);
+    cu.getCurrentDate(startDate);
+
+    if(false == cu.addMonth(endDate, startDate, intMonth))
+    {
+        return;
+    }
+
+
 
     inData.peMaxIsValid = ui->PeCheckBoxKey3->isChecked();
     inData.peMinIsValid = ui->PeCheckBoxKey3->isChecked();
@@ -239,6 +264,22 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
         {
             resData = m_stockArr[j];
 
+
+            riskReturnData.stockSymbol = resData.stockSymbol;
+            res = gfic.calcRiskAndReturn(startDate, endDate, riskReturnData);
+
+            if(true == res)
+            {
+                color = gfc.getColorRiskReturns(riskReturnData.riskStdDev, riskReturnData.meanReturns);
+
+                riskStr.sprintf("%.3f", riskReturnData.riskStdDev);
+
+                returnStr.sprintf("%.3f", riskReturnData.meanReturns);
+
+                m_ynokd.addDataSetTextColor(ui->tableViewKey3, riskStr, row, CDbHndl::YNOI_EXPECTED_RISK, color);
+                m_ynokd.addDataSetTextColor(ui->tableViewKey3, returnStr, row, CDbHndl::YNOI_EXPECTED_RETURNS, color);
+            }
+
             m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.companyName, row, CDbHndl::YNOI_COMPANYNAME, Qt::black);
             m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.stockSymbol, row, CDbHndl::YNOI_COMPANY_SYMBOL, Qt::black);
 
@@ -260,8 +301,13 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
             gfc.getColorNavDivStockPrice(resData.netAssetValueToPriceRatio, color1);
             m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.netAssetValueToPriceRatio, row, CDbHndl::YNOI_NETASSETVALUETOPRICERATIO, color1);
 
-            m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.totalDebtToEquityRatio, row, CDbHndl::YNOI_TOTALDEBTTOEQUITYRATIO, Qt::black);
-            m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.currentRatio, row, CDbHndl::YNOI_CURRENTRATIO, Qt::black);
+            gfc.getColorDebtToEquityRatio(resData.totalDebtToEquityRatio, color1);
+            m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.totalDebtToEquityRatio, row, CDbHndl::YNOI_TOTALDEBTTOEQUITYRATIO, color1);
+
+            gfc.getColorCurrentRatio(resData.currentRatio, color1);
+            m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.currentRatio, row, CDbHndl::YNOI_CURRENTRATIO, color1);
+
+            color1 = Qt::black;
             m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.lastPrice, row, CDbHndl::YNOI_LASTPRICE, Qt::black);
             m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.procentChangeOneDay, row, CDbHndl::YNOI_PROCENTCHANGEONEDAY, Qt::black);
             m_ynokd.addDataSetTextColor(ui->tableViewKey3, resData.volume, row, CDbHndl::YNOI_VOLUME, Qt::black);

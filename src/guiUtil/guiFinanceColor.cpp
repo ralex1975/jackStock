@@ -395,6 +395,101 @@ QColor GuiFinanceColor::getColorPe(QString pe, Qt::GlobalColor &gColor)
 }
 
 
+
+
+/**********************************************************************************
+ *
+ * Function:    getColorDebtToEquityRatio()
+ *
+ *
+ * Description:
+ *
+ *
+ *
+ ********************************************************************************/
+QColor GuiFinanceColor::getColorDebtToEquityRatio(QString debtToEquityRatio, Qt::GlobalColor &gColor)
+{
+    CUtil cu;
+    QColor color;
+    double doubleValue;
+
+
+    if(false == cu.number2double(debtToEquityRatio, doubleValue))
+    {
+        color = Qt::red;
+        gColor = Qt::red;
+        return color;
+    }
+
+    // PE Vaue
+    if(debtToEquityRatio.toDouble() > 150.0)
+    {
+        color = Qt::red;
+        gColor = Qt::red;
+    }
+    else if((debtToEquityRatio.toDouble() >= 100.0) && (debtToEquityRatio.toDouble() <= 150.0))
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+        gColor = Qt::magenta; // Orange is missing
+    }
+    else
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+        gColor = Qt::darkGreen;
+    }
+
+    return color;
+
+}
+
+
+/**********************************************************************************
+ *
+ * Function:    getColorCurrentRatio()
+ *
+ *
+ * Description:
+ *
+ *
+ *
+ ********************************************************************************/
+QColor GuiFinanceColor::getColorCurrentRatio(QString currentRatio, Qt::GlobalColor &gColor)
+{
+    CUtil cu;
+    QColor color;
+    double doubleValue;
+
+
+    if(false == cu.number2double(currentRatio, doubleValue))
+    {
+        color = Qt::red;
+        gColor = Qt::red;
+        return color;
+    }
+
+
+    if(currentRatio.toDouble() > 1.5)
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
+        gColor = Qt::darkGreen;
+    }
+    else if((currentRatio.toDouble() >= 1.0) && (currentRatio.toDouble() <= 1.5))
+    {
+        color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::ORANGE);
+        gColor = Qt::magenta; // Orange is missing
+    }
+    else
+    {
+        color = Qt::red;
+        gColor = Qt::red;
+    }
+
+    return color;
+
+}
+
+
+
 /**********************************************************************************
  *
  * Function:    setTxtColorPe()

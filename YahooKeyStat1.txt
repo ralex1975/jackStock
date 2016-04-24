@@ -1,21 +1,21 @@
 Market Cap (intraday)
 
-Enterprise Value (Apr 5, 2016)
-4.95B
+Enterprise Value (Apr 23, 2016)
+5.28B
 Trailing P/E (ttm, intraday):
-4.17
+4.24
 Forward P/E (fye Dec 31, 2017)
 N/A
 PEG Ratio (5 yr expected)
 N/A
 Price/Sales (ttm):
-4.13
+4.23
 Price/Book (mrq):
-1.11
+1.14
 Enterprise Value/Revenue (ttm)
-3.91
+4.17
 Enterprise Value/EBITDA (ttm)
-3.97
+4.24
 Fiscal Year Ends:
 Dec 31
 Most Recent Quarter (mrq):
@@ -63,21 +63,21 @@ Levered Free Cash Flow (ttm):
 Beta:
 N/A
 52-Week Change
-31.14%
+33.91%
 S&amp;P500 52-Week Change
--0.49%
-52-Week High (Dec 18, 2015)
-234.00
+-0.82%
+52-Week High (Apr 14, 2016)
+244.00
 52-Week Low (Jul 8, 2015)
 153.00
 50-Day Moving Average
-220.39
+228.99
 200-Day Moving Average
-203.47
+208.79
 Avg Vol (3 month)
-12,532
+13,179
 Avg Vol (10 day)
-6,752
+16,887
 Shares Outstanding
 22.73M
 Float:
