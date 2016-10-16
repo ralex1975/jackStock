@@ -159,7 +159,7 @@ void CTADlg::initFa2OperatingIncomeList(void)
 
 /*******************************************************************
  *
- * Function:    initStockList()
+ * Function:    initFa2netProfitAfterTaxList()
  *
  * Description:
  *
@@ -198,7 +198,7 @@ void CTADlg::initFa2netProfitAfterTaxList(void)
 
 /*******************************************************************
  *
- * Function:    initStockList()
+ * Function:    initFa3ProfitabilityAnalysis()
  *
  * Description:
  *
@@ -235,7 +235,7 @@ void CTADlg::initFa3ProfitabilityAnalysis(void)
 
 /*******************************************************************
  *
- * Function:    initStockList()
+ * Function:    initFa3ProfitabilityAnalysis()
  *
  * Description:
  *

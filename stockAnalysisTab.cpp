@@ -26,7 +26,13 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     m_gfc.initStockList1(ui->treeWidgetStockListAnalysis);
     m_gfc.addAllStockListsToCombobox(ui->StockListComboBoxAnalysis);
 
+    m_gfc.initStockAnalysisDateList(ui->treeWidgetAnalysisDate);
+
+
+
 }
+
+
 
 
 /******************************************************************
@@ -73,6 +79,7 @@ void StockAnalysisTab::on_SelStockListButton_clicked()
          ui->treeWidgetStockListAnalysis->setColumnWidth(0, 160);
          ui->treeWidgetStockListAnalysis->scrollToTop();
          ui->treeWidgetStockListAnalysis->setCurrentItem(ui->treeWidgetStockListAnalysis->topLevelItem(0));
+
      }
 
 }
@@ -80,9 +87,9 @@ void StockAnalysisTab::on_SelStockListButton_clicked()
 
 /******************************************************************
  *
- * Function:    ()
+ * Function:    on_treeWidgetStockListAnalysis_doubleClicked()
  *
- * Description:
+ * Description: Select stock to analyse and display all date of analysis
  *
  *
  *
@@ -119,11 +126,16 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
         return;
     }
 
+     resetGuiCtrl();
 
     m_gfc.getSelStockListItem(ui->treeWidgetStockListAnalysis, m_stockName, m_stockSymbol, index);
     ui->stockNameLineEdit->setText(m_stockName);
     ui->stockSymbolLineEdit->setText(m_stockSymbol);
 
+    if(m_stockName.size() > 0 && m_stockSymbol.size() > 0)
+    {
+        db.getStockAnalysisDate(m_stockName, m_stockSymbol, ui->treeWidgetAnalysisDate);
+    }
 
 
 
@@ -211,9 +223,9 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
 /******************************************************************
  *
- * Function:    ()
+ * Function:    on_pushButton_clicked()
  *
- * Description:
+ * Description: This function saves data to db
  *
  *
  *
@@ -261,13 +273,13 @@ void StockAnalysisTab::on_pushButton_clicked()
 
     if(true == res)
     {
-        m_BigCompDescription = ui->textBrowserBigCompDescrption->toPlainText();
+        m_BigCompDescription = ui->textEditCompDescription->toPlainText();
 
         m_bigEnoughComment = ui->textEditBigEnoughText->toPlainText();
         m_bigEnoughAnswer = ui->lineEditBigEnoughAnswer->text();
 
-        m_strongFinancialPositionAnswer = ui->lineEditErningStabilityAnswer->text();
-        m_strongFinancialPositionComment = ui->textEditErningStabilityText->toPlainText();
+        m_strongFinancialPositionAnswer = ui->lineEditFinancialStrongAnswer->text();
+        m_strongFinancialPositionComment = ui->textEditFinancialStrongText->toPlainText();
 
         m_earningStabilityAnswer = ui->lineEditErningStabilityAnswer->text();
         m_earningStabilityComment = ui->textEditDividentStabilityText->toPlainText();
@@ -323,3 +335,161 @@ void StockAnalysisTab::on_pushButton_clicked()
     }
 
 }
+
+
+/******************************************************************
+ *
+ * Function:    on_treeWidgetAnalysisDate_doubleClicked()
+ *
+ * Description: This function use date to get stock analysis data
+ *              from the database.
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex &index)
+{
+    QString analysisDate;
+    CDbHndl db;
+
+
+    m_gfc.getSelStockAnalysisDateItem(ui->treeWidgetAnalysisDate,
+                               analysisDate,
+                               index);
+
+    if(analysisDate.size() < 1)
+    {
+        return;
+    }
+
+
+    db.getStockAnalysisData(m_stockName,
+                         m_stockSymbol,
+                         analysisDate,
+                         m_companyDescription,
+                         m_bigEnoughAnswer,
+                         m_bigEnoughComment,
+                         m_strongFinancialPositionAnswer,
+                         m_strongFinancialPositionComment,
+                         m_earningStabilityAnswer,
+                         m_earningStabilityComment,
+                         m_dividendStabilityAnswer,
+                         m_dividendStabilityComment,
+                         m_earningGrowthAnswer,
+                         m_earningGrowthComment,
+                         m_keyValuePe,
+                         m_keyValuePs,
+                         m_keyValueNavPriceRatio,
+                         m_keyValueYield,
+                         m_keyValuePriceJEKRatio,
+                         m_keyValueErningsDividentRatio,
+                         m_keyValueTotalDebtEquityRatio,
+                         m_keyValueCurrentRatio,
+                         m_trustworthyLeadershipAnswer,
+                         m_trustworthyLeadershipComment,
+                         m_goodOwnershipAnswer,
+                         m_goodOwnershipComment);
+
+
+    resetGuiCtrl();
+
+
+    ui->textEditCompDescription->setText(m_companyDescription);
+
+    // Big enought
+    ui->lineEditBigEnoughAnswer->setText(m_bigEnoughAnswer);
+    ui->textEditBigEnoughText->setText(m_bigEnoughComment);
+
+    // Financial strong enought
+    ui->lineEditFinancialStrongAnswer->setText(m_strongFinancialPositionAnswer);
+    ui->textEditFinancialStrongText->setText(m_strongFinancialPositionComment);
+
+    // Earning Stability
+    ui->lineEditErningStabilityAnswer->setText(m_earningStabilityAnswer);
+    ui->textEditErningStabilityText->setText(m_earningStabilityComment);
+
+    // Dividend Stability
+    ui->lineEditDividentStabilityAnswer->setText(m_dividendStabilityAnswer);
+    ui->textEditDividentStabilityText->setText(m_dividendStabilityComment);
+
+    // Erning Growth
+    ui->lineEditErningGrowthAnswer->setText(m_earningGrowthAnswer);
+    ui->textEditErningGrowthText->setText(m_earningGrowthComment);
+
+    // Pe-value
+    ui->lineEditPE->setText(m_keyValuePe);
+    ui->lineEditPs->setText(m_keyValuePs);
+    ui->lineEditNavDivLastStockPrice->setText(m_keyValueNavPriceRatio);
+    ui->lineEditYield->setText(m_keyValueYield);
+    // m_keyValuePriceJEKRatio, saknas
+    ui->lineEditTotDebtEquityRatio->setText(m_keyValueTotalDebtEquityRatio);
+    ui->lineEditEarningsDivByDividend->setText(m_keyValueErningsDividentRatio);
+    ui->lineEditCurrentRatio->setText(m_keyValueCurrentRatio);
+
+    // Trustworthy Leadership
+    ui->lineEditTrustworthyManagementAnswer->setText(m_trustworthyLeadershipAnswer);
+    ui->textEditTrustworthyManagementText->setText(m_trustworthyLeadershipComment);
+
+    // Good Ownership
+    ui->lineEditBeneficialOwnershipAnswer->setText(m_goodOwnershipAnswer);
+    ui->textEditBeneficialOwnershipText->setText(m_goodOwnershipComment);
+
+}
+
+
+
+/******************************************************************
+ *
+ * Function:    resetGuiCtrl()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::resetGuiCtrl(void)
+{
+    ui->textEditCompDescription->clear();
+
+    // Big enought
+    ui->lineEditBigEnoughAnswer->clear();
+    ui->textEditBigEnoughText->clear();
+
+    // Financial strong enought
+    ui->lineEditFinancialStrongAnswer->clear();
+    ui->textEditFinancialStrongText->clear();
+
+    // Earning Stability
+    ui->lineEditErningStabilityAnswer->clear();
+    ui->textEditErningStabilityText->clear();
+
+    // Dividend Stability
+    ui->lineEditDividentStabilityAnswer->clear();
+    ui->textEditDividentStabilityText->clear();
+
+    // Erning Growth
+    ui->lineEditErningGrowthAnswer->clear();
+    ui->textEditErningGrowthText->clear();
+
+    // Pe-value
+    ui->lineEditPE->clear();
+    ui->lineEditPs->clear();
+    ui->lineEditNavDivLastStockPrice->clear();
+    ui->lineEditYield->clear();
+    // m_keyValuePriceJEKRatio, saknas
+    ui->lineEditTotDebtEquityRatio->clear();
+    ui->lineEditEarningsDivByDividend->clear();
+    ui->lineEditCurrentRatio->clear();
+
+    // Trustworthy Leadership
+    ui->lineEditTrustworthyManagementAnswer->clear();
+    ui->textEditTrustworthyManagementText->clear();
+
+    // Good Ownership
+    ui->lineEditBeneficialOwnershipAnswer->clear();
+    ui->textEditBeneficialOwnershipText->clear();
+
+}
+

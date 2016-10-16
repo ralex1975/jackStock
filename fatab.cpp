@@ -21,6 +21,11 @@ FaTab::FaTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->labelPg2CalcProfit->setText(QString::fromUtf8("Beräknad vinst"));;
+    ui->labelPg2CalcProfit->setStyleSheet("QLabel { background-color : black; color : lightgreen; }");
+    ui->labelPg2ReportedProfit->setText(QString::fromUtf8("Rapporterad Vinst"));
+    ui->labelPg2ReportedProfit->setStyleSheet("QLabel { color : black; }");
+
     ui->labelProfitPg3->setText(QString::fromUtf8("Försäljning"));
     ui->labelProfitPg3->setStyleSheet("QLabel { color : black; }");
 
@@ -29,9 +34,23 @@ FaTab::FaTab(QWidget *parent) :
 
     ui->labelProfitMarginPg3->setText(QString::fromUtf8("Vinstmarginal"));
     ui->labelProfitMarginPg3->setStyleSheet("QLabel { color : lightgreen; }");
+    ui->labelProfitMarginPg3->setStyleSheet("QLabel { background-color : black; color : lightgreen; }");
 
     ui->labelReturnOnEquityPg3->setText(QString::fromUtf8("Ränta på eget kapital"));
     ui->labelReturnOnEquityPg3->setStyleSheet("QLabel { color : magenta; }");
+    //ui->labelReturnOnEquityPg3->setStyleSheet("QLabel { background-color : black; color : magenta; }");
+
+    ui->labelPg4Profit->setText(QString::fromUtf8("Vinst"));
+    ui->labelPg4Profit->setStyleSheet("QLabel { background-color : black; color : lightgreen; }");
+
+    ui->labelPg4Sales->setText(QString::fromUtf8("Försäljning"));
+    ui->labelPg4Sales->setStyleSheet("QLabel { color : blue; }");
+
+    //ui->labelPg4Sales->setStyleSheet("QLabel { color : lightgreen; }");
+
+
+    //pLabel->setStyleSheet("QLabel { background-color : red; color : blue; }");
+
 
     CDbHndl db;
 
@@ -291,7 +310,7 @@ void FaTab::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
         }
 
         QString avgResult[10];
-        if(true == SalesOrProfitGrowthCalcAverage(ui->treeWidgetSalesGrowth, avgResult, 4))
+        if(true == SalesOrProfitGrowthCalcAverage(ui->treeWidgetSalesGrowth, avgResult, 4,growthRate))
         {
             QString reportAvg;
             reportAvg = QString::fromUtf8("Medel:       ");
@@ -323,7 +342,7 @@ void FaTab::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
         }
 
 
-        if(true == SalesOrProfitGrowthCalcAverage(ui->treeWidgetProfitGrowth, avgResult, 4))
+        if(true == SalesOrProfitGrowthCalcAverage(ui->treeWidgetProfitGrowth, avgResult, 4, growthRate))
         {
             QString reportAvg;
             reportAvg = QString::fromUtf8("Medel:       ");
@@ -332,11 +351,25 @@ void FaTab::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
                 if( i > 0)
                     reportAvg += ",        ";
                 reportAvg += avgResult[i];
-            }
+             }
 
             reportAvg += QString::fromUtf8("    (Rapporterad)");
             ui->labelReportAvg_2->clear();
             ui->labelReportAvg_2->setText(reportAvg);
+
+            if(growthRate > 0)
+            {
+                qDebug() << growthRate;
+                double calcPe = 8.5 + growthRate * 2;
+                QString str;
+                str.sprintf("P/E = %.2f, (g = %.2f)", calcPe, growthRate);
+                ui->labelGrahamCalcPe->clear();
+                ui->labelGrahamCalcPe->setText(str);
+            }
+            else
+            {
+                ui->labelGrahamCalcPe->clear();
+            }
         }
 
 
@@ -1433,13 +1466,16 @@ addSalesOrProfitGrowthPrognosData(QTreeWidget *treeWidget,
 
 /*******************************************************************
  *
- * Function:    ()
+ * Function:    SalesOrProfitGrowthCalcAverage()
  *
- * Description: This function traverse treewidget and check which
- *              of the nodes that are checked in column 1
+ * Description: This function traverse treewidget and calc
+ *              average sales growth or profit growth.
  *
  *******************************************************************/
-bool FaTab::SalesOrProfitGrowthCalcAverage(QTreeWidget *treeWidget, QString result[], int maxCol)
+bool FaTab::SalesOrProfitGrowthCalcAverage(QTreeWidget *treeWidget,
+                                           QString result[],
+                                           int maxCol,
+                                           double &growthRate)
 {
     CUtil cu;
     int j;
@@ -1493,7 +1529,7 @@ bool FaTab::SalesOrProfitGrowthCalcAverage(QTreeWidget *treeWidget, QString resu
         qDebug() << result[j];
     }
 
-    double growthRate;
+
     QTreeWidgetItem *item3 = treeWidget->topLevelItem(nofTopItems-1);
     QTreeWidgetItem *item4 = treeWidget->topLevelItem(0);
     if(true == cu.number2double(item3->text(1), minY) && true == cu.number2double(item4->text(1), maxY))

@@ -20,7 +20,7 @@ class StockAnalysisTab : public QDialog
     QString m_stockListName;
     int m_stockListId;
 
-
+    QString m_companyDescription;
     QString m_BigCompDescription;
     QString m_bigEnoughAnswer;
     QString m_bigEnoughComment;
@@ -46,6 +46,8 @@ class StockAnalysisTab : public QDialog
     QString m_goodOwnershipComment;
 
 
+    void resetGuiCtrl(void);
+
 
 public:
     explicit StockAnalysisTab(QWidget *parent = 0);
@@ -57,6 +59,8 @@ private slots:
     void on_treeWidgetStockListAnalysis_doubleClicked(const QModelIndex &index);
 
     void on_pushButton_clicked();
+
+    void on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::StockAnalysisTab *ui;

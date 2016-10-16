@@ -348,7 +348,51 @@ void GuiFinanceCtrls::initStockList1(QTreeWidget *treeWidgetStockList, bool hide
     }
 
     treeWidgetStockList->setColumnHidden(1, hideSymbol);
+}
 
+
+/*******************************************************************
+ *
+ * Function:    initStockList()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::initStockAnalysisDateList(QTreeWidget *treeWidgetStockList)
+{
+
+    QString column0 = QString::fromUtf8("Datum");
+
+    treeWidgetStockList->setColumnCount(1);
+    treeWidgetStockList->setSelectionMode(QAbstractItemView::SingleSelection);
+    treeWidgetStockList->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    if(QTreeWidgetItem* header = treeWidgetStockList->headerItem())
+    {
+        header->setText(0, column0.toLocal8Bit());
+    }
+}
+
+
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void GuiFinanceCtrls::getSelStockAnalysisDateItem(QTreeWidget *treeWidgetStockList,
+                                QString &analysisDate,
+                                const QModelIndex &index)
+{
+    treeWidgetStockList->setCurrentItem(treeWidgetStockList->topLevelItem(index.row()));
+    treeWidgetStockList->setFocus();
+
+    analysisDate.clear();
+
+    analysisDate = treeWidgetStockList->currentItem()->text(0);
 }
 
 

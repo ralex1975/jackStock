@@ -625,6 +625,40 @@ public:
                        int &analysisDataId,
                        bool dbIsHandledExternly = false);
 
+    bool getStockAnalysisData(QString stockName,
+                         QString stockSymbol,
+                         QString analysisDate,
+                         QString &companyDescription,
+                         QString &bigEnoughAnswer,
+                         QString &bigEnoughComment,
+                         QString &strongFinancialPositionAnswer,
+                         QString &strongFinancialPositionComment,
+                         QString &earningStabilityAnswer,
+                         QString &earningStabilityComment,
+                         QString &dividendStabilityAnswer,
+                         QString &dividendStabilityComment,
+                         QString &earningGrowthAnswer,
+                         QString &earningGrowthComment,
+                         QString &keyValuePe,
+                         QString &keyValuePs,
+                         QString &keyValueNavPriceRatio,
+                         QString &keyValueYield,
+                         QString &keyValuePriceJEKRatio,
+                         QString &keyValueErningsDividentRatio,
+                         QString &keyValueTotalDebtEquityRatio,
+                         QString &keyValueCurrentRatio,
+                         QString &trustworthyLeadershipAnswer,
+                         QString &trustworthyLeadershipComment,
+                         QString &goodOwnershipAnswer,
+                         QString &goodOwnershipComment,
+                         bool dbIsHandledExternly = false);
+
+
+    bool getStockAnalysisDate(QString stockName,
+                         QString stockSymbol,
+                         QTreeWidget *treeWidget,
+                         bool dbIsHandledExternly = false);
+
 
 
 

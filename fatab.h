@@ -116,7 +116,7 @@ class FaTab : public QDialog
                                            double k1,
                                            double m1,
                                            double maxX);
-    bool SalesOrProfitGrowthCalcAverage(QTreeWidget *treeWidget, QString result[], int maxCol);
+    bool SalesOrProfitGrowthCalcAverage(QTreeWidget *treeWidget, QString result[], int maxCol, double &growthRate);
     void displayProfitGrowth(QTreeWidget *treeWidget, int coly);
     void initNetProfitAfterTaxList(void);
     void initProfitabilityAnalysis(void);
