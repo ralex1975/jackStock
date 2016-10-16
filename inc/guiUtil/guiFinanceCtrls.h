@@ -69,6 +69,15 @@ public:
     void initStockList1(QTreeWidget *treeWidgetStockList, bool hideSymbol=true);
 
 
+    void initStockAnalysisDateList(QTreeWidget *treeWidgetStockList);
+
+    void getSelStockAnalysisDateItem(QTreeWidget *treeWidgetStockList,
+                                    QString &analysisDate,
+                                    const QModelIndex &index);
+
+
+
+
     void initTimePeriodCtrls(int value,
                              QLineEdit *timePeriodLineEdit,
                              QLineEdit *setEndDateLineEdit,

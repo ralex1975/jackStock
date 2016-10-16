@@ -1,87 +1,87 @@
 Market Cap (intraday)
 
-Enterprise Value (Apr 23, 2016)
-5.28B
+Enterprise Value (Aug 7, 2016)
+6.07B
 Trailing P/E (ttm, intraday):
-4.24
+5.82
 Forward P/E (fye Dec 31, 2017)
 N/A
 PEG Ratio (5 yr expected)
 N/A
 Price/Sales (ttm):
-4.23
+5.67
 Price/Book (mrq):
-1.14
+1.24
 Enterprise Value/Revenue (ttm)
-4.17
+5.70
 Enterprise Value/EBITDA (ttm)
-4.24
+5.82
 Fiscal Year Ends:
 Dec 31
 Most Recent Quarter (mrq):
-Dec 31, 2015
+Jun 30, 2016
 Profit Margin (ttm):
-98.66%
+98.32%
 Operating Margin (ttm):
-98.37%
+97.95%
 Return on Assets (ttm):
-18.06%
+14.04%
 Return on Equity (ttm):
-30.09%
+23.56%
 Revenue (ttm):
-1.27B
+1.07B
 Revenue Per Share (ttm):
-55.74
+23.43
 Qtrly Revenue Growth (yoy):
-196.20%
+N/A
 Gross Profit (ttm):
 1.27B
 EBITDA (ttm)
-1.25B
+1.04B
 Net Income Avl to Common (ttm):
-1.25B
+1.05B
 Diluted EPS (ttm):
-54.99
+23.04
 Qtrly Earnings Growth (yoy):
-201.00%
+N/A
 Total Cash (mrq):
-232.40M
+197.90M
 Total Cash Per Share (mrq):
-10.23
+4.35
 Total Debt (mrq):
-160.10M
+174.80M
 Total Debt/Equity (mrq):
-3.41
+3.59
 Current Ratio (mrq):
-1.18
+0.86
 Book Value Per Share (mrq):
-206.48
+107.04
 Operating Cash Flow (ttm):
-194.90M
+209.02M
 Levered Free Cash Flow (ttm):
-785.57M
+637.60M
 Beta:
 N/A
 52-Week Change
-33.91%
+51.41%
 S&amp;P500 52-Week Change
--0.82%
-52-Week High (Apr 14, 2016)
-244.00
-52-Week Low (Jul 8, 2015)
-153.00
+3.74%
+52-Week High (Jul 29, 2016)
+138.25
+52-Week Low (Aug 25, 2015)
+78.50
 50-Day Moving Average
-228.99
+121.24
 200-Day Moving Average
-208.79
+114.05
 Avg Vol (3 month)
-13,179
+18,321
 Avg Vol (10 day)
-16,887
+21,792
 Shares Outstanding
-22.73M
+45.46M
 Float:
-13.63M
+22.32M
 % Held by Insiders
 N/A
 % Held by Institutions
@@ -99,9 +99,9 @@ N/A
 Forward Annual Dividend Yield
 N/A
 Trailing Annual Dividend Yield
-N/A
+9.00
 Trailing Annual Dividend Yield
-N/A
+6.80%
 5 Year Average Dividend Yield
 N/A
 Payout Ratio

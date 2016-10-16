@@ -12,7 +12,7 @@ INCLUDEPATH +=/home/ajn/qwt-6.0.2/include
 
 
 
-#QT       += qwt
+#QT       += core gui webkitwidgets
 QT       += core gui
 QT       += network
 QT	 += webkit

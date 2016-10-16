@@ -412,10 +412,10 @@
     <widget class="QwtPlot" name="qwtPlotProfitAnalysis">
      <property name="geometry">
       <rect>
-       <x>390</x>
-       <y>0</y>
-       <width>611</width>
-       <height>521</height>
+       <x>400</x>
+       <y>40</y>
+       <width>651</width>
+       <height>491</height>
       </rect>
      </property>
     </widget>
@@ -515,6 +515,87 @@
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>450</y>
+       <width>361</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <italic>false</italic>
+      </font>
+     </property>
+     <property name="text">
+      <string>P/E = 8,5 + 2g  (g = vinsttillväxten i %)</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGrahamCalcPe">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>470</y>
+       <width>361</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>P/E =</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>430</y>
+       <width>211</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Grahams tillväxtformel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPg2ReportedProfit">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>10</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rapporterad vinst</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPg2CalcProfit">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>10</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Beräknad vinst</string>
      </property>
     </widget>
    </widget>
@@ -679,9 +760,9 @@
      <property name="geometry">
       <rect>
        <x>390</x>
-       <y>10</y>
-       <width>611</width>
-       <height>511</height>
+       <y>40</y>
+       <width>661</width>
+       <height>481</height>
       </rect>
      </property>
     </widget>
@@ -778,6 +859,32 @@
      </property>
      <property name="text">
       <string>Historiska priser</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPg4Sales">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>10</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Försäljning</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPg4Profit">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>10</y>
+       <width>41</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Vinst</string>
      </property>
     </widget>
    </widget>

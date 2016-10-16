@@ -60,16 +60,6 @@
         </rect>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="textBrowserBigCompDescrption">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>80</y>
-         <width>501</width>
-         <height>211</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
@@ -310,7 +300,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QTextEdit" name="textEdit_8">
+      <widget class="QTextEdit" name="textEditFinancialStrongText">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -330,7 +320,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_12">
+      <widget class="QLineEdit" name="lineEditFinancialStrongAnswer">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -714,6 +704,16 @@
        </property>
        <property name="text">
         <string>Pe</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditCompDescription">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>501</width>
+         <height>201</height>
+        </rect>
        </property>
       </widget>
      </widget>
@@ -1438,7 +1438,7 @@
     </property>
    </column>
   </widget>
-  <widget class="QTreeWidget" name="treeWidget">
+  <widget class="QTreeWidget" name="treeWidgetAnalysisDate">
    <property name="geometry">
     <rect>
      <x>10</x>

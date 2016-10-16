@@ -1358,7 +1358,7 @@ bool CDbHndl::createTable(void)
 
 /****************************************************************
  *
- * Function:    getMainAnalysisData()
+ * Function:    mainAnalysisDataExists()
  *
  * Description:
  *
@@ -1451,7 +1451,7 @@ bool CDbHndl::mainAnalysisDataExists(QString stockName,
 
 /****************************************************************
  *
- * Function:    ()
+ * Function:    insertMainAnalysisData()
  *
  * Description:
  *
@@ -1592,7 +1592,7 @@ bool CDbHndl::mainAnalysisDateExists(QString date,
             }
             else
             {
-                mainAnalysisId = rec.value("AnalysisDateId").toInt();
+                analysisDateId = rec.value("AnalysisDateId").toInt();
                 qry.finish();
                 closeDb();
                 m_mutex.unlock();
@@ -1830,6 +1830,418 @@ insertAnalysisData(int analysisDateId,
     return true;
 }
 
+
+
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getStockAnalysisData(QString stockName,
+                     QString stockSymbol,
+                     QString analysisDate,
+                     QString &companyDescription,
+                     QString &bigEnoughAnswer,
+                     QString &bigEnoughComment,
+                     QString &strongFinancialPositionAnswer,
+                     QString &strongFinancialPositionComment,
+                     QString &earningStabilityAnswer,
+                     QString &earningStabilityComment,
+                     QString &dividendStabilityAnswer,
+                     QString &dividendStabilityComment,
+                     QString &earningGrowthAnswer,
+                     QString &earningGrowthComment,
+                     QString &keyValuePe,
+                     QString &keyValuePs,
+                     QString &keyValueNavPriceRatio,
+                     QString &keyValueYield,
+                     QString &keyValuePriceJEKRatio,
+                     QString &keyValueErningsDividentRatio,
+                     QString &keyValueTotalDebtEquityRatio,
+                     QString &keyValueCurrentRatio,
+                     QString &trustworthyLeadershipAnswer,
+                     QString &trustworthyLeadershipComment,
+                     QString &goodOwnershipAnswer,
+                     QString &goodOwnershipComment,
+                     bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateAnalysis.*, TblAnalysisData.* "
+                " FROM TblMainAnalysis, TblDateAnalysis, TblAnalysisData  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateAnalysis.MainAnalysisId AND "
+                "       TblDateAnalysis.AnalysisDateId = TblAnalysisData.AnalysisDateId AND "
+                "       lower(TblDateAnalysis.AnalysisDate) = lower('%s') AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s');",
+                                                                           analysisDate.toLocal8Bit().constData(),
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("AnalysisDate").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("AnalysisDate").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+                companyDescription.clear();
+                if(rec.value("companyDescription").isNull() == false)
+                {
+                    companyDescription = rec.value("companyDescription").toString();
+                }
+
+                bigEnoughAnswer.clear();
+                if(rec.value("bigEnoughAnswer").isNull() == false)
+                {
+                    bigEnoughAnswer = rec.value("bigEnoughAnswer").toString();
+                }
+
+                bigEnoughComment.clear();
+                if(rec.value("bigEnoughComment").isNull() == false)
+                {
+                    bigEnoughComment = rec.value("bigEnoughComment").toString();
+                }
+
+                strongFinancialPositionAnswer.clear();
+                if(rec.value("strongFinancialPositionAnswer").isNull() == false)
+                {
+                    strongFinancialPositionAnswer = rec.value("strongFinancialPositionAnswer").toString();
+                }
+
+                strongFinancialPositionComment.clear();
+                if(rec.value("strongFinancialPositionComment").isNull() == false)
+                {
+                     strongFinancialPositionComment = rec.value("strongFinancialPositionComment").toString();
+                }
+
+                earningStabilityAnswer.clear();
+                if(rec.value("earningStabilityAnswer").isNull() == false)
+                {
+                     earningStabilityAnswer = rec.value("earningStabilityAnswer").toString();
+                }
+
+                earningStabilityComment.clear();
+                if(rec.value("earningStabilityComment").isNull() == false)
+                {
+                     earningStabilityComment = rec.value("earningStabilityComment").toString();
+                }
+
+                dividendStabilityAnswer.clear();
+                if(rec.value("dividendStabilityAnswer").isNull() == false)
+                {
+                     dividendStabilityAnswer = rec.value("dividendStabilityAnswer").toString();
+                }
+
+                dividendStabilityComment.clear();
+                if(rec.value("dividendStabilityComment").isNull() == false)
+                {
+                     dividendStabilityComment = rec.value("dividendStabilityComment").toString();
+                }
+
+                earningGrowthAnswer.clear();
+                if(rec.value("earningGrowthAnswer").isNull() == false)
+                {
+                    earningGrowthAnswer = rec.value("earningGrowthAnswer").toString();
+                }
+
+                earningGrowthComment.clear();
+                if(rec.value("earningGrowthComment").isNull() == false)
+                {
+                     earningGrowthComment = rec.value("earningGrowthComment").toString();
+                }
+
+
+
+
+                keyValuePe.clear();
+                if(rec.value("keyValuePe").isNull() == false)
+                {
+                     keyValuePe = rec.value("keyValuePe").toString();
+                }
+
+                keyValuePs.clear();
+                if(rec.value("keyValuePs").isNull() == false)
+                {
+                     keyValuePs = rec.value("keyValuePs").toString();
+                }
+
+                keyValueNavPriceRatio.clear();
+                if(rec.value("keyValueNavPriceRatio").isNull() == false)
+                {
+                     keyValueNavPriceRatio = rec.value("keyValueNavPriceRatio").toString();
+                }
+
+
+
+
+                keyValueYield.clear();
+                if(rec.value("keyValueYield").isNull() == false)
+                {
+                     keyValueYield = rec.value("keyValueYield").toString();
+                }
+
+                keyValuePriceJEKRatio.clear();
+                if(rec.value("keyValuePriceJEKRatio").isNull() == false)
+                {
+                     keyValuePriceJEKRatio = rec.value("keyValuePriceJEKRatio").toString();
+                }
+
+                keyValueErningsDividentRatio.clear();
+                if(rec.value("keyValueerningsDividentRatio").isNull() == false)
+                {
+                     keyValueErningsDividentRatio = rec.value("keyValueerningsDividentRatio").toString();
+                }
+
+                keyValueTotalDebtEquityRatio.clear();
+                if(rec.value("keyValueTotalDebtEquityRatio").isNull() == false)
+                {
+                     keyValueTotalDebtEquityRatio = rec.value("keyValueTotalDebtEquityRatio").toString();
+                }
+
+
+
+                keyValueCurrentRatio.clear();
+                if(rec.value("keyValueCurrentRatio").isNull() == false)
+                {
+                    keyValueCurrentRatio = rec.value("keyValueCurrentRatio").toString();
+                }
+
+
+                trustworthyLeadershipAnswer.clear();
+                if(rec.value("trustworthyLeadershipAnswer").isNull() == false)
+                {
+                    trustworthyLeadershipAnswer = rec.value("trustworthyLeadershipAnswer").toString();
+                }
+
+
+                trustworthyLeadershipComment.clear();
+                if(rec.value("trustworthyLeadershipComment").isNull() == false)
+                {
+                    trustworthyLeadershipComment = rec.value("trustworthyLeadershipComment").toString();
+                }
+
+
+                goodOwnershipAnswer.clear();
+                if(rec.value("goodOwnershipAnswer").isNull() == false)
+                {
+                    goodOwnershipAnswer = rec.value("goodOwnershipAnswer").toString();
+                }
+
+                goodOwnershipComment.clear();
+                if(rec.value("goodOwnershipComment").isNull() == false)
+                {
+                    goodOwnershipComment = rec.value("goodOwnershipComment").toString();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+#if 1
+/*****************************************************************
+ *
+ * Function:		getStockAnalysisDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getStockAnalysisDate(QString stockName,
+                     QString stockSymbol,
+                     QTreeWidget *treeWidget,
+                     bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateAnalysis.* "
+                " FROM TblMainAnalysis, TblDateAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateAnalysis.MainAnalysisId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s');",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        treeWidget->clear();
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("AnalysisDate").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("AnalysisDate").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+                QTreeWidgetItem *item = new QTreeWidgetItem;
+                item->setText(0, (QString)rec.value("AnalysisDate").toString().toUtf8());
+                treeWidget->addTopLevelItem(item);
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+#endif
 
 
 

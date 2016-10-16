@@ -15,6 +15,7 @@
 #include <QtGui>
 #include <QMessageBox>
 #include <QtWebKit/QWebView>
+//#include <QtWebKitWidgets/QWebView>
 
 
 
@@ -37,6 +38,8 @@ CWebBrowserTab::CWebBrowserTab(QWidget *parent) :
 
     ui->setupUi(this);
     ui->webView->setUrl(url);
+    //ui->webView->load(url);
+
     installEventFilter(this);
 
 }
