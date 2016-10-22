@@ -36,6 +36,8 @@ CWebBrowserTab::CWebBrowserTab(QWidget *parent) :
 {
     QUrl url("https://www.nordnet.se/mux/web/marknaden/kurslista/aktier.html?marknad=Sverige&lista=1_1&large=on&mid=on&sektor=0&subtyp=price&sortera=aktie&sorteringsordning=stigande");
 
+   // QUrl url("file:///home/ajn/Documents/myAnalysisTemplate.html");
+
     ui->setupUi(this);
     ui->webView->setUrl(url);
     //ui->webView->load(url);

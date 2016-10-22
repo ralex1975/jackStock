@@ -28,6 +28,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     m_gfc.initStockAnalysisDateList(ui->treeWidgetAnalysisDate);
 
+    on_SelStockListButton_clicked();
 
 
 }
@@ -239,6 +240,20 @@ void StockAnalysisTab::on_pushButton_clicked()
     int mainAnalysisId;
     int analysisDateId;
     int analysisDataId;
+    QString str;
+
+    str = (QString::fromUtf8("Vill du lägga till data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if( false == QMessageBox::information(NULL, QString::fromUtf8("Uppdatera databas"), str))
+    {
+        return;
+    }
 
     // Check if this stocksymbol and stockname is already added
     // If not add it
@@ -282,7 +297,7 @@ void StockAnalysisTab::on_pushButton_clicked()
         m_strongFinancialPositionComment = ui->textEditFinancialStrongText->toPlainText();
 
         m_earningStabilityAnswer = ui->lineEditErningStabilityAnswer->text();
-        m_earningStabilityComment = ui->textEditDividentStabilityText->toPlainText();
+        m_earningStabilityComment = ui->textEditErningStabilityText->toPlainText();
 
         m_dividendStabilityAnswer = ui->lineEditDividentStabilityAnswer->text();
         m_dividendStabilityComment =ui->textEditDividentStabilityText->toPlainText();
@@ -306,6 +321,8 @@ void StockAnalysisTab::on_pushButton_clicked()
 
         m_goodOwnershipAnswer = ui->lineEditBeneficialOwnershipAnswer->text();
         m_goodOwnershipComment = ui->textEditBeneficialOwnershipText->toPlainText();
+
+        m_otherInformation = ui->textEditOtherInfo->toPlainText();
 
         res = db.insertAnalysisData(analysisDateId,
                            m_BigCompDescription,
@@ -331,9 +348,51 @@ void StockAnalysisTab::on_pushButton_clicked()
                            m_trustworthyLeadershipComment,
                            m_goodOwnershipAnswer,
                            m_goodOwnershipComment,
+                           m_otherInformation,
                            analysisDataId);
     }
 
+}
+
+
+/******************************************************************
+ *
+ * Function:    resetStockAnalysisData()
+ *
+ * Description: This function use date to get stock analysis data
+ *              from the database.
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::resetStockAnalysisData(void)
+{
+    m_companyDescription.clear();
+    m_BigCompDescription.clear();
+    m_bigEnoughAnswer.clear();
+    m_bigEnoughComment.clear();
+    m_strongFinancialPositionAnswer.clear();
+    m_strongFinancialPositionComment.clear();
+    m_earningStabilityAnswer.clear();
+    m_earningStabilityComment.clear();
+    m_dividendStabilityAnswer.clear();
+    m_dividendStabilityComment.clear();
+    m_earningGrowthAnswer.clear();
+    m_earningGrowthComment.clear();
+    m_keyValuePe.clear();
+    m_keyValuePs.clear();
+    m_keyValueNavPriceRatio.clear();
+    m_keyValueYield.clear();
+    m_keyValuePriceJEKRatio.clear();
+    m_keyValueErningsDividentRatio.clear();
+    m_keyValueTotalDebtEquityRatio.clear();
+    m_keyValueCurrentRatio.clear();
+    m_trustworthyLeadershipAnswer.clear();
+    m_trustworthyLeadershipComment.clear();
+    m_goodOwnershipAnswer.clear();
+    m_goodOwnershipComment.clear();
+    m_otherInformation.clear();
 }
 
 
@@ -355,18 +414,23 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
 
 
     m_gfc.getSelStockAnalysisDateItem(ui->treeWidgetAnalysisDate,
-                               analysisDate,
-                               index);
+                                      analysisDate,
+                                      index);
 
     if(analysisDate.size() < 1)
     {
         return;
     }
 
+    m_analysisDate = analysisDate;
+    ui->analysisDateLineEdit->setText(analysisDate);
+
+    resetStockAnalysisData();
+    resetGuiCtrl();
 
     db.getStockAnalysisData(m_stockName,
                          m_stockSymbol,
-                         analysisDate,
+                         m_analysisDate,
                          m_companyDescription,
                          m_bigEnoughAnswer,
                          m_bigEnoughComment,
@@ -389,10 +453,11 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
                          m_trustworthyLeadershipAnswer,
                          m_trustworthyLeadershipComment,
                          m_goodOwnershipAnswer,
-                         m_goodOwnershipComment);
+                         m_goodOwnershipComment,
+                            m_otherInformation);
 
 
-    resetGuiCtrl();
+
 
 
     ui->textEditCompDescription->setText(m_companyDescription);
@@ -434,6 +499,8 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     // Good Ownership
     ui->lineEditBeneficialOwnershipAnswer->setText(m_goodOwnershipAnswer);
     ui->textEditBeneficialOwnershipText->setText(m_goodOwnershipComment);
+
+    ui->textEditOtherInfo->setText(m_otherInformation);
 
 }
 
@@ -493,3 +560,78 @@ void StockAnalysisTab::resetGuiCtrl(void)
 
 }
 
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonRemoveRecord_clicked()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonRemoveRecord_clicked()
+{
+    QString str;
+    CDbHndl db;
+
+
+    str = QString::fromUtf8("Vill du ta bort data?\n");
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if( false == QMessageBox::information(NULL, QString::fromUtf8("Uppdatera databas"), str))
+    {
+        return;
+    }
+
+
+    // Remove all data from data table in db
+    if( false == db.deleteStockAnalysisDataRecord(m_stockName, m_stockSymbol, m_analysisDate))
+    {
+        str = (QString::fromUtf8("Fel: Data gick ej att ta bort\n"));
+        QMessageBox::information(NULL, QString::fromUtf8("Uppdatera databas"), str);
+        return;
+    }
+
+    // Delete data from date table in db
+    if( false == db.deleteStockAnalysisDateRecord(m_stockName, m_stockSymbol, m_analysisDate))
+    {
+        str = (QString::fromUtf8("Fel: Data gick ej att ta bort\n"));
+        QMessageBox::information(NULL, QString::fromUtf8("Uppdatera databas"), str);
+        return;
+    }
+
+
+    // Find date in treeWidget and remove it
+    QTreeWidgetItem *item;
+    int index = -1;
+    int numberOfTopLevelItems = ui->treeWidgetAnalysisDate->topLevelItemCount();
+    for (int topLevelindex = 0 ; topLevelindex < numberOfTopLevelItems ; topLevelindex++)
+    {
+        item = ui->treeWidgetAnalysisDate->topLevelItem(topLevelindex);
+        if(item != NULL)
+        {
+            if(m_analysisDate.compare(item->text(0)) == 0)
+            {
+                index = topLevelindex;
+                break;
+            }
+        }
+    }
+
+
+
+
+    if(index > -1)
+    {
+        item  = ui->treeWidgetAnalysisDate->takeTopLevelItem(index);
+        delete item; // do not forget to delete the item if it is not owned by any other widget.
+    }
+
+}

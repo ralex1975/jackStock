@@ -622,8 +622,26 @@ public:
                        QString trustworthyLeadershipComment,
                        QString goodOwnershipAnswer,
                        QString goodOwnershipComment,
+                       QString otherInformation,
                        int &analysisDataId,
                        bool dbIsHandledExternly = false);
+
+    bool getStockAnalysisDateId(QString stockName,
+                         QString stockSymbol,
+                         QString analysisDate,
+                         int &analysisDateId,
+                         bool dbIsHandledExternly = false);
+
+    bool deleteStockAnalysisDateRecord(QString stockName,
+                                       QString stockSymbol,
+                                       QString analysisDate);
+
+
+    bool deleteStockAnalysisDataRecord(QString stockName,
+                                       QString stockSymbol,
+                                       QString analysisDate);
+
+
 
     bool getStockAnalysisData(QString stockName,
                          QString stockSymbol,
@@ -651,6 +669,7 @@ public:
                          QString &trustworthyLeadershipComment,
                          QString &goodOwnershipAnswer,
                          QString &goodOwnershipComment,
+                         QString &otherInformation,
                          bool dbIsHandledExternly = false);
 
 

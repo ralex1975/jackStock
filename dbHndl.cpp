@@ -330,7 +330,7 @@ bool CDbHndl::createTable(void)
         //-----------------------------------------------------------------------
         // TblAnalysisDate
         //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblAnalysisData "
+         tmp.sprintf("CREATE TABLE IF NOT EXISTS TblAnalysisData "
                     " (AnalysisDataId INTEGER PRIMARY KEY AUTOINCREMENT , "
                     " AnalysisDateId INTEGER, "                             // YYYY-MM-DD ID
                     " companyDescription VARCHAR(255), "
@@ -362,7 +362,8 @@ bool CDbHndl::createTable(void)
                     " trustworthyLeadershipAnswer VARCHAR(255), "
                     " trustworthyLeadershipComment VARCHAR(255), "
                     " goodOwnershipAnswer VARCHAR(255), "
-                    " goodOwnershipComment VARCHAR(255));");
+                    " goodOwnershipComment VARCHAR(255),"
+                    " otherInformation VARCHAR(255));");
 
                 qry.prepare(tmp);
 
@@ -1612,7 +1613,7 @@ bool CDbHndl::mainAnalysisDateExists(QString date,
 
 /****************************************************************
  *
- * Function:    ()
+ * Function:    insertMainAnalysisDate()
  *
  * Description:
  *
@@ -1719,6 +1720,7 @@ insertAnalysisData(int analysisDateId,
                    QString trustworthyLeadershipComment,
                    QString goodOwnershipAnswer,
                    QString goodOwnershipComment,
+                   QString otherInformation,
                    int &analysisDataId,
                    bool dbIsHandledExternly)
 {
@@ -1765,10 +1767,11 @@ insertAnalysisData(int analysisDateId,
                  " trustworthyLeadershipAnswer, "
                  " trustworthyLeadershipComment, "
                  " goodOwnershipAnswer, "
-                 " goodOwnershipComment) "
-                " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                 " goodOwnershipComment,"
+                 " otherInformation) "
+                 " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
                        " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
-                       " '%s', '%s', '%s', '%s');",
+                       " '%s', '%s', '%s', '%s', '%s');",
                         analysisDateId,
                         companyDescription.toLocal8Bit().constData(),
                         bigEnoughAnswer.toLocal8Bit().constData(),
@@ -1792,7 +1795,8 @@ insertAnalysisData(int analysisDateId,
                         trustworthyLeadershipAnswer.toLocal8Bit().constData(),
                         trustworthyLeadershipComment.toLocal8Bit().constData(),
                         goodOwnershipAnswer.toLocal8Bit().constData(),
-                        goodOwnershipComment.toLocal8Bit().constData());  // 24
+                        goodOwnershipComment.toLocal8Bit().constData(),
+                        otherInformation.toLocal8Bit().constData());
 
 
     qDebug() << str;
@@ -1829,6 +1833,241 @@ insertAnalysisData(int analysisDateId,
 
     return true;
 }
+
+
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getStockAnalysisDateId(QString stockName,
+                     QString stockSymbol,
+                     QString analysisDate,
+                     int &analysisDateId,
+                     bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateAnalysis.*  "
+                " FROM TblMainAnalysis, TblDateAnalysis   "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateAnalysis.MainAnalysisId AND "
+                "       lower(TblDateAnalysis.AnalysisDate) = lower('%s') AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s');",
+                                                                           analysisDate.toLocal8Bit().constData(),
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("AnalysisDate").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("AnalysisDate").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+                if(rec.value("AnalysisDateId").isNull() == false)
+                {
+                    analysisDateId = rec.value("AnalysisDateId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+/****************************************************************
+ *
+ * Function:    deleteDataFromProgressMyPortfolio()
+ *
+ * Description:
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::deleteStockAnalysisDateRecord(QString stockName,
+                                            QString stockSymbol,
+                                            QString analysisDate)
+{
+    QString str;
+    int analysisDateId;
+
+    if( false == getStockAnalysisDateId(stockName, stockSymbol, analysisDate, analysisDateId))
+    {
+     return false;
+
+    }
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+    str.sprintf("DELETE FROM TblDateAnalysis WHERE AnalysisDateId = %d ", analysisDateId);
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        qry.finish();
+        closeDb();
+        m_mutex.unlock();
+
+        qDebug() << qry.lastError();
+        return false;
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+
+    return true;
+}
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    deleteDataFromProgressMyPortfolio()
+ *
+ * Description:
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::deleteStockAnalysisDataRecord(QString stockName,
+                                            QString stockSymbol,
+                                            QString analysisDate)
+{
+    QString str;
+    int analysisDateId;
+
+    if( false == getStockAnalysisDateId(stockName, stockSymbol, analysisDate, analysisDateId))
+    {
+     return false;
+
+    }
+
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+    str.sprintf("DELETE FROM TblAnalysisData WHERE analysisDateId = %d ", analysisDateId);
+
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        qry.finish();
+        closeDb();
+        m_mutex.unlock();
+
+        qDebug() << qry.lastError();
+        return false;
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+
+    return true;
+}
+
 
 
 
@@ -1868,6 +2107,7 @@ getStockAnalysisData(QString stockName,
                      QString &trustworthyLeadershipComment,
                      QString &goodOwnershipAnswer,
                      QString &goodOwnershipComment,
+                     QString &otherInformation,
                      bool dbIsHandledExternly)
 {
 
@@ -2103,6 +2343,12 @@ getStockAnalysisData(QString stockName,
                     goodOwnershipComment = rec.value("goodOwnershipComment").toString();
                 }
 
+                otherInformation.clear();
+                if(rec.value("otherInformation").isNull() == false)
+                {
+                    goodOwnershipComment = rec.value("otherInformation").toString();
+                }
+
             }
         }
     }
@@ -2125,7 +2371,7 @@ getStockAnalysisData(QString stockName,
 
 
 
-#if 1
+
 /*****************************************************************
  *
  * Function:		getStockAnalysisDate()
@@ -2241,7 +2487,7 @@ getStockAnalysisDate(QString stockName,
 
     return false;
 }
-#endif
+
 
 
 
@@ -3446,7 +3692,7 @@ bool CDbHndl::delAllTblProgressMyPortfolio(void)
 
 /****************************************************************
  *
- * Function:    getAllProgressMyPortfolioData()
+ * Function:    deleteDataFromProgressMyPortfolio()
  *
  * Description:
  *

@@ -159,7 +159,6 @@ FORMS    += \
     selIndicatorsDlg.ui \
     jackStock.ui \
     TADlg.ui \
-    graphtab.ui \
     portfolio.ui \
     taAnalysis.ui \
     efficientPortfolio.ui \
@@ -168,9 +167,6 @@ FORMS    += \
     tabhelp.ui \
     fatab.ui \
     graphtab.ui \
-    efficentbargraphdlg.ui \
-    fatab.ui \
-    fatab.ui \
     leastsquarestadlg.ui \
     keyIndicators_3.ui \
     adminmyportfolio.ui \

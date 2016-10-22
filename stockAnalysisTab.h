@@ -44,9 +44,11 @@ class StockAnalysisTab : public QDialog
     QString m_trustworthyLeadershipComment;
     QString m_goodOwnershipAnswer;
     QString m_goodOwnershipComment;
+    QString m_otherInformation;
 
 
     void resetGuiCtrl(void);
+    void resetStockAnalysisData(void);
 
 
 public:
@@ -61,6 +63,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex &index);
+
+    void on_pushButtonRemoveRecord_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;
