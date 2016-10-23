@@ -363,7 +363,8 @@ bool CDbHndl::createTable(void)
                     " trustworthyLeadershipComment VARCHAR(255), "
                     " goodOwnershipAnswer VARCHAR(255), "
                     " goodOwnershipComment VARCHAR(255),"
-                    " otherInformation VARCHAR(255));");
+                    " otherInformation VARCHAR(255),"
+                    " MainAnalysisId INTEGER);");
 
                 qry.prepare(tmp);
 
@@ -1642,7 +1643,7 @@ insertMainAnalysisDate(QString date,
     const char *c_date = ba.data();
 
 
-    str.sprintf("INSERT INTO TblDateAnalysis "
+    str.sprintf("INSERT OR SELECT INTO TblDateAnalysis "
                 "(AnalysisDate, MainAnalysisId) "
                 " VALUES('%s', %d);",
                 c_date,
@@ -1684,6 +1685,129 @@ insertMainAnalysisDate(QString date,
 
 
 
+/*****************************************************************
+ *
+ * Function:		getNordnetYahooKeyData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getAnalysisDataId(int mainAnalysisId,
+                  int analysisDateId,
+                  int &analysisDataId,
+                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblAnalysisData.AnalysisDataId, TblAnalysisData.AnalysisDateId, TblAnalysisData.MainAnalysisId   "
+                " FROM TblAnalysisData   "
+                " WHERE  "
+                "       TblAnalysisData.AnalysisDateId = %d AND "
+                "       TblAnalysisData.MainAnalysisId = %d;",
+                                                                           analysisDateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("AnalysisDateId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("AnalysisDateId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("AnalysisDataId").isNull() == false)
+                {
+                    analysisDataId = rec.value("AnalysisDataId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
 /****************************************************************
  *
  * Function:    ()
@@ -1697,6 +1821,9 @@ insertMainAnalysisDate(QString date,
  ****************************************************************/
 bool CDbHndl::
 insertAnalysisData(int analysisDateId,
+                   int mainAnalysisId,
+                   int inputAnalysisDataId,
+                   bool inputAnalysisDataIdIsValid,
                    QString companyDescription,
                    QString bigEnoughAnswer,
                    QString bigEnoughComment,
@@ -1736,7 +1863,9 @@ insertAnalysisData(int analysisDateId,
     QSqlQuery qry(m_db);
 
 
-    str.sprintf("INSERT OR REPLACE INTO TblAnalysisData "
+    if(inputAnalysisDataIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblAnalysisData "
                 " (AnalysisDateId, "
                 " companyDescription, "
 
@@ -1768,10 +1897,12 @@ insertAnalysisData(int analysisDateId,
                  " trustworthyLeadershipComment, "
                  " goodOwnershipAnswer, "
                  " goodOwnershipComment,"
-                 " otherInformation) "
+                 " otherInformation, "
+                 " AnalysisDataId,"
+                 " MainAnalysisId) "
                  " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
                        " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
-                       " '%s', '%s', '%s', '%s', '%s');",
+                       " '%s', '%s', '%s', '%s', '%s', %d, %d);",
                         analysisDateId,
                         companyDescription.toLocal8Bit().constData(),
                         bigEnoughAnswer.toLocal8Bit().constData(),
@@ -1796,7 +1927,77 @@ insertAnalysisData(int analysisDateId,
                         trustworthyLeadershipComment.toLocal8Bit().constData(),
                         goodOwnershipAnswer.toLocal8Bit().constData(),
                         goodOwnershipComment.toLocal8Bit().constData(),
-                        otherInformation.toLocal8Bit().constData());
+                        otherInformation.toLocal8Bit().constData(),
+                        inputAnalysisDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblAnalysisData "
+                    " (AnalysisDateId, "
+                    " companyDescription, "
+
+                    " bigEnoughAnswer, "
+                    " bigEnoughComment, "
+
+                    " strongFinancialPositionAnswer, "
+                    " strongFinancialPositionComment, "
+
+                    " earningStabilityAnswer, "
+                    " earningStabilityComment, "
+
+                    " dividendStabilityAnswer, "
+                    " dividendStabilityComment, "
+
+                    " earningGrowthAnswer, "
+                    " earningGrowthComment, "
+
+                    " keyValuePe, "
+                    " keyValuePs, "
+
+                     " keyValueNavPriceRatio, "
+                     " keyValueYield, "
+                     " keyValuePriceJEKRatio, "
+                     " keyValueerningsDividentRatio, "
+                     " keyValueTotalDebtEquityRatio, "
+                     " keyValueCurrentRatio, "
+                     " trustworthyLeadershipAnswer, "
+                     " trustworthyLeadershipComment, "
+                     " goodOwnershipAnswer, "
+                     " goodOwnershipComment,"
+                     " otherInformation, "
+                     " MainAnalysisId) "
+                     " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                           " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
+                           " '%s', '%s', '%s', '%s', '%s', %d);",
+                            analysisDateId,
+                            companyDescription.toLocal8Bit().constData(),
+                            bigEnoughAnswer.toLocal8Bit().constData(),
+                            bigEnoughComment.toLocal8Bit().constData(),
+                            strongFinancialPositionAnswer.toLocal8Bit().constData(),
+                            strongFinancialPositionComment.toLocal8Bit().constData(),
+                            earningStabilityAnswer.toLocal8Bit().constData(),
+                            earningStabilityComment.toLocal8Bit().constData(),
+                            dividendStabilityAnswer.toLocal8Bit().constData(),
+                            dividendStabilityComment.toLocal8Bit().constData(),  // 10
+                            earningGrowthAnswer.toLocal8Bit().constData(),
+                            earningGrowthComment.toLocal8Bit().constData(),
+                            keyValuePe.toLocal8Bit().constData(),
+                            keyValuePs.toLocal8Bit().constData(),
+                            keyValueNavPriceRatio.toLocal8Bit().constData(),
+                            keyValueYield.toLocal8Bit().constData(),
+                            keyValuePriceJEKRatio.toLocal8Bit().constData(),
+                            keyValueerningsDividentRatio.toLocal8Bit().constData(),
+                            keyValueTotalDebtEquityRatio.toLocal8Bit().constData(),
+                            keyValueCurrentRatio.toLocal8Bit().constData(),              // 20
+                            trustworthyLeadershipAnswer.toLocal8Bit().constData(),
+                            trustworthyLeadershipComment.toLocal8Bit().constData(),
+                            goodOwnershipAnswer.toLocal8Bit().constData(),
+                            goodOwnershipComment.toLocal8Bit().constData(),
+                            otherInformation.toLocal8Bit().constData(),
+                            mainAnalysisId);             // Main list primary id);
+    }
 
 
     qDebug() << str;

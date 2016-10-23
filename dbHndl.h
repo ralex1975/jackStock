@@ -597,8 +597,17 @@ public:
                            int &analysisDateId,
                            bool dbIsHandledExternly = false);
 
+    bool getAnalysisDataId(int mainAnalysisId,
+                           int analysisDateId,
+                           int &analysisDataId,
+                           bool dbIsHandledExternly = false);
+
+
 
     bool insertAnalysisData(int analysisDateId,
+                       int mainAnalysisId,
+                       int inputAnalysisDataId,
+                       bool inputAnalysisDataIdIsValid,
                        QString companyDescription,
                        QString bigEnoughAnswer,
                        QString bigEnoughComment,
@@ -625,6 +634,7 @@ public:
                        QString otherInformation,
                        int &analysisDataId,
                        bool dbIsHandledExternly = false);
+
 
     bool getStockAnalysisDateId(QString stockName,
                          QString stockSymbol,

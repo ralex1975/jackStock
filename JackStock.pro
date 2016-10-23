@@ -85,7 +85,8 @@ SOURCES += main.cpp\
     adminMyPortFolio.cpp \
     keyIndicators_3.cpp \
     stockAnalysisTab.cpp \
-    extendedLineEdit.cpp
+    extendedLineEdit.cpp \
+    createstockanalysishtmlpage.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -151,7 +152,8 @@ HEADERS  += WebBrowserTab.h \
     keyIndicators_3.h \
     adminMyPortFolio.h \
     stockAnalysisTab.h \
-    extendedLineEdit.h
+    extendedLineEdit.h \
+    createstockanalysishtmlpage.h
 
 FORMS    += \
     WebBrowserTab.ui \

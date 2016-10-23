@@ -12,6 +12,8 @@ class StockAnalysisTab : public QDialog
 {
     Q_OBJECT
 
+     QString m_html;
+
     GuiFinanceCtrls m_gfc;
     QString m_stockName;
     QString m_stockSymbol;

@@ -5,6 +5,9 @@
 #include "dbHndl.h"
 #include "extendedLineEdit.h"
 #include "yahooStockPlotUtil.h"
+#include "createstockanalysishtmlpage.h"
+#include <QtWebKit/QWebView>
+
 
 
 /******************************************************************
@@ -239,7 +242,6 @@ void StockAnalysisTab::on_pushButton_clicked()
     bool res;
     int mainAnalysisId;
     int analysisDateId;
-    int analysisDataId;
     QString str;
 
     str = (QString::fromUtf8("Vill du lägga till data?\n"));
@@ -250,7 +252,7 @@ void StockAnalysisTab::on_pushButton_clicked()
     str = str + m_analysisDate;
 
 
-    if( false == QMessageBox::information(NULL, QString::fromUtf8("Uppdatera databas"), str))
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
     {
         return;
     }
@@ -324,7 +326,25 @@ void StockAnalysisTab::on_pushButton_clicked()
 
         m_otherInformation = ui->textEditOtherInfo->toPlainText();
 
+        int inputAnalysisDataId;
+        int analysisDataId;
+        bool inputAnalysisDataIdIsValid = false;
+       if( true == db.getAnalysisDataId(mainAnalysisId, analysisDateId, inputAnalysisDataId))
+       {
+           //QString responsStr;
+           inputAnalysisDataIdIsValid = true;
+
+           //responsStr.sprintf("Data finns redan analysisDataId = %d", inputAnalysisDataId);
+           //QMessageBox::information(NULL, QString::fromUtf8("Uppdatera databas"), responsStr);
+           //return;
+
+       }
+
+
         res = db.insertAnalysisData(analysisDateId,
+                                    mainAnalysisId,
+                                    inputAnalysisDataId,
+                                    inputAnalysisDataIdIsValid,
                            m_BigCompDescription,
                            m_bigEnoughAnswer,
                            m_bigEnoughComment,
@@ -409,6 +429,8 @@ void StockAnalysisTab::resetStockAnalysisData(void)
  *****************************************************************/
 void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex &index)
 {
+
+    createStockAnalysisHtmlPage csaHtmlPg;
     QString analysisDate;
     CDbHndl db;
 
@@ -454,10 +476,43 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
                          m_trustworthyLeadershipComment,
                          m_goodOwnershipAnswer,
                          m_goodOwnershipComment,
-                            m_otherInformation);
+                         m_otherInformation);
 
 
+    csaHtmlPg.createHtmlPage(m_html,
+                                          m_stockName,
+                                          m_stockSymbol,
+                                          m_analysisDate,
+                                          m_companyDescription,
+                                          m_bigEnoughAnswer,
+                                          m_bigEnoughComment,
+                                          m_strongFinancialPositionAnswer,
+                                          m_strongFinancialPositionComment,
+                                          m_earningStabilityAnswer,
+                                          m_earningStabilityComment,
+                                          m_dividendStabilityAnswer,
+                                          m_dividendStabilityComment,
+                                          m_earningGrowthAnswer,
+                                          m_earningGrowthComment,
+                                          m_keyValuePe,
+                                          m_keyValuePs,
+                                          m_keyValueNavPriceRatio,
+                                          m_keyValueYield,
+                                          m_keyValuePriceJEKRatio,
+                                          m_keyValueErningsDividentRatio,
+                                          m_keyValueTotalDebtEquityRatio,
+                                          m_keyValueCurrentRatio,
+                                          m_trustworthyLeadershipAnswer,
+                                          m_trustworthyLeadershipComment,
+                                          m_goodOwnershipAnswer,
+                                          m_goodOwnershipComment,
+                                          m_otherInformation);
 
+
+    //QUrl url(m_html);
+    //qDebug() << m_html;
+    //ui->webView->setUrl(url);
+    ui->webView->setHtml(m_html);
 
 
     ui->textEditCompDescription->setText(m_companyDescription);
