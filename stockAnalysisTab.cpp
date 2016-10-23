@@ -33,6 +33,9 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     on_SelStockListButton_clicked();
 
+    // Show html file that describes investment strategy
+    ui->webView_2->load(QUrl("qrc:/database/AnalysDoc/AnalysDoc/Investeringskriterier.html"));
+
 
 }
 

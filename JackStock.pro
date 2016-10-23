@@ -137,8 +137,8 @@ HEADERS  += WebBrowserTab.h \
     parsecompdescription.h \
     fatab.h \
     inc/guiUtil/guiFinanceColor.h \
-    src/guiUtil/mylineedit.h \
-    src/guiUtil/guifinancectrls.h \
+    inc/guiUtil/mylineedit.h \
+    inc/guiUtil/guifinancectrls.h \
     inc/guiUtil/guiFinanceCtrls.h \
     inc/guiUtil/myTreeWidget.h \
     inc/guiUtil/myLineEdit.h \
@@ -173,5 +173,10 @@ FORMS    += \
     keyIndicators_3.ui \
     adminmyportfolio.ui \
     stockanalysistab.ui
+
+RESOURCES += \
+    database/resourcedb.qrc
+
+
 
 
