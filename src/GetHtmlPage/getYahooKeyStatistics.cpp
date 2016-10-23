@@ -185,7 +185,7 @@ void GetYahooKeyStatistics::reqNextYahooKeyStatisticsFile(QString stockSymbol)
 {
 
     QString req;
-    bool res;
+    //bool res;
 
     if(m_waitOnServerResp == true)
     {
@@ -245,7 +245,7 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename, QString st
     QString str;
     QString errStr = QString("Fail to open file: %1").arg(filename);
 
-    m_interimStorage.StockSymbol = stockSymbol;
+
 
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
@@ -253,6 +253,12 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename, QString st
         QMessageBox::critical(NULL, QString::fromUtf8("Fail to open file"), errStr);
         return false;
     }
+
+
+    resetYahooKeyStatistics(m_interimStorage);
+
+    m_interimStorage.StockSymbol = stockSymbol;
+
 
     if(!outFile.open(QFile::WriteOnly | QFile::Text))
     {
@@ -394,6 +400,80 @@ bool GetYahooKeyStatistics::parseYahooKeyStatistics(QString filename, QString st
 }
 
 
+/*******************************************************************
+ *
+ * Function:    interimStorageYahooKeyStatistics()
+ *
+ * Description:
+ *
+ * Note: do not add stock symbol here.
+ *
+ *
+ *******************************************************************/
+void GetYahooKeyStatistics::
+resetYahooKeyStatistics(YahooKeyStatisticsST &interimStorage)
+{
+
+    interimStorage.StockSymbol.clear();
+    interimStorage.MarketCap.clear();
+    interimStorage.EnterpriseValue.clear();
+    interimStorage.TrailingPe.clear();
+    interimStorage.ForwardPe.clear();
+    interimStorage.PEGRatio.clear();
+    interimStorage.PriceDivSales.clear();
+    interimStorage.PriceDivBook.clear();
+    interimStorage.EnterpriseValueDivRevenue.clear();
+    interimStorage.EnterpriseValueDivEBITDA.clear();
+    interimStorage.FiscalYearEnds.clear();
+    interimStorage.MostRecentQuarter.clear();
+    interimStorage.ProfitMargin.clear();
+    interimStorage.OperatingMargin.clear();
+    interimStorage.ReturnOnAssets.clear();
+    interimStorage.ReturnOnEquity.clear();
+    interimStorage.Revenue.clear();
+    interimStorage.RevenuePerShare.clear();
+    interimStorage.QtrlyRevenueGrowth.clear();
+    interimStorage.GrossProfit.clear();
+    interimStorage.EBITDA.clear();
+    interimStorage.NetIncomeAvlToCommon.clear();
+    interimStorage.DilutedEPS.clear();
+    interimStorage.QtrlyEarningsGrowth.clear();
+    interimStorage.TotalCash.clear();
+    interimStorage.TotalCashPerShare.clear();
+    interimStorage.TotalDebt.clear();
+    interimStorage.TotalDebtDivEquity.clear();
+    interimStorage.CurrentRatio.clear();
+    interimStorage.BookValuePerShare.clear();
+    interimStorage.OperatingCashFlow.clear();
+    interimStorage.LeveredFreeCashFlow.clear();
+    interimStorage.Beta.clear();
+    interimStorage.Week52Change.clear();
+    interimStorage.S_And_P500_52WeekChange.clear();
+    interimStorage.ProcentHeldbyInsiders.clear();
+    interimStorage.ProcentHeldbyInstitutions.clear();
+    interimStorage.SharesShort.clear();
+    interimStorage.ShortRatio.clear();
+    interimStorage.ShortProcentOfFloat.clear();
+    interimStorage.SharesShortPriorMonth.clear();
+    interimStorage.ForwardAnnualDividendRate.clear();
+    interimStorage.ForwardAnnualDividendYield.clear();
+    interimStorage.Week52High.clear();
+    interimStorage.Week52Low.clear();
+    interimStorage.Day50MovingAverage.clear();
+    interimStorage.Day200MovingAverage.clear();
+    interimStorage.AvgVol3Month.clear();
+    interimStorage.AvgVol10Day.clear();
+    interimStorage.SharesOutstanding.clear();
+    interimStorage.Float_.clear();
+    interimStorage.TrailingAnnualDividendYield.clear();
+    interimStorage.TrailingAnnualDividendYield1.clear();
+    interimStorage.Year5AverageDividendYield.clear();
+    interimStorage.PayoutRatio.clear();
+    interimStorage.DividendDate.clear();
+    interimStorage.ExDividendDate.clear();
+    interimStorage.LastSplitFactor.clear();
+   interimStorage.LastSplitDate.clear();
+}
 
 /*******************************************************************
  *

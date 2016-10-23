@@ -60,6 +60,8 @@ private:
     void reqNextYahooKeyStatisticsFile(QString stockSymbol);
     //void slotReqNextCompanyData();
     void interimStorageYahooKeyStatistics(QString data, YahooKeyStatisticsET i, YahooKeyStatisticsST &interimStorage);
+    void resetYahooKeyStatistics(YahooKeyStatisticsST &interimStorage);
+
 
 
 
