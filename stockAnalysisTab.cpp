@@ -292,8 +292,8 @@ void StockAnalysisTab::on_pushButton_clicked()
     {
         m_BigCompDescription = ui->textEditCompDescription->toPlainText();
 
-        m_bigEnoughComment = ui->textEditBigEnoughText->toPlainText();
         m_bigEnoughAnswer = ui->lineEditBigEnoughAnswer->text();
+        m_bigEnoughComment = ui->textEditBigEnoughText->toPlainText();
 
         m_strongFinancialPositionAnswer = ui->lineEditFinancialStrongAnswer->text();
         m_strongFinancialPositionComment = ui->textEditFinancialStrongText->toPlainText();
@@ -515,27 +515,27 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     ui->webView->setHtml(m_html);
 
 
-    ui->textEditCompDescription->setText(m_companyDescription);
+    ui->textEditCompDescription->insertPlainText(m_companyDescription);
 
     // Big enought
     ui->lineEditBigEnoughAnswer->setText(m_bigEnoughAnswer);
-    ui->textEditBigEnoughText->setText(m_bigEnoughComment);
+    ui->textEditBigEnoughText->insertPlainText(m_bigEnoughComment);
 
     // Financial strong enought
     ui->lineEditFinancialStrongAnswer->setText(m_strongFinancialPositionAnswer);
-    ui->textEditFinancialStrongText->setText(m_strongFinancialPositionComment);
+    ui->textEditFinancialStrongText->insertPlainText(m_strongFinancialPositionComment);
 
     // Earning Stability
     ui->lineEditErningStabilityAnswer->setText(m_earningStabilityAnswer);
-    ui->textEditErningStabilityText->setText(m_earningStabilityComment);
+    ui->textEditErningStabilityText->insertPlainText(m_earningStabilityComment);
 
     // Dividend Stability
     ui->lineEditDividentStabilityAnswer->setText(m_dividendStabilityAnswer);
-    ui->textEditDividentStabilityText->setText(m_dividendStabilityComment);
+    ui->textEditDividentStabilityText->insertPlainText(m_dividendStabilityComment);
 
     // Erning Growth
     ui->lineEditErningGrowthAnswer->setText(m_earningGrowthAnswer);
-    ui->textEditErningGrowthText->setText(m_earningGrowthComment);
+    ui->textEditErningGrowthText->insertPlainText(m_earningGrowthComment);
 
     // Pe-value
     ui->lineEditPE->setText(m_keyValuePe);
@@ -549,13 +549,13 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
 
     // Trustworthy Leadership
     ui->lineEditTrustworthyManagementAnswer->setText(m_trustworthyLeadershipAnswer);
-    ui->textEditTrustworthyManagementText->setText(m_trustworthyLeadershipComment);
+    ui->textEditTrustworthyManagementText->setHtml(m_trustworthyLeadershipComment);
 
     // Good Ownership
     ui->lineEditBeneficialOwnershipAnswer->setText(m_goodOwnershipAnswer);
-    ui->textEditBeneficialOwnershipText->setText(m_goodOwnershipComment);
+    ui->textEditBeneficialOwnershipText->insertPlainText(m_goodOwnershipComment);
 
-    ui->textEditOtherInfo->setText(m_otherInformation);
+    ui->textEditOtherInfo->insertPlainText(m_otherInformation);
 
 }
 
@@ -612,6 +612,8 @@ void StockAnalysisTab::resetGuiCtrl(void)
     // Good Ownership
     ui->lineEditBeneficialOwnershipAnswer->clear();
     ui->textEditBeneficialOwnershipText->clear();
+
+    ui->textEditOtherInfo->clear();
 
 }
 

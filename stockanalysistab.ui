@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -113,16 +113,6 @@
          <y>460</y>
          <width>61</width>
          <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="textEditErningStabilityText">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>460</y>
-         <width>431</width>
-         <height>81</height>
         </rect>
        </property>
       </widget>
@@ -217,56 +207,6 @@
         <string>Övriga nyckeltal:</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="textEditDividentStabilityText">
-       <property name="geometry">
-        <rect>
-         <x>640</x>
-         <y>100</y>
-         <width>371</width>
-         <height>81</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="textEditErningGrowthText">
-       <property name="geometry">
-        <rect>
-         <x>640</x>
-         <y>190</y>
-         <width>371</width>
-         <height>81</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="textEditTrustworthyManagementText">
-       <property name="geometry">
-        <rect>
-         <x>640</x>
-         <y>280</y>
-         <width>371</width>
-         <height>81</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="textEditBeneficialOwnershipText">
-       <property name="geometry">
-        <rect>
-         <x>640</x>
-         <y>370</y>
-         <width>371</width>
-         <height>71</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="textEditBigEnoughText">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>240</y>
-         <width>431</width>
-         <height>81</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="lineEditDividentStabilityAnswer">
        <property name="geometry">
         <rect>
@@ -304,16 +244,6 @@
          <y>390</y>
          <width>61</width>
          <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="textEditFinancialStrongText">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>350</y>
-         <width>431</width>
-         <height>81</height>
         </rect>
        </property>
       </widget>
@@ -713,16 +643,6 @@
         <string>Pe</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="textEditCompDescription">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>80</y>
-         <width>501</width>
-         <height>121</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pushButtonRemoveRecord">
        <property name="geometry">
         <rect>
@@ -741,7 +661,7 @@
         <rect>
          <x>520</x>
          <y>460</y>
-         <width>121</width>
+         <width>91</width>
          <height>16</height>
         </rect>
        </property>
@@ -749,11 +669,91 @@
         <string>Övrigt:</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="textEditOtherInfo">
+      <widget class="QPlainTextEdit" name="textEditCompDescription">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>501</width>
+         <height>121</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditBigEnoughText">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>240</y>
+         <width>431</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditFinancialStrongText">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>350</y>
+         <width>431</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditErningStabilityText">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>450</y>
+         <width>431</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditDividentStabilityText">
        <property name="geometry">
         <rect>
          <x>640</x>
-         <y>450</y>
+         <y>109</y>
+         <width>371</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditErningGrowthText">
+       <property name="geometry">
+        <rect>
+         <x>640</x>
+         <y>190</y>
+         <width>371</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditTrustworthyManagementText">
+       <property name="geometry">
+        <rect>
+         <x>640</x>
+         <y>280</y>
+         <width>371</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditBeneficialOwnershipText">
+       <property name="geometry">
+        <rect>
+         <x>640</x>
+         <y>369</y>
+         <width>371</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="textEditOtherInfo">
+       <property name="geometry">
+        <rect>
+         <x>640</x>
+         <y>449</y>
          <width>371</width>
          <height>81</height>
         </rect>

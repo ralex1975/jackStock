@@ -57,7 +57,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
      // Add html page title
      m_htmlStr += QString::fromUtf8("<title>");
-     m_htmlStr += tmpStr;
+     m_htmlStr += QString::fromUtf8(tmpStr.toLocal8Bit().constData());
      m_htmlStr += QString::fromUtf8("</title>");
 
      m_htmlStr += QString::fromUtf8("</head>");
@@ -100,7 +100,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     // New line
     m_htmlStr += QString::fromUtf8("<tr>\n");
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\" colspan=\"3\" rowspan=\"1\">\n");
-    m_htmlStr += companyDescription;
+    m_htmlStr += QString::fromUtf8(companyDescription.toLocal8Bit().constData());
     m_htmlStr += QString::fromUtf8("<br>\n");
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
@@ -128,7 +128,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
-    m_htmlStr += bigEnoughComment;
+    m_htmlStr += QString::fromUtf8(bigEnoughComment.toLocal8Bit().constData());
     m_htmlStr += QString::fromUtf8("<br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -143,7 +143,8 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
-    m_htmlStr += strongFinancialPositionComment;
+    m_htmlStr += QString::fromUtf8(strongFinancialPositionComment.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("<br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -154,10 +155,12 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
     m_htmlStr += earningStabilityAnswer;
+
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
-    m_htmlStr += earningStabilityComment;
+    m_htmlStr += QString::fromUtf8(earningStabilityComment.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("<br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -171,7 +174,8 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
-    m_htmlStr += dividendStabilityComment;
+    m_htmlStr += QString::fromUtf8(dividendStabilityComment.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -185,6 +189,8 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
     m_htmlStr += earningGrowthComment;
+    m_htmlStr += QString::fromUtf8(earningGrowthComment.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -198,7 +204,8 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
-    m_htmlStr += trustworthyLeadershipComment;
+    m_htmlStr += QString::fromUtf8(trustworthyLeadershipComment.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -211,7 +218,8 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\">\n");
-    m_htmlStr += goodOwnershipComment;
+    m_htmlStr += QString::fromUtf8(goodOwnershipComment.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -227,7 +235,8 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\"><br>Övrigt:</td>\n");
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\"><br></td>\n");
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px;\"><br>\n");
-    m_htmlStr += otherInformation;
+    m_htmlStr += QString::fromUtf8(otherInformation.toLocal8Bit().constData());
+
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("</tr>\n");
