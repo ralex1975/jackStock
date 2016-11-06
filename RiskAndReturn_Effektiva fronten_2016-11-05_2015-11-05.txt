@@ -1,0 +1,15 @@
+Stockname|Risk|Return|startDate|endDate|
+|||2015-11-05|2016-11-05|
+Bilia A|11.7|8.2|||
+Ericsson Telephone Company|10.8|-17.4|||
+Fortum Oyj|9.7|1.6|||
+Holmen AB|9.1|6.7|||
+ICA Gruppen |5.9|-3.0|||
+Industrial & Financial Sys. B|2.9|7.3|||
+IND.VAERDEN -A-|6.4|-6.9|||
+Intrum Justitia|4.1|-0.3|||
+Investment AB Latour|7.8|2.5|||
+New Wave B|18.6|-2.9|||
+SCA Sv Cellulosa|4.7|0.1|||
+Swedbank AB|7.0|-2.8|||
+Tele2 AB|5.8|-10.3|||

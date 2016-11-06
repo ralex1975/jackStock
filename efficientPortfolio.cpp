@@ -13,6 +13,7 @@
 #include "common.h"
 #include <QItemSelectionModel>
 #include "inc/guiUtil/guiFinanceCtrls.h"
+#include <stdlib.h>
 
 
 
@@ -624,9 +625,11 @@ void EfficientPortfolio::removeQwtPlotArrMemSpace(void)
 void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
 {
     CUtil cu;
+    QString filename;
     CDbHndl db;
     CDbHndl::EfficPortStockData_ST data;
     int row;
+
 
     removeQwtPlotArrMemSpace();
     createQwtPlotArrMemSpace(m_stockArr1.size());
@@ -635,12 +638,40 @@ void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
 
     ui->treeWidget->clear();
 
-    QString endDate = ui->lineEditEndDate->text();
-    QString startDate = ui->lineEditStartDate->text();
     QString tmp;
     double x;
     double y;
+
+    QString startDate = ui->lineEditStartDate->text();
+    QString endDate = ui->lineEditEndDate->text();
     int colorNumber = 0;
+
+    filename = QString::fromUtf8("RiskAndReturn_");
+    filename += ui->StockListComboBox->currentText();
+    filename += "_";
+    filename += endDate;
+    filename += "_";
+    filename += startDate;
+    filename += ".txt";
+
+
+    QFile caFile(filename);
+
+    caFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    if(!caFile.isOpen())
+    {
+       qDebug() << "Error: open file";
+       QMessageBox::information(NULL, QString::fromUtf8("Fail to open file"), QString::fromUtf8("Fail to open file"));
+       return;
+    }
+
+    QTextStream outStream(&caFile);
+
+
+
+    outStream << "Stockname|" << "Risk|" << "Return|" << "startDate|"     << "endDate" << "|\n";
+    outStream <<          "|" <<     "|" <<       "|" << startDate << "|" << endDate   << "|\n";
+
 
     for(row = 0; row < m_stockArr1.size(); row++)
     {
@@ -676,6 +707,8 @@ void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
             QTreeWidgetItem *item = new QTreeWidgetItem;
             item->setText(CDbHndl::TWColum_Name, str);
             item->setText(CDbHndl::TWColum_SYMBOL, data.stockSymbol);
+            outStream  << data.stockName << "|";
+
             item->setExpanded(true);
                            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
                            item->setCheckState(CDbHndl::TWCOLUM_IS_SELECTED, Qt::Checked); // Qt::Unchecked
@@ -683,10 +716,17 @@ void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
                            item->setCheckState(CDbHndl::TWCOLUM_DEFAULT_SETTINGS, Qt::Unchecked); // Qt::Unchecked
                            item->setText(CDbHndl::TWCOLUM_IS_SELECTED, " ");
                            item->setText(CDbHndl::TWCOLUM_DEFAULT_SETTINGS, " ");
+
             tmp.sprintf("%.1f", data.riskStdDev*100);
             item->setText(CDbHndl::TWCOLUM_RISK, tmp);
+            outStream  << tmp << "|";
+
+
             tmp.sprintf("%.1f", data.meanReturns*100);
             item->setText(CDbHndl::TWCOLUM_RETURN, tmp);
+            outStream  << tmp << "|||\n";
+
+
             tmp.sprintf("%d", 0);
             item->setText(CDbHndl::TWCOLUM_MIN_PROCENT, tmp);
             tmp.sprintf("%d", 100);
@@ -707,6 +747,8 @@ void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
             qDebug() << "invalid risk return calc" << data.stockName;
         }
     }
+    caFile.close();
+
 }
 
 
@@ -767,16 +809,16 @@ void EfficientPortfolio::setTableWidth(int nofColumns)
 void EfficientPortfolio::initStockList(void)
 {
 
-    QString column0 = QObject::tr("Namn");
-    QString column1 = QObject::tr("Sym");
-    QString column2 = QObject::tr("Ink");
-    QString column3 = QObject::tr("Std");
-    QString column4 = QObject::tr("Förv.\nRisk");
-    QString column5 = QObject::tr("Förv.\nAvkst");
-    QString column6 = QObject::tr("Min\nvikt");
-    QString column7 = QObject::tr("Max\nvikt");
-    QString column8 = QObject::tr("Vald\nvikt");
-    QString column9 = QObject::tr("Antal");
+    QString column0 = QString::fromUtf8("Namn");
+    QString column1 = QString::fromUtf8("Sym");
+    QString column2 = QString::fromUtf8("Ink");
+    QString column3 = QString::fromUtf8("Std");
+    QString column4 = QString::fromUtf8("FÃ¶rv.\nRisk");
+    QString column5 = QString::fromUtf8("FÃ¶rv.\nAvkst");
+    QString column6 = QString::fromUtf8("Min\nvikt");
+    QString column7 = QString::fromUtf8("Max\nvikt");
+    QString column8 = QString::fromUtf8("Vald\nvikt");
+    QString column9 = QString::fromUtf8("Antal");
 
 
 
@@ -890,8 +932,8 @@ bool EfficientPortfolio::openStockListFile(QString filename)
 
             if(false == m_db.addTaStockList(stockListName))
             {
-                str.sprintf("Kan inte lÃ ?Â„gga till stockList");
-                QMessageBox::critical(NULL, QObject::tr("LÃ ?Â„ga till stock list"), str.toLocal8Bit().constData());
+                str.sprintf("Kan inte lÃ¤gga till namn i stockList");
+                QMessageBox::critical(NULL, QString::fromUtf8("LÃ¤gga till data"), str.toLocal8Bit().constData());
                 return false;
             }
             else
@@ -1316,4 +1358,3 @@ void EfficientPortfolio::copyTreeWidgetDataToTmpDb(CDbHndl &db, bool dbIsHandled
         //processItem(item, 1);
     }
 }
-

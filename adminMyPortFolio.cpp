@@ -97,7 +97,12 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
 
     // ui->marketValueLabel();
     ui->InvestedMoneyLabel->setPalette(*palette1);
+    ui->InvestedMoneyLabel_2->setPalette(*palette1);
+    ui->InvestedMoneyLabelData->setPalette(*palette1);
+
     ui->valueIncreaseLabel->setPalette(*palette2);
+    ui->valueIncreaseLabel_2->setPalette(*palette2);
+    ui->valueIncreaseLabelData->setPalette(*palette2);
 
 
 
@@ -361,14 +366,14 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
     CYahooStockPlotUtil cyspu;
     CUtil cu;
 
-    int row = 0;
+    //int row = 0;
     int year;
     int month;
     int minYear;
     int minMonth;
     double investedMoney;
     double withdraw;
-    double addedMoney;
+    //double addedMoney;
     double valueIncrease;
     QString data;
     CDbHndl db;
@@ -407,17 +412,17 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
         m_qwtPlotData.axis.minMaxIsInit = false;
 
         // Get month count since min date
-        table.getOneData(ui->tableView, maxRow-1, 0, data);
+        table.getOneData(ui->tableView, maxRow - 1, 0, data);
         year = data.toInt();
-        table.getOneData(ui->tableView, maxRow-1, 1, data);
+        table.getOneData(ui->tableView, maxRow - 1, 1, data);
         month = data.toInt();
         m_x[maxRow-1] = (double) cu.calcDeltaMonth(year, month, minYear, minMonth);
 
         // Get market value
-        table.getOneData(ui->tableView, maxRow-1, 2, data);
+        table.getOneData(ui->tableView, maxRow - 1, 2, data);
         m_y[maxRow-1] = (double) data.toDouble();
 
-        table.getOneData(ui->tableView, maxRow-1, 3, data);
+        table.getOneData(ui->tableView, maxRow - 1, 3, data);
         investedMoney = (double) data.toDouble();
         m_z[maxRow-1] = investedMoney;
 
@@ -494,9 +499,20 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
         interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
         m_barHistData.append (QwtIntervalSample(diff, interval));
         qDebug() << m_y[row] << m_y[row+1] << diff;
-
         i++;
     }
+
+    QString str;
+    str =  str.sprintf("%.0f\n", m_y[0]);
+    ui->marketValueLabelData->setText(str);
+
+    str =  str.sprintf("%.0f\n", m_z[0]);
+    ui->InvestedMoneyLabelData->setText(str);
+
+
+    str =  str.sprintf("%.0f\n", m_valueIncreaseArr[0]);
+    ui->valueIncreaseLabelData->setText(str);
+
 
     if(m_qwtPlotData.axis.minY > 0)
     {

@@ -161,6 +161,14 @@ enum YahooKeyStatisticsET
     STOCKSYMBOL                 // 58
 };
 
+
+struct DividendDataST
+{
+    QString Date;
+    QString Dividend;
+};
+
+
 struct YahooKeyStatisticsST
 {
     QString StockSymbol;
@@ -573,6 +581,43 @@ public:
        bool yieldIsValid;
        QString yield;
      };
+
+
+    // start dbSubHndl.cpp
+    bool subAnalysisDividendDateExists(QString date,
+                                       int mainAnalysisId,
+                                       int &analysisDateId);
+
+
+    bool insertSubAnalysisDividendDate(QString date,
+                                       int mainAnalysisId,
+                                       int &dateDividendId,
+                                       bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisDividendId(int mainAnalysisId,
+                                  int dividendDateId,
+                                  int &dividendDataId,
+                                  bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisDividend(int dividendDateId,
+                                   int mainAnalysisId,
+                                   int inputDividendDataId,
+                                   bool dividendDataIdIsValid,
+                                   QString dataDividend,
+                                   int &dividendDataId,
+                                   bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisDividendData(QString stockName,
+                               QString stockSymbol,
+                               DividendDataST *dividendDataArr,
+                               int &nofDividendArrData,
+                               bool dbIsHandledExternly = false);
+
+
+
+    // Stop dbSubHndl.cpp
+
+
 
 
     bool mainAnalysisDataExists(QString stockName,

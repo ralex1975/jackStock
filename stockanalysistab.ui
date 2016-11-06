@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -153,7 +153,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>440</y>
+         <y>430</y>
          <width>131</width>
          <height>17</height>
         </rect>
@@ -807,25 +807,12 @@
         <height>539</height>
        </rect>
       </property>
-      <widget class="QLabel" name="label_16">
+      <widget class="QPushButton" name="pushSaveDividend">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
-         <width>491</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Stark finansiell ställning, omsättningstillgångar bör vara dubbelt så stora som kortfristiga skulder och de totala skulderna bör inte vara större än omsättningstillgångarna</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>10</y>
-         <width>99</width>
+         <y>50</y>
+         <width>61</width>
          <height>27</height>
         </rect>
        </property>
@@ -833,17 +820,40 @@
         <string>Spara</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QTableWidget" name="tableWidgetDividend">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
-         <width>99</width>
-         <height>27</height>
+         <y>80</y>
+         <width>201</width>
+         <height>441</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="StockNameLabel_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>301</width>
+         <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Hämta</string>
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="ananlysisDateLabel_32">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>301</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </widget>

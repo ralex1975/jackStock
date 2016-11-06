@@ -87,6 +87,7 @@ parseProfitloss(QTextStream &inStream, int &dateIndex)
     static int i = 0;
     bool isValidNo;
 
+    str.clear();
     str = inStream.readLine();
     str = str.trimmed();
 
@@ -160,6 +161,7 @@ parseProfitloss(QTextStream &inStream, int &dateIndex)
             {
                 // qDebug() << "str aa" << str;
                 QString year;
+                year.clear();
                 year.sprintf("%d", intNumber);
                 year.toInt(&isValidNo);
                 if(true == isValidNo)

@@ -26,6 +26,8 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    initSubAnalysTables();
+
     m_gfc.initStockList1(ui->treeWidgetStockListAnalysis);
     m_gfc.addAllStockListsToCombobox(ui->StockListComboBoxAnalysis);
 
@@ -35,7 +37,6 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     // Show html file that describes investment strategy
     ui->webView_2->load(QUrl("qrc:/database/AnalysDoc/AnalysDoc/Investeringskriterier.html"));
-
 
 }
 
@@ -56,6 +57,53 @@ StockAnalysisTab::~StockAnalysisTab()
 {
     delete ui;
 }
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::initSubAnalysTables(void)
+{
+    QFont fnt;
+    QStringList labels;
+    labels << QString::fromUtf8("År") << QString::fromUtf8("Utdel/Aktie");
+
+    ui->tableWidgetDividend->setRowCount(20);
+    ui->tableWidgetDividend->setColumnCount(2);
+
+
+    fnt.setPointSize(9);
+    fnt.setFamily("Sans Serif");
+    const int rowCount = ui->tableWidgetDividend->rowCount();
+    const int columnCount = ui->tableWidgetDividend->columnCount();
+
+    for(int i = 0; i < rowCount; ++i)
+    {
+        for(int j = 0; j < columnCount; ++j)
+        {
+            QTableWidgetItem* selectedItem = ui->tableWidgetDividend->item(i, j);
+            if(selectedItem != NULL)
+            {
+                selectedItem->setFont(fnt);
+            }
+        }
+    }
+
+    ui->tableWidgetDividend->setHorizontalHeaderLabels(labels);
+    ui->tableWidgetDividend->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableWidgetDividend->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
+
+}
+
+
+
 
 /******************************************************************
  *
@@ -144,7 +192,8 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
         db.getStockAnalysisDate(m_stockName, m_stockSymbol, ui->treeWidgetAnalysisDate);
     }
 
-
+    ui->StockNameLabel_16->setText(m_stockName);
+    ui->ananlysisDateLabel_32->setText(m_analysisDate);
 
 
     if(startDate.isEmpty() == false && m_analysisDate.isEmpty() == false)
@@ -224,6 +273,33 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
         ui->lineEditReturnOnEquity->setText(yahooKeyData.returnOnEquity);
     }
+
+
+    // Get and display sub data
+    int nofDividendArrData;
+    DividendDataST data;
+
+    if(true == db.getSubAnalysisDividendData(m_stockName,
+                                             m_stockSymbol,
+                                             m_dividendDataArr,
+                                             nofDividendArrData))
+    {
+
+        for(int i = 0; i < nofDividendArrData; i++)
+        {
+            data = m_dividendDataArr[i];
+            ui->tableWidgetDividend->insertRow(i);
+
+            QTableWidgetItem *itemDate = new QTableWidgetItem( data.Date);
+            ui->tableWidgetDividend->setItem( i, 0, itemDate);
+
+            QTableWidgetItem *itemDividend = new QTableWidgetItem(data.Dividend);
+            ui->tableWidgetDividend->setItem( i, 1, itemDividend);
+
+        }
+    }
+
+
 
 }
 
@@ -449,6 +525,7 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
 
     m_analysisDate = analysisDate;
     ui->analysisDateLineEdit->setText(analysisDate);
+    ui->ananlysisDateLabel_32->setText(m_analysisDate);
 
     resetStockAnalysisData();
     resetGuiCtrl();
@@ -552,7 +629,7 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
 
     // Trustworthy Leadership
     ui->lineEditTrustworthyManagementAnswer->setText(m_trustworthyLeadershipAnswer);
-    ui->textEditTrustworthyManagementText->setHtml(m_trustworthyLeadershipComment);
+    ui->textEditTrustworthyManagementText->setText(m_trustworthyLeadershipComment);
 
     // Good Ownership
     ui->lineEditBeneficialOwnershipAnswer->setText(m_goodOwnershipAnswer);
@@ -695,3 +772,162 @@ void StockAnalysisTab::on_pushButtonRemoveRecord_clicked()
     }
 
 }
+
+#if 0
+/******************************************************************
+ *
+ * Function:    on_pushSaveDividend_clicked()
+ *
+ * Description: This function saves data to db
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushSaveDividend_clicked()
+{
+   // QString itemDate, itemDividend, str;
+    int nofData;
+    nofData = ui->tableWidgetDividend->rowCount();
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetDividend->item(row, 0))
+       {
+            qDebug() << ui->tableWidgetDividend->item(row, 0)->text();
+            break;
+       }
+        //ui->tableWidgetDividend->item(row, 0);
+        //itemDate = ui->tableWidgetDividend->cellWidget(row, 1);
+        //itemDividend = ui->tableWidgetDividend->cellWidget(row, 2);
+
+        //qDebug() << "Date" << itemDate;
+        //qDebug() << "Dividend" << itemDividend;
+    }
+
+}
+#endif
+
+
+
+/******************************************************************
+ *
+ * Function:    on_pushSaveDividend_clicked()
+ *
+ * Description: This function saves dividend data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushSaveDividend_clicked()
+{
+
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dividendDateId;
+    int inputDividendDataId;
+    int dividendDataId;
+    bool dividendDataIdIsValid = false;
+
+    int nofData;
+    QString dividendDate;
+    QString dividendData;
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+
+    nofData = ui->tableWidgetDividend->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetDividend->item(row, 0))
+       {
+            dividendDate = ui->tableWidgetDividend->item(row, 0)->text();
+            dividendData = ui->tableWidgetDividend->item(row, 1)->text();
+
+            dividendDate.toInt(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+            }
+
+            dividendData.toDouble(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Dividend is not a number"));
+            }
+       }
+       else
+       {
+           break;
+       }
+
+
+        if(true == res)
+        {
+            res = db.subAnalysisDividendDateExists(dividendDate,
+                                                   mainAnalysisId,
+                                                   dividendDateId);
+        }
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisDividendDate(dividendDate,
+                                                   mainAnalysisId,
+                                                   dividendDateId);
+        }
+
+
+        if(true == res)
+        {
+           dividendDataIdIsValid = false;
+
+           if( true == db.getSubAnalysisDividendId(mainAnalysisId, dividendDateId, inputDividendDataId))
+           {
+               dividendDataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisDividend(dividendDateId,
+                                               mainAnalysisId,
+                                               inputDividendDataId,
+                                               dividendDataIdIsValid,
+                                               dividendData,
+                                               dividendDataId);
+        }
+    }
+
+}
+
+
+

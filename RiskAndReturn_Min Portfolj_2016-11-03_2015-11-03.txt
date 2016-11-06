@@ -1,0 +1,26 @@
+Stockname|Risk|Return|startDate|endDate|
+|||2015-11-03|2016-11-03|
+AstraZeneca PLC|7.4|-2.4|||
+Axfood Ab|4.3|-1.5|||
+Betsson B|10.1|-5.9|||
+Bilia A|11.7|9.6|||
+Bure Equity|17.2|31.3|||
+Fortum Oyj|9.7|4.7|||
+HENNES&MAURITZ -B-|6.9|-16.6|||
+Holmen AB|9.1|7.9|||
+ICA Gruppen |5.9|-2.7|||
+IND.VAERDEN -C-|7.5|-6.8|||
+Investor AB|5.6|-6.4|||
+L E Lundbergforetagen AB|9.8|7.2|||
+New Wave B|18.5|2.5|||
+Nordea Bank AB|8.4|-15.4|||
+Sagax A|19.0|16.3|||
+Sagax B|14.2|9.1|||
+SCA Sv Cellulosa|4.6|1.4|||
+Seadrill|33.7|-79.9|||
+Skanska AB|8.2|6.9|||
+Svenska Handelsbanken|5.0|-5.6|||
+Swedbank AB|7.0|-3.0|||
+Tele2 AB|5.9|-9.7|||
+Teliasonera Ab|4.8|-8.7|||
+Öresund|28.5|-0.9|||

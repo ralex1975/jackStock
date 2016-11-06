@@ -104,6 +104,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("<br><br>\n");
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
     // New line
     m_htmlStr += QString::fromUtf8("<tr>\n");
@@ -118,6 +119,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\"><b>Uppfyllt?</b></td>\n");
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\"><b>Kommentar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></b></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
     // New line Big Enough
     m_htmlStr += QString::fromUtf8("<tr>\n");
@@ -131,6 +133,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8(bigEnoughComment.toLocal8Bit().constData());
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
 
@@ -147,6 +150,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
     // New line Earning Stability
@@ -163,6 +167,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
 
@@ -178,6 +183,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
     // New line Earning Growth
@@ -188,11 +194,11 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8("</td>\n");
 
     m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
-    m_htmlStr += earningGrowthComment;
     m_htmlStr += QString::fromUtf8(earningGrowthComment.toLocal8Bit().constData());
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
 
@@ -208,6 +214,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
     // New line Good Ownership
@@ -222,6 +229,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
     // New line
     m_htmlStr += QString::fromUtf8("<tr>\n");
@@ -238,8 +246,9 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += QString::fromUtf8(otherInformation.toLocal8Bit().constData());
 
     m_htmlStr += QString::fromUtf8("<br><br></td>\n");
-
     m_htmlStr += QString::fromUtf8("</tr>\n");
+    m_htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
+
     m_htmlStr += QString::fromUtf8("</tbody>\n");
     m_htmlStr += QString::fromUtf8("</table>\n");
 
@@ -268,16 +277,16 @@ void createStockAnalysisHtmlPage::createHtmlPage(QString &m_htmlStr,
     m_htmlStr += keyValueYield;
     m_htmlStr += QString::fromUtf8("</td>\n");
 
-    m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
-    m_htmlStr += keyValuePriceJEKRatio;
+    m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">returnOnEquity\n");
+    // m_htmlStr += returnOnEquity
     m_htmlStr += QString::fromUtf8("</td>\n");
 
-    m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">RISK\n");
-    //m_htmlStr += risk fixa detta
-    m_htmlStr += QString::fromUtf8("</td>\n");
-
-    m_htmlStr += QString::fromUtf8("<td colspan=\"1\" rowspan=\"1\" style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
+    m_htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">");
     m_htmlStr += keyValueTotalDebtEquityRatio;
+    m_htmlStr += QString::fromUtf8("</td>\n");
+
+    m_htmlStr += QString::fromUtf8("<td colspan=\"1\" rowspan=\"1\" style=\"height: 35px; text-align: left; vertical-align: top;\">Förväntad risk\n");
+    //m_htmlStr +=
     m_htmlStr += QString::fromUtf8("</td>\n");
     m_htmlStr += QString::fromUtf8("</tr>\n");
 

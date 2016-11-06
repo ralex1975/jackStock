@@ -8,11 +8,19 @@ namespace Ui {
 class StockAnalysisTab;
 }
 
+#define MAX_NOF_DIVIDEND_ARR_DATA 100
+
+
+
+
 class StockAnalysisTab : public QDialog
 {
     Q_OBJECT
 
      QString m_html;
+
+     DividendDataST m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
+
 
     GuiFinanceCtrls m_gfc;
     QString m_stockName;
@@ -57,6 +65,9 @@ public:
     explicit StockAnalysisTab(QWidget *parent = 0);
     ~StockAnalysisTab();
 
+    void initSubAnalysTables(void);
+
+
 private slots:
     void on_SelStockListButton_clicked();
 
@@ -67,6 +78,8 @@ private slots:
     void on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex &index);
 
     void on_pushButtonRemoveRecord_clicked();
+
+    void on_pushSaveDividend_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

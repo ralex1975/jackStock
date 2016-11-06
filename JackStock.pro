@@ -86,7 +86,8 @@ SOURCES += main.cpp\
     keyIndicators_3.cpp \
     stockAnalysisTab.cpp \
     extendedLineEdit.cpp \
-    createstockanalysishtmlpage.cpp
+    createstockanalysishtmlpage.cpp \
+    dbSubHndl.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \

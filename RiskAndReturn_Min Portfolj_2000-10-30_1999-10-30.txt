@@ -1,0 +1,22 @@
+Stockname|Risk|Return|startDate|endDate|
+|||1999-10-30|2000-10-30|
+AstraZeneca PLC|14.2|10.3|||
+Axfood Ab|7.1|-10.3|||
+Betsson B|15.0|-31.1|||
+Bilia A|8.8|5.7|||
+Bure Equity|13.9|26.7|||
+HENNES&MAURITZ -B-|21.1|-29.0|||
+Holmen AB|12.5|-28.2|||
+IND.VAERDEN -C-|6.9|15.6|||
+Investor AB|4.5|8.5|||
+L E Lundbergforetagen AB|4.8|5.3|||
+New Wave B|16.8|38.2|||
+Nordea Bank AB|15.0|12.4|||
+Sagax A|61.5|4.0|||
+SCA Sv Cellulosa|10.9|-27.9|||
+Skanska AB|34.3|8.3|||
+Svenska Handelsbanken|31.3|21.9|||
+Swedbank AB|7.3|0.7|||
+Tele2 AB|17.3|5.4|||
+Teliasonera Ab|15.7|-21.4|||
+Öresund|7.6|24.6|||

@@ -237,7 +237,7 @@ bool CDbHndl::createTable(void)
     //===================================================================
     // TblAvanzaAssetName
     //===================================================================
-    tmp.sprintf("CREATE TABLE IF NOT EXISTS TblMainHelpSection"
+    tmp.sprintf("CREATE TABLE IF NOT EXISTS TblMainHelpSection "
                 " (MainHelpSectionName VARCHAR(255), "
                 " MainHelpSectionId INTEGER PRIMARY KEY AUTOINCREMENT);");
 
@@ -294,7 +294,600 @@ bool CDbHndl::createTable(void)
         qry.finish();
 
 
+// 1
+// Date
+        //-----------------------------------------------------------------------
+        // TblDateDividendSubAnalysis (Utdelning)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateDividendSubAnalysis "
+                    " (DateDividendId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateDividend DATE, "
+                    " MainAnalysisId INTEGER);");
 
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateDividendSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// Data
+        //-----------------------------------------------------------------------
+        // TblDataDividendSubAnalysis (Utdelning)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataDividendSubAnalysis "
+                    " (DataDividendId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateDividendId INTEGER, "
+                    " DataDividend VARCHAR(255), "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataDividendSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+// 2
+//Date
+        //-----------------------------------------------------------------------
+        // TblDateEarningsSubAnalysis (Vinst)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateEarningsSubAnalysis "
+                    " (DateEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateEarnings DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+//Data
+        //-----------------------------------------------------------------------
+        // TblDataEarningsSubAnalysis (Vinst)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataEarningsSubAnalysis "
+                    " (DataEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateEarningsId INTEGER, "
+                    "  DataEarnings VARCHAR(255), "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+// 3
+
+// Date
+        //-----------------------------------------------------------------------
+        // TblDateTotalCurrentAssetsSubAnalysis (Omsättningstillgångar)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotalCurrentAssetsSubAnalysis "
+                    " (DateTotalCurrentAssetsId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTotalCurrentAssets DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTotalCurrentAssetsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// Data
+        //-----------------------------------------------------------------------
+        // TblDataTotalCurrentAssetsSubAnalysis (Omsättningstillgångar)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotalCurrentAssetsSubAnalysis "
+                    " (DataTotalCurrentAssetsId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTotalCurrentAssetsId INTEGER, "
+                    "  DataTotalCurrentAssets VARCHAR(255), "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataTotalCurrentAssetsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+
+// 4
+// Date
+        //-----------------------------------------------------------------------
+        // TblDateTotalCurrentLiabilitiesSubAnalysis (Kortfristiga skulder)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotalCurrentLiabilitiesSubAnalysis "
+                    " (DateTotalCurrentLiabilitiesId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTotalCurrentLiabilities DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTotalCurrentLiabilitiesSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+        // Data
+                //-----------------------------------------------------------------------
+                // TblDataTotalCurrentLiabilitiesSubAnalysis (Kortfristiga skulder)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotalCurrentLiabilitiesSubAnalysis "
+                            " (DataTotalCurrentLiabilitiesId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  DateTotalCurrentLiabilitiesId INTEGER, "
+                            "  DataTotalCurrentLiabilities VARCHAR(255), "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataTotalCurrentLiabilitiesSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+
+
+// 5
+        //-----------------------------------------------------------------------
+        // TblDateTotalLiabilitiesSubAnalysis (Totala skulder)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotalLiabilitiesSubAnalysis "
+                    " (DateTotalLiabilitiesId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateTotalLiabilities DATE, "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTotalLiabilitiesSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// Data
+        //-----------------------------------------------------------------------
+        // TblDataTotalLiabilitiesSubAnalysis (Totala skulder)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotalLiabilitiesSubAnalysis "
+                    " (DataTotalLiabilitiesId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateTotalLiabilitiesId INTEGER, "
+                    " DataTotalLiabilities VARCHAR(255), "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataTotalLiabilitiesSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+// 6
+// Date
+        //-----------------------------------------------------------------------
+        // TblDateSoliditySubAnalysis (soliditet)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateSoliditySubAnalysis "
+                    " (DateSolidityId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateSolidity DATE, "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateSoliditySubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+// Data
+        //-----------------------------------------------------------------------
+        // TblDataSoliditySubAnalysis (soliditet)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataSoliditySubAnalysis "
+                    " (DataSolidityId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateSolidityId INTEGER, "
+                    " DataSolidity VARCHAR(255), "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataSoliditySubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+// 7
+
+//Date
+        //-----------------------------------------------------------------------
+        // TblDateCoverageRatioSubAnalysis (räntetäckningsgraden)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateCoverageRatioSubAnalysis "
+                    " (CoverageRatioDateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  CoverageRatioDate DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateCoverageRatioSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// Data
+                //-----------------------------------------------------------------------
+                // TblDataCoverageRatioSubAnalysis (räntetäckningsgraden)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataCoverageRatioSubAnalysis "
+                            " (CoverageRatioDataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  CoverageRatioDateId INTEGER, "
+                            "  CoverageRatioData VARCHAR(255), "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataCoverageRatioSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+
+// 8
+// Date
+
+        //-----------------------------------------------------------------------
+        // TblDateCoreCapitalRatioSubAnalysis (kärnprimärkapitalrelation används ej)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateCoreCapitalRatioSubAnalysis "
+                    " (DateCoreCapitalRatioId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateCoreCapitalRatio DATE, "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateCoreCapitalRatioSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// Data
+        //-----------------------------------------------------------------------
+        // TblDataCoreCapitalRatioSubAnalysis (kärnprimärkapitalrelation används ej)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataCoreCapitalRatioSubAnalysis "
+                    " (DataCoreCapitalRatioId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateCoreCapitalRatioId INTEGER, "
+                    "  DataCoreCapitalRatio VARCHAR(255), "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataCoreCapitalRatioSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// 9
+
+// Date
+        //-----------------------------------------------------------------------
+        // TblDateCoreTier1RatioSubAnalysis (primärkapitalrelation, Lundaluppen)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTier1RatioSubAnalysis "
+                    " (DateTier1RatioId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTier1Ratio DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTier1RatioSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+// Data
+
+        //-----------------------------------------------------------------------
+        // TblDataCoreTier1RatioSubAnalysis (primärkapitalrelation, Lundaluppen)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTier1RatioSubAnalysis "
+                    " (DataTier1RatioId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTier1RatioId INTEGER, "                             // YYYY-MM-DD ID
+                    "  DataTier1Ratio VARCHAR(255), "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataTier1RatioSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+//===========================
         //-----------------------------------------------------------------------
         // TblDateAnalysis
         //-----------------------------------------------------------------------
@@ -384,6 +977,7 @@ bool CDbHndl::createTable(void)
 
                 qry.finish();
 
+//===========================
 
 
                     //-----------------------------------------------------------------------
@@ -1643,7 +2237,7 @@ insertMainAnalysisDate(QString date,
     const char *c_date = ba.data();
 
 
-    str.sprintf("INSERT OR SELECT INTO TblDateAnalysis "
+    str.sprintf("INSERT OR REPLACE INTO TblDateAnalysis "
                 "(AnalysisDate, MainAnalysisId) "
                 " VALUES('%s', %d);",
                 c_date,
@@ -1687,7 +2281,7 @@ insertMainAnalysisDate(QString date,
 
 /*****************************************************************
  *
- * Function:		getNordnetYahooKeyData()
+ * Function:		getAnalysisDataId()
  *
  * Description:
  *
@@ -2547,7 +3141,7 @@ getStockAnalysisData(QString stockName,
                 otherInformation.clear();
                 if(rec.value("otherInformation").isNull() == false)
                 {
-                    goodOwnershipComment = rec.value("otherInformation").toString();
+                    otherInformation = rec.value("otherInformation").toString();
                 }
 
             }
