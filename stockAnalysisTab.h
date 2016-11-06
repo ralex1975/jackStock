@@ -8,8 +8,8 @@ namespace Ui {
 class StockAnalysisTab;
 }
 
-#define MAX_NOF_DIVIDEND_ARR_DATA 100
-
+#define MAX_NOF_DIVIDEND_ARR_DATA       100
+#define MAX_NOF_EARNINGS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
 
 
 
@@ -20,6 +20,9 @@ class StockAnalysisTab : public QDialog
      QString m_html;
 
      DividendDataST m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
+     EarningsDataST m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
+
+
 
 
     GuiFinanceCtrls m_gfc;
@@ -80,6 +83,8 @@ private slots:
     void on_pushButtonRemoveRecord_clicked();
 
     void on_pushSaveDividend_clicked();
+
+    void on_pushSaveEarnings_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

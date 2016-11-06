@@ -164,9 +164,17 @@ enum YahooKeyStatisticsET
 
 struct DividendDataST
 {
-    QString Date;
-    QString Dividend;
+    QString date;
+    QString dividend;
 };
+
+
+struct EarningsDataST
+{
+    QString date;
+    QString earnings;
+};
+
 
 
 struct YahooKeyStatisticsST
@@ -584,9 +592,11 @@ public:
 
 
     // start dbSubHndl.cpp
+
+    // Dividend
     bool subAnalysisDividendDateExists(QString date,
                                        int mainAnalysisId,
-                                       int &analysisDateId);
+                                       int &dateDividendId);
 
 
     bool insertSubAnalysisDividendDate(QString date,
@@ -612,6 +622,38 @@ public:
                                DividendDataST *dividendDataArr,
                                int &nofDividendArrData,
                                bool dbIsHandledExternly = false);
+
+
+    //Earnings
+    bool subAnalysisEarningsDateExists(QString date,
+                                       int mainAnalysisId,
+                                       int &earningsDateId);
+
+    bool insertSubAnalysisEarningsDate(QString date,
+                                       int mainAnalysisId,
+                                       int &dateEarningsId,
+                                       bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisEarningsId(int mainAnalysisId,
+                                  int earningsDateId,
+                                  int &earningsDataId,
+                                  bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisEarnings(int earningsDateId,
+                                   int mainAnalysisId,
+                                   int inputEarningsDataId,
+                                   bool earningsDataIdIsValid,
+                                   QString dataEarnings,
+                                   int &earningsDataId,
+                                   bool dbIsHandledExternly = false);
+
+
+
+    bool getSubAnalysisEarningsData(QString stockName,
+                                    QString stockSymbol,
+                                    EarningsDataST *earningsDataArr,
+                                    int &nofEarningsArrData,
+                                    bool dbIsHandledExternly = false);
 
 
 

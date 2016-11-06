@@ -71,34 +71,28 @@ StockAnalysisTab::~StockAnalysisTab()
  *****************************************************************/
 void StockAnalysisTab::initSubAnalysTables(void)
 {
-    QFont fnt;
+    // Dividend
     QStringList labels;
     labels << QString::fromUtf8("År") << QString::fromUtf8("Utdel/Aktie");
 
     ui->tableWidgetDividend->setRowCount(20);
     ui->tableWidgetDividend->setColumnCount(2);
 
-
-    fnt.setPointSize(9);
-    fnt.setFamily("Sans Serif");
-    const int rowCount = ui->tableWidgetDividend->rowCount();
-    const int columnCount = ui->tableWidgetDividend->columnCount();
-
-    for(int i = 0; i < rowCount; ++i)
-    {
-        for(int j = 0; j < columnCount; ++j)
-        {
-            QTableWidgetItem* selectedItem = ui->tableWidgetDividend->item(i, j);
-            if(selectedItem != NULL)
-            {
-                selectedItem->setFont(fnt);
-            }
-        }
-    }
-
     ui->tableWidgetDividend->setHorizontalHeaderLabels(labels);
     ui->tableWidgetDividend->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
     ui->tableWidgetDividend->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
+
+    // Earnings
+    labels.clear();
+    labels << QString::fromUtf8("År") << QString::fromUtf8("Vinst/Aktie");
+
+    ui->tableWidgetEarnings->setRowCount(20);
+    ui->tableWidgetEarnings->setColumnCount(2);
+
+    ui->tableWidgetEarnings->setHorizontalHeaderLabels(labels);
+    ui->tableWidgetEarnings->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableWidgetEarnings->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
+
 
 }
 
@@ -275,7 +269,14 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     }
 
 
+    //====================================================================
     // Get and display sub data
+    //====================================================================
+
+    ui->tableWidgetDividend->clearContents();
+    ui->tableWidgetEarnings->clearContents();
+
+    // Dividend
     int nofDividendArrData;
     DividendDataST data;
 
@@ -290,11 +291,36 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             data = m_dividendDataArr[i];
             ui->tableWidgetDividend->insertRow(i);
 
-            QTableWidgetItem *itemDate = new QTableWidgetItem( data.Date);
+            QTableWidgetItem *itemDate = new QTableWidgetItem( data.date);
             ui->tableWidgetDividend->setItem( i, 0, itemDate);
 
-            QTableWidgetItem *itemDividend = new QTableWidgetItem(data.Dividend);
+            QTableWidgetItem *itemDividend = new QTableWidgetItem(data.dividend);
             ui->tableWidgetDividend->setItem( i, 1, itemDividend);
+
+        }
+    }
+
+
+    // Earnings
+    int nofEarningsArrData;
+    EarningsDataST eData;
+
+    if(true == db.getSubAnalysisEarningsData(m_stockName,
+                                             m_stockSymbol,
+                                             m_earningsDataArr,
+                                             nofEarningsArrData))
+    {
+
+        for(int i = 0; i < nofEarningsArrData; i++)
+        {
+            eData = m_earningsDataArr[i];
+            ui->tableWidgetEarnings->insertRow(i);
+
+            QTableWidgetItem *itemDate = new QTableWidgetItem(eData.date);
+            ui->tableWidgetEarnings->setItem( i, 0, itemDate);
+
+            QTableWidgetItem *itemEarnings = new QTableWidgetItem(eData.earnings);
+            ui->tableWidgetEarnings->setItem( i, 1, itemEarnings);
 
         }
     }
@@ -893,7 +919,7 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
        }
 
 
-        if(true == res)
+       // if(true == res)
         {
             res = db.subAnalysisDividendDateExists(dividendDate,
                                                    mainAnalysisId,
@@ -931,3 +957,121 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
 
 
 
+/******************************************************************
+ *
+ * Function:    on_pushSaveDividend_clicked()
+ *
+ * Description: This function saves earnings data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushSaveEarnings_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int earningsDateId;
+    int inputEarningsDataId;
+    int earningsDataId;
+    bool earningsDataIdIsValid = false;
+
+    int nofData;
+    QString earningsDate;
+    QString earningsData;
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+
+    nofData = ui->tableWidgetEarnings->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetEarnings->item(row, 0))
+       {
+            earningsDate = ui->tableWidgetEarnings->item(row, 0)->text();
+            earningsData = ui->tableWidgetEarnings->item(row, 1)->text();
+
+            earningsDate.toInt(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+            }
+
+            earningsData.toDouble(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Earnings is not a number"));
+            }
+       }
+       else
+       {
+           break;
+       }
+
+
+        //if(true == res)
+        {
+            res = db.subAnalysisEarningsDateExists(earningsDate,
+                                                   mainAnalysisId,
+                                                   earningsDateId);
+        }
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisEarningsDate(earningsDate,
+                                                   mainAnalysisId,
+                                                   earningsDateId);
+        }
+
+
+        if(true == res)
+        {
+           earningsDataIdIsValid = false;
+
+           if( true == db.getSubAnalysisEarningsId(mainAnalysisId, earningsDateId, inputEarningsDataId))
+           {
+               earningsDataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisEarnings(earningsDateId,
+                                               mainAnalysisId,
+                                               inputEarningsDataId,
+                                               earningsDataIdIsValid,
+                                               earningsData,
+                                               earningsDataId);
+        }
+    }
+
+}
