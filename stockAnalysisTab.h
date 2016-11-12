@@ -8,10 +8,10 @@ namespace Ui {
 class StockAnalysisTab;
 }
 
-#define MAX_NOF_DIVIDEND_ARR_DATA       100
-#define MAX_NOF_EARNINGS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
-
-
+#define MAX_NOF_DIVIDEND_ARR_DATA                   100
+#define MAX_NOF_EARNINGS_ARR_DATA                   MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOTAL_CURRENT_LIABILITIES           MAX_NOF_DIVIDEND_ARR_DATA
 
 class StockAnalysisTab : public QDialog
 {
@@ -19,9 +19,10 @@ class StockAnalysisTab : public QDialog
 
      QString m_html;
 
-     DividendDataST m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
-     EarningsDataST m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
-
+     DividendDataST             m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
+     EarningsDataST             m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
+     TotalCurrentAssetsST       m_totalCurrentAssetsArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+     TotalCurrentLiabilitiesST  m_totalCurrentLiabilitiesArr[MAX_NOF_TOTAL_CURRENT_LIABILITIES];
 
 
 
@@ -85,6 +86,10 @@ private slots:
     void on_pushSaveDividend_clicked();
 
     void on_pushSaveEarnings_clicked();
+
+    void on_pushButtonSaveTotalCurrentAsset_clicked();
+
+    void on_pushButtonSaveTotalCurrentLiabilities_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

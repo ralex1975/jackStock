@@ -45,7 +45,6 @@ CTableTab::CTableTab(QWidget *parent) :
 
 
     m_filesReceived = 0;
-
     m_parserThread = new CParseSnapshotData(this);
 
     if(!m_parserThread)
@@ -91,17 +90,9 @@ CTableTab::CTableTab(QWidget *parent) :
 
 
     // Init filter comboBoxes
-    //qDebug("Open db 108 %s, %d", __FILE__, __LINE__);
-    //db.openDb(PATH_JACK_STOCK_DB);
-
     db.initSortCompareToComboBoxes(&m_filterCtrls);
     db.initIndicatorToComboBoxes(&m_filterCtrls);
     (void)db.dbDataSetFilterComboSel(&m_filterCtrls);
-    //db.closeDb();
-    // qDebug("Close db 108 %s, %d", __FILE__, __LINE__);
-
-    //bool isSSLSupported = QSslSocket::supportsSsl();
-    //qDebug() << "isSSLSupported=  " << isSSLSupported << "\n";
 
 
     m_sortWithoutfilter = false;
@@ -161,31 +152,19 @@ void CTableTab::sectionClicked1(int logicalIndex)
     }
     else
     {
-        //logicalIndex = logicalIndex;
-        //QMessageBox::information(NULL, QString::fromUtf8("Header clicked"), QString::fromUtf8("Header clicked") );
-
-
         if(true == db.filter1DividendGetColumnSortParameter(logicalIndex, sortParam))
         {
-            // qDebug("Open db 7 %s, %d", __FILE__, __LINE__);
-            // db.openDb(PATH_JACK_STOCK_DB);
             db.createTabelTabFilter(m_filterCtrls);
-
-            //QMessageBox::information(NULL, QString::fromUtf8("sortOrder"), m_tableHeaderList[logicalIndex].sortOrder );
-
-
             db.debugPrintFilter();
 
 
             if(m_tableHeaderList[logicalIndex].sortOrder.compare(QString::fromUtf8(SQL_STR_DESC)) ==  0)
             {
                m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_ASC;
-               //QMessageBox::information(NULL, QString::fromUtf8(SQL_STR_ASC), m_tableHeaderList[logicalIndex].sortOrder);
             }
             else if(m_tableHeaderList[logicalIndex].sortOrder.compare(QString::fromUtf8(SQL_STR_ASC)) ==  0)
             {
                 m_tableHeaderList[logicalIndex].sortOrder = SQL_STR_DESC;
-                //QMessageBox::information(NULL, QString::fromUtf8(SQL_STR_DESC), m_tableHeaderList[logicalIndex].sortOrder);
             }
             else
             {
@@ -206,9 +185,6 @@ void CTableTab::sectionClicked1(int logicalIndex)
 
             // Set Filter Combo Box last Selection
             (void)db.dbDataSetFilterComboSel(&m_filterCtrls);
-
-            // db.closeDb();
-            // qDebug("Close db 7 %s, %d", __FILE__, __LINE__);
     }
     else
     {

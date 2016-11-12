@@ -258,7 +258,7 @@ getSubAnalysisEarningsId(int mainAnalysisId,
             else
             {
                 found = true;
-                qDebug() << rec.value("DateDividendId").toString();
+                qDebug() << rec.value("DataEarningsId").toString();
                 qDebug() << rec.value("MainAnalysisId").toString();
 
 
@@ -387,32 +387,6 @@ insertSubAnalysisEarnings(int earningsDateId,
 
 
 
-#if 0
-
-// 2
-//Date
-        //-----------------------------------------------------------------------
-        // TblDateEarningsSubAnalysis (Vinst)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateEarningsSubAnalysis "
-                    " (DateEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateEarnings DATE, "
-                    "  MainAnalysisId INTEGER);");
-
-
-
-//Data
-        //-----------------------------------------------------------------------
-        // TblDataEarningsSubAnalysis (Vinst)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataEarningsSubAnalysis "
-                    " (DataEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateEarningsId INTEGER, "
-                    "  DataEarnings VARCHAR(255), "
-                    "  MainAnalysisId INTEGER);");
-
-
-#endif
 
 
 
@@ -562,18 +536,6 @@ getSubAnalysisEarningsData(QString stockName,
 
 
 
-#if 0
-
-
-
-
-
-
-
-
-
-
-#endif
 
 
 
@@ -1118,210 +1080,1094 @@ getSubAnalysisDividendData(QString stockName,
 
 
 
+/****************************************************************
+ *
+ * Function:    subAnalysisTotalCurrentAssetsDateExists()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisTotalCurrentAssetsDateExists(QString date,
+                                                      int mainAnalysisId,
+                                                      int &totalCurrentAssetsDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
 
 
 
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateTotalCurrentAssetsSubAnalysis "
+                " WHERE DateTotalCurrentAssets = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotalCurrentAssetsSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("DateTotalCurrentAssets").isNull() == true || true == rec.value("MainAnalysisId").isNull())
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                totalCurrentAssetsDateId = rec.value("DateTotalCurrentAssetsId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotalCurrentAssetsDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotalCurrentAssetsDate(QString date,
+                       int mainAnalysisId,
+                       int &dateTotalCurrentAssetsId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateTotalCurrentAssetsSubAnalysis "
+                "(DateTotalCurrentAssets, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotalCurrentAssetsSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateTotalCurrentAssetsId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotalCurrentAssetsDataId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotalCurrentAssetsDataId(int mainAnalysisId,
+                                       int totalCurrentAssetsDateId,
+                                       int &totalCurrentAssetsDataId,
+                                       bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataTotalCurrentAssetsSubAnalysis.DataTotalCurrentAssetsId, TblDataTotalCurrentAssetsSubAnalysis.DateTotalCurrentAssetsId, TblDataTotalCurrentAssetsSubAnalysis.MainAnalysisId   "
+                " FROM TblDataTotalCurrentAssetsSubAnalysis   "
+                " WHERE  "
+                "       TblDataTotalCurrentAssetsSubAnalysis.DateTotalCurrentAssetsId = %d AND "
+                "       TblDataTotalCurrentAssetsSubAnalysis.MainAnalysisId = %d;",
+                                                                           totalCurrentAssetsDateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataTotalCurrentAssetsId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataTotalCurrentAssetsId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataTotalCurrentAssetsId").isNull() == false)
+                {
+                    totalCurrentAssetsDataId = rec.value("DataTotalCurrentAssetsId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubEarnings()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotalCurrentAssets(int totalCurrentAssetsDateId,
+                          int mainAnalysisId,
+                          int inputTotalCurrentAssetsDataId,
+                          bool totalCurrentAssetsDataIdIsValid,
+                          QString dataTotalCurrentAssets,
+                          int &totalCurrentAssetsDataId,
+                          bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(totalCurrentAssetsDataIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataTotalCurrentAssetsSubAnalysis "
+                " (DateTotalCurrentAssetsId, "
+                "  DataTotalCurrentAssets, "
+                 " DataTotalCurrentAssetsId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', %d, %d);",
+                        totalCurrentAssetsDateId,
+                        dataTotalCurrentAssets.toLocal8Bit().constData(),
+                        inputTotalCurrentAssetsDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataTotalCurrentAssetsSubAnalysis "
+                    " (DateTotalCurrentAssetsId, "
+                    " DataTotalCurrentAssets, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            totalCurrentAssetsDateId,
+                            dataTotalCurrentAssets.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotalCurrentAssetsSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    totalCurrentAssetsDataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotalCurrentAssetsData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotalCurrentAssetsData(QString stockName,
+                                     QString stockSymbol,
+                                     TotalCurrentAssetsST *totalCurrentAssetsDataArr,
+                                     int &nofTotalCurrentAssetsArrData,
+                                     bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    TotalCurrentAssetsST data;
+
+    nofTotalCurrentAssetsArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateTotalCurrentAssetsSubAnalysis.*, TblDataTotalCurrentAssetsSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateTotalCurrentAssetsSubAnalysis, TblDataTotalCurrentAssetsSubAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateTotalCurrentAssetsSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataTotalCurrentAssetsSubAnalysis.MainAnalysisId AND "
+                "       TblDateTotalCurrentAssetsSubAnalysis.DateTotalCurrentAssetsId = TblDataTotalCurrentAssetsSubAnalysis.DateTotalCurrentAssetsId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateTotalCurrentAssetsSubAnalysis.DateTotalCurrentAssets AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if((rec.value("DateTotalCurrentAssets").isNull() == true) ||  // Date
+                (rec.value("DataTotalCurrentAssets").isNull() == true))   // Data
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DateTotalCurrentAssets").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("DateTotalCurrentAssets").isNull() == false)
+                {
+                    data.date = rec.value("DateTotalCurrentAssets").toString();
+                }
+
+                // Data
+                data.totalCurrentAssets.clear();
+                if(rec.value("DataTotalCurrentAssets").isNull() == false)
+                {
+                    data.totalCurrentAssets = rec.value("DataTotalCurrentAssets").toString();
+                }
+
+                totalCurrentAssetsDataArr[nofTotalCurrentAssetsArrData] = data;
+                nofTotalCurrentAssetsArrData++;
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+//=====================================
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    subAnalysisTotalCurrentLiabilitiesDateExists()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisTotalCurrentLiabilitiesDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &totalCurrentLiabilitiesDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateTotalCurrentLiabilitiesSubAnalysis "
+                " WHERE DateTotalCurrentLiabilities = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotalCurrentLiabilitiesSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if((rec.value("DateTotalCurrentLiabilities").isNull() == true) ||
+               (true == rec.value("MainAnalysisId").isNull()))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                totalCurrentLiabilitiesDateId = rec.value("DateTotalCurrentLiabilitiesId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotalCurrentLiabilitiesDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotalCurrentLiabilitiesDate(QString date,
+                                             int mainAnalysisId,
+                                             int &dateTotalCurrentLiabilitiesId,
+                                             bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateTotalCurrentLiabilitiesSubAnalysis "
+                "(DateTotalCurrentLiabilities, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotalCurrentLiabilitiesSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateTotalCurrentLiabilitiesId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotalCurrentLiabilitiesDataId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotalCurrentLiabilitiesDataId(int mainAnalysisId,
+                  int totalCurrentLiabilitiesDateId,
+                  int &totalCurrentLiabilitiesDataId,
+                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataTotalCurrentLiabilitiesSubAnalysis.DataTotalCurrentLiabilitiesId, TblDataTotalCurrentLiabilitiesSubAnalysis.DateTotalCurrentLiabilitiesId, TblDataTotalCurrentLiabilitiesSubAnalysis.MainAnalysisId   "
+                " FROM TblDataTotalCurrentLiabilitiesSubAnalysis   "
+                " WHERE  "
+                "       TblDataTotalCurrentLiabilitiesSubAnalysis.DateTotalCurrentLiabilitiesId = %d AND "
+                "       TblDataTotalCurrentLiabilitiesSubAnalysis.MainAnalysisId = %d;",
+                                                                           totalCurrentLiabilitiesDateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataTotalCurrentLiabilitiesId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataTotalCurrentLiabilitiesId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataTotalCurrentLiabilitiesId").isNull() == false)
+                {
+                    totalCurrentLiabilitiesDataId = rec.value("DataTotalCurrentLiabilitiesId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotalCurrentLiabilities()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotalCurrentLiabilities(int dateId,
+                                         int mainAnalysisId,
+                                         int inputDataId,
+                                         bool dataIdIsValid,
+                                         QString data,
+                                         int &dataId,
+                                         bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(dataIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataTotalCurrentLiabilitiesSubAnalysis "
+                " (DateTotalCurrentLiabilitiesId, "
+                "  DataTotalCurrentLiabilities, "
+                 " DataTotalCurrentLiabilitiesId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', %d, %d);",
+                        dateId,
+                        data.toLocal8Bit().constData(),
+                        inputDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataTotalCurrentLiabilitiesSubAnalysis "
+                    " (DateTotalCurrentLiabilitiesId, "
+                    " DataTotalCurrentLiabilities, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            dateId,
+                            data.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotalCurrentLiabilitiesSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotalCurrentLiabilitiesData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotalCurrentLiabilitiesData(QString stockName,
+                           QString stockSymbol,
+                           TotalCurrentLiabilitiesST *dataArr,
+                           int &nofArrData,
+                           bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    TotalCurrentLiabilitiesST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateTotalCurrentLiabilitiesSubAnalysis.*, TblDataTotalCurrentLiabilitiesSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateTotalCurrentLiabilitiesSubAnalysis, TblDataTotalCurrentLiabilitiesSubAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateTotalCurrentLiabilitiesSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataTotalCurrentLiabilitiesSubAnalysis.MainAnalysisId AND "
+                "       TblDateTotalCurrentLiabilitiesSubAnalysis.DateTotalCurrentLiabilitiesId = TblDataTotalCurrentLiabilitiesSubAnalysis.DateTotalCurrentLiabilitiesId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateTotalCurrentLiabilitiesSubAnalysis.DateTotalCurrentLiabilities AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if((rec.value("DateTotalCurrentLiabilities").isNull() == true) ||  // Date
+                (rec.value("DataTotalCurrentLiabilities").isNull() == true))   // Data
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DateTotalCurrentLiabilities").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("DateTotalCurrentLiabilities").isNull() == false)
+                {
+                    data.date = rec.value("DateTotalCurrentLiabilities").toString();
+                }
+
+                // Data
+                data.totalCurrentLiabilities.clear();
+                if(rec.value("DataTotalCurrentLiabilities").isNull() == false)
+                {
+                    data.totalCurrentLiabilities = rec.value("DataTotalCurrentLiabilities").toString();
+                }
+
+                dataArr[nofArrData] = data;
+                nofArrData++;
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+
+//=====================
 
 //===================
 
 #if 0
 
 
-// 2
-//Date
-        //-----------------------------------------------------------------------
-        // TblDateEarningsSubAnalysis (Vinst)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateEarningsSubAnalysis "
-                    " (DateEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateEarnings DATE, "
-                    "  MainAnalysisId INTEGER);");
-
-        qDebug() << tmp;
-
-
-        qry.prepare(tmp);
-
-        res = execSingleCmd(qry);
-
-        if(res == false)
-        {
-            qDebug() << qry.lastError();
-            if(m_disableMsgBoxes == false)
-            {
-                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateEarningsSubAnalysis"));
-            }
-            closeDb();
-            m_mutex.unlock();
-            return false;
-        }
-
-        qry.finish();
-
-
-//Data
-        //-----------------------------------------------------------------------
-        // TblDataEarningsSubAnalysis (Vinst)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataEarningsSubAnalysis "
-                    " (DataEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateEarningsId INTEGER, "
-                    "  DataEarnings VARCHAR(255), "
-                    "  MainAnalysisId INTEGER);");
-
-        qDebug() << tmp;
-
-
-        qry.prepare(tmp);
-
-        res = execSingleCmd(qry);
-
-        if(res == false)
-        {
-            qDebug() << qry.lastError();
-            if(m_disableMsgBoxes == false)
-            {
-                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
-            }
-            closeDb();
-            m_mutex.unlock();
-            return false;
-        }
-
-        qry.finish();
-
-
-
-// 3
-
-// Date
-        //-----------------------------------------------------------------------
-        // TblDateTotalCurrentAssetsSubAnalysis (Omsättningstillgångar)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotalCurrentAssetsSubAnalysis "
-                    " (DateTotalCurrentAssetsId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateTotalCurrentAssets DATE, "
-                    "  MainAnalysisId INTEGER);");
-
-        qDebug() << tmp;
-
-
-        qry.prepare(tmp);
-
-        res = execSingleCmd(qry);
-
-        if(res == false)
-        {
-            qDebug() << qry.lastError();
-            if(m_disableMsgBoxes == false)
-            {
-                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTotalCurrentAssetsSubAnalysis"));
-            }
-            closeDb();
-            m_mutex.unlock();
-            return false;
-        }
-
-        qry.finish();
-
-
-// Data
-        //-----------------------------------------------------------------------
-        // TblDataTotalCurrentAssetsSubAnalysis (Omsättningstillgångar)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotalCurrentAssetsSubAnalysis "
-                    " (DataTotalCurrentAssetsId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateTotalCurrentAssetsId INTEGER, "
-                    "  DataTotalCurrentAssets VARCHAR(255), "
-                    "  MainAnalysisId INTEGER);");
-
-        qDebug() << tmp;
-
-
-        qry.prepare(tmp);
-
-        res = execSingleCmd(qry);
-
-        if(res == false)
-        {
-            qDebug() << qry.lastError();
-            if(m_disableMsgBoxes == false)
-            {
-                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataTotalCurrentAssetsSubAnalysis"));
-            }
-            closeDb();
-            m_mutex.unlock();
-            return false;
-        }
-
-        qry.finish();
-
-
-
-
-
-// 4
-// Date
-        //-----------------------------------------------------------------------
-        // TblDateTotalCurrentLiabilitiesSubAnalysis (Kortfristiga skulder)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotalCurrentLiabilitiesSubAnalysis "
-                    " (DateTotalCurrentLiabilitiesId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "  DateTotalCurrentLiabilities DATE, "
-                    "  MainAnalysisId INTEGER);");
-
-        qDebug() << tmp;
-
-
-        qry.prepare(tmp);
-
-        res = execSingleCmd(qry);
-
-        if(res == false)
-        {
-            qDebug() << qry.lastError();
-            if(m_disableMsgBoxes == false)
-            {
-                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTotalCurrentLiabilitiesSubAnalysis"));
-            }
-            closeDb();
-            m_mutex.unlock();
-            return false;
-        }
-
-        qry.finish();
-
-
-        // Data
-                //-----------------------------------------------------------------------
-                // TblDataTotalCurrentLiabilitiesSubAnalysis (Kortfristiga skulder)
-                //-----------------------------------------------------------------------
-                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotalCurrentLiabilitiesSubAnalysis "
-                            " (DataTotalCurrentLiabilitiesId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                            "  DateTotalCurrentLiabilitiesId INTEGER, "
-                            "  DataTotalCurrentLiabilities VARCHAR(255), "
-                            "  MainAnalysisId INTEGER);");
-
-                qDebug() << tmp;
-
-
-                qry.prepare(tmp);
-
-                res = execSingleCmd(qry);
-
-                if(res == false)
-                {
-                    qDebug() << qry.lastError();
-                    if(m_disableMsgBoxes == false)
-                    {
-                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataTotalCurrentLiabilitiesSubAnalysis"));
-                    }
-                    closeDb();
-                    m_mutex.unlock();
-                    return false;
-                }
-
-                qry.finish();
 
 
 

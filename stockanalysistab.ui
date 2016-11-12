@@ -784,7 +784,7 @@
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
-     <string>Stark finansiell ställning, </string>
+     <string>Analys data 1 </string>
     </attribute>
     <widget class="QScrollArea" name="scrollArea_3">
      <property name="geometry">
@@ -812,7 +812,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>61</width>
+         <width>51</width>
          <height>27</height>
         </rect>
        </property>
@@ -826,7 +826,7 @@
          <x>10</x>
          <y>80</y>
          <width>201</width>
-         <height>441</height>
+         <height>461</height>
         </rect>
        </property>
       </widget>
@@ -862,7 +862,7 @@
          <x>220</x>
          <y>80</y>
          <width>201</width>
-         <height>441</height>
+         <height>461</height>
         </rect>
        </property>
       </widget>
@@ -871,7 +871,7 @@
         <rect>
          <x>220</x>
          <y>50</y>
-         <width>61</width>
+         <width>51</width>
          <height>27</height>
         </rect>
        </property>
@@ -882,7 +882,7 @@
       <widget class="QLabel" name="label_16">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>70</x>
          <y>60</y>
          <width>81</width>
          <height>16</height>
@@ -895,7 +895,7 @@
       <widget class="QLabel" name="label_32">
        <property name="geometry">
         <rect>
-         <x>290</x>
+         <x>280</x>
          <y>60</y>
          <width>91</width>
          <height>16</height>
@@ -903,6 +903,78 @@
        </property>
        <property name="text">
         <string>Vinst</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_33">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>60</y>
+         <width>151</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Omsättningstillgång.</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidgetTotalCurrentAsset">
+       <property name="geometry">
+        <rect>
+         <x>430</x>
+         <y>80</y>
+         <width>181</width>
+         <height>461</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonSaveTotalCurrentAsset">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>50</y>
+         <width>51</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Spara</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidgetTotalCurrentLiabilities">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>80</y>
+         <width>191</width>
+         <height>461</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonSaveTotalCurrentLiabilities">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>50</y>
+         <width>51</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Spara</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_34">
+       <property name="geometry">
+        <rect>
+         <x>680</x>
+         <y>60</y>
+         <width>141</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Kortfristiga skulder</string>
        </property>
       </widget>
      </widget>

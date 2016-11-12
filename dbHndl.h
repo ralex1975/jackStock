@@ -177,6 +177,24 @@ struct EarningsDataST
 
 
 
+struct TotalCurrentAssetsST
+{
+    QString date;
+    QString totalCurrentAssets;
+};
+
+
+struct TotalCurrentLiabilitiesST
+{
+    QString date;
+    QString totalCurrentLiabilities;
+};
+
+
+
+
+
+
 struct YahooKeyStatisticsST
 {
     QString StockSymbol;
@@ -654,6 +672,72 @@ public:
                                     EarningsDataST *earningsDataArr,
                                     int &nofEarningsArrData,
                                     bool dbIsHandledExternly = false);
+
+
+    // TotalCurrentAssets
+    bool subAnalysisTotalCurrentAssetsDateExists(QString date,
+                                                 int mainAnalysisId,
+                                                 int &totalCurrentAssetsDateId);
+
+
+    bool insertSubAnalysisTotalCurrentAssetsDate(QString date,
+                                                 int mainAnalysisId,
+                                                 int &dateTotalCurrentAssetsId,
+                                                 bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisTotalCurrentAssetsDataId(int mainAnalysisId,
+                                                int totalCurrentAssetsDateId,
+                                                int &totalCurrentAssetsDataId,
+                                                bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisTotalCurrentAssets(int totalCurrentAssetsDateId,
+                                             int mainAnalysisId,
+                                             int inputTotalCurrentAssetsDataId,
+                                             bool totalCurrentAssetsDataIdIsValid,
+                                             QString dataTotalCurrentAssets,
+                                             int &totalCurrentAssetsDataId,
+                                             bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisTotalCurrentAssetsData(QString stockName,
+                                              QString stockSymbol,
+                                              TotalCurrentAssetsST *totalCurrentAssetsDataArr,
+                                              int &nofTotalCurrentAssetsArrData,
+                                              bool dbIsHandledExternly = false);
+
+
+    // TotalCurrentLiabilities
+    bool subAnalysisTotalCurrentLiabilitiesDateExists(QString date,
+                                                      int mainAnalysisId,
+                                                      int &totalCurrentLiabilitiesDateId);
+
+
+    bool insertSubAnalysisTotalCurrentLiabilitiesDate(QString date,
+                                                      int mainAnalysisId,
+                                                      int &dateTotalCurrentLiabilitiesId,
+                                                      bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisTotalCurrentLiabilitiesDataId(int mainAnalysisId,
+                                                 int totalCurrentLiabilitiesDateId,
+                                                 int &totalCurrentLiabilitiesDataId,
+                                                 bool dbIsHandledExternly = false);
+
+
+    bool insertSubAnalysisTotalCurrentLiabilities(int dateId,
+                                             int mainAnalysisId,
+                                             int inputDataId,
+                                             bool dataIdIsValid,
+                                             QString data,
+                                             int &dataId,
+                                             bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisTotalCurrentLiabilitiesData(QString stockName,
+                                                   QString stockSymbol,
+                                                   TotalCurrentLiabilitiesST *dataArr,
+                                                   int &nofArrData,
+                                                   bool dbIsHandledExternly = false);
 
 
 

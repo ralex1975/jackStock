@@ -71,6 +71,8 @@ StockAnalysisTab::~StockAnalysisTab()
  *****************************************************************/
 void StockAnalysisTab::initSubAnalysTables(void)
 {
+    QFont font;
+
     // Dividend
     QStringList labels;
     labels << QString::fromUtf8("År") << QString::fromUtf8("Utdel/Aktie");
@@ -81,6 +83,13 @@ void StockAnalysisTab::initSubAnalysTables(void)
     ui->tableWidgetDividend->setHorizontalHeaderLabels(labels);
     ui->tableWidgetDividend->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
     ui->tableWidgetDividend->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
+
+    font = ui->tableWidgetDividend->horizontalHeader()->font();
+    font.setPointSize(9);
+    font.setFamily("Helvetica");
+    ui->tableWidgetDividend->horizontalHeader()->setFont( font );
+    ui->tableWidgetDividend->verticalHeader()->setFont( font );
+
 
     // Earnings
     labels.clear();
@@ -93,6 +102,49 @@ void StockAnalysisTab::initSubAnalysTables(void)
     ui->tableWidgetEarnings->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
     ui->tableWidgetEarnings->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
 
+    font = ui->tableWidgetEarnings->horizontalHeader()->font();
+    font.setPointSize(9);
+    font.setFamily("Helvetica");
+    ui->tableWidgetEarnings->horizontalHeader()->setFont( font );
+    ui->tableWidgetDividend->verticalHeader()->setFont( font );
+
+
+    // TotalCurrentAssets
+    labels.clear();
+    labels << QString::fromUtf8("År") << QString::fromUtf8("Oms.tillg");
+
+    ui->tableWidgetTotalCurrentAsset->setRowCount(20);
+    ui->tableWidgetTotalCurrentAsset->setColumnCount(2);
+
+    ui->tableWidgetTotalCurrentAsset->setHorizontalHeaderLabels(labels);
+    ui->tableWidgetTotalCurrentAsset->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableWidgetTotalCurrentAsset->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
+
+    font = ui->tableWidgetTotalCurrentAsset->horizontalHeader()->font();
+    font.setPointSize(9);
+    font.setFamily("Helvetica");
+    ui->tableWidgetTotalCurrentAsset->horizontalHeader()->setFont( font );
+    ui->tableWidgetDividend->verticalHeader()->setFont( font );
+
+
+
+    // totalCurrentLiabilities
+    labels.clear();
+    labels << QString::fromUtf8("År") << QString::fromUtf8("kortf.skuld");
+
+    ui->tableWidgetTotalCurrentLiabilities->setRowCount(20);
+    ui->tableWidgetTotalCurrentLiabilities->setColumnCount(2);
+
+    ui->tableWidgetTotalCurrentLiabilities->setHorizontalHeaderLabels(labels);
+    ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
+
+
+    font = ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->font();
+    font.setPointSize(9);
+    font.setFamily("Helvetica");
+    ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->setFont( font );
+    ui->tableWidgetTotalCurrentLiabilities->verticalHeader()->setFont( font );
 
 }
 
@@ -272,9 +324,15 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     //====================================================================
     // Get and display sub data
     //====================================================================
+    QFont font;
+    font.setPointSize(9);
+    font.setFamily("Helvetica");
+
 
     ui->tableWidgetDividend->clearContents();
     ui->tableWidgetEarnings->clearContents();
+    ui->tableWidgetTotalCurrentAsset->clearContents();
+    ui->tableWidgetTotalCurrentLiabilities->clearContents();
 
     // Dividend
     int nofDividendArrData;
@@ -292,14 +350,16 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             ui->tableWidgetDividend->insertRow(i);
 
             QTableWidgetItem *itemDate = new QTableWidgetItem( data.date);
+            itemDate->setFont(font);
             ui->tableWidgetDividend->setItem( i, 0, itemDate);
 
+
             QTableWidgetItem *itemDividend = new QTableWidgetItem(data.dividend);
+            itemDividend->setFont(font);
             ui->tableWidgetDividend->setItem( i, 1, itemDividend);
 
         }
     }
-
 
     // Earnings
     int nofEarningsArrData;
@@ -317,9 +377,12 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             ui->tableWidgetEarnings->insertRow(i);
 
             QTableWidgetItem *itemDate = new QTableWidgetItem(eData.date);
+            itemDate->setFont(font);
             ui->tableWidgetEarnings->setItem( i, 0, itemDate);
 
+
             QTableWidgetItem *itemEarnings = new QTableWidgetItem(eData.earnings);
+            itemEarnings->setFont(font);
             ui->tableWidgetEarnings->setItem( i, 1, itemEarnings);
 
         }
@@ -327,6 +390,59 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
 
 
+    // TotalCurrentAssets
+    int nofTotalCurrentAssetsArrData;
+    TotalCurrentAssetsST tcaData;
+
+
+    if(true == db.getSubAnalysisTotalCurrentAssetsData(m_stockName,
+                                                       m_stockSymbol,
+                                                       m_totalCurrentAssetsArr,
+                                                       nofTotalCurrentAssetsArrData))
+    {
+
+        for(int i = 0; i < nofTotalCurrentAssetsArrData; i++)
+        {
+            tcaData = m_totalCurrentAssetsArr[i];
+            ui->tableWidgetTotalCurrentAsset->insertRow(i);
+
+            QTableWidgetItem *itemDate = new QTableWidgetItem(tcaData.date);
+            itemDate->setFont(font);
+            ui->tableWidgetTotalCurrentAsset->setItem( i, 0, itemDate);
+
+            QTableWidgetItem *itemData = new QTableWidgetItem(tcaData.totalCurrentAssets);
+            itemData->setFont(font);
+            ui->tableWidgetTotalCurrentAsset->setItem( i, 1, itemData);
+        }
+    }
+
+
+
+    // TotalCurrentLiabilities
+    int nofTotalCurrentLiabilitiesArrData;
+    TotalCurrentLiabilitiesST tclData;
+
+
+    if(true == db.getSubAnalysisTotalCurrentLiabilitiesData(m_stockName,
+                                                       m_stockSymbol,
+                                                       m_totalCurrentLiabilitiesArr,
+                                                       nofTotalCurrentLiabilitiesArrData))
+    {
+
+        for(int i = 0; i < nofTotalCurrentLiabilitiesArrData; i++)
+        {
+            tclData = m_totalCurrentLiabilitiesArr[i];
+            ui->tableWidgetTotalCurrentLiabilities->insertRow(i);
+
+            QTableWidgetItem *itemDate = new QTableWidgetItem(tclData.date);
+            itemDate->setFont(font);
+            ui->tableWidgetTotalCurrentLiabilities->setItem( i, 0, itemDate);
+
+            QTableWidgetItem *itemData = new QTableWidgetItem(tclData.totalCurrentLiabilities);
+            itemData->setFont(font);
+            ui->tableWidgetTotalCurrentLiabilities->setItem( i, 1, itemData);
+        }
+    }
 }
 
 
@@ -799,39 +915,6 @@ void StockAnalysisTab::on_pushButtonRemoveRecord_clicked()
 
 }
 
-#if 0
-/******************************************************************
- *
- * Function:    on_pushSaveDividend_clicked()
- *
- * Description: This function saves data to db
- *
- *
- *
- *
- *****************************************************************/
-void StockAnalysisTab::on_pushSaveDividend_clicked()
-{
-   // QString itemDate, itemDividend, str;
-    int nofData;
-    nofData = ui->tableWidgetDividend->rowCount();
-    for(int row = 0; row < nofData; row++)
-    {
-       if(NULL != ui->tableWidgetDividend->item(row, 0))
-       {
-            qDebug() << ui->tableWidgetDividend->item(row, 0)->text();
-            break;
-       }
-        //ui->tableWidgetDividend->item(row, 0);
-        //itemDate = ui->tableWidgetDividend->cellWidget(row, 1);
-        //itemDividend = ui->tableWidgetDividend->cellWidget(row, 2);
-
-        //qDebug() << "Date" << itemDate;
-        //qDebug() << "Dividend" << itemDividend;
-    }
-
-}
-#endif
 
 
 
@@ -846,7 +929,6 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
  *****************************************************************/
 void StockAnalysisTab::on_pushSaveDividend_clicked()
 {
-
     CDbHndl db;
     bool res;
     int mainAnalysisId;
@@ -904,13 +986,15 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
             dividendDate.toInt(&isValid);
             if (false == isValid)
             {
-               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
             }
 
             dividendData.toDouble(&isValid);
             if (false == isValid)
             {
-               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Dividend is not a number"));
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Dividend is not a number"));
+                continue;
             }
        }
        else
@@ -919,12 +1003,9 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
        }
 
 
-       // if(true == res)
-        {
-            res = db.subAnalysisDividendDateExists(dividendDate,
+        res = db.subAnalysisDividendDateExists(dividendDate,
                                                    mainAnalysisId,
                                                    dividendDateId);
-        }
 
         // Exist anaysis date?
         if(false == res)
@@ -959,7 +1040,7 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
 
 /******************************************************************
  *
- * Function:    on_pushSaveDividend_clicked()
+ * Function:    on_pushSaveEarnings_clicked()
  *
  * Description: This function saves earnings data to db
  *
@@ -1025,13 +1106,15 @@ void StockAnalysisTab::on_pushSaveEarnings_clicked()
             earningsDate.toInt(&isValid);
             if (false == isValid)
             {
-               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
             }
 
             earningsData.toDouble(&isValid);
             if (false == isValid)
             {
-               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Earnings is not a number"));
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Earnings is not a number"));
+                continue;
             }
        }
        else
@@ -1040,12 +1123,9 @@ void StockAnalysisTab::on_pushSaveEarnings_clicked()
        }
 
 
-        //if(true == res)
-        {
-            res = db.subAnalysisEarningsDateExists(earningsDate,
-                                                   mainAnalysisId,
-                                                   earningsDateId);
-        }
+        res = db.subAnalysisEarningsDateExists(earningsDate,
+                                               mainAnalysisId,
+                                               earningsDateId);
 
         // Exist anaysis date?
         if(false == res)
@@ -1071,6 +1151,243 @@ void StockAnalysisTab::on_pushSaveEarnings_clicked()
                                                earningsDataIdIsValid,
                                                earningsData,
                                                earningsDataId);
+        }
+    }
+
+}
+
+
+/******************************************************************
+ *
+ * Function:    on_pushSaveEarnings_clicked()
+ *
+ * Description: This function saves earnings data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveTotalCurrentAsset_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int totalCurrentAssetsDateId;
+    int inputTotalCurrentAssetsDataId;
+    int totalCurrentAssetsDataId;
+    bool totalCurrentAssetsDataIdIsValid = false;
+
+    int nofData;
+    QString totalCurrentAssetsDate;
+    QString totalCurrentAssetsData;
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+
+    nofData = ui->tableWidgetTotalCurrentAsset->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetTotalCurrentAsset->item(row, 0))
+       {
+            totalCurrentAssetsDate = ui->tableWidgetTotalCurrentAsset->item(row, 0)->text();
+            totalCurrentAssetsData = ui->tableWidgetTotalCurrentAsset->item(row, 1)->text();
+
+            totalCurrentAssetsDate.toInt(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+               continue;
+            }
+
+            totalCurrentAssetsData.toDouble(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Earnings is not a number"));
+               continue;
+            }
+       }
+       else
+       {
+           break;
+       }
+
+
+        res = db.subAnalysisTotalCurrentAssetsDateExists(totalCurrentAssetsDate,
+                                                        mainAnalysisId,
+                                                        totalCurrentAssetsDateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisTotalCurrentAssetsDate(totalCurrentAssetsDate,
+                                                            mainAnalysisId,
+                                                            totalCurrentAssetsDateId);
+        }
+
+
+        if(true == res)
+        {
+           totalCurrentAssetsDataIdIsValid = false;
+
+           if( true == db.getSubAnalysisTotalCurrentAssetsDataId(mainAnalysisId, totalCurrentAssetsDateId, inputTotalCurrentAssetsDataId))
+           {
+               totalCurrentAssetsDataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisTotalCurrentAssets(totalCurrentAssetsDateId,
+                                                        mainAnalysisId,
+                                                        inputTotalCurrentAssetsDataId,
+                                                        totalCurrentAssetsDataIdIsValid,
+                                                        totalCurrentAssetsData,
+                                                        totalCurrentAssetsDataId);
+        }
+    }
+}
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveTotalCurrentLiabilities_clicked()
+ *
+ * Description: This function saves Total Current Liabilities data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveTotalCurrentLiabilities_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+
+    nofData = ui->tableWidgetTotalCurrentLiabilities->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetTotalCurrentLiabilities->item(row, 0))
+       {
+            date = ui->tableWidgetTotalCurrentLiabilities->item(row, 0)->text();
+            data = ui->tableWidgetTotalCurrentLiabilities->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+               continue;
+            }
+
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Earnings is not a number"));
+               continue;
+            }
+       }
+       else
+       {
+           break;
+       }
+
+
+        res = db.subAnalysisTotalCurrentLiabilitiesDateExists(date,
+                                                        mainAnalysisId,
+                                                        dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisTotalCurrentLiabilitiesDate(date,
+                                                            mainAnalysisId,
+                                                            dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisTotalCurrentLiabilitiesDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisTotalCurrentLiabilities(dateId,
+                                                              mainAnalysisId,
+                                                              inputDataId,
+                                                              dataIdIsValid,
+                                                              data,
+                                                              dataId);
         }
     }
 
