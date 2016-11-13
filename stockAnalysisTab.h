@@ -15,6 +15,8 @@ class StockAnalysisTab;
 #define MAX_NOF_TOTAL_CURRENT_LIABILITIES           MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOTAL_LIABILITIES                   MAX_NOF_DIVIDEND_ARR_DATA
 
+#define NOF_COMPANY_TYPE_ARR_DATA 8
+
 
 class StockAnalysisTab : public QDialog
 {
@@ -41,6 +43,7 @@ class StockAnalysisTab : public QDialog
 
     GuiFinanceCtrls m_gfc;
     QString m_stockName;
+    bool m_stockNameIsInit;
     QString m_stockSymbol;
     QString m_analysisDate;
 
@@ -89,10 +92,14 @@ class StockAnalysisTab : public QDialog
                                       int &nofArrData);
 
 
+    void initCompanyTypeComboBox(void);
 
 
 
 public:
+    static const QString m_companyTypesArr[NOF_COMPANY_TYPE_ARR_DATA];
+
+
     explicit StockAnalysisTab(QWidget *parent = 0);
     ~StockAnalysisTab();
 
@@ -119,6 +126,8 @@ private slots:
     void on_pushButtonSaveTotalCurrentLiabilities_clicked();
 
     void on_pushButtonSaveTotalLiabilities_clicked();
+
+    void on_pushButtonSelectSaveCompanyType_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

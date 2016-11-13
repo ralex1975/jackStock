@@ -17,6 +17,18 @@
 #define SAT_FONT_SIZE                    9
 
 
+const QString StockAnalysisTab::m_companyTypesArr[NOF_COMPANY_TYPE_ARR_DATA] =
+                            {QString::fromUtf8("Odefinierad"),
+                            QString::fromUtf8("Handel"),
+                            QString::fromUtf8("Industribolag"),
+                            QString::fromUtf8("Bank"),
+                            QString::fromUtf8("Fastighetsbolag"),
+                            QString::fromUtf8("Försörjningsbolag"),
+                            QString::fromUtf8("Investmentbolag"),
+                            QString::fromUtf8("Allmännyttiga företag")}; // t.ex energibolag (Skulder/eget kapital exklusive immateriella tillgångar < 2)
+
+
+
 /******************************************************************
  *
  * Function:    ()
@@ -32,6 +44,8 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     ui(new Ui::StockAnalysisTab)
 {
     ui->setupUi(this);
+
+    m_stockNameIsInit = false;
 
     initSubAnalysTables();
 
@@ -81,6 +95,8 @@ void StockAnalysisTab::initSubAnalysTables(void)
     QString dateHeader = QString::fromUtf8("   År   ");
     QString dataHeader;
 
+    initCompanyTypeComboBox();
+
     // Dividend
     dataHeader = QString::fromUtf8("Utdel/Aktie");
     initSubAnalyseTableWidget(ui->tableWidgetDividend, dateHeader,dataHeader);
@@ -103,7 +119,28 @@ void StockAnalysisTab::initSubAnalysTables(void)
 }
 
 
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::initCompanyTypeComboBox(void)
+{
+    ui->comboBoxCompanyType->clear();
 
+    for(int i = 0; i < NOF_COMPANY_TYPE_ARR_DATA; i++)
+    {
+        ui->comboBoxCompanyType->addItem(m_companyTypesArr[i]);
+    }
+
+    ui->comboBoxCompanyType->setCurrentIndex(0);
+
+}
 
 /******************************************************************
  *
@@ -229,6 +266,7 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
     if(m_stockName.size() > 0 && m_stockSymbol.size() > 0)
     {
+        m_stockNameIsInit = true;
         db.getStockAnalysisDate(m_stockName, m_stockSymbol, ui->treeWidgetAnalysisDate);
     }
 
@@ -343,6 +381,29 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  SAD_TOTAL_LIABILITIES,
                                  m_totalLiabilitiesArr,
                                  m_nofTotalLiabilitiesData);
+
+
+    int mainAnalysisId;
+    int companyType = 0;
+
+    // Reset Company type
+    ui->labelCompanyType->setText(m_companyTypesArr[companyType]);
+    ui->labelMainPglabelCompanyType->setText(m_companyTypesArr[companyType]);
+
+    ui->comboBoxCompanyType->setCurrentIndex(companyType);
+
+    if(true == db.mainAnalysisDataExists(m_stockName, m_stockSymbol, mainAnalysisId))
+    {
+        if(true ==  db.getSubAnalysisCompanyType(mainAnalysisId, companyType))
+        {
+            if(companyType < NOF_COMPANY_TYPE_ARR_DATA)
+            {
+                ui->labelCompanyType->setText(m_companyTypesArr[companyType]);
+                ui->labelMainPglabelCompanyType->setText(m_companyTypesArr[companyType]);
+                ui->comboBoxCompanyType->setCurrentIndex(companyType);
+            }
+        }
+    }
 
 
 
@@ -1559,6 +1620,8 @@ void StockAnalysisTab::on_pushButtonSaveTotalCurrentLiabilities_clicked()
 
 }
 
+
+
 /******************************************************************
  *
  * Function:    on_pushButtonSaveTotalLiabilities_clicked()
@@ -1677,4 +1740,72 @@ void StockAnalysisTab::on_pushButtonSaveTotalLiabilities_clicked()
 
 }
 
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveTotalLiabilities_clicked()
+ *
+ * Description: This function set company type and save it in db
+ *
+ *
+ *
+ *****************************************************************/
+
+void StockAnalysisTab::on_pushButtonSelectSaveCompanyType_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    int companyType;
+    int companyTypeId;
+
+    QString str;
+
+
+    str = (QString::fromUtf8("Vill du lägga till bolagstyp?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+
+
+    if(m_stockNameIsInit == false)
+    {
+        return;
+    }
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+    companyType = ui->comboBoxCompanyType->currentIndex();
+
+    db.deleteCompanyType(mainAnalysisId);
+
+    res = db.insertSubAnalysisCompanyType(companyType,
+                                          mainAnalysisId,
+                                          companyTypeId);
+
+    if(companyType < NOF_COMPANY_TYPE_ARR_DATA)
+    {
+        ui->labelCompanyType->setText(m_companyTypesArr[companyType]);
+        ui->labelMainPglabelCompanyType->setText(m_companyTypesArr[companyType]);
+
+        ui->comboBoxCompanyType->setCurrentIndex(companyType);
+    }
+
+}
 

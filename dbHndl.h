@@ -629,6 +629,23 @@ public:
 
 
     // start dbSubHndl.cpp
+    bool subAnalysisCompanyTypeExists(int companyType,
+                                      int mainAnalysisId,
+                                      int &companyTypeId);
+
+
+    bool insertSubAnalysisCompanyType(int companyType,
+                                      int mainAnalysisId,
+                                      int &companyTypeId,
+                                      bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisCompanyType(int mainAnalysisId,
+                                   int &companyType,
+                                   bool dbIsHandledExternly = false);
+
+    bool deleteCompanyType(int mainAnalysisId);
+
+
 
     // Dividend
     bool subAnalysisDividendDateExists(QString date,

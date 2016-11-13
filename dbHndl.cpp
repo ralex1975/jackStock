@@ -294,6 +294,39 @@ bool CDbHndl::createTable(void)
         qry.finish();
 
 
+
+        //-----------------------------------------------------------------------
+        // TblSubAnalysisCompanyType
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblSubAnalysisCompanyType "
+                    " (CompanyTypeId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  CompanyType INTEGER DEFAULT 0, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
 // 1
 // Date
         //-----------------------------------------------------------------------

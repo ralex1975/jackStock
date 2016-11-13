@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -779,6 +779,32 @@
         </rect>
        </property>
       </widget>
+      <widget class="QLabel" name="labelMainPglabelCompanyType">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>40</y>
+         <width>231</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_41">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bolagstyp:</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -1011,6 +1037,55 @@
        </property>
        <property name="text">
         <string>Totala skulder</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxCompanyType">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>0</y>
+         <width>301</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonSelectSaveCompanyType">
+       <property name="geometry">
+        <rect>
+         <x>930</x>
+         <y>0</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Välj</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCompanyType">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>30</y>
+         <width>301</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_40">
+       <property name="geometry">
+        <rect>
+         <x>540</x>
+         <y>0</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bolagstyp:</string>
        </property>
       </widget>
      </widget>

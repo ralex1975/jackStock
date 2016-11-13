@@ -6,6 +6,336 @@
 
 /****************************************************************
  *
+ * Function:    subAnalysisCompanyTypeExists()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisCompanyTypeExists(int companyType,
+                                     int mainAnalysisId,
+                                     int &companyTypeId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblSubAnalysisCompanyType "
+                " WHERE CompanyType = %d AND MainAnalysisId = %d;",
+                companyType,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblSubAnalysisCompanyType error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("CompanyTypeId").isNull() == true || true == rec.value("MainAnalysisId").isNull())
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                companyTypeId = rec.value("CompanyTypeId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisCompanyType()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisCompanyType(int companyType,
+                            int mainAnalysisId,
+                            int &companyTypeId,
+                            bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblSubAnalysisCompanyType "
+                "(CompanyType, MainAnalysisId) "
+                " VALUES(%d, %d);",
+                companyType,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateEarningsSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    companyTypeId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+#if 0
+//-----------------------------------------------------------------------
+// TblSubAnalysisCompanyType
+//-----------------------------------------------------------------------
+tmp.sprintf("CREATE TABLE IF NOT EXISTS TblSubAnalysisCompanyType "
+            " (CompanyTypeId INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "  CompanyType INTEGER, "
+            "  MainAnalysisId INTEGER);");
+#endif
+
+
+
+/****************************************************************
+ *
+ * Function:    deleteCompanyType()
+ *
+ * Description:
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::deleteCompanyType(int mainAnalysisId)
+{
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+    QString str;
+
+    str.sprintf("DELETE FROM TblSubAnalysisCompanyType WHERE MainAnalysisId = %d",
+                                                             mainAnalysisId);
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        qry.finish();
+        closeDb();
+        m_mutex.unlock();
+
+        qDebug() << qry.lastError();
+        return false;
+    }
+
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+
+    return true;
+}
+
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisEarningsId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisCompanyType(int mainAnalysisId,
+                          int &companyType,
+                          bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT *   "
+                " FROM TblSubAnalysisCompanyType   "
+                " WHERE  "
+                "       TblSubAnalysisCompanyType.MainAnalysisId = %d;",
+                                                                        mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+            if(rec.value("CompanyType").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+
+
+                if(rec.value("CompanyType").isNull() == false)
+                {
+                    companyType = rec.value("CompanyType").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+/****************************************************************
+ *
  * Function:    subAnalysisEarningsDateExists()
  *
  * Description:
@@ -293,7 +623,7 @@ getSubAnalysisEarningsId(int mainAnalysisId,
 
 /****************************************************************
  *
- * Function:    insertSubEarnings()
+ * Function:    insertSubAnalysisEarnings()
  *
  * Description:
  *
