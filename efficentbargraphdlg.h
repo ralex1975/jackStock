@@ -28,7 +28,7 @@ public:
 
     
 private slots:
-    void on_tableView_doubleClicked(const QModelIndex &index);
+
 
 private:
     Ui::efficentBarGraphDlg *ui;

@@ -32,9 +32,6 @@ private slots:
 
     void on_pushButSelMainSectionData_clicked();
 
-    void slotComboBoxMainSectionChange(int index);
-
-
     void on_pushButModifySubSectionNameInDb_clicked();
 
     void on_pushButRemoveMsg_clicked();

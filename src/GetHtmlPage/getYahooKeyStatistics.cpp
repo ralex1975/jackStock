@@ -665,6 +665,8 @@ interimStorageYahooKeyStatistics(QString data, YahooKeyStatisticsET i, YahooKeyS
     case LASTSPLITDATE:
         interimStorage.LastSplitDate = data;
         break;
+    default:
+        break;
     }
 }
 

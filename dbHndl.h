@@ -162,6 +162,25 @@ enum YahooKeyStatisticsET
 };
 
 
+struct SubAnalysDataST
+{
+    QString date;
+    QString data;
+};
+
+
+
+enum SubAnalyseDataTypeET
+{
+    SAD_DIVIDEND,
+    SAD_EARNINGS,
+    SAD_TOTAL_CURRENT_ASSETS,       // Omsättningstillgångar
+    SAD_TOTAL_CURRENT_LIABILITIES,  // Kortfristiga skulder
+    SAD_TOTAL_LIABILITIES           // Totala skulder
+};
+
+
+#if 0
 struct DividendDataST
 {
     QString date;
@@ -189,7 +208,7 @@ struct TotalCurrentLiabilitiesST
     QString date;
     QString totalCurrentLiabilities;
 };
-
+#endif
 
 
 
@@ -637,7 +656,7 @@ public:
 
     bool getSubAnalysisDividendData(QString stockName,
                                QString stockSymbol,
-                               DividendDataST *dividendDataArr,
+                               SubAnalysDataST *dividendDataArr,
                                int &nofDividendArrData,
                                bool dbIsHandledExternly = false);
 
@@ -669,7 +688,7 @@ public:
 
     bool getSubAnalysisEarningsData(QString stockName,
                                     QString stockSymbol,
-                                    EarningsDataST *earningsDataArr,
+                                    SubAnalysDataST *earningsDataArr,
                                     int &nofEarningsArrData,
                                     bool dbIsHandledExternly = false);
 
@@ -701,12 +720,12 @@ public:
 
     bool getSubAnalysisTotalCurrentAssetsData(QString stockName,
                                               QString stockSymbol,
-                                              TotalCurrentAssetsST *totalCurrentAssetsDataArr,
+                                              SubAnalysDataST *totalCurrentAssetsDataArr,
                                               int &nofTotalCurrentAssetsArrData,
                                               bool dbIsHandledExternly = false);
 
 
-    // TotalCurrentLiabilities
+    // TotalCurrentLiabilities (Kortfristiga skulder)
     bool subAnalysisTotalCurrentLiabilitiesDateExists(QString date,
                                                       int mainAnalysisId,
                                                       int &totalCurrentLiabilitiesDateId);
@@ -735,9 +754,41 @@ public:
 
     bool getSubAnalysisTotalCurrentLiabilitiesData(QString stockName,
                                                    QString stockSymbol,
-                                                   TotalCurrentLiabilitiesST *dataArr,
+                                                   SubAnalysDataST *dataArr,
                                                    int &nofArrData,
                                                    bool dbIsHandledExternly = false);
+
+
+    // TotalLiabilities (Totala skulder)
+    bool subAnalysisTotalLiabilitiesDateExists(QString date,
+                                               int mainAnalysisId,
+                                               int &dateId);
+
+    bool insertSubAnalysisTotalLiabilitiesDate(QString date,
+                                               int mainAnalysisId,
+                                               int &dateId,
+                                               bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisTotalLiabilitiesDataId(int mainAnalysisId,
+                                              int dateId,
+                                              int &dataId,
+                                              bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisTotalLiabilities(int dateId,
+                                           int mainAnalysisId,
+                                           int inputDataId,
+                                           bool dataIdIsValid,
+                                           QString data,
+                                           int &dataId,
+                                           bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisTotalLiabilitiesData(QString stockName,
+                                            QString stockSymbol,
+                                            SubAnalysDataST *dataArr,
+                                            int &nofArrData,
+                                            bool dbIsHandledExternly = false);
+
+
 
 
 
@@ -751,6 +802,8 @@ public:
                                 int &mainAnalysisId);
 
 
+
+
     bool insertMainAnalysisData(QString stockName,
                                 QString stockSymbol,
                                 int &mainAnalysisId,
@@ -760,6 +813,8 @@ public:
     bool mainAnalysisDateExists(QString date,
                                 int mainAnalysisId,
                                 int &analysisDateId);
+
+
 
 
 

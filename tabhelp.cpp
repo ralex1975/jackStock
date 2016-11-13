@@ -22,8 +22,6 @@ TabHelp::TabHelp(QWidget *parent) :
 
     ui->setupUi(this);
 
-    // connect(ui->comboBoxMainSection, SIGNAL(currentIndexChanged(int)), this, SLOT(slotComboBoxMainSectionChange(int)));
-
 
     if(true == db.getAllMainHelpSectionNames(ui->comboBoxMainSection))
     {
@@ -53,11 +51,12 @@ TabHelp::TabHelp(QWidget *parent) :
     }
 }
 
-void TabHelp::slotComboBoxMainSectionChange(int index)
-{
-    //on_pushButSelMainSectionData_clicked();
-     //QMessageBox::information(this, tr("Error"), tr("Error fail to retrive data"));
-}
+
+
+
+
+
+
 
 /*******************************************************************
  *

@@ -117,7 +117,3 @@ void efficentBarGraphDlg::mainTraversTreeWidget(QTreeWidget *treeWidget)
 }
 
 
-void efficentBarGraphDlg::on_tableView_doubleClicked(const QModelIndex &index)
-{
-
-}

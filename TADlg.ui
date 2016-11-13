@@ -121,7 +121,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QTabWidget" name="tabWidget">
+  <widget class="QTabWidget" name="tabWidget1">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -131,7 +131,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -1164,7 +1164,7 @@
   <zorder>treeWidgetSalesGrowth</zorder>
   <zorder>qwtPlotProfitGrowth</zorder>
   <zorder>qwtPlotSalesGrowth</zorder>
-  <zorder>tabWidget</zorder>
+  <zorder>tabWidget1</zorder>
   <zorder>lineEditAssetName_3</zorder>
   <zorder>selTimePeriodSlider_3</zorder>
   <zorder>labelOneDayProcentChange_3</zorder>
@@ -1209,8 +1209,8 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

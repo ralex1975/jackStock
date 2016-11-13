@@ -140,9 +140,7 @@ HEADERS  += WebBrowserTab.h \
     inc/guiUtil/guiFinanceColor.h \
     inc/guiUtil/mylineedit.h \
     inc/guiUtil/guifinancectrls.h \
-    inc/guiUtil/guiFinanceCtrls.h \
     inc/guiUtil/myTreeWidget.h \
-    inc/guiUtil/myLineEdit.h \
     inc/TaBuySellIdicator/taBuySellIdicator.h \
     leastSquareStaDlg.h \
     inc/myOs/mutex.h \

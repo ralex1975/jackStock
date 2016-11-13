@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "inc/guiUtil/guiFinanceCtrls.h"
+#include "dbHndl.h"
 
 namespace Ui {
 class StockAnalysisTab;
@@ -12,19 +13,31 @@ class StockAnalysisTab;
 #define MAX_NOF_EARNINGS_ARR_DATA                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOTAL_CURRENT_LIABILITIES           MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOTAL_LIABILITIES                   MAX_NOF_DIVIDEND_ARR_DATA
+
 
 class StockAnalysisTab : public QDialog
 {
     Q_OBJECT
 
-     QString m_html;
+    SubAnalysDataST       m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
+    int                   m_nofDividendArrData;
 
-     DividendDataST             m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
-     EarningsDataST             m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
-     TotalCurrentAssetsST       m_totalCurrentAssetsArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
-     TotalCurrentLiabilitiesST  m_totalCurrentLiabilitiesArr[MAX_NOF_TOTAL_CURRENT_LIABILITIES];
+    SubAnalysDataST       m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
+    int                   m_nofEarningsArrData;
+
+    SubAnalysDataST       m_totalCurrentAssetsArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    int                   m_nofTotalCurrentAssetsArrData;
+
+    SubAnalysDataST       m_totalCurrentLiabilitiesArr[MAX_NOF_TOTAL_CURRENT_LIABILITIES];
+    int                   m_nofTotalCurrentLiabilitiesData;
+
+    SubAnalysDataST       m_totalLiabilitiesArr[MAX_NOF_TOTAL_CURRENT_LIABILITIES];
+    int                   m_nofTotalLiabilitiesData;
 
 
+
+    QString m_html;
 
     GuiFinanceCtrls m_gfc;
     QString m_stockName;
@@ -64,6 +77,20 @@ class StockAnalysisTab : public QDialog
     void resetGuiCtrl(void);
     void resetStockAnalysisData(void);
 
+    void initSubAnalyseTableWidget(QTableWidget *tableWidget,
+                                   QString dateHeader,
+                                   QString dataHeader);
+
+
+
+    void updateTableWithSubAnalysData(QTableWidget *tableWidget,
+                                      SubAnalyseDataTypeET analyseType,
+                                      SubAnalysDataST *subAnalysDataArr,
+                                      int &nofArrData);
+
+
+
+
 
 public:
     explicit StockAnalysisTab(QWidget *parent = 0);
@@ -90,6 +117,8 @@ private slots:
     void on_pushButtonSaveTotalCurrentAsset_clicked();
 
     void on_pushButtonSaveTotalCurrentLiabilities_clicked();
+
+    void on_pushButtonSaveTotalLiabilities_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

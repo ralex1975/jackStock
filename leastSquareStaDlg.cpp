@@ -1250,6 +1250,8 @@ void LeastSquaresTaDlg::findDateList(QString stockSymbol, bool &isUpdate)
 
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 /**********************************************************************************
  *
  * Function:    on_tableViewLeastSquare_clicked
@@ -1285,6 +1287,8 @@ void LeastSquaresTaDlg::on_tableViewLeastSquare_clicked(const QModelIndex &index
     }
 
 }
+#pragma GCC diagnostic pop
+
 
 
 /*******************************************************************

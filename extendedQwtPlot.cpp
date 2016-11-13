@@ -166,15 +166,13 @@ void CExtendedQwtPlot::setRightLegend(QwtPlot *qwtPlot)
  *       QwtPlot::RightLegend
  *
  *******************************************************************/
-void CExtendedQwtPlot::setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos, QString str)
+void CExtendedQwtPlot::setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos)
 {
     QwtLegend *legend = new QwtLegend;
     legend->setItemMode( QwtLegend::ReadOnlyItem );
     legend->setFont(QFont("Helvetica", 10));
     qwtPlot->insertLegend(legend, pos);
 }
-
-
 
 
 

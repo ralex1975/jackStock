@@ -791,7 +791,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>1011</width>
+       <width>1021</width>
        <height>541</height>
       </rect>
      </property>
@@ -803,7 +803,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1009</width>
+        <width>1019</width>
         <height>539</height>
        </rect>
       </property>
@@ -825,7 +825,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>201</width>
+         <width>161</width>
          <height>461</height>
         </rect>
        </property>
@@ -861,7 +861,7 @@
         <rect>
          <x>220</x>
          <y>80</y>
-         <width>201</width>
+         <width>161</width>
          <height>461</height>
         </rect>
        </property>
@@ -923,7 +923,7 @@
         <rect>
          <x>430</x>
          <y>80</y>
-         <width>181</width>
+         <width>141</width>
          <height>461</height>
         </rect>
        </property>
@@ -946,7 +946,7 @@
         <rect>
          <x>620</x>
          <y>80</y>
-         <width>191</width>
+         <width>151</width>
          <height>461</height>
         </rect>
        </property>
@@ -975,6 +975,42 @@
        </property>
        <property name="text">
         <string>Kortfristiga skulder</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidgetTotalLiabilities">
+       <property name="geometry">
+        <rect>
+         <x>820</x>
+         <y>80</y>
+         <width>161</width>
+         <height>461</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonSaveTotalLiabilities">
+       <property name="geometry">
+        <rect>
+         <x>820</x>
+         <y>50</y>
+         <width>51</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Spara</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_39">
+       <property name="geometry">
+        <rect>
+         <x>880</x>
+         <y>60</y>
+         <width>141</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Totala skulder</string>
        </property>
       </widget>
      </widget>

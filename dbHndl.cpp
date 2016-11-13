@@ -4358,8 +4358,8 @@ bool CDbHndl::getMinDateProgressMyPortfolio(int &year, int &month)
     QString str;
     QString tmp;
     CUtil cu;
-    int row;
-    int col;
+    //int row;
+    //int col;
 
 
 
@@ -4397,8 +4397,8 @@ bool CDbHndl::getMinDateProgressMyPortfolio(int &year, int &month)
     {
         //table.deleteAllData(tableView);
 
-        row = 0;
-        col = 0;
+      //  row = 0;
+      //  col = 0;
 
         while(qry.next())
         {

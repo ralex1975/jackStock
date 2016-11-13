@@ -32,7 +32,7 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
     CDbHndl db;
     int nofRows;
 
-    QHeaderView *horizHeaderTable;
+    // QHeaderView *horizHeaderTable;
 
     headerList[nofCols++].name = QString::fromUtf8("År     ");
     headerList[nofCols++].name = QString::fromUtf8("Månad  ");
@@ -49,7 +49,7 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
     m_ynokd.addHeaders(ui->tableView, headerList, nofCols);
 
     // Init columm head click event handlers for tableView
-    horizHeaderTable = ui->tableView->horizontalHeader();
+    //horizHeaderTable = ui->tableView->horizontalHeader();
 
     db.getNofRowsProgressMyPortfolioData(nofRows);
 
@@ -126,6 +126,8 @@ AdminMyPortfolio::~AdminMyPortfolio()
 
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 /*******************************************************************
  *
  * Function:
@@ -203,6 +205,7 @@ void AdminMyPortfolio::on_tableView_doubleClicked(const QModelIndex &index)
     }
 
 }
+#pragma GCC diagnostic pop
 
 
 /*******************************************************************
@@ -319,7 +322,7 @@ void AdminMyPortfolio::addTableHead(void)
     CDbHndl db;
 
 
-    QHeaderView *horizHeaderTable;
+    //QHeaderView *horizHeaderTable;
 
 
     // db.delAllTblProgressMyPortfolio();
@@ -340,7 +343,7 @@ void AdminMyPortfolio::addTableHead(void)
     m_ynokd.addHeaders(ui->tableView, headerList, nofCols);
 
     // Init columm head click event handlers for tableView
-    horizHeaderTable = ui->tableView->horizontalHeader();
+    //horizHeaderTable = ui->tableView->horizontalHeader();
 
     int nofRows;
 

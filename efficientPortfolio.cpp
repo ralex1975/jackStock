@@ -134,6 +134,11 @@ void EfficientPortfolio::slotVertHeaderClicked(int index)
 
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+//#pragma GCC diagnostic ignored "-Wunused-result"
+//#pragma GCC diagnostic ignored "-Wtype-limits"
+//#pragma GCC diagnostic ignored "-Wreorder"
 /*********************************************************************
  * Function: ()
  *
@@ -144,6 +149,7 @@ void EfficientPortfolio::slotHorHeaderClicked(int index)
 {
     QMessageBox::critical(NULL, QObject::tr("tableview"), QObject::tr("Horz tableview"));
 }
+#pragma GCC diagnostic pop
 
 
 

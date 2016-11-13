@@ -56,7 +56,7 @@ public:
     void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
     void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
     void setRightLegend(QwtPlot *qwtPlot);
-    void setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos, QString str="");
+    void setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos);
     void initPlotPicker(QwtPlot *qwtPlot);
     void initPlotZoomer(QwtPlot *qwtPlot);
     void initPlotPanner(QwtPlot *qwtPlot);

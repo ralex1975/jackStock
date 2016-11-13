@@ -8,6 +8,13 @@
 #include "createstockanalysishtmlpage.h"
 #include <QtWebKit/QWebView>
 
+//Sub Analys Tables defines
+#define SAT_COLUMN_DATE                  0
+#define SAT_COLUMN_DATA                  1
+#define SAT_NOF_ROWS                    20
+#define SAT_NOF_COLUMNS                  2
+#define SAT_FONT_NAME                    QString::fromUtf8("Helvetica")
+#define SAT_FONT_SIZE                    9
 
 
 /******************************************************************
@@ -71,83 +78,70 @@ StockAnalysisTab::~StockAnalysisTab()
  *****************************************************************/
 void StockAnalysisTab::initSubAnalysTables(void)
 {
-    QFont font;
+    QString dateHeader = QString::fromUtf8("   År   ");
+    QString dataHeader;
 
     // Dividend
-    QStringList labels;
-    labels << QString::fromUtf8("År") << QString::fromUtf8("Utdel/Aktie");
-
-    ui->tableWidgetDividend->setRowCount(20);
-    ui->tableWidgetDividend->setColumnCount(2);
-
-    ui->tableWidgetDividend->setHorizontalHeaderLabels(labels);
-    ui->tableWidgetDividend->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
-    ui->tableWidgetDividend->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
-
-    font = ui->tableWidgetDividend->horizontalHeader()->font();
-    font.setPointSize(9);
-    font.setFamily("Helvetica");
-    ui->tableWidgetDividend->horizontalHeader()->setFont( font );
-    ui->tableWidgetDividend->verticalHeader()->setFont( font );
-
+    dataHeader = QString::fromUtf8("Utdel/Aktie");
+    initSubAnalyseTableWidget(ui->tableWidgetDividend, dateHeader,dataHeader);
 
     // Earnings
-    labels.clear();
-    labels << QString::fromUtf8("År") << QString::fromUtf8("Vinst/Aktie");
-
-    ui->tableWidgetEarnings->setRowCount(20);
-    ui->tableWidgetEarnings->setColumnCount(2);
-
-    ui->tableWidgetEarnings->setHorizontalHeaderLabels(labels);
-    ui->tableWidgetEarnings->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
-    ui->tableWidgetEarnings->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
-
-    font = ui->tableWidgetEarnings->horizontalHeader()->font();
-    font.setPointSize(9);
-    font.setFamily("Helvetica");
-    ui->tableWidgetEarnings->horizontalHeader()->setFont( font );
-    ui->tableWidgetDividend->verticalHeader()->setFont( font );
-
+    dataHeader = QString::fromUtf8("Vinst/Aktie");
+    initSubAnalyseTableWidget(ui->tableWidgetEarnings, dateHeader,dataHeader);
 
     // TotalCurrentAssets
-    labels.clear();
-    labels << QString::fromUtf8("År") << QString::fromUtf8("Oms.tillg");
-
-    ui->tableWidgetTotalCurrentAsset->setRowCount(20);
-    ui->tableWidgetTotalCurrentAsset->setColumnCount(2);
-
-    ui->tableWidgetTotalCurrentAsset->setHorizontalHeaderLabels(labels);
-    ui->tableWidgetTotalCurrentAsset->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
-    ui->tableWidgetTotalCurrentAsset->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
-
-    font = ui->tableWidgetTotalCurrentAsset->horizontalHeader()->font();
-    font.setPointSize(9);
-    font.setFamily("Helvetica");
-    ui->tableWidgetTotalCurrentAsset->horizontalHeader()->setFont( font );
-    ui->tableWidgetDividend->verticalHeader()->setFont( font );
-
-
+    dataHeader = QString::fromUtf8("Oms.tillg");
+    initSubAnalyseTableWidget(ui->tableWidgetTotalCurrentAsset, dateHeader,dataHeader);
 
     // totalCurrentLiabilities
-    labels.clear();
-    labels << QString::fromUtf8("År") << QString::fromUtf8("kortf.skuld");
+    dataHeader = QString::fromUtf8("Kortf.skuld");
+    initSubAnalyseTableWidget(ui->tableWidgetTotalCurrentLiabilities, dateHeader,dataHeader);
 
-    ui->tableWidgetTotalCurrentLiabilities->setRowCount(20);
-    ui->tableWidgetTotalCurrentLiabilities->setColumnCount(2);
-
-    ui->tableWidgetTotalCurrentLiabilities->setHorizontalHeaderLabels(labels);
-    ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
-    ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->setResizeMode(1, QHeaderView::ResizeToContents);
-
-
-    font = ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->font();
-    font.setPointSize(9);
-    font.setFamily("Helvetica");
-    ui->tableWidgetTotalCurrentLiabilities->horizontalHeader()->setFont( font );
-    ui->tableWidgetTotalCurrentLiabilities->verticalHeader()->setFont( font );
-
+    // totalLiabilities
+    dataHeader = QString::fromUtf8("Totala Skuld");
+    initSubAnalyseTableWidget(ui->tableWidgetTotalLiabilities, dateHeader,dataHeader);
 }
 
+
+
+
+/******************************************************************
+ *
+ * Function:    on_SelStockListButton_clicked()
+ *
+ * Description: init Sub Analyse QTableWidget.
+ *
+ *              This table has 20 rows and 2 columns
+ *
+ * ****************************************************************/
+void StockAnalysisTab::initSubAnalyseTableWidget(QTableWidget *tableWidget,
+                                                 QString dateHeader,
+                                                 QString dataHeader)
+{
+
+    // Set table size
+    tableWidget->setRowCount(SAT_NOF_ROWS);
+    tableWidget->setColumnCount(SAT_NOF_COLUMNS);
+
+    // Init label
+    QStringList labels;
+    labels.clear();
+    labels << dateHeader << dataHeader;
+    tableWidget->setHorizontalHeaderLabels(labels);
+
+    // Init headers
+    tableWidget->horizontalHeader()->setResizeMode(SAT_COLUMN_DATE, QHeaderView::ResizeToContents);
+    tableWidget->horizontalHeader()->setResizeMode(SAT_COLUMN_DATA, QHeaderView::ResizeToContents);
+
+    // Init font
+    QFont font;
+    font = tableWidget->horizontalHeader()->font();
+    font.setPointSize(SAT_FONT_SIZE);
+    font.setFamily(SAT_FONT_NAME);
+    tableWidget->horizontalHeader()->setFont( font );
+    tableWidget->verticalHeader()->setFont( font );
+
+}
 
 
 
@@ -324,6 +318,38 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     //====================================================================
     // Get and display sub data
     //====================================================================
+
+    updateTableWithSubAnalysData(ui->tableWidgetDividend,
+                                 SAD_DIVIDEND,
+                                 m_dividendDataArr,
+                                 m_nofDividendArrData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetEarnings,
+                                 SAD_EARNINGS,
+                                 m_earningsDataArr,
+                                 m_nofEarningsArrData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetTotalCurrentAsset,
+                                 SAD_TOTAL_CURRENT_ASSETS,
+                                 m_totalCurrentAssetsArr,
+                                 m_nofTotalCurrentAssetsArrData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetTotalCurrentLiabilities,
+                                 SAD_TOTAL_CURRENT_LIABILITIES,
+                                 m_totalCurrentLiabilitiesArr,
+                                 m_nofTotalCurrentLiabilitiesData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetTotalLiabilities,
+                                 SAD_TOTAL_LIABILITIES,
+                                 m_totalLiabilitiesArr,
+                                 m_nofTotalLiabilitiesData);
+
+
+
+
+
+
+#if 0
     QFont font;
     font.setPointSize(9);
     font.setFamily("Helvetica");
@@ -443,7 +469,147 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             ui->tableWidgetTotalCurrentLiabilities->setItem( i, 1, itemData);
         }
     }
+#endif
 }
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButton_clicked()
+ *
+ * Description: This function updates table Widget with
+ *              Sub Analys Data from the database.
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
+                                                    SubAnalyseDataTypeET analyseType,
+                                                    SubAnalysDataST *subAnalysDataArr,
+                                                    int &nofArrData)
+{
+    CDbHndl db;
+    bool res = false;
+    SubAnalysDataST data;
+    QFont font;
+
+    // Set table widget font
+    font.setPointSize(SAT_FONT_SIZE);
+    font.setFamily(SAT_FONT_NAME);
+
+    // Clear table widget
+    tableWidget->clearContents();
+
+
+    switch(analyseType)
+    {
+    case SAD_DIVIDEND:
+        res = db.getSubAnalysisDividendData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_DIVIDEND_ARR_DATA)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 1: Too many array data"));
+        }
+        break;
+    case SAD_EARNINGS:
+        res = db.getSubAnalysisEarningsData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_EARNINGS_ARR_DATA)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 2: Too many array data"));
+        }
+        break;
+    case SAD_TOTAL_CURRENT_ASSETS:
+        res = db.getSubAnalysisTotalCurrentAssetsData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 3: Too many array data"));
+        }
+        break;
+    case SAD_TOTAL_CURRENT_LIABILITIES:
+        res = db.getSubAnalysisTotalCurrentLiabilitiesData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_TOTAL_CURRENT_LIABILITIES)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 4: Too many array data"));
+        }
+        break;
+    case SAD_TOTAL_LIABILITIES:
+        res = db.getSubAnalysisTotalLiabilitiesData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_TOTAL_LIABILITIES)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 4: Too many array data"));
+        }
+        break;
+    default:
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error: invalid subAnalyseType"));
+        return;
+    }
+
+
+    if(true == res)
+    {
+        for(int i = 0; i < nofArrData; i++)
+        {
+            data = subAnalysDataArr[i];
+            tableWidget->insertRow(i);
+
+            // Insert Year in table widget
+            QTableWidgetItem *itemDate = new QTableWidgetItem( data.date);
+            itemDate->setFont(font);
+            tableWidget->setItem( i, SAT_COLUMN_DATE, itemDate);
+
+            // Insert Data in table widget
+            QTableWidgetItem *itemData = new QTableWidgetItem(data.data);
+            itemData->setFont(font);
+            tableWidget->setItem( i, SAT_COLUMN_DATA, itemData);
+        }
+    }
+}
+
+
+
+
+#if 0
+//====================================================================
+// Get and display sub data
+//====================================================================
+QFont font;
+font.setPointSize(9);
+font.setFamily("Helvetica");
+
+
+ui->tableWidgetDividend->clearContents();
+ui->tableWidgetEarnings->clearContents();
+ui->tableWidgetTotalCurrentAsset->clearContents();
+ui->tableWidgetTotalCurrentLiabilities->clearContents();
+
+// Dividend
+int nofDividendArrData;
+DividendDataST data;
+
+if(true == db.getSubAnalysisDividendData(m_stockName,
+                                         m_stockSymbol,
+                                         m_dividendDataArr,
+                                         nofDividendArrData))
+{
+
+    for(int i = 0; i < nofDividendArrData; i++)
+    {
+        data = m_dividendDataArr[i];
+        ui->tableWidgetDividend->insertRow(i);
+
+        QTableWidgetItem *itemDate = new QTableWidgetItem( data.date);
+        itemDate->setFont(font);
+        ui->tableWidgetDividend->setItem( i, 0, itemDate);
+
+
+        QTableWidgetItem *itemDividend = new QTableWidgetItem(data.dividend);
+        itemDividend->setFont(font);
+        ui->tableWidgetDividend->setItem( i, 1, itemDividend);
+
+    }
+}
+
+#endif
 
 
 /******************************************************************
@@ -1392,3 +1558,123 @@ void StockAnalysisTab::on_pushButtonSaveTotalCurrentLiabilities_clicked()
     }
 
 }
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveTotalLiabilities_clicked()
+ *
+ * Description: This function saves Total Liabilities data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveTotalLiabilities_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+
+    nofData = ui->tableWidgetTotalLiabilities->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetTotalLiabilities->item(row, 0))
+       {
+            date = ui->tableWidgetTotalLiabilities->item(row, 0)->text();
+            data = ui->tableWidgetTotalLiabilities->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+               continue;
+            }
+
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Earnings is not a number"));
+               continue;
+            }
+       }
+       else
+       {
+           break;
+       }
+
+
+        res = db.subAnalysisTotalLiabilitiesDateExists(date,
+                                                       mainAnalysisId,
+                                                       dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisTotalLiabilitiesDate(date,
+                                                           mainAnalysisId,
+                                                           dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisTotalLiabilitiesDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisTotalLiabilities(dateId,
+                                                       mainAnalysisId,
+                                                       inputDataId,
+                                                       dataIdIsValid,
+                                                       data,
+                                                       dataId);
+        }
+    }
+
+}
+
+

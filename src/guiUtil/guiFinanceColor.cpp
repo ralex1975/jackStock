@@ -68,15 +68,15 @@ Qt::GlobalColor GuiFinanceColor::getColorRiskReturns(double riskStdDev, double m
     {
         riskReturnColor = Qt::red;
     }
-    else if((riskStdDev) >= 15 && (riskStdDev) <= 20|| (meanReturns) > 0)
+    else if( (riskStdDev >= 15 && riskStdDev <= 20) || (meanReturns > 0))
     {
         riskReturnColor = Qt::magenta;
     }
-    else if((riskStdDev) > 10 && (riskStdDev) < 15 && (meanReturns) > 0)
+    else if(riskStdDev > 10 && riskStdDev < 15 && meanReturns > 0)
     {
         riskReturnColor = Qt::darkYellow;
     }
-    else if((riskStdDev) <= 10 && (meanReturns) > 7)
+    else if(riskStdDev <= 10 && meanReturns > 7)
     {
         riskReturnColor = Qt::darkGreen;
     }
@@ -672,7 +672,7 @@ setTxtColorPs(QString inValue, QLineEdit *outValue)
 {
     CUtil cu;
     QColor color;
-    double inValueDouble;
+    //double inValueDouble;
 
 #if 0
 
