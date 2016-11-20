@@ -810,7 +810,7 @@
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
-     <string>Analys data 1 </string>
+     <string>Analysdata 1 </string>
     </attribute>
     <widget class="QScrollArea" name="scrollArea_3">
      <property name="geometry">
@@ -1093,7 +1093,7 @@
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>Intjäningsstabilitet</string>
+     <string>Analysdata 2</string>
     </attribute>
     <widget class="QScrollArea" name="scrollArea_2">
      <property name="geometry">
@@ -1116,364 +1116,177 @@
         <height>529</height>
        </rect>
       </property>
-      <widget class="QLabel" name="label_2">
+      <widget class="QPushButton" name="pushButtonSaveCoverageRatio">
        <property name="geometry">
         <rect>
-         <x>520</x>
-         <y>310</y>
-         <width>151</width>
-         <height>17</height>
+         <x>200</x>
+         <y>40</y>
+         <width>51</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Vinstutveckling</string>
+        <string>Spara</string>
        </property>
       </widget>
-      <widget class="QGraphicsView" name="graphicsView_2">
-       <property name="geometry">
-        <rect>
-         <x>520</x>
-         <y>10</y>
-         <width>480</width>
-         <height>300</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QGraphicsView" name="graphicsView">
+      <widget class="QPushButton" name="pushButtonSaveSolidity">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
-         <width>480</width>
-         <height>300</height>
+         <y>50</y>
+         <width>51</width>
+         <height>22</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>Spara</string>
        </property>
       </widget>
       <widget class="QLabel" name="label">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>310</y>
-         <width>171</width>
-         <height>17</height>
+         <x>70</x>
+         <y>50</y>
+         <width>51</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Försäljningsutveckling</string>
+        <string>Solidity</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QPushButton" name="pushButtonSaveCoreTier1Ratio">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>330</y>
-         <width>421</width>
-         <height>27</height>
+         <x>810</x>
+         <y>30</y>
+         <width>51</width>
+         <height>21</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>Spara</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>360</y>
-         <width>151</width>
-         <height>17</height>
+         <x>810</x>
+         <y>50</y>
+         <width>161</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Sökväg</string>
+        <string>Primärkapitalrelation</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_3">
+      <widget class="QTableWidget" name="tableWidgetCoreTier1Ratio">
        <property name="geometry">
         <rect>
-         <x>520</x>
-         <y>330</y>
-         <width>421</width>
-         <height>27</height>
+         <x>810</x>
+         <y>80</y>
+         <width>161</width>
+         <height>441</height>
         </rect>
        </property>
       </widget>
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
-         <x>520</x>
-         <y>360</y>
-         <width>151</width>
-         <height>17</height>
+         <x>400</x>
+         <y>60</y>
+         <width>181</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Sökväg</string>
+        <string>Kärnprimärkapitalrelation</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_5">
+      <widget class="QPushButton" name="pushButtonSaveCoreCapitalRatio">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>410</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_13">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>410</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_14">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>440</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_15">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>440</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_16">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>470</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_17">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>470</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_18">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>500</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_19">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>500</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_20">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>380</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_21">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>380</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_15">
-       <property name="geometry">
-        <rect>
-         <x>300</x>
-         <y>380</y>
-         <width>67</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Utv %</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_22">
-       <property name="geometry">
-        <rect>
-         <x>520</x>
-         <y>440</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_23">
-       <property name="geometry">
-        <rect>
-         <x>520</x>
-         <y>500</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_24">
-       <property name="geometry">
-        <rect>
-         <x>520</x>
-         <y>410</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_25">
-       <property name="geometry">
-        <rect>
-         <x>660</x>
-         <y>500</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_26">
-       <property name="geometry">
-        <rect>
-         <x>660</x>
-         <y>380</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_27">
-       <property name="geometry">
-        <rect>
-         <x>520</x>
-         <y>380</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_28">
-       <property name="geometry">
-        <rect>
-         <x>520</x>
-         <y>470</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_29">
-       <property name="geometry">
-        <rect>
-         <x>660</x>
-         <y>470</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_30">
-       <property name="geometry">
-        <rect>
-         <x>660</x>
-         <y>440</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_31">
-       <property name="geometry">
-        <rect>
-         <x>660</x>
-         <y>410</y>
-         <width>113</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_3">
-       <property name="geometry">
-        <rect>
-         <x>370</x>
-         <y>400</y>
-         <width>99</width>
-         <height>27</height>
+         <x>400</x>
+         <y>40</y>
+         <width>51</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
         <string>Spara</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QTableWidget" name="tableWidgetCoreCapitalRatio">
        <property name="geometry">
         <rect>
-         <x>810</x>
-         <y>400</y>
-         <width>99</width>
-         <height>27</height>
+         <x>400</x>
+         <y>80</y>
+         <width>181</width>
+         <height>441</height>
         </rect>
-       </property>
-       <property name="text">
-        <string>Spara</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_6">
-       <property name="geometry">
-        <rect>
-         <x>370</x>
-         <y>370</y>
-         <width>99</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Hämta</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_7">
-       <property name="geometry">
-        <rect>
-         <x>810</x>
-         <y>370</y>
-         <width>99</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Hämta</string>
        </property>
       </widget>
      </widget>
+    </widget>
+    <widget class="QLabel" name="ananlysisDateLabel_33">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>301</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="StockNameLabel_17">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>301</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidgetSolidity">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>161</width>
+       <height>441</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidgetCoverageRatio">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>100</y>
+       <width>161</width>
+       <height>441</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>80</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Räntetäckningsgraden</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_4">

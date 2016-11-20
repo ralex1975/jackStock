@@ -7,6 +7,8 @@
 #include "yahooStockPlotUtil.h"
 #include "createstockanalysishtmlpage.h"
 #include <QtWebKit/QWebView>
+#include "util.h"
+
 
 //Sub Analys Tables defines
 #define SAT_COLUMN_DATE                  0
@@ -92,30 +94,47 @@ StockAnalysisTab::~StockAnalysisTab()
  *****************************************************************/
 void StockAnalysisTab::initSubAnalysTables(void)
 {
-    QString dateHeader = QString::fromUtf8("   År   ");
+    QString dateHeader = QString::fromUtf8("   År    ");
     QString dataHeader;
 
     initCompanyTypeComboBox();
 
     // Dividend
     dataHeader = QString::fromUtf8("Utdel/Aktie");
-    initSubAnalyseTableWidget(ui->tableWidgetDividend, dateHeader,dataHeader);
+    initSubAnalyseTableWidget(ui->tableWidgetDividend, dateHeader, dataHeader);
 
     // Earnings
     dataHeader = QString::fromUtf8("Vinst/Aktie");
-    initSubAnalyseTableWidget(ui->tableWidgetEarnings, dateHeader,dataHeader);
+    initSubAnalyseTableWidget(ui->tableWidgetEarnings, dateHeader, dataHeader);
 
     // TotalCurrentAssets
     dataHeader = QString::fromUtf8("Oms.tillg");
-    initSubAnalyseTableWidget(ui->tableWidgetTotalCurrentAsset, dateHeader,dataHeader);
+    initSubAnalyseTableWidget(ui->tableWidgetTotalCurrentAsset, dateHeader, dataHeader);
 
     // totalCurrentLiabilities
     dataHeader = QString::fromUtf8("Kortf.skuld");
-    initSubAnalyseTableWidget(ui->tableWidgetTotalCurrentLiabilities, dateHeader,dataHeader);
+    initSubAnalyseTableWidget(ui->tableWidgetTotalCurrentLiabilities, dateHeader, dataHeader);
 
     // totalLiabilities
     dataHeader = QString::fromUtf8("Totala Skuld");
-    initSubAnalyseTableWidget(ui->tableWidgetTotalLiabilities, dateHeader,dataHeader);
+    initSubAnalyseTableWidget(ui->tableWidgetTotalLiabilities, dateHeader, dataHeader);
+
+    // Solidity
+    dataHeader = QString::fromUtf8("Soliditet (%)");
+    initSubAnalyseTableWidget(ui->tableWidgetSolidity, dateHeader, dataHeader);
+
+    // Coverage Ratio (Räntetäckningsgrad)
+    dataHeader = QString::fromUtf8("RänteTG ggr");
+    initSubAnalyseTableWidget(ui->tableWidgetCoverageRatio, dateHeader, dataHeader);
+
+    // Core Tier1 Ratio (Primärkapitalrelation)
+    dataHeader = QString::fromUtf8("primärkap.rel");
+    initSubAnalyseTableWidget(ui->tableWidgetCoreTier1Ratio, dateHeader, dataHeader);
+
+    // CoreCapitalRatio (Kärnprimärkapitalrelation)
+    dataHeader = QString::fromUtf8("kärnprimärkap.rel");
+    initSubAnalyseTableWidget(ui->tableWidgetCoreCapitalRatio, dateHeader, dataHeader);
+
 }
 
 
@@ -270,9 +289,13 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
         db.getStockAnalysisDate(m_stockName, m_stockSymbol, ui->treeWidgetAnalysisDate);
     }
 
+    // Page analysdata 1
     ui->StockNameLabel_16->setText(m_stockName);
     ui->ananlysisDateLabel_32->setText(m_analysisDate);
 
+    // Page analysdata 2
+    ui->StockNameLabel_17->setText(m_stockName);
+    ui->ananlysisDateLabel_33->setText(m_analysisDate);
 
     if(startDate.isEmpty() == false && m_analysisDate.isEmpty() == false)
     {
@@ -382,6 +405,29 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_totalLiabilitiesArr,
                                  m_nofTotalLiabilitiesData);
 
+    updateTableWithSubAnalysData(ui->tableWidgetSolidity,
+                                 SAD_SOLIDITY,
+                                 m_solidityArr,
+                                 m_nofSolidityData);
+
+
+    updateTableWithSubAnalysData(ui->tableWidgetCoverageRatio,
+                                 SAD_COVERAGE_RATIO,
+                                 m_coverageRatioArr,
+                                 m_nofCoverageRatioData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetCoreTier1Ratio,
+                                 SAD_CORE_TIER_1_RATIO,
+                                 m_coreTier1RatioArr,
+                                 m_nofCoreTier1RatioData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetCoreCapitalRatio,
+                                 SAD_CORE_CAPITAL_RATIO,
+                                 m_coreCapitalRatioArr,
+                                 m_nofCoreCapitalRatioData);
+
+
+
 
     int mainAnalysisId;
     int companyType = 0;
@@ -405,132 +451,6 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
         }
     }
 
-
-
-
-
-
-#if 0
-    QFont font;
-    font.setPointSize(9);
-    font.setFamily("Helvetica");
-
-
-    ui->tableWidgetDividend->clearContents();
-    ui->tableWidgetEarnings->clearContents();
-    ui->tableWidgetTotalCurrentAsset->clearContents();
-    ui->tableWidgetTotalCurrentLiabilities->clearContents();
-
-    // Dividend
-    int nofDividendArrData;
-    DividendDataST data;
-
-    if(true == db.getSubAnalysisDividendData(m_stockName,
-                                             m_stockSymbol,
-                                             m_dividendDataArr,
-                                             nofDividendArrData))
-    {
-
-        for(int i = 0; i < nofDividendArrData; i++)
-        {
-            data = m_dividendDataArr[i];
-            ui->tableWidgetDividend->insertRow(i);
-
-            QTableWidgetItem *itemDate = new QTableWidgetItem( data.date);
-            itemDate->setFont(font);
-            ui->tableWidgetDividend->setItem( i, 0, itemDate);
-
-
-            QTableWidgetItem *itemDividend = new QTableWidgetItem(data.dividend);
-            itemDividend->setFont(font);
-            ui->tableWidgetDividend->setItem( i, 1, itemDividend);
-
-        }
-    }
-
-    // Earnings
-    int nofEarningsArrData;
-    EarningsDataST eData;
-
-    if(true == db.getSubAnalysisEarningsData(m_stockName,
-                                             m_stockSymbol,
-                                             m_earningsDataArr,
-                                             nofEarningsArrData))
-    {
-
-        for(int i = 0; i < nofEarningsArrData; i++)
-        {
-            eData = m_earningsDataArr[i];
-            ui->tableWidgetEarnings->insertRow(i);
-
-            QTableWidgetItem *itemDate = new QTableWidgetItem(eData.date);
-            itemDate->setFont(font);
-            ui->tableWidgetEarnings->setItem( i, 0, itemDate);
-
-
-            QTableWidgetItem *itemEarnings = new QTableWidgetItem(eData.earnings);
-            itemEarnings->setFont(font);
-            ui->tableWidgetEarnings->setItem( i, 1, itemEarnings);
-
-        }
-    }
-
-
-
-    // TotalCurrentAssets
-    int nofTotalCurrentAssetsArrData;
-    TotalCurrentAssetsST tcaData;
-
-
-    if(true == db.getSubAnalysisTotalCurrentAssetsData(m_stockName,
-                                                       m_stockSymbol,
-                                                       m_totalCurrentAssetsArr,
-                                                       nofTotalCurrentAssetsArrData))
-    {
-
-        for(int i = 0; i < nofTotalCurrentAssetsArrData; i++)
-        {
-            tcaData = m_totalCurrentAssetsArr[i];
-            ui->tableWidgetTotalCurrentAsset->insertRow(i);
-
-            QTableWidgetItem *itemDate = new QTableWidgetItem(tcaData.date);
-            itemDate->setFont(font);
-            ui->tableWidgetTotalCurrentAsset->setItem( i, 0, itemDate);
-
-            QTableWidgetItem *itemData = new QTableWidgetItem(tcaData.totalCurrentAssets);
-            itemData->setFont(font);
-            ui->tableWidgetTotalCurrentAsset->setItem( i, 1, itemData);
-        }
-    }
-
-
-
-    // TotalCurrentLiabilities
-    int nofTotalCurrentLiabilitiesArrData;
-    TotalCurrentLiabilitiesST tclData;
-
-
-    if(true == db.getSubAnalysisTotalCurrentLiabilitiesData(m_stockName,
-                                                       m_stockSymbol,
-                                                       m_totalCurrentLiabilitiesArr,
-                                                       nofTotalCurrentLiabilitiesArrData))
-    {
-
-        for(int i = 0; i < nofTotalCurrentLiabilitiesArrData; i++)
-        {
-            tclData = m_totalCurrentLiabilitiesArr[i];
-            ui->tableWidgetTotalCurrentLiabilities->insertRow(i);
-
-            QTableWidgetItem *itemDate = new QTableWidgetItem(tclData.date);
-            itemDate->setFont(font);
-            ui->tableWidgetTotalCurrentLiabilities->setItem( i, 0, itemDate);
-
-            QTableWidgetItem *itemData = new QTableWidgetItem(tclData.totalCurrentLiabilities);
-            itemData->setFont(font);
-            ui->tableWidgetTotalCurrentLiabilities->setItem( i, 1, itemData);
-        }
-    }
-#endif
 }
 
 
@@ -572,6 +492,7 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 1: Too many array data"));
         }
         break;
+
     case SAD_EARNINGS:
         res = db.getSubAnalysisEarningsData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
         if(nofArrData > MAX_NOF_EARNINGS_ARR_DATA)
@@ -579,6 +500,7 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 2: Too many array data"));
         }
         break;
+
     case SAD_TOTAL_CURRENT_ASSETS:
         res = db.getSubAnalysisTotalCurrentAssetsData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
         if(nofArrData > MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA)
@@ -586,6 +508,7 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 3: Too many array data"));
         }
         break;
+
     case SAD_TOTAL_CURRENT_LIABILITIES:
         res = db.getSubAnalysisTotalCurrentLiabilitiesData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
         if(nofArrData > MAX_NOF_TOTAL_CURRENT_LIABILITIES)
@@ -593,13 +516,47 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 4: Too many array data"));
         }
         break;
+
     case SAD_TOTAL_LIABILITIES:
         res = db.getSubAnalysisTotalLiabilitiesData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
         if(nofArrData > MAX_NOF_TOTAL_LIABILITIES)
         {
-            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 4: Too many array data"));
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 5: Too many array data"));
         }
         break;
+
+   case SAD_SOLIDITY:
+        res = db.getSubAnalysisSolidityData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_SOLIDITY)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 6: Too many array data"));
+        }
+        break;
+
+    case SAD_COVERAGE_RATIO:
+        res = db.getSubAnalysisCoverageRatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_COVERAGE_RATIO)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
+        }
+        break;
+
+    case SAD_CORE_TIER_1_RATIO:
+        res = db.getSubAnalysisCoreTier1RatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_CORE_TIER_1_RATIO)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
+        }
+        break;
+
+    case SAD_CORE_CAPITAL_RATIO:
+        res = db.getSubAnalysisCoreCapitalRatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_CORE_CAPITAL_RATIO)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
+        }
+        break;
+
     default:
         QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error: invalid subAnalyseType"));
         return;
@@ -629,48 +586,6 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
 
 
 
-#if 0
-//====================================================================
-// Get and display sub data
-//====================================================================
-QFont font;
-font.setPointSize(9);
-font.setFamily("Helvetica");
-
-
-ui->tableWidgetDividend->clearContents();
-ui->tableWidgetEarnings->clearContents();
-ui->tableWidgetTotalCurrentAsset->clearContents();
-ui->tableWidgetTotalCurrentLiabilities->clearContents();
-
-// Dividend
-int nofDividendArrData;
-DividendDataST data;
-
-if(true == db.getSubAnalysisDividendData(m_stockName,
-                                         m_stockSymbol,
-                                         m_dividendDataArr,
-                                         nofDividendArrData))
-{
-
-    for(int i = 0; i < nofDividendArrData; i++)
-    {
-        data = m_dividendDataArr[i];
-        ui->tableWidgetDividend->insertRow(i);
-
-        QTableWidgetItem *itemDate = new QTableWidgetItem( data.date);
-        itemDate->setFont(font);
-        ui->tableWidgetDividend->setItem( i, 0, itemDate);
-
-
-        QTableWidgetItem *itemDividend = new QTableWidgetItem(data.dividend);
-        itemDividend->setFont(font);
-        ui->tableWidgetDividend->setItem( i, 1, itemDividend);
-
-    }
-}
-
-#endif
 
 
 /******************************************************************
@@ -892,9 +807,15 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
         return;
     }
 
+    // Main analys page
     m_analysisDate = analysisDate;
     ui->analysisDateLineEdit->setText(analysisDate);
+
+    // Page analysdata 1
     ui->ananlysisDateLabel_32->setText(m_analysisDate);
+
+    // Page analysdata 2
+    ui->ananlysisDateLabel_33->setText(m_analysisDate);
 
     resetStockAnalysisData();
     resetGuiCtrl();
@@ -1171,6 +1092,12 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
     QString dividendDate;
     QString dividendData;
 
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
 
     str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
     str = str + m_stockName;
@@ -1217,6 +1144,8 @@ void StockAnalysisTab::on_pushSaveDividend_clicked()
                 continue;
             }
 
+            CUtil cu;
+            cu.number2double(dividendData, dividendData);
             dividendData.toDouble(&isValid);
             if (false == isValid)
             {
@@ -1291,6 +1220,11 @@ void StockAnalysisTab::on_pushSaveEarnings_clicked()
     QString earningsDate;
     QString earningsData;
 
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
 
     str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
     str = str + m_stockName;
@@ -1337,6 +1271,8 @@ void StockAnalysisTab::on_pushSaveEarnings_clicked()
                 continue;
             }
 
+            CUtil cu;
+            cu.number2double(earningsData, earningsData);
             earningsData.toDouble(&isValid);
             if (false == isValid)
             {
@@ -1410,6 +1346,12 @@ void StockAnalysisTab::on_pushButtonSaveTotalCurrentAsset_clicked()
     QString totalCurrentAssetsDate;
     QString totalCurrentAssetsData;
 
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
 
     str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
     str = str + m_stockName;
@@ -1456,6 +1398,8 @@ void StockAnalysisTab::on_pushButtonSaveTotalCurrentAsset_clicked()
                continue;
             }
 
+            CUtil cu;
+            cu.number2double(totalCurrentAssetsData, totalCurrentAssetsData);
             totalCurrentAssetsData.toDouble(&isValid);
             if (false == isValid)
             {
@@ -1528,6 +1472,12 @@ void StockAnalysisTab::on_pushButtonSaveTotalCurrentLiabilities_clicked()
     QString date;
     QString data;
 
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
 
     str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
     str = str + m_stockName;
@@ -1574,6 +1524,8 @@ void StockAnalysisTab::on_pushButtonSaveTotalCurrentLiabilities_clicked()
                continue;
             }
 
+            CUtil cu;
+            cu.number2double(data, data);
             data.toDouble(&isValid);
             if (false == isValid)
             {
@@ -1649,6 +1601,13 @@ void StockAnalysisTab::on_pushButtonSaveTotalLiabilities_clicked()
     QString data;
 
 
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
     str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
     str = str + m_stockName;
     str = str + ", ";
@@ -1694,6 +1653,8 @@ void StockAnalysisTab::on_pushButtonSaveTotalLiabilities_clicked()
                continue;
             }
 
+            CUtil cu;
+            cu.number2double(data, data);
             data.toDouble(&isValid);
             if (false == isValid)
             {
@@ -1751,7 +1712,6 @@ void StockAnalysisTab::on_pushButtonSaveTotalLiabilities_clicked()
  *
  *
  *****************************************************************/
-
 void StockAnalysisTab::on_pushButtonSelectSaveCompanyType_clicked()
 {
     CDbHndl db;
@@ -1760,8 +1720,14 @@ void StockAnalysisTab::on_pushButtonSelectSaveCompanyType_clicked()
     int companyType;
     int companyTypeId;
 
-    QString str;
 
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+    QString str;
 
     str = (QString::fromUtf8("Vill du lägga till bolagstyp?\n"));
     str = str + m_stockName;
@@ -1809,3 +1775,466 @@ void StockAnalysisTab::on_pushButtonSelectSaveCompanyType_clicked()
 
 }
 
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveSolidity_clicked()
+ *
+ * Description: This function saves Solidity data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveSolidity_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                m_stockSymbol,
+                                mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                     m_stockSymbol,
+                                     mainAnalysisId);
+    }
+
+
+
+    nofData = ui->tableWidgetSolidity->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+       if(NULL != ui->tableWidgetSolidity->item(row, 0))
+       {
+            date = ui->tableWidgetSolidity->item(row, 0)->text();
+            data = ui->tableWidgetSolidity->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+               continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+               QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Solidity is not a number"));
+               continue;
+            }
+       }
+       else
+       {
+           break;
+       }
+
+
+        res = db.subAnalysisSolidityDateExists(date,
+                                               mainAnalysisId,
+                                               dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisSolidityDate(date,
+                                                   mainAnalysisId,
+                                                   dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisSolidityDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisSolidityData(dateId,
+                                               mainAnalysisId,
+                                               inputDataId,
+                                               dataIdIsValid,
+                                               data,
+                                               dataId);
+        }
+    }
+
+}
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveCoverageRatio_clicked()
+ *
+ * Description: This function saves Coverage Ratio data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveCoverageRatio_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName, m_stockSymbol, mainAnalysisId);
+
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName, m_stockSymbol, mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetCoverageRatio->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetCoverageRatio->item(row, 0))
+        {
+            date = ui->tableWidgetCoverageRatio->item(row, 0)->text();
+            data = ui->tableWidgetCoverageRatio->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("CoverageRatio is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+
+        res = db.subAnalysisCoverageRatioDateExists(date, mainAnalysisId, dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisCoverageRatioDate(date, mainAnalysisId, dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisCoverageRatioDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+           res = db.insertSubAnalysisCoverageRatioData(dateId, mainAnalysisId, inputDataId, dataIdIsValid,
+                                                       data, dataId);
+        }
+    }
+}
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveCoreTier1Ratio_clicked()
+ *
+ * Description: This function saves CoreTier1Ratio data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveCoreTier1Ratio_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName, m_stockSymbol, mainAnalysisId);
+
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName, m_stockSymbol, mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetCoreTier1Ratio->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetCoreTier1Ratio->item(row, 0))
+        {
+            date = ui->tableWidgetCoreTier1Ratio->item(row, 0)->text();
+            data = ui->tableWidgetCoreTier1Ratio->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("CoreTier1Ratio is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+
+        res = db.subAnalysisCoreTier1RatioDateExists(date, mainAnalysisId, dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisCoreTier1RatioDate(date, mainAnalysisId, dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisCoreTier1RatioDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+           res = db.insertSubAnalysisCoreTier1RatioData(dateId, mainAnalysisId, inputDataId, dataIdIsValid,
+                                                       data, dataId);
+        }
+    }
+}
+
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveCoreCapitalRatio_clicked()
+ *
+ * Description: This function saves CoreCapitalRatio data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveCoreCapitalRatio_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName, m_stockSymbol, mainAnalysisId);
+
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName, m_stockSymbol, mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetCoreCapitalRatio->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetCoreCapitalRatio->item(row, 0))
+        {
+            date = ui->tableWidgetCoreCapitalRatio->item(row, 0)->text();
+            data = ui->tableWidgetCoreCapitalRatio->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("CoreCapitalRatio is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+
+        res = db.subAnalysisCoreCapitalRatioDateExists(date, mainAnalysisId, dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisCoreCapitalRatioDate(date, mainAnalysisId, dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisCoreCapitalRatioDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+           res = db.insertSubAnalysisCoreCapitalRatioData(dateId, mainAnalysisId, inputDataId, dataIdIsValid,
+                                                       data, dataId);
+        }
+    }
+
+}

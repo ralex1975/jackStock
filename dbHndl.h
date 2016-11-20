@@ -176,39 +176,12 @@ enum SubAnalyseDataTypeET
     SAD_EARNINGS,
     SAD_TOTAL_CURRENT_ASSETS,       // Omsättningstillgångar
     SAD_TOTAL_CURRENT_LIABILITIES,  // Kortfristiga skulder
-    SAD_TOTAL_LIABILITIES           // Totala skulder
+    SAD_TOTAL_LIABILITIES,          // Totala skulder
+    SAD_SOLIDITY,                   // Soliditet
+    SAD_COVERAGE_RATIO,             // Räntetäckningsgrad
+    SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
+    SAD_CORE_CAPITAL_RATIO          // kärnprimärkapitalrelation
 };
-
-
-#if 0
-struct DividendDataST
-{
-    QString date;
-    QString dividend;
-};
-
-
-struct EarningsDataST
-{
-    QString date;
-    QString earnings;
-};
-
-
-
-struct TotalCurrentAssetsST
-{
-    QString date;
-    QString totalCurrentAssets;
-};
-
-
-struct TotalCurrentLiabilitiesST
-{
-    QString date;
-    QString totalCurrentLiabilities;
-};
-#endif
 
 
 
@@ -800,6 +773,130 @@ public:
                                            bool dbIsHandledExternly = false);
 
     bool getSubAnalysisTotalLiabilitiesData(QString stockName,
+                                            QString stockSymbol,
+                                            SubAnalysDataST *dataArr,
+                                            int &nofArrData,
+                                            bool dbIsHandledExternly = false);
+
+
+    // Solidity
+    bool subAnalysisSolidityDateExists(QString date,
+                                       int mainAnalysisId,
+                                       int &dateId);
+
+    bool insertSubAnalysisSolidityDate(QString date,
+                                       int mainAnalysisId,
+                                       int &dateId,
+                                       bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisSolidityDataId(int mainAnalysisId,
+                                      int dateId,
+                                      int &dataId,
+                                      bool dbIsHandledExternly = false);
+
+
+    bool insertSubAnalysisSolidityData(int dateId,
+                                       int mainAnalysisId,
+                                       int inputDataId,
+                                       bool dataIdIsValid,
+                                       QString data,
+                                       int &dataId,
+                                       bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisSolidityData(QString stockName,
+                                    QString stockSymbol,
+                                    SubAnalysDataST *dataArr,
+                                    int &nofArrData,
+                                    bool dbIsHandledExternly = false);
+
+
+    // CoverageRatio
+    bool subAnalysisCoverageRatioDateExists(QString date,
+                                            int mainAnalysisId,
+                                            int &dateId);
+
+    bool insertSubAnalysisCoverageRatioDate(QString date,
+                                            int mainAnalysisId,
+                                            int &dateId,
+                                            bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisCoverageRatioDataId(int mainAnalysisId,
+                                           int dateId,
+                                           int &dataId,
+                                           bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisCoverageRatioData(int dateId,
+                                            int mainAnalysisId,
+                                            int inputDataId,
+                                            bool dataIdIsValid,
+                                            QString data,
+                                            int &dataId,
+                                            bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisCoverageRatioData(QString stockName,
+                                         QString stockSymbol,
+                                         SubAnalysDataST *dataArr,
+                                         int &nofArrData,
+                                         bool dbIsHandledExternly = false);
+
+
+    // CoreTier1Ratio (primärkapitalrelation, Lundaluppen)
+    bool subAnalysisCoreTier1RatioDateExists(QString date,
+                                             int mainAnalysisId,
+                                             int &dateId);
+
+
+    bool insertSubAnalysisCoreTier1RatioDate(QString date,
+                                             int mainAnalysisId,
+                                             int &dateId,
+                                             bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisCoreTier1RatioDataId(int mainAnalysisId,
+                                            int dateId,
+                                            int &dataId,
+                                            bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisCoreTier1RatioData(int dateId,
+                                             int mainAnalysisId,
+                                             int inputDataId,
+                                             bool dataIdIsValid,
+                                             QString data,
+                                             int &dataId,
+                                             bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisCoreTier1RatioData(QString stockName,
+                                     QString stockSymbol,
+                                     SubAnalysDataST *dataArr,
+                                     int &nofArrData,
+                                     bool dbIsHandledExternly = false);
+
+
+    // CoreCapitalRatio
+    bool subAnalysisCoreCapitalRatioDateExists(QString date,
+                                               int mainAnalysisId,
+                                               int &dateId);
+
+
+    bool insertSubAnalysisCoreCapitalRatioDate(QString date,
+                                               int mainAnalysisId,
+                                               int &dateId,
+                                               bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisCoreCapitalRatioDataId(int mainAnalysisId,
+                                              int dateId,
+                                              int &dataId,
+                                              bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisCoreCapitalRatioData(int dateId,
+                                               int mainAnalysisId,
+                                               int inputDataId,
+                                               bool dataIdIsValid,
+                                               QString data,
+                                               int &dataId,
+                                               bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisCoreCapitalRatioData(QString stockName,
                                             QString stockSymbol,
                                             SubAnalysDataST *dataArr,
                                             int &nofArrData,

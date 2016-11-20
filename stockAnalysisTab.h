@@ -14,6 +14,12 @@ class StockAnalysisTab;
 #define MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOTAL_CURRENT_LIABILITIES           MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOTAL_LIABILITIES                   MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_SOLIDITY                            MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_COVERAGE_RATIO                      MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
+
+
 
 #define NOF_COMPANY_TYPE_ARR_DATA 8
 
@@ -36,6 +42,20 @@ class StockAnalysisTab : public QDialog
 
     SubAnalysDataST       m_totalLiabilitiesArr[MAX_NOF_TOTAL_CURRENT_LIABILITIES];
     int                   m_nofTotalLiabilitiesData;
+
+    SubAnalysDataST       m_solidityArr[MAX_NOF_SOLIDITY];
+    int                   m_nofSolidityData;
+
+    SubAnalysDataST       m_coverageRatioArr[MAX_NOF_COVERAGE_RATIO];
+    int                   m_nofCoverageRatioData;
+
+    SubAnalysDataST       m_coreTier1RatioArr[MAX_NOF_CORE_TIER_1_RATIO];
+    int                   m_nofCoreTier1RatioData;
+
+    SubAnalysDataST       m_coreCapitalRatioArr[MAX_NOF_CORE_TIER_1_RATIO];
+    int                   m_nofCoreCapitalRatioData;
+
+
 
 
 
@@ -128,6 +148,14 @@ private slots:
     void on_pushButtonSaveTotalLiabilities_clicked();
 
     void on_pushButtonSelectSaveCompanyType_clicked();
+
+    void on_pushButtonSaveSolidity_clicked();
+
+    void on_pushButtonSaveCoverageRatio_clicked();
+
+    void on_pushButtonSaveCoreTier1Ratio_clicked();
+
+    void on_pushButtonSaveCoreCapitalRatio_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;
