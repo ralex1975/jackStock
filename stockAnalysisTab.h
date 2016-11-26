@@ -67,6 +67,10 @@ class StockAnalysisTab : public QDialog
     QString m_stockSymbol;
     QString m_analysisDate;
 
+    QString  m_riskStdDev;
+    QString  m_meanReturns;
+    QString m_returnOnEquity;
+
     QString m_stockListName;
     int m_stockListId;
 

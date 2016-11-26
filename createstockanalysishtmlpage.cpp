@@ -469,7 +469,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;År&nbsp;</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Soliditet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Soliditet (%)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
     hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
 
     for(int ii = 0; ii < hSAPData.nofSolidityData; ii++)
@@ -787,16 +787,16 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += hSAPData.keyValueYield;
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
 
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">returnOnEquity\n");
-    // hSAPData.htmlStr += returnOnEquity
+    hSAPData.htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
+    hSAPData.htmlStr += hSAPData.returnOnEquity;
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
 
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">");
     hSAPData.htmlStr += hSAPData.keyValueTotalDebtEquityRatio;
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
 
-    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"1\" rowspan=\"1\" style=\"height: 35px; text-align: left; vertical-align: top;\">Förväntad risk\n");
-    //hSAPData.htmlStr +=
+    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"1\" rowspan=\"1\" style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
+    hSAPData.htmlStr += hSAPData.riskStdDev;
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
@@ -825,7 +825,9 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
     hSAPData.htmlStr += hSAPData.keyValueCurrentRatio;
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"1\" rowspan=\"1\" style=\"height: 35px; text-align: left; vertical-align: top;\">VÄRDE10</td>\n");
+    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"1\" rowspan=\"1\" style=\"height: 35px; text-align: left; vertical-align: top;\">\n");
+    hSAPData.htmlStr += hSAPData.meanReturns;
+    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
     hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");

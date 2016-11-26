@@ -299,6 +299,9 @@ struct HtmlStockAnalysPageDataST
     int nofCoreTier1RatioData;
     SubAnalysDataST *coreCapitalRatioArr;
     int nofCoreCapitalRatioData;
+    QString  riskStdDev;
+    QString  meanReturns;
+    QString returnOnEquity;
 };
 
 

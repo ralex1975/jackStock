@@ -338,6 +338,11 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
     }
 
+    m_riskStdDev.clear();
+    m_meanReturns.clear();
+    m_returnOnEquity.clear();
+
+
     riskReturnData.stockSymbol = m_stockSymbol;
     res = m_gfc.calcRiskAndReturn(startDate, m_analysisDate, riskReturnData);
 
@@ -351,6 +356,10 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
         ui->lineEditExpectedReturn->setText(returnStr);
         ui->lineEditExpectedRisk->setText(riskStr);
+
+        m_riskStdDev = riskStr;
+        m_meanReturns = returnStr;
+
 
         ele.setTxtColor(ui->lineEditExpectedReturn, &palette[5], color);
         ele.setTxtColor(ui->lineEditExpectedRisk, &palette[6], color);
@@ -373,6 +382,7 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
         ele.setTxtColor(ui->lineEditTotDebtEquityRatio, &palette[8], color);
 
         ui->lineEditReturnOnEquity->setText(yahooKeyData.returnOnEquity);
+        m_returnOnEquity = yahooKeyData.returnOnEquity;
     }
 
 
@@ -696,6 +706,10 @@ void StockAnalysisTab::on_pushButton_clicked()
 
         hSAPData.otherInformation = ui->textEditOtherInfo->toPlainText();
 
+        hSAPData.riskStdDev = m_riskStdDev;
+        hSAPData.meanReturns = m_meanReturns;
+
+
         int inputAnalysisDataId;
         int analysisDataId;
         bool inputAnalysisDataIdIsValid = false;
@@ -749,8 +763,7 @@ void StockAnalysisTab::on_pushButton_clicked()
  *
  * Function:    resetStockAnalysisData()
  *
- * Description: This function use date to get stock analysis data
- *              from the database.
+ * Description:
  *
  *
  *
@@ -783,6 +796,10 @@ void StockAnalysisTab::resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPDat
     hSAPData.goodOwnershipAnswer.clear();
     hSAPData.goodOwnershipComment.clear();
     hSAPData.otherInformation.clear();
+    hSAPData.riskStdDev.clear();
+    hSAPData.meanReturns.clear();
+    hSAPData.meanReturns.clear();
+
 }
 
 
@@ -890,6 +907,10 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     hSAPData.nofCoreTier1RatioData = m_nofCoreTier1RatioData;
     hSAPData.coreCapitalRatioArr = m_coreCapitalRatioArr;
     hSAPData.nofCoreCapitalRatioData = m_nofCoreCapitalRatioData;
+    hSAPData.riskStdDev = m_riskStdDev;
+    hSAPData.meanReturns = m_meanReturns;
+    hSAPData.returnOnEquity = m_returnOnEquity;
+
 
 
 
