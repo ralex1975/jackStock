@@ -478,7 +478,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
         hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
         hSAPData.htmlStr += hSAPData.solidityArr[ii].date;
         hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-        if(hSAPData.solidityArr[ii].data.toDouble() > 40)
+        if(hSAPData.solidityArr[ii].data.toDouble() >= 40)
         {
             hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
         }
