@@ -793,7 +793,7 @@ bool CDbHndl::createTable(void)
 // Date
 
         //-----------------------------------------------------------------------
-        // TblDateCoreCapitalRatioSubAnalysis (kärnprimärkapitalrelation används ej)
+        // TblDateCoreCapitalRatioSubAnalysis (kärnprimärkapitalrelation används)
         //-----------------------------------------------------------------------
         tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateCoreCapitalRatioSubAnalysis "
                     " (DateCoreCapitalRatioId INTEGER PRIMARY KEY AUTOINCREMENT, "

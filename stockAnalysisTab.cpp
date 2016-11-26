@@ -606,6 +606,7 @@ void StockAnalysisTab::on_pushButton_clicked()
     int mainAnalysisId;
     int analysisDateId;
     QString str;
+    HtmlStockAnalysPageDataST hSAPData;
 
     str = (QString::fromUtf8("Vill du lägga till data?\n"));
     str = str + m_stockName;
@@ -625,6 +626,12 @@ void StockAnalysisTab::on_pushButton_clicked()
     res = db.mainAnalysisDataExists(m_stockName,
                                 m_stockSymbol,
                                 mainAnalysisId);
+
+    hSAPData.stockName = m_stockName;
+    hSAPData.stockSymbol = m_stockSymbol;
+    hSAPData.analysisDate = m_analysisDate;
+
+
     if(false == res)
     {
         res = db.insertMainAnalysisData(m_stockName,
@@ -653,41 +660,41 @@ void StockAnalysisTab::on_pushButton_clicked()
 
     if(true == res)
     {
-        m_BigCompDescription = ui->textEditCompDescription->toPlainText();
+        hSAPData.companyDescription = ui->textEditCompDescription->toPlainText();
 
-        m_bigEnoughAnswer = ui->lineEditBigEnoughAnswer->text();
-        m_bigEnoughComment = ui->textEditBigEnoughText->toPlainText();
+        hSAPData.bigEnoughAnswer = ui->lineEditBigEnoughAnswer->text();
+        hSAPData.bigEnoughComment = ui->textEditBigEnoughText->toPlainText();
 
-        m_strongFinancialPositionAnswer = ui->lineEditFinancialStrongAnswer->text();
-        m_strongFinancialPositionComment = ui->textEditFinancialStrongText->toPlainText();
+        hSAPData.strongFinancialPositionAnswer = ui->lineEditFinancialStrongAnswer->text();
+        hSAPData.strongFinancialPositionComment = ui->textEditFinancialStrongText->toPlainText();
 
-        m_earningStabilityAnswer = ui->lineEditErningStabilityAnswer->text();
-        m_earningStabilityComment = ui->textEditErningStabilityText->toPlainText();
+        hSAPData.earningStabilityAnswer = ui->lineEditErningStabilityAnswer->text();
+        hSAPData.earningStabilityComment = ui->textEditErningStabilityText->toPlainText();
 
-        m_dividendStabilityAnswer = ui->lineEditDividentStabilityAnswer->text();
-        m_dividendStabilityComment =ui->textEditDividentStabilityText->toPlainText();
+        hSAPData.dividendStabilityAnswer = ui->lineEditDividentStabilityAnswer->text();
+        hSAPData.dividendStabilityComment =ui->textEditDividentStabilityText->toPlainText();
 
-        m_earningGrowthAnswer = ui->lineEditErningGrowthAnswer->text();
-        m_earningGrowthComment = ui->textEditErningGrowthText->toPlainText();
+        hSAPData.earningGrowthAnswer = ui->lineEditErningGrowthAnswer->text();
+        hSAPData.earningGrowthComment = ui->textEditErningGrowthText->toPlainText();
 
 
-        m_keyValuePe = ui->lineEditPE->text();
-        m_keyValuePs = ui->lineEditPs->text();
-        m_keyValueNavPriceRatio = ui->lineEditNavDivLastStockPrice->text();
-        m_keyValueYield = ui->lineEditYield->text();
-        m_keyValueCurrentRatio = ui->lineEditCurrentRatio->text();
-        m_keyValueTotalDebtEquityRatio = ui->lineEditTotDebtEquityRatio->text();
+        hSAPData.keyValuePe = ui->lineEditPE->text();
+        hSAPData.keyValuePs = ui->lineEditPs->text();
+        hSAPData.keyValueNavPriceRatio = ui->lineEditNavDivLastStockPrice->text();
+        hSAPData.keyValueYield = ui->lineEditYield->text();
+        hSAPData.keyValueCurrentRatio = ui->lineEditCurrentRatio->text();
+        hSAPData.keyValueTotalDebtEquityRatio = ui->lineEditTotDebtEquityRatio->text();
 
         // Saknas m_keyValuePriceJEKRatio;
-        m_keyValueErningsDividentRatio = ui->lineEditEarningsDivByDividend->text();
+        hSAPData.keyValueErningsDividentRatio = ui->lineEditEarningsDivByDividend->text();
 
-        m_trustworthyLeadershipAnswer = ui->lineEditTrustworthyManagementAnswer->text();
-        m_trustworthyLeadershipComment =  ui->textEditTrustworthyManagementText->toPlainText();
+        hSAPData.trustworthyLeadershipAnswer = ui->lineEditTrustworthyManagementAnswer->text();
+        hSAPData.trustworthyLeadershipComment =  ui->textEditTrustworthyManagementText->toPlainText();
 
-        m_goodOwnershipAnswer = ui->lineEditBeneficialOwnershipAnswer->text();
-        m_goodOwnershipComment = ui->textEditBeneficialOwnershipText->toPlainText();
+        hSAPData.goodOwnershipAnswer = ui->lineEditBeneficialOwnershipAnswer->text();
+        hSAPData.goodOwnershipComment = ui->textEditBeneficialOwnershipText->toPlainText();
 
-        m_otherInformation = ui->textEditOtherInfo->toPlainText();
+        hSAPData.otherInformation = ui->textEditOtherInfo->toPlainText();
 
         int inputAnalysisDataId;
         int analysisDataId;
@@ -708,30 +715,30 @@ void StockAnalysisTab::on_pushButton_clicked()
                                     mainAnalysisId,
                                     inputAnalysisDataId,
                                     inputAnalysisDataIdIsValid,
-                           m_BigCompDescription,
-                           m_bigEnoughAnswer,
-                           m_bigEnoughComment,
-                           m_strongFinancialPositionAnswer,
-                           m_strongFinancialPositionComment,
-                           m_earningStabilityAnswer,
-                           m_earningStabilityComment,
-                           m_dividendStabilityAnswer,
-                           m_dividendStabilityComment,
-                           m_earningGrowthAnswer,
-                           m_earningGrowthComment,
-                           m_keyValuePe,
-                           m_keyValuePs,
-                           m_keyValueNavPriceRatio,
-                           m_keyValueYield,
-                           m_keyValuePriceJEKRatio,
-                           m_keyValueErningsDividentRatio,
-                           m_keyValueTotalDebtEquityRatio,
-                           m_keyValueCurrentRatio,
-                           m_trustworthyLeadershipAnswer,
-                           m_trustworthyLeadershipComment,
-                           m_goodOwnershipAnswer,
-                           m_goodOwnershipComment,
-                           m_otherInformation,
+                           hSAPData.companyDescription,
+                           hSAPData.bigEnoughAnswer,
+                           hSAPData.bigEnoughComment,
+                           hSAPData.strongFinancialPositionAnswer,
+                           hSAPData.strongFinancialPositionComment,
+                           hSAPData.earningStabilityAnswer,
+                           hSAPData.earningStabilityComment,
+                           hSAPData.dividendStabilityAnswer,
+                           hSAPData.dividendStabilityComment,
+                           hSAPData.earningGrowthAnswer,
+                           hSAPData.earningGrowthComment,
+                           hSAPData.keyValuePe,
+                           hSAPData.keyValuePs,
+                           hSAPData.keyValueNavPriceRatio,
+                           hSAPData.keyValueYield,
+                           hSAPData.keyValuePriceJEKRatio,
+                           hSAPData.keyValueErningsDividentRatio,
+                           hSAPData.keyValueTotalDebtEquityRatio,
+                           hSAPData.keyValueCurrentRatio,
+                           hSAPData.trustworthyLeadershipAnswer,
+                           hSAPData.trustworthyLeadershipComment,
+                           hSAPData.goodOwnershipAnswer,
+                           hSAPData.goodOwnershipComment,
+                           hSAPData.otherInformation,
                            analysisDataId);
     }
 
@@ -749,33 +756,33 @@ void StockAnalysisTab::on_pushButton_clicked()
  *
  *
  *****************************************************************/
-void StockAnalysisTab::resetStockAnalysisData(void)
+void StockAnalysisTab::resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData)
 {
-    m_companyDescription.clear();
-    m_BigCompDescription.clear();
-    m_bigEnoughAnswer.clear();
-    m_bigEnoughComment.clear();
-    m_strongFinancialPositionAnswer.clear();
-    m_strongFinancialPositionComment.clear();
-    m_earningStabilityAnswer.clear();
-    m_earningStabilityComment.clear();
-    m_dividendStabilityAnswer.clear();
-    m_dividendStabilityComment.clear();
-    m_earningGrowthAnswer.clear();
-    m_earningGrowthComment.clear();
-    m_keyValuePe.clear();
-    m_keyValuePs.clear();
-    m_keyValueNavPriceRatio.clear();
-    m_keyValueYield.clear();
-    m_keyValuePriceJEKRatio.clear();
-    m_keyValueErningsDividentRatio.clear();
-    m_keyValueTotalDebtEquityRatio.clear();
-    m_keyValueCurrentRatio.clear();
-    m_trustworthyLeadershipAnswer.clear();
-    m_trustworthyLeadershipComment.clear();
-    m_goodOwnershipAnswer.clear();
-    m_goodOwnershipComment.clear();
-    m_otherInformation.clear();
+    hSAPData.companyDescription.clear();
+    //m_BigCompDescription.clear();
+    hSAPData.bigEnoughAnswer.clear();
+    hSAPData.bigEnoughComment.clear();
+    hSAPData.strongFinancialPositionAnswer.clear();
+    hSAPData.strongFinancialPositionComment.clear();
+    hSAPData.earningStabilityAnswer.clear();
+    hSAPData.earningStabilityComment.clear();
+    hSAPData.dividendStabilityAnswer.clear();
+    hSAPData.dividendStabilityComment.clear();
+    hSAPData.earningGrowthAnswer.clear();
+    hSAPData.earningGrowthComment.clear();
+    hSAPData.keyValuePe.clear();
+    hSAPData.keyValuePs.clear();
+    hSAPData.keyValueNavPriceRatio.clear();
+    hSAPData.keyValueYield.clear();
+    hSAPData.keyValuePriceJEKRatio.clear();
+    hSAPData.keyValueErningsDividentRatio.clear();
+    hSAPData.keyValueTotalDebtEquityRatio.clear();
+    hSAPData.keyValueCurrentRatio.clear();
+    hSAPData.trustworthyLeadershipAnswer.clear();
+    hSAPData.trustworthyLeadershipComment.clear();
+    hSAPData.goodOwnershipAnswer.clear();
+    hSAPData.goodOwnershipComment.clear();
+    hSAPData.otherInformation.clear();
 }
 
 
@@ -796,6 +803,7 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     createStockAnalysisHtmlPage csaHtmlPg;
     QString analysisDate;
     CDbHndl db;
+    HtmlStockAnalysPageDataST hSAPData;
 
 
     m_gfc.getSelStockAnalysisDateItem(ui->treeWidgetAnalysisDate,
@@ -809,7 +817,8 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
 
     // Main analys page
     m_analysisDate = analysisDate;
-    ui->analysisDateLineEdit->setText(analysisDate);
+    hSAPData.analysisDate = analysisDate;
+    ui->analysisDateLineEdit->setText(m_analysisDate);
 
     // Page analysdata 1
     ui->ananlysisDateLabel_32->setText(m_analysisDate);
@@ -817,115 +826,121 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     // Page analysdata 2
     ui->ananlysisDateLabel_33->setText(m_analysisDate);
 
-    resetStockAnalysisData();
+    resetStockAnalysisData(hSAPData);
     resetGuiCtrl();
 
-    db.getStockAnalysisData(m_stockName,
-                         m_stockSymbol,
-                         m_analysisDate,
-                         m_companyDescription,
-                         m_bigEnoughAnswer,
-                         m_bigEnoughComment,
-                         m_strongFinancialPositionAnswer,
-                         m_strongFinancialPositionComment,
-                         m_earningStabilityAnswer,
-                         m_earningStabilityComment,
-                         m_dividendStabilityAnswer,
-                         m_dividendStabilityComment,
-                         m_earningGrowthAnswer,
-                         m_earningGrowthComment,
-                         m_keyValuePe,
-                         m_keyValuePs,
-                         m_keyValueNavPriceRatio,
-                         m_keyValueYield,
-                         m_keyValuePriceJEKRatio,
-                         m_keyValueErningsDividentRatio,
-                         m_keyValueTotalDebtEquityRatio,
-                         m_keyValueCurrentRatio,
-                         m_trustworthyLeadershipAnswer,
-                         m_trustworthyLeadershipComment,
-                         m_goodOwnershipAnswer,
-                         m_goodOwnershipComment,
-                         m_otherInformation);
 
 
-    csaHtmlPg.createHtmlPage(m_html,
-                                          m_stockName,
-                                          m_stockSymbol,
-                                          m_analysisDate,
-                                          m_companyDescription,
-                                          m_bigEnoughAnswer,
-                                          m_bigEnoughComment,
-                                          m_strongFinancialPositionAnswer,
-                                          m_strongFinancialPositionComment,
-                                          m_earningStabilityAnswer,
-                                          m_earningStabilityComment,
-                                          m_dividendStabilityAnswer,
-                                          m_dividendStabilityComment,
-                                          m_earningGrowthAnswer,
-                                          m_earningGrowthComment,
-                                          m_keyValuePe,
-                                          m_keyValuePs,
-                                          m_keyValueNavPriceRatio,
-                                          m_keyValueYield,
-                                          m_keyValuePriceJEKRatio,
-                                          m_keyValueErningsDividentRatio,
-                                          m_keyValueTotalDebtEquityRatio,
-                                          m_keyValueCurrentRatio,
-                                          m_trustworthyLeadershipAnswer,
-                                          m_trustworthyLeadershipComment,
-                                          m_goodOwnershipAnswer,
-                                          m_goodOwnershipComment,
-                                          m_otherInformation);
+    hSAPData.stockName = m_stockName;
+    hSAPData.stockSymbol = m_stockSymbol;
+    hSAPData.analysisDate = m_analysisDate;
 
 
-    //QUrl url(m_html);
-    //qDebug() << m_html;
-    //ui->webView->setUrl(url);
-    ui->webView->setHtml(m_html);
 
 
-    ui->textEditCompDescription->insertPlainText(m_companyDescription);
+    db.getStockAnalysisData(hSAPData.stockName,
+                         hSAPData.stockSymbol,
+                         hSAPData.analysisDate,
+                         hSAPData.companyDescription,
+                         hSAPData.bigEnoughAnswer,
+                         hSAPData.bigEnoughComment,
+                         hSAPData.strongFinancialPositionAnswer,
+                         hSAPData.strongFinancialPositionComment,
+                         hSAPData.earningStabilityAnswer,
+                         hSAPData.earningStabilityComment,
+                         hSAPData.dividendStabilityAnswer,
+                         hSAPData.dividendStabilityComment,
+                         hSAPData.earningGrowthAnswer,
+                         hSAPData.earningGrowthComment,
+                         hSAPData.keyValuePe,
+                         hSAPData.keyValuePs,
+                         hSAPData.keyValueNavPriceRatio,
+                         hSAPData.keyValueYield,
+                         hSAPData.keyValuePriceJEKRatio,
+                         hSAPData.keyValueErningsDividentRatio,
+                         hSAPData.keyValueTotalDebtEquityRatio,
+                         hSAPData.keyValueCurrentRatio,
+                         hSAPData.trustworthyLeadershipAnswer,
+                         hSAPData.trustworthyLeadershipComment,
+                         hSAPData.goodOwnershipAnswer,
+                         hSAPData.goodOwnershipComment,
+                         hSAPData.otherInformation);
+
+
+    //m_companyDescription = hSAPData.companyDescription;
+
+
+    hSAPData.dividendDataArr = m_dividendDataArr;
+    hSAPData.nofDividendArrData = m_nofDividendArrData;
+
+    hSAPData.earningsDataArr = &m_earningsDataArr[0];
+    hSAPData.nofEarningsArrData = m_nofEarningsArrData;
+
+    hSAPData.totalCurrentAssetsArr = m_totalCurrentAssetsArr;
+    hSAPData.nofTotalCurrentAssetsArrData = m_nofTotalCurrentAssetsArrData;
+    hSAPData.totalCurrentLiabilitiesArr = m_totalCurrentLiabilitiesArr;
+    hSAPData.nofTotalCurrentLiabilitiesData = m_nofTotalCurrentLiabilitiesData;
+    hSAPData.totalLiabilitiesArr = m_totalLiabilitiesArr;
+    hSAPData.nofTotalLiabilitiesData = m_nofTotalLiabilitiesData;
+    hSAPData.solidityArr = m_solidityArr;
+    hSAPData.nofSolidityData = m_nofSolidityData;
+    hSAPData.coverageRatioArr = m_coverageRatioArr;
+    hSAPData.nofCoverageRatioData = m_nofCoverageRatioData;
+    hSAPData.coreTier1RatioArr = m_coreTier1RatioArr;
+    hSAPData.nofCoreTier1RatioData = m_nofCoreTier1RatioData;
+    hSAPData.coreCapitalRatioArr = m_coreCapitalRatioArr;
+    hSAPData.nofCoreCapitalRatioData = m_nofCoreCapitalRatioData;
+
+
+
+
+    csaHtmlPg.createHtmlPage(hSAPData);
+
+
+    ui->webView->setHtml(hSAPData.htmlStr);
+
+
+    ui->textEditCompDescription->insertPlainText(hSAPData.companyDescription);
 
     // Big enought
-    ui->lineEditBigEnoughAnswer->setText(m_bigEnoughAnswer);
-    ui->textEditBigEnoughText->insertPlainText(m_bigEnoughComment);
+    ui->lineEditBigEnoughAnswer->setText(hSAPData.bigEnoughAnswer);
+    ui->textEditBigEnoughText->insertPlainText(hSAPData.bigEnoughComment);
 
     // Financial strong enought
-    ui->lineEditFinancialStrongAnswer->setText(m_strongFinancialPositionAnswer);
-    ui->textEditFinancialStrongText->insertPlainText(m_strongFinancialPositionComment);
+    ui->lineEditFinancialStrongAnswer->setText(hSAPData.strongFinancialPositionAnswer);
+    ui->textEditFinancialStrongText->insertPlainText(hSAPData.strongFinancialPositionComment);
 
     // Earning Stability
-    ui->lineEditErningStabilityAnswer->setText(m_earningStabilityAnswer);
-    ui->textEditErningStabilityText->insertPlainText(m_earningStabilityComment);
+    ui->lineEditErningStabilityAnswer->setText(hSAPData.earningStabilityAnswer);
+    ui->textEditErningStabilityText->insertPlainText(hSAPData.earningStabilityComment);
 
     // Dividend Stability
-    ui->lineEditDividentStabilityAnswer->setText(m_dividendStabilityAnswer);
-    ui->textEditDividentStabilityText->insertPlainText(m_dividendStabilityComment);
+    ui->lineEditDividentStabilityAnswer->setText(hSAPData.dividendStabilityAnswer);
+    ui->textEditDividentStabilityText->insertPlainText(hSAPData.dividendStabilityComment);
 
     // Erning Growth
-    ui->lineEditErningGrowthAnswer->setText(m_earningGrowthAnswer);
-    ui->textEditErningGrowthText->insertPlainText(m_earningGrowthComment);
+    ui->lineEditErningGrowthAnswer->setText(hSAPData.earningGrowthAnswer);
+    ui->textEditErningGrowthText->insertPlainText(hSAPData.earningGrowthComment);
 
     // Pe-value
-    ui->lineEditPE->setText(m_keyValuePe);
-    ui->lineEditPs->setText(m_keyValuePs);
-    ui->lineEditNavDivLastStockPrice->setText(m_keyValueNavPriceRatio);
-    ui->lineEditYield->setText(m_keyValueYield);
+    ui->lineEditPE->setText(hSAPData.keyValuePe);
+    ui->lineEditPs->setText(hSAPData.keyValuePs);
+    ui->lineEditNavDivLastStockPrice->setText(hSAPData.keyValueNavPriceRatio);
+    ui->lineEditYield->setText(hSAPData.keyValueYield);
     // m_keyValuePriceJEKRatio, saknas
-    ui->lineEditTotDebtEquityRatio->setText(m_keyValueTotalDebtEquityRatio);
-    ui->lineEditEarningsDivByDividend->setText(m_keyValueErningsDividentRatio);
-    ui->lineEditCurrentRatio->setText(m_keyValueCurrentRatio);
+    ui->lineEditTotDebtEquityRatio->setText(hSAPData.keyValueTotalDebtEquityRatio);
+    ui->lineEditEarningsDivByDividend->setText(hSAPData.keyValueErningsDividentRatio);
+    ui->lineEditCurrentRatio->setText(hSAPData.keyValueCurrentRatio);
 
     // Trustworthy Leadership
-    ui->lineEditTrustworthyManagementAnswer->setText(m_trustworthyLeadershipAnswer);
-    ui->textEditTrustworthyManagementText->setText(m_trustworthyLeadershipComment);
+    ui->lineEditTrustworthyManagementAnswer->setText(hSAPData.trustworthyLeadershipAnswer);
+    ui->textEditTrustworthyManagementText->setText(hSAPData.trustworthyLeadershipComment);
 
     // Good Ownership
-    ui->lineEditBeneficialOwnershipAnswer->setText(m_goodOwnershipAnswer);
-    ui->textEditBeneficialOwnershipText->insertPlainText(m_goodOwnershipComment);
+    ui->lineEditBeneficialOwnershipAnswer->setText(hSAPData.goodOwnershipAnswer);
+    ui->textEditBeneficialOwnershipText->insertPlainText(hSAPData.goodOwnershipComment);
 
-    ui->textEditOtherInfo->insertPlainText(m_otherInformation);
+    ui->textEditOtherInfo->insertPlainText(hSAPData.otherInformation);
 
 }
 

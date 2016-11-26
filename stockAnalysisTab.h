@@ -59,7 +59,7 @@ class StockAnalysisTab : public QDialog
 
 
 
-    QString m_html;
+    //QString m_html;
 
     GuiFinanceCtrls m_gfc;
     QString m_stockName;
@@ -70,6 +70,7 @@ class StockAnalysisTab : public QDialog
     QString m_stockListName;
     int m_stockListId;
 
+#if 0
     QString m_companyDescription;
     QString m_BigCompDescription;
     QString m_bigEnoughAnswer;
@@ -95,10 +96,10 @@ class StockAnalysisTab : public QDialog
     QString m_goodOwnershipAnswer;
     QString m_goodOwnershipComment;
     QString m_otherInformation;
-
+#endif
 
     void resetGuiCtrl(void);
-    void resetStockAnalysisData(void);
+    void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
 
     void initSubAnalyseTableWidget(QTableWidget *tableWidget,
                                    QString dateHeader,

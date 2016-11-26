@@ -251,6 +251,58 @@ struct YahooKeyStatisticsST
 };
 
 
+struct HtmlStockAnalysPageDataST
+{
+    QString htmlStr;
+    QString stockName;
+    QString stockSymbol;
+    QString analysisDate;
+    QString companyDescription;
+    QString bigEnoughAnswer;
+    QString bigEnoughComment;
+    QString strongFinancialPositionAnswer;
+    QString strongFinancialPositionComment;
+    QString earningStabilityAnswer;
+    QString earningStabilityComment;
+    QString dividendStabilityAnswer;
+    QString dividendStabilityComment;
+    QString earningGrowthAnswer;
+    QString earningGrowthComment;
+    QString keyValuePe;
+    QString keyValuePs;
+    QString keyValueNavPriceRatio;
+    QString keyValueYield;
+    QString keyValuePriceJEKRatio;
+    QString keyValueErningsDividentRatio;
+    QString keyValueTotalDebtEquityRatio;
+    QString keyValueCurrentRatio;
+    QString trustworthyLeadershipAnswer;
+    QString trustworthyLeadershipComment;
+    QString goodOwnershipAnswer;
+    QString goodOwnershipComment;
+    QString otherInformation;
+    SubAnalysDataST *dividendDataArr;
+    int nofDividendArrData;
+    SubAnalysDataST *earningsDataArr;
+    int nofEarningsArrData;
+    SubAnalysDataST *totalCurrentAssetsArr;
+    int nofTotalCurrentAssetsArrData;
+    SubAnalysDataST *totalCurrentLiabilitiesArr;
+    int nofTotalCurrentLiabilitiesData;
+    SubAnalysDataST *totalLiabilitiesArr;
+    int nofTotalLiabilitiesData;
+    SubAnalysDataST *solidityArr;
+    int nofSolidityData;
+    SubAnalysDataST *coverageRatioArr;
+    int nofCoverageRatioData;
+    SubAnalysDataST *coreTier1RatioArr;
+    int nofCoreTier1RatioData;
+    SubAnalysDataST *coreCapitalRatioArr;
+    int nofCoreCapitalRatioData;
+};
+
+
+
 class CExtendedTable;
 
 class CDbHndl//: public CDbBase
