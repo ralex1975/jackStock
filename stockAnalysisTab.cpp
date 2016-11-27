@@ -326,13 +326,13 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
         if(true == db.getNordnetCompanyDescription(companyDescripData, faData.companyName))
         {
-            ui->textEditMoreInfobusinessDescription->clear();
+            //ui->textEditMoreInfobusinessDescription->clear();
 
-            ui->lineEditMoreInfoCompanyName->setText(companyDescripData.assetName);
-            ui->lineEditMoreInfoexecutiveDirector->setText(companyDescripData.executiveDirector);
-            ui->lineEditMoreInfoBransch->setText(companyDescripData.bransch);
-            ui->lineEditMoreInfoSector->setText(companyDescripData.sector);
-            ui->textEditMoreInfobusinessDescription->insertPlainText(companyDescripData.businessDescription);
+            //ui->lineEditMoreInfoCompanyName->setText(companyDescripData.assetName);
+            //ui->lineEditMoreInfoexecutiveDirector->setText(companyDescripData.executiveDirector);
+            //ui->lineEditMoreInfoBransch->setText(companyDescripData.bransch);
+            //ui->lineEditMoreInfoSector->setText(companyDescripData.sector);
+            //ui->textEditMoreInfobusinessDescription->insertPlainText(companyDescripData.businessDescription);
 
         }
 

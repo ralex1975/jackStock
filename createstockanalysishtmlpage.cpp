@@ -1,4 +1,5 @@
 #include "createstockanalysishtmlpage.h"
+#include <math.h>
 
 
 createStockAnalysisHtmlPage::createStockAnalysisHtmlPage()
@@ -542,7 +543,6 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
 
-
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
@@ -559,14 +559,63 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Intjäningsförmågan&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
     hSAPData.htmlStr += QString::fromUtf8("</td></tr>\n");
 
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+
+        if((hSAPData.nofEarningsArrData > 1))
+        {
+            hSAPData.htmlStr += hSAPData.earningsDataArr[0].date;
+        }
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+        if((hSAPData.nofEarningsArrData > 1))
+        {
+            hSAPData.htmlStr += hSAPData.earningsDataArr[hSAPData.nofEarningsArrData-1].date;
+        }
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+
+        double firstData = hSAPData.earningsDataArr[0].data.toDouble();
+        double lastData = hSAPData.earningsDataArr[hSAPData.nofEarningsArrData-1].data.toDouble();
+        double res;
+        if((hSAPData.nofEarningsArrData > 1))
+        {
+            if(lastData < 0.0)
+                lastData = -lastData;
+
+            if(firstData < 0.0)
+                firstData = -firstData;
+
+            if(firstData == 0.0)
+                firstData = 0.001;
+
+
+            res = pow((lastData/firstData), (1.0/(hSAPData.nofEarningsArrData-1.0)));
+            QString tmpStr;
+
+            if(res > 1.04)
+                tmpStr = QString::fromUtf8("<font color=\"blue\">Årlig tillväxt: ");
+            else
+                tmpStr = QString::fromUtf8("<font color=\"red\">Årlig tillväxt: ");
+
+            hSAPData.htmlStr += tmpStr;
+            tmpStr.clear();
+            tmpStr.sprintf("%.2f",(res - 1) * 100.0);
+            hSAPData.htmlStr += tmpStr;
+            tmpStr.clear();
+            tmpStr = QString::fromUtf8(" %");
+            hSAPData.htmlStr += tmpStr;
+
+        }
+        if((hSAPData.nofEarningsArrData > 1))
+            hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+        else
+            hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
 
     hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
     hSAPData.htmlStr += QString::fromUtf8("</table>\n");
@@ -629,13 +678,6 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
                 negativeSign = true;
             }
 
-            #if 0
-            if(lastEarnings < 0)
-            {
-                negativeSign = true;
-            }
-            #endif
-
 
             // Handle divide by zero
             if(lastEarnings == 0)
@@ -678,19 +720,6 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
         hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
         hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
     }
-
-
-
-
-
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
 
 
