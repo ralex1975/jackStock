@@ -1698,7 +1698,7 @@ void LeastSquaresTaDlg::on_GetDbDataButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
     headerList[nofCols++].name = QString::fromUtf8("PS     ");
     headerList[nofCols++].name = QString::fromUtf8("DirAvk");
-    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nDAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nUtdel");
     headerList[nofCols++].name = QString::fromUtf8("Sub/\nKurs");
 
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
@@ -2102,7 +2102,7 @@ void LeastSquaresTaDlg::on_pushButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
     headerList[nofCols++].name = QString::fromUtf8("PS     ");
     headerList[nofCols++].name = QString::fromUtf8("DirAvk");
-    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nDAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nUtdel");
     headerList[nofCols++].name = QString::fromUtf8("Sub/\nKurs");
 
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
@@ -2796,7 +2796,7 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
     headerList[nofCols++].name = QString::fromUtf8("PS     ");
     headerList[nofCols++].name = QString::fromUtf8("DirAvk");
-    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nDAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nUtdel");
     headerList[nofCols++].name = QString::fromUtf8("Sub/\nKurs");
 
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
@@ -3375,7 +3375,7 @@ void LeastSquaresTaDlg::on_SellSigPushButton_clicked()
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
     headerList[nofCols++].name = QString::fromUtf8("PS     ");
     headerList[nofCols++].name = QString::fromUtf8("DirAvk");
-    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nDAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nUtdel");
     headerList[nofCols++].name = QString::fromUtf8("Sub/\nKurs");
 
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");
@@ -3826,7 +3826,7 @@ void LeastSquaresTaDlg::on_SellBuyBridgeListpushButton_2_clicked()
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
     headerList[nofCols++].name = QString::fromUtf8("PS     ");
     headerList[nofCols++].name = QString::fromUtf8("DirAvk");
-    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nDAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nUtdel");
     headerList[nofCols++].name = QString::fromUtf8("Sub/\nKurs");
 
     headerList[nofCols++].name = QString::fromUtf8("Förv.\nRisk");

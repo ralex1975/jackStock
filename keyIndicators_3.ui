@@ -92,7 +92,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Vinst/Direktavkastning (min)</string>
+      <string>Vinst/Utdel (min)</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="earningsToDividendRatioLineEditKey3">

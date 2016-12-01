@@ -36,7 +36,7 @@ keyIndicators_3::keyIndicators_3(QWidget *parent) :
     ui->PsCheckBoxKey3->setChecked(true);
     ui->psLineEditKey3->insert(QString::fromUtf8("1,5"));
 
-    // Vinst/Direktavkastning
+    // Vinst/Utdelning
     ui->earningsToDividendRatioCheckBoxKey3->setChecked(true);
     ui->earningsToDividendRatioLineEditKey3->insert(QString::fromUtf8("1,5"));
 
@@ -145,7 +145,7 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
     inData.psIsValid = ui->PsCheckBoxKey3->isChecked();
     inData.psValue = ui->psLineEditKey3->text();
 
-    // Vinst/Direktavkastning
+    // Vinst/Utdelning
     inData.earningsToDividendRatioIsValid = ui->earningsToDividendRatioCheckBoxKey3->isChecked();
     inData.earningsToDividendRatio = ui->earningsToDividendRatioLineEditKey3->text();
 
@@ -174,7 +174,7 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
 
         inData.psIsValid = false;
 
-        // Vinst/Direktavkastning
+        // Vinst/Utdel
         inData.earningsToDividendRatioIsValid = false;
 
         // Substans / Aktie pris
@@ -198,7 +198,7 @@ void keyIndicators_3::on_loadDataPushButtonKey3_clicked()
     headerList[nofCols++].name = QString::fromUtf8("PE     ");
     headerList[nofCols++].name = QString::fromUtf8("PS     ");
     headerList[nofCols++].name = QString::fromUtf8("DirAvk");
-    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nDirAvk");
+    headerList[nofCols++].name = QString::fromUtf8("Vinst/\nUtdel");
     headerList[nofCols++].name = QString::fromUtf8("Sub/\nKurs");
     headerList[nofCols++].name = QString::fromUtf8("Kurs/\nJEK");
     headerList[nofCols++].name = QString::fromUtf8("Skuld\n/Eget kap.");
