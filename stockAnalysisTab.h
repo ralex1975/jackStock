@@ -18,10 +18,10 @@ class StockAnalysisTab;
 #define MAX_NOF_COVERAGE_RATIO                      MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
 
 
 
-#define NOF_COMPANY_TYPE_ARR_DATA 8
 
 
 class StockAnalysisTab : public QDialog
@@ -52,8 +52,12 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_coreTier1RatioArr[MAX_NOF_CORE_TIER_1_RATIO];
     int                   m_nofCoreTier1RatioData;
 
-    SubAnalysDataST       m_coreCapitalRatioArr[MAX_NOF_CORE_TIER_1_RATIO];
+    SubAnalysDataST       m_coreCapitalRatioArr[MAX_NOF_CORE_CAPITAL_RATIO];
     int                   m_nofCoreCapitalRatioData;
+
+
+    SubAnalysDataST       m_equityArr[MAX_NOF_EQUITY];
+    int                   m_nofEquityData;
 
 
 
@@ -74,33 +78,6 @@ class StockAnalysisTab : public QDialog
     QString m_stockListName;
     int m_stockListId;
 
-#if 0
-    QString m_companyDescription;
-    QString m_BigCompDescription;
-    QString m_bigEnoughAnswer;
-    QString m_bigEnoughComment;
-    QString m_strongFinancialPositionAnswer;
-    QString m_strongFinancialPositionComment;
-    QString m_earningStabilityAnswer;
-    QString m_earningStabilityComment;
-    QString m_dividendStabilityAnswer;
-    QString m_dividendStabilityComment;
-    QString m_earningGrowthAnswer;
-    QString m_earningGrowthComment;
-    QString m_keyValuePe;
-    QString m_keyValuePs;
-    QString m_keyValueNavPriceRatio;
-    QString m_keyValueYield;
-    QString m_keyValuePriceJEKRatio;
-    QString m_keyValueErningsDividentRatio;
-    QString m_keyValueTotalDebtEquityRatio;
-    QString m_keyValueCurrentRatio;
-    QString m_trustworthyLeadershipAnswer;
-    QString m_trustworthyLeadershipComment;
-    QString m_goodOwnershipAnswer;
-    QString m_goodOwnershipComment;
-    QString m_otherInformation;
-#endif
 
     void resetGuiCtrl(void);
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
@@ -161,6 +138,8 @@ private slots:
     void on_pushButtonSaveCoreTier1Ratio_clicked();
 
     void on_pushButtonSaveCoreCapitalRatio_clicked();
+
+    void on_pushButtonSaveEquity_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

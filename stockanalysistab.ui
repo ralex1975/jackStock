@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1154,8 +1154,8 @@
       <widget class="QPushButton" name="pushButtonSaveCoreTier1Ratio">
        <property name="geometry">
         <rect>
-         <x>810</x>
-         <y>30</y>
+         <x>830</x>
+         <y>40</y>
          <width>51</width>
          <height>21</height>
         </rect>
@@ -1167,8 +1167,8 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>810</x>
-         <y>50</y>
+         <x>830</x>
+         <y>60</y>
          <width>161</width>
          <height>21</height>
         </rect>
@@ -1180,7 +1180,7 @@
       <widget class="QTableWidget" name="tableWidgetCoreTier1Ratio">
        <property name="geometry">
         <rect>
-         <x>810</x>
+         <x>830</x>
          <y>80</y>
          <width>161</width>
          <height>441</height>
@@ -1221,6 +1221,42 @@
          <width>181</width>
          <height>441</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidgetEquity">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>80</y>
+         <width>181</width>
+         <height>441</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>60</y>
+         <width>181</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Eget kapital</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonSaveEquity">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>40</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Spara</string>
        </property>
       </widget>
      </widget>

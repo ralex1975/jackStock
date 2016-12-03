@@ -47,6 +47,22 @@ class CGuiUtils;
 
 
 
+// Used in stockAnalysisTab.cpp
+enum SubAnalysesCompanyTypeET
+{
+    UNKNOW_COMPANY_TYPE,			// Okänd
+    TRADING_COMPANY,                // handelsföretag
+    INDUSTRIALS_COMPANY,            // Industriföretag
+    BANK_COMPANY,					// Bank
+    REAL_ESTATE_COMPANY,	    	// Fastighetsbolag
+    UTILITIS_COMPANY,               // Allmännyttiga företag, Försörjningsbolag
+    INVESTMENT_TRUST_COMPANY,    	// Investmentbolag
+    UTILITIS_COMPANY_2,             // Ska tas bort, Allmännyttiga företag, Försörjningsbolag
+    NOF_COMPANY_TYPE_ARR_DATA
+};
+
+
+
 //extern QStringList g_filter1DividendSortColParamLst;
 
 enum StockIndicatorSortType
@@ -180,8 +196,11 @@ enum SubAnalyseDataTypeET
     SAD_SOLIDITY,                   // Soliditet
     SAD_COVERAGE_RATIO,             // Räntetäckningsgrad
     SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
-    SAD_CORE_CAPITAL_RATIO          // kärnprimärkapitalrelation
+    SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation
+    SAD_CORE_EQUITY                 // Eget kapital
+
 };
+
 
 
 
@@ -297,8 +316,12 @@ struct HtmlStockAnalysPageDataST
     int nofCoverageRatioData;
     SubAnalysDataST *coreTier1RatioArr;
     int nofCoreTier1RatioData;
+    SubAnalysDataST *equityArr;
+    int nofEquityData;
     SubAnalysDataST *coreCapitalRatioArr;
     int nofCoreCapitalRatioData;
+
+
     QString  riskStdDev;
     QString  meanReturns;
     QString returnOnEquity;
@@ -956,6 +979,38 @@ public:
                                             SubAnalysDataST *dataArr,
                                             int &nofArrData,
                                             bool dbIsHandledExternly = false);
+
+
+
+    // Equity
+    bool subAnalysisEquityDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &dateId);
+
+    bool insertSubAnalysisEquityDate(QString date,
+                                     int mainAnalysisId,
+                                     int &dateId,
+                                     bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisEquityDataId(int mainAnalysisId,
+                                    int dateId,
+                                    int &dataId,
+                                    bool dbIsHandledExternly = false);
+
+    bool insertSubAnalysisEquityData(int dateId,
+                                     int mainAnalysisId,
+                                     int inputDataId,
+                                     bool dataIdIsValid,
+                                     QString data,
+                                     int &dataId,
+                                     bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisEquityData(QString stockName,
+                                  QString stockSymbol,
+                                  SubAnalysDataST *dataArr,
+                                  int &nofArrData,
+                                  bool dbIsHandledExternly = false);
+
 
 
 

@@ -2,6 +2,7 @@
 #include <math.h>
 
 
+
 createStockAnalysisHtmlPage::createStockAnalysisHtmlPage()
 {
 
@@ -13,7 +14,21 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
 {
 
     QString tmpStr;
+    CDbHndl db;
+    int mainAnalysisId;
+    int companyType = 0;
 
+    if(true == db.mainAnalysisDataExists(hSAPData.stockName, hSAPData.stockSymbol, mainAnalysisId))
+    {
+        if(true ==  db.getSubAnalysisCompanyType(mainAnalysisId, companyType))
+        {
+            if(companyType >= NOF_COMPANY_TYPE_ARR_DATA)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Error companyType >= NOF_COMPANY_TYPE_ARR_DATA"));
+                companyType = 0;
+            }
+        }
+    }
 
 
      hSAPData.htmlStr = QString::fromUtf8("<!DOCTYPE html>\n");
@@ -144,7 +159,6 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
 
 
-
     // New line dividend Stability
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"height: 35px; text-align: left; vertical-align: top;\"><b>Utdelningsstabilitet:</b></td>\n");
@@ -173,7 +187,6 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<br><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<tr><td colspan=\"3\" rowspan=\"1\"> <hr></td></tr>\n");
-
 
 
     // New line Trustworthy Leadership
@@ -223,331 +236,408 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"3\" rowspan=\"1\"><b>Finansdata:</b></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
-    hSAPData.htmlStr += QString::fromUtf8("<tr><td><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8(" <td colspan=\"2\" rowspan=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;&nbsp;År &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Omsättningstillgångarna</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Kortfristiga skulder</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">OmsTlg/KS</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
-
-    if(hSAPData.nofTotalCurrentAssetsArrData == hSAPData.nofTotalCurrentLiabilitiesData)
+    if((companyType == UNKNOW_COMPANY_TYPE) || (companyType == INDUSTRIALS_COMPANY) || (companyType == TRADING_COMPANY))
     {
+        hSAPData.htmlStr += QString::fromUtf8("<tr><td><br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8(" <td colspan=\"2\" rowspan=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;&nbsp;År &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Omsättningstillgångarna</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Kortfristiga skulder</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">OmsTlg/KS >= 2</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
-        for(int ii = 0; ii < hSAPData.nofTotalCurrentAssetsArrData; ii++)
+
+        if(hSAPData.nofTotalCurrentAssetsArrData == hSAPData.nofTotalCurrentLiabilitiesData)
         {
-            if(hSAPData.totalCurrentAssetsArr[ii].date.toInt() == hSAPData.totalCurrentLiabilitiesArr[ii].date.toInt())
+
+            for(int ii = 0; ii < hSAPData.nofTotalCurrentAssetsArrData; ii++)
             {
-                hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-                hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].date;
-                hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-                hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].data;
-                hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-                hSAPData.htmlStr += hSAPData.totalCurrentLiabilitiesArr[ii].data;
-                hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-
-
-                double tmpRes;
-                if(hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble() != 0)
+                if(hSAPData.totalCurrentAssetsArr[ii].date.toInt() == hSAPData.totalCurrentLiabilitiesArr[ii].date.toInt())
                 {
-                    tmpRes = (hSAPData.totalCurrentAssetsArr[ii].data.toDouble() - hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble())/hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble();
-                }
-                else
-                {
-                    tmpRes = hSAPData.totalCurrentAssetsArr[ii].data.toDouble() / 0.001;
-                }
+                    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                    hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].date;
+                    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                    hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].data;
+                    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                    hSAPData.htmlStr += hSAPData.totalCurrentLiabilitiesArr[ii].data;
+                    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
 
-                tmpRes = 1.0 + tmpRes;
+
+                    double tmpRes;
+                    if(hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble() != 0)
+                    {
+                        tmpRes = (hSAPData.totalCurrentAssetsArr[ii].data.toDouble() - hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble())/hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble();
+                    }
+                    else
+                    {
+                        tmpRes = hSAPData.totalCurrentAssetsArr[ii].data.toDouble() / 0.001;
+                    }
+
+                    tmpRes = 1.0 + tmpRes;
 
 
-                if(tmpRes >= 2)
-                {
-                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"blue\">\n");
+                    if(tmpRes >= 2)
+                    {
+                        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"blue\">\n");
+                    }
+                    else
+                    {
+                        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"red\">\n");
+                    }
+
+                    QString tmpDb;
+                    tmpDb.sprintf("%.2f", tmpRes);
+                    hSAPData.htmlStr += tmpDb;
+                    hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
                 }
-                else
-                {
-                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"red\">\n");
-                }
-
-                QString tmpDb;
-                tmpDb.sprintf("%.2f", tmpRes);
-                hSAPData.htmlStr += tmpDb;
-                hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
-                hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
             }
         }
-    }
-    else
-    {
-        QMessageBox::information(NULL, QString::fromUtf8("Error:"), QString::fromUtf8("nofTotalCurrentAssetsArrData != nofTotalCurrentLiabilitiesData"));
+        else
+        {
+            QMessageBox::information(NULL, QString::fromUtf8("Error:"), QString::fromUtf8("nofTotalCurrentAssetsArrData != nofTotalCurrentLiabilitiesData"));
+        }
+
+        hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</table>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr><td><br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8(" <td colspan=\"2\" rowspan=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;&nbsp;År &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Omsättningstillgångarna</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Totala skulder</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">OmsTlg/TS >= 1 </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        if(hSAPData.nofTotalCurrentAssetsArrData == hSAPData.nofTotalLiabilitiesData)
+        {
+            for(int ii = 0; ii < hSAPData.nofTotalCurrentAssetsArrData; ii++)
+            {
+                if(hSAPData.totalCurrentAssetsArr[ii].date.toInt() == hSAPData.totalLiabilitiesArr[ii].date.toInt())
+                {
+                    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                    hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].date;
+                    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                    hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].data;
+                    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                    hSAPData.htmlStr += hSAPData.totalLiabilitiesArr[ii].data;
+                    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+
+                    double tmpRes = hSAPData.totalCurrentAssetsArr[ii].data.toDouble()/hSAPData.totalLiabilitiesArr[ii].data.toDouble();
+
+
+                    if(hSAPData.totalLiabilitiesArr[ii].data.toDouble() != 0)
+                    {
+                        tmpRes = (hSAPData.totalCurrentAssetsArr[ii].data.toDouble() - hSAPData.totalLiabilitiesArr[ii].data.toDouble())/hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble();
+                    }
+                    else
+                    {
+                        tmpRes = hSAPData.totalCurrentAssetsArr[ii].data.toDouble() / 0.001;
+                    }
+
+                    tmpRes = 1.0 + tmpRes;
+
+
+                    if(tmpRes >= 1)
+                    {
+                        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"blue\">\n");
+                    }
+                    else
+                    {
+                        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"red\">\n");
+                    }
+
+                    QString tmpDb;
+                    tmpDb.sprintf("%.2f", tmpRes);
+                    hSAPData.htmlStr += tmpDb;
+                    hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+                    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+                }
+            }
+        }
+        else
+        {
+            QMessageBox::information(NULL, QString::fromUtf8("Error:"), QString::fromUtf8("nofTotalCurrentAssetsArrData != nofTotalLiabilitiesData"));
+        }
+
+        hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</table>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
     }
 
-    hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</table>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br>\n");
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
 
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-
-
-    hSAPData.htmlStr += QString::fromUtf8("<tr><td><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8(" <td colspan=\"2\" rowspan=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;&nbsp;År &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Omsättningstillgångarna</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Totala skulder</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">OmsTlg/TS</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-
-
-    if(hSAPData.nofTotalCurrentAssetsArrData == hSAPData.nofTotalLiabilitiesData)
+    if((companyType == UNKNOW_COMPANY_TYPE) || (companyType == BANK_COMPANY))
     {
-        for(int ii = 0; ii < hSAPData.nofTotalCurrentAssetsArrData; ii++)
+        hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;År&nbsp; </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Kärnprimärkapitalrelation > 15% &nbsp;&nbsp;&nbsp;\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
+
+        for(int ii = 0; ii < hSAPData.nofCoreCapitalRatioData; ii++)
         {
-            if(hSAPData.totalCurrentAssetsArr[ii].date.toInt() == hSAPData.totalLiabilitiesArr[ii].date.toInt())
+
+            hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+            hSAPData.htmlStr += hSAPData.coreCapitalRatioArr[ii].date;
+            hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+            if(hSAPData.coreCapitalRatioArr[ii].data.toDouble() > 15.0)
+            {
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
+            }
+            else
+            {
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
+            }
+            hSAPData.htmlStr += hSAPData.coreCapitalRatioArr[ii].data;
+            hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+            hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+        }
+
+        hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</table>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+    }
+
+
+    if((companyType == UNKNOW_COMPANY_TYPE) ||
+       (companyType == UTILITIS_COMPANY)    || (companyType == UTILITIS_COMPANY_2))
+    {
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;År&nbsp;&nbsp;&nbsp; </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Totala skulder</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Eget kapital </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">TS/EK <= 2 </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        // equity & total liabilities
+        for(int ii = 0; ii < hSAPData.nofTotalLiabilitiesData; ii++)
+        {
+            if(hSAPData.equityArr[ii].date.toInt() == hSAPData.totalLiabilitiesArr[ii].date.toInt())
             {
                 hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+
                 hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-                hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].date;
+                hSAPData.htmlStr += hSAPData.equityArr[ii].date;
                 hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-                hSAPData.htmlStr += hSAPData.totalCurrentAssetsArr[ii].data;
-                hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+
                 hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
                 hSAPData.htmlStr += hSAPData.totalLiabilitiesArr[ii].data;
+
+                hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+                hSAPData.htmlStr += hSAPData.equityArr[ii].data;
                 hSAPData.htmlStr += QString::fromUtf8("</td>\n");
 
-                double tmpRes = hSAPData.totalCurrentAssetsArr[ii].data.toDouble()/hSAPData.totalLiabilitiesArr[ii].data.toDouble();
-
-
-                if(hSAPData.totalLiabilitiesArr[ii].data.toDouble() != 0)
+                QString tmpStr;
+                double realEquity = hSAPData.equityArr[ii].data.toDouble();
+                double realTotalLiabilities = hSAPData.totalLiabilitiesArr[ii].data.toDouble();
+                double ratio;
+                if(realEquity == 0)
                 {
-                    tmpRes = (hSAPData.totalCurrentAssetsArr[ii].data.toDouble() - hSAPData.totalLiabilitiesArr[ii].data.toDouble())/hSAPData.totalCurrentLiabilitiesArr[ii].data.toDouble();
+                    realEquity = 0.001;
+                    ratio = realTotalLiabilities / realEquity;
+                }
+                if(realEquity < 0)
+                {
+                    ratio = realTotalLiabilities / realEquity;
+                    if(ratio > 0)
+                    {
+                        ratio = -ratio;
+                    }
                 }
                 else
                 {
-                    tmpRes = hSAPData.totalCurrentAssetsArr[ii].data.toDouble() / 0.001;
+                    ratio = realTotalLiabilities / realEquity;
                 }
 
-                tmpRes = 1.0 + tmpRes;
-
-
-                if(tmpRes >= 1)
+                if(ratio > 2)
                 {
-                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"blue\">\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
                 }
                 else
                 {
-                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"> <font color=\"red\">\n");
+                    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
                 }
 
-                QString tmpDb;
-                tmpDb.sprintf("%.2f", tmpRes);
-                hSAPData.htmlStr += tmpDb;
+                tmpStr.sprintf("%.2f", ratio);
+                hSAPData.htmlStr += tmpStr;
+
                 hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
                 hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
             }
         }
-    }
-    else
-    {
-        QMessageBox::information(NULL, QString::fromUtf8("Error:"), QString::fromUtf8("nofTotalCurrentAssetsArrData != nofTotalLiabilitiesData"));
-    }
 
-    hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</table>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-
-
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;År&nbsp; </td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Kärnprimärkapitalrelation&nbsp;&nbsp;&nbsp;\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
-
-    for(int ii = 0; ii < hSAPData.nofCoreCapitalRatioData; ii++)
-    {
-        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-        hSAPData.htmlStr += hSAPData.coreCapitalRatioArr[ii].date;
+        hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</table>\n");
         hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-        if(hSAPData.coreCapitalRatioArr[ii].data.toDouble() > 15.0)
-        {
-            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
-        }
-        else
-        {
-            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
-        }
-        hSAPData.htmlStr += hSAPData.coreCapitalRatioArr[ii].data;
-        hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
         hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    }
-    hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</table>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
 
 
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp;År&nbsp;&nbsp;&nbsp; </td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Totala skulder</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Eget kapital </td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">TS/EK</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</table>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-
-
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\"><br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;År&nbsp;</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Soliditet (%)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
-
-    for(int ii = 0; ii < hSAPData.nofSolidityData; ii++)
-    {
         hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-        hSAPData.htmlStr += hSAPData.solidityArr[ii].date;
-        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-        if(hSAPData.solidityArr[ii].data.toDouble() >= 40)
-        {
-            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
-        }
-        else
-        {
-            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
-        }
-        hSAPData.htmlStr += hSAPData.solidityArr[ii].data;
-        hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
-
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
         hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
     }
 
-    hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</table>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-
-
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;År&nbsp; </td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Räntetäckningsgraden&nbsp;&nbsp;&nbsp;&nbsp;\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
-
-    for(int ii = 0; ii < hSAPData.nofCoverageRatioData; ii++)
+    if((companyType == UNKNOW_COMPANY_TYPE) || (companyType == REAL_ESTATE_COMPANY) ||
+       (companyType == UTILITIS_COMPANY)    || (companyType == UTILITIS_COMPANY_2))
     {
         hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
-        hSAPData.htmlStr += hSAPData.coverageRatioArr[ii].date;
-        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-        if(hSAPData.coverageRatioArr[ii].data.toDouble() >= 3)
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\"><br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;År&nbsp;</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Soliditet >= 40% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
+
+        for(int ii = 0; ii < hSAPData.nofSolidityData; ii++)
         {
-            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
-        }
-        else
-        {
-            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
+            hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+            hSAPData.htmlStr += hSAPData.solidityArr[ii].date;
+            hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+            if(hSAPData.solidityArr[ii].data.toDouble() >= 40)
+            {
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
+            }
+            else
+            {
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
+            }
+            hSAPData.htmlStr += hSAPData.solidityArr[ii].data;
+            hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+
+            hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
         }
 
-        hSAPData.htmlStr += hSAPData.coverageRatioArr[ii].data;
-        hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</table>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;År&nbsp; </td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Räntetäckningsgraden >= 3 &nbsp;&nbsp;&nbsp;&nbsp;\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td> </tr>\n");
+
+        for(int ii = 0; ii < hSAPData.nofCoverageRatioData; ii++)
+        {
+            hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+            hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">\n");
+            hSAPData.htmlStr += hSAPData.coverageRatioArr[ii].date;
+            hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+            if(hSAPData.coverageRatioArr[ii].data.toDouble() >= 3)
+            {
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"blue\">\n");
+            }
+            else
+            {
+                hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\"><font color=\"red\">\n");
+            }
+
+            hSAPData.htmlStr += hSAPData.coverageRatioArr[ii].data;
+            hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+            hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+        }
+
+        hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</table>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<br>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+        hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
+        hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
         hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
     }
 
-    hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</table>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<br>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
-
-
-    hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
@@ -556,8 +646,11 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Från År</td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Till År</td>\n");
-    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Intjäningsförmågan&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+    hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Intjäningsförmågan  > 3% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
     hSAPData.htmlStr += QString::fromUtf8("</td></tr>\n");
+
+    if(hSAPData.nofEarningsArrData > 0)
+    {
 
 
 
@@ -596,7 +689,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
             res = pow((lastData/firstData), (1.0/(hSAPData.nofEarningsArrData-1.0)));
             QString tmpStr;
 
-            if(res > 1.04)
+            if(res > 1.03)
                 tmpStr = QString::fromUtf8("<font color=\"blue\">Årlig tillväxt: ");
             else
                 tmpStr = QString::fromUtf8("<font color=\"red\">Årlig tillväxt: ");
@@ -611,10 +704,17 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
 
         }
         if((hSAPData.nofEarningsArrData > 1))
+        {
             hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+        }
         else
+        {
             hSAPData.htmlStr += QString::fromUtf8("</font></td>\n");
+        }
         hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+    }
 
 
     hSAPData.htmlStr += QString::fromUtf8("</tbody>\n");
@@ -623,11 +723,15 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("<br>\n");
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
+
+
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
@@ -727,16 +831,19 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
     hSAPData.htmlStr += QString::fromUtf8("</table>\n");
     hSAPData.htmlStr += QString::fromUtf8("</td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("</tr>\n");
+
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td><br></td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td colspan=\"2\" rowspan=\"1\">\n");
     hSAPData.htmlStr += QString::fromUtf8("<table style=\"width: 100%\" border=\"1\">\n");
     hSAPData.htmlStr += QString::fromUtf8("<tbody>\n");
+
     hSAPData.htmlStr += QString::fromUtf8("<tr>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">&nbsp;&nbsp;&nbsp; År</td>\n");
     hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Utdelning (%)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
