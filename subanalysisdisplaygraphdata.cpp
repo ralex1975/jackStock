@@ -69,7 +69,7 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
     graphIndex= 0;
     plotBarGraph(graphIndex, data.nofTotalCurrentAssetsArrData, data.totalCurrentAssetsArr, qwtPlot);
 
-    graphIndex++;
+    graphIndex= 1;
     plotBarGraph(graphIndex, data.nofTotalCurrentLiabilitiesData, data.totalCurrentLiabilitiesArr, qwtPlot);
 
     if(data.nofTotalCurrentAssetsArrData == data.nofTotalCurrentLiabilitiesData)
@@ -87,14 +87,14 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
     }
 
     // Ratio CurrentAssets / TotalCurrentLiabilities
-    graphIndex++;
+    graphIndex= 2;
     plotBarGraph(graphIndex, data.nofTotalCurrentLiabilitiesData, tmpRatioArr, qwtPlot);
 
 
-    graphIndex++;
+    graphIndex= 3;
     plotBarGraph(graphIndex, data.nofTotalCurrentAssetsArrData, data.totalCurrentAssetsArr, qwtPlot);
 
-    graphIndex++;
+    graphIndex= 4;
     plotBarGraph(graphIndex, data.nofTotalLiabilitiesData, data.totalLiabilitiesArr, qwtPlot);
 
 
@@ -113,11 +113,11 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
     }
 
     // Ratio CurrentAssets / TotalLiabilities
-    graphIndex++;
+    graphIndex= 5;
     plotBarGraph(graphIndex, data.nofTotalLiabilitiesData, tmpRatioArr, qwtPlot);
 
 
-    graphIndex++;
+    graphIndex= 6;
     plotBarGraph(graphIndex, data.nofEarningsArrData, data.earningsDataArr, qwtPlot);
 
 
@@ -136,7 +136,7 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
     }
 
         // Ratio CurrentAssets / TotalLiabilities
-        graphIndex++;
+        graphIndex= 7;
         plotBarGraph(graphIndex, data.nofEarningsArrData, tmpRatioArr, qwtPlot);
     }
 
@@ -318,6 +318,13 @@ void subAnalysisDisplayGraphData::plotBarGraph(int graphIndex,
     double date;
     double data;
 
+    double xMin;
+    double xMax;
+
+    double yMin;
+    double yMax;
+
+
     if((nofArrData < 1) || (graphIndex > 9))
     {
         return;
@@ -334,6 +341,41 @@ void subAnalysisDisplayGraphData::plotBarGraph(int graphIndex,
     {
         date = subAnalysDataArr[i].date.toDouble();
         data = subAnalysDataArr[i].data.toDouble();
+
+        if(i == 0)
+        {
+           xMin = date;
+           xMax = date;
+
+           yMin = data;
+           yMax = data;
+
+        }
+        else
+        {
+            if(xMin > (date))
+            {
+                xMin = (date + 0.5);
+            }
+
+            if(xMax < (date + 1.0))
+            {
+                xMax = date + 1.0;
+            }
+
+
+            if(yMin > data)
+            {
+                yMin = (data);
+            }
+
+            if(yMax < (data + 1.0))
+            {
+                yMax = (data + 1.0);
+            }
+
+        }
+
 
         // Insert data value at the top of the bar
         lableText.clear();
@@ -353,6 +395,15 @@ void subAnalysisDisplayGraphData::plotBarGraph(int graphIndex,
 
     // qwtPlot[graphIndex]->enableAxis(QwtPlot::xBottom, false);
     // qwtPlot[graphIndex]->enableAxis(QwtPlot::yLeft, false);
+
+    if(yMin > 0)
+        yMin = 0;
+
+    //qwtPlot[graphIndex]->setAxisAutoScale(QwtPlot::yLeft, true);
+    qwtPlot[graphIndex]->setAxisScale(QwtPlot::yLeft, yMin, yMax);
+//    qwtPlot[graphIndex]->setAxisScale(QwtPlot::xBottom, xMin, xMax);
+
+
 
     // Display graph data
     m_barHist[graphIndex]->setBrush(Qt::blue);
