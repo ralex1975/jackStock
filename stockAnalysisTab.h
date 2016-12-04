@@ -4,21 +4,12 @@
 #include <QDialog>
 #include "inc/guiUtil/guiFinanceCtrls.h"
 #include "dbHndl.h"
+#include "subanalysisdisplaygraphdata.h"
 
 namespace Ui {
 class StockAnalysisTab;
 }
 
-#define MAX_NOF_DIVIDEND_ARR_DATA                   100
-#define MAX_NOF_EARNINGS_ARR_DATA                   MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_TOTAL_CURRENT_LIABILITIES           MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_TOTAL_LIABILITIES                   MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_SOLIDITY                            MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_COVERAGE_RATIO                      MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
-#define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
 
 
 
@@ -27,6 +18,15 @@ class StockAnalysisTab;
 class StockAnalysisTab : public QDialog
 {
     Q_OBJECT
+
+    QwtPlot *m_qwtPlot[10];
+    subAnalysisDisplayGraphData m_saDisply;
+
+
+    QwtPlotHistogram *m_barHist;
+    QVector <QwtIntervalSample> m_barHistData;
+
+
 
     SubAnalysDataST       m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
     int                   m_nofDividendArrData;
@@ -81,6 +81,8 @@ class StockAnalysisTab : public QDialog
 
     void resetGuiCtrl(void);
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
+    void initSubAnalysisPlots(void);
+
 
     void initSubAnalyseTableWidget(QTableWidget *tableWidget,
                                    QString dateHeader,

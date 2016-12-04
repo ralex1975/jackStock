@@ -87,7 +87,8 @@ SOURCES += main.cpp\
     stockAnalysisTab.cpp \
     extendedLineEdit.cpp \
     createstockanalysishtmlpage.cpp \
-    dbSubHndl.cpp
+    dbSubHndl.cpp \
+    subanalysisdisplaygraphdata.cpp
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -152,7 +153,8 @@ HEADERS  += WebBrowserTab.h \
     adminMyPortFolio.h \
     stockAnalysisTab.h \
     extendedLineEdit.h \
-    createstockanalysishtmlpage.h
+    createstockanalysishtmlpage.h \
+    subanalysisdisplaygraphdata.h
 
 FORMS    += \
     WebBrowserTab.ui \

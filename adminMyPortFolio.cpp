@@ -400,6 +400,7 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
     if(maxRow > 999)
     {
         // m_x[], m_y[] is too small
+        QMessageBox::critical(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Errot: maxRow > 999"));
         return;
     }
 

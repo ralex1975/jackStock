@@ -10,6 +10,7 @@
 #include "util.h"
 
 
+
 //Sub Analys Tables defines
 #define SAT_COLUMN_DATE                  0
 #define SAT_COLUMN_DATA                  1
@@ -30,6 +31,7 @@ const QString StockAnalysisTab::m_companyTypesArr[NOF_COMPANY_TYPE_ARR_DATA] =
                             QString::fromUtf8("Försörjningsbolag"),
                             QString::fromUtf8("Investmentbolag"),
                             QString::fromUtf8("Allmännyttiga företag")}; // t.ex energibolag (Skulder/eget kapital exklusive immateriella tillgångar < 2)
+
 
 
 
@@ -63,6 +65,83 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     // Show html file that describes investment strategy
     ui->webView_2->load(QUrl("qrc:/database/AnalysDoc/AnalysDoc/Investeringskriterier.html"));
 
+    initSubAnalysisPlots();
+
+#if 0
+        HtmlStockAnalysPageDataST data;
+        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
+
+        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
+
+        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
+
+        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
+
+        //m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
+#endif
+
+
+
+#if 0
+    double m_x[1000];
+    double m_y[1000];
+    m_barHist = new QwtPlotHistogram();
+
+     QwtPlotMarker m_markers[10];
+
+
+
+    // ajn
+    m_barHistData.clear();
+    m_barHist->detach();
+    m_barHist->setData(NULL);
+    m_barHist-> setStyle (QwtPlotHistogram :: Columns);
+
+    for(int i = 0; i < 10; i++)
+    {
+        QwtText txt;
+        QString lableText;
+
+        //QwtSymbol *sym=new QwtSymbol(QwtSymbol::Diamond,QBrush(Qt::red),QPen(Qt::red),QSize(50,50));
+        QwtPlotMarker *mark = new QwtPlotMarker;
+         //mark->setSymbol(sym);
+         lableText.sprintf("%d", i);
+         txt.setText(lableText);
+         mark->setLabel(txt);
+         mark->setValue((double)(i+0.5),(double)(i+0.5));//here you have to set the coordinate axis i.e. where the axis are meeting.
+         mark->attach(ui->qwtPlot_2);
+
+
+        lableText.sprintf("Hej hopp %d", i);
+        txt.setText(lableText);
+
+        txt.setFont( QFont( "Helvetica", 14, QFont::Bold) );
+        txt.setColor( QColor(Qt::black));
+        txt.setBackgroundBrush(QColor(Qt::white));
+
+
+        m_y[i] = (double) i;
+        m_markers[i].setLabel(txt);
+        m_markers[i].setValue((double)i, (double)i);
+        m_markers[i].attach(ui->qwtPlot_2);
+        //m_markers
+        QwtInterval interval(i, i + 1);
+        interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
+         double diff = (m_y[i]-m_y[i-1]);
+        m_barHistData.append (QwtIntervalSample(m_y[i], interval));
+        qDebug() << m_y[i-1] << m_y[i] << "diff" << diff;
+    }
+
+
+    ui->qwtPlot_2->enableAxis(QwtPlot::xBottom, false);
+    ui->qwtPlot_2->enableAxis(QwtPlot::yLeft, false);
+    m_barHist->setBrush(Qt::blue);
+    m_barHist->setPen(QPen(Qt::black));
+    m_barHist->setSamples(m_barHistData);
+    m_barHist->attach(ui->qwtPlot_2);
+    ui->qwtPlot_2->replot();
+#endif
+
 }
 
 
@@ -81,7 +160,69 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 StockAnalysisTab::~StockAnalysisTab()
 {
     delete ui;
+    delete m_barHist;
 }
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::initSubAnalysisPlots(void)
+{
+
+    // Hide axises
+    m_qwtPlot[0] = ui->qwtPlot_0;
+    m_qwtPlot[0]->enableAxis(QwtPlot::xBottom, true);
+    m_qwtPlot[0]->enableAxis(QwtPlot::yLeft, false);
+   // m_qwtPlot[0]->hide();
+
+    m_qwtPlot[1] = ui->qwtPlot_1;
+    m_qwtPlot[1]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[1]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[2] = ui->qwtPlot_2;
+    m_qwtPlot[2]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[2]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[3] = ui->qwtPlot_3;
+    m_qwtPlot[3]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[3]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[4] = ui->qwtPlot_4;
+    m_qwtPlot[4]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[4]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[5] = ui->qwtPlot_5;
+    m_qwtPlot[5]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[5]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[6] = ui->qwtPlot_6;
+    m_qwtPlot[6]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[6]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[7] = ui->qwtPlot_7;
+    m_qwtPlot[7]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[7]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[8] = ui->qwtPlot_8;
+    m_qwtPlot[8]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[8]->enableAxis(QwtPlot::yLeft, false);
+
+    m_qwtPlot[9] = ui->qwtPlot_9;
+    m_qwtPlot[9]->enableAxis(QwtPlot::xBottom, false);
+    m_qwtPlot[9]->enableAxis(QwtPlot::yLeft, false);
+
+
+
+}
+
 
 
 /******************************************************************
@@ -949,10 +1090,9 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     hSAPData.returnOnEquity = m_returnOnEquity;
 
 
-
-
-
     csaHtmlPg.createHtmlPage(hSAPData);
+
+     m_saDisply.subAnalysisShowDataInGraphs(hSAPData, m_qwtPlot);
 
 
     ui->webView->setHtml(hSAPData.htmlStr);

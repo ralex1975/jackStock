@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1321,6 +1321,111 @@
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>Grafer</string>
+    </attribute>
+    <widget class="QwtPlot" name="qwtPlot_1">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>20</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_3">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>140</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_5">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>140</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_0">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>20</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_2">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>20</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_4">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>140</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_6">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>260</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_7">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>260</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_8">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>260</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtPlot_9">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>380</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QComboBox" name="StockListComboBoxAnalysis">
    <property name="geometry">
@@ -1391,6 +1496,12 @@
    <class>QWebView</class>
    <extends>QWidget</extends>
    <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

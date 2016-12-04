@@ -185,6 +185,18 @@ struct SubAnalysDataST
 };
 
 
+#define MAX_NOF_DIVIDEND_ARR_DATA                   100
+#define MAX_NOF_EARNINGS_ARR_DATA                   MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA       MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOTAL_CURRENT_LIABILITIES           MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOTAL_LIABILITIES                   MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_SOLIDITY                            MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_COVERAGE_RATIO                      MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
+
+
 
 enum SubAnalyseDataTypeET
 {
