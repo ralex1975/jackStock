@@ -1,5 +1,27 @@
+/******************************************************************
+ *
+ * Filename:        subanalysisdisplaygraphdata.cpp
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+
+
 #include "subanalysisdisplaygraphdata.h"
 
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
 subAnalysisDisplayGraphData::subAnalysisDisplayGraphData()
 {
     int i, j;
@@ -17,7 +39,16 @@ subAnalysisDisplayGraphData::subAnalysisDisplayGraphData()
 
 
 
-
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
 subAnalysisDisplayGraphData:: ~subAnalysisDisplayGraphData()
 {
     int i, j ;
@@ -34,23 +65,113 @@ subAnalysisDisplayGraphData:: ~subAnalysisDisplayGraphData()
 }
 
 
-
-
-void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisCalcRation(SubAnalysDataST *numeratorArr,
+                      int nofNumeratorArrData,
+                      SubAnalysDataST *denominatorArr,
+                      int nofDenominatorData,
+                      SubAnalysDataST *resultArr,
+                      int &nofResultArrData)
 {
-    int graphIndex = 0;
+    double denominator;
+
+    nofResultArrData = 0;
+
+    if(nofNumeratorArrData == nofDenominatorData)
+    {
+        nofResultArrData = nofNumeratorArrData;
+
+        for(int i = 0; i < nofNumeratorArrData; i++)
+        {
+            // Do not divide with zero
+            denominator = denominatorArr[i].data.toDouble();
+            if(denominator == 0)
+            {
+                denominator = 0.001;
+            }
+
+
+            if(numeratorArr[i].date.toDouble() == denominatorArr[i].date.toDouble())
+            {
+                resultArr[i].date = numeratorArr[i].date;
+
+                resultArr[i].data.sprintf("%.2f", numeratorArr[i].data.toDouble() / denominator);
+            }
+        }
+    }
+}
+
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:  out[i] = arr[i-1] / arr[i]; out[0] is set to 0
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisOneArrCalcRationPrevCurrSlot(SubAnalysDataST *inputArr,
+                                        int nofInputArrData,
+                                        SubAnalysDataST *resultArr,
+                                        int &nofResultArrData)
+{
+    nofResultArrData = nofInputArrData;
+
+    if(nofInputArrData > 1)
+    {
+        resultArr[0].date = inputArr[0].date;
+
+        resultArr[0].data.sprintf("%.2f", 0.0);
+
+        for(int i = 1; i < nofInputArrData; i++)
+        {
+            // Do not divide with zero
+            double denominator = inputArr[i].data.toDouble();
+            if(denominator == 0)
+                denominator = 0.001;
+
+            resultArr[i].date = inputArr[i].date;
+
+            resultArr[i].data.sprintf("%.2f", inputArr[i-1].data.toDouble() / denominator);
+        }
+    }
+
+}
+
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisGetCompanyType(HtmlStockAnalysPageDataST data, int &companyType)
+{
     CDbHndl db;
     int mainAnalysisId;
-    int companyType = 0;
-    SubAnalysDataST tmpRatioArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
 
 
-
-    // double m_y[1000];
-    //QwtText txt;
-    //QString lableText;
-
-
+    companyType = 0;
 
     // Check company type
     if(true == db.mainAnalysisDataExists(data.stockName, data.stockSymbol, mainAnalysisId))
@@ -64,6 +185,214 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
             }
         }
     }
+}
+
+
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisPlotGraphicDataTradingComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    subAnalysisPlotGraphicDataIndustrialComp(data, qwtPlot);
+
+}
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisPlotGraphicDataUtilitisComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    int graphIndex = 0;
+    int companyType;
+    SubAnalysDataST tmpRatioArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    int nofResultArrData;
+
+
+    subAnalysisGetCompanyType(data, companyType);
+
+
+    graphIndex= 0;
+    plotBarGraph(graphIndex, data.nofTotalLiabilitiesData, data.totalLiabilitiesArr, qwtPlot);
+
+    graphIndex= 1;
+    plotBarGraph(graphIndex, data.nofEquityData, data.equityArr, qwtPlot);
+
+
+    // Calc ratio TotalLiabilities / Equity
+    subAnalysisCalcRation(data.totalLiabilitiesArr,
+                          data.nofTotalLiabilitiesData,
+                          data.equityArr,
+                          data.nofEquityData,
+                          tmpRatioArr,
+                          nofResultArrData);
+
+    graphIndex= 2;
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
+
+    graphIndex= 3;
+    plotBarGraph(graphIndex, data.nofSolidityData, data.solidityArr, qwtPlot);
+
+    graphIndex= 4;
+    plotBarGraph(graphIndex, data.nofCoverageRatioData, data.coverageRatioArr, qwtPlot);
+
+
+    graphIndex= 6;
+    plotBarGraph(graphIndex, data.nofEarningsArrData, data.earningsDataArr, qwtPlot);
+
+
+    subAnalysisOneArrCalcRationPrevCurrSlot(data.earningsDataArr,
+                                            data.nofEarningsArrData,
+                                            tmpRatioArr,
+                                            nofResultArrData);
+
+    // Ratio prev erarnings / current earnings
+    graphIndex= 7;
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
+
+
+    graphIndex = 9;
+    plotBarGraph(graphIndex, data.nofDividendArrData, data.dividendDataArr, qwtPlot);
+
+}
+
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisPlotGraphicDataRealEstateComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    int graphIndex = 0;
+    int companyType;
+    SubAnalysDataST tmpRatioArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    int nofResultArrData;
+
+
+    subAnalysisGetCompanyType(data, companyType);
+
+
+    graphIndex= 0;
+    plotBarGraph(graphIndex, data.nofSolidityData, data.solidityArr, qwtPlot);
+
+    graphIndex= 3;
+    plotBarGraph(graphIndex, data.nofCoverageRatioData, data.coverageRatioArr, qwtPlot);
+
+
+    graphIndex= 6;
+    plotBarGraph(graphIndex, data.nofEarningsArrData, data.earningsDataArr, qwtPlot);
+
+
+    subAnalysisOneArrCalcRationPrevCurrSlot(data.earningsDataArr,
+                                            data.nofEarningsArrData,
+                                            tmpRatioArr,
+                                            nofResultArrData);
+
+    // Ratio prev erarnings / current earnings
+    graphIndex= 7;
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
+
+
+    graphIndex = 9;
+    plotBarGraph(graphIndex, data.nofDividendArrData, data.dividendDataArr, qwtPlot);
+
+}
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisPlotGraphicDataBankComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    int graphIndex = 0;
+    int companyType;
+    SubAnalysDataST tmpRatioArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    int nofResultArrData;
+
+
+    subAnalysisGetCompanyType(data, companyType);
+
+
+    graphIndex= 0;
+    plotBarGraph(graphIndex, data.nofCoreCapitalRatioData, data.coreCapitalRatioArr, qwtPlot);
+
+
+    graphIndex= 3;
+    plotBarGraph(graphIndex, data.nofEarningsArrData, data.earningsDataArr, qwtPlot);
+
+
+    subAnalysisOneArrCalcRationPrevCurrSlot(data.earningsDataArr,
+                                            data.nofEarningsArrData,
+                                            tmpRatioArr,
+                                            nofResultArrData);
+
+    // Ratio prev erarnings / current earnings
+    graphIndex= 4;
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
+
+
+    graphIndex = 6;
+    plotBarGraph(graphIndex, data.nofDividendArrData, data.dividendDataArr, qwtPlot);
+
+}
+
+
+
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisPlotGraphicDataIndustrialComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    int graphIndex = 0;
+    int companyType;
+    SubAnalysDataST tmpRatioArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    int nofResultArrData;
+
+
+    subAnalysisGetCompanyType(data, companyType);
 
 
     graphIndex= 0;
@@ -72,24 +401,17 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
     graphIndex= 1;
     plotBarGraph(graphIndex, data.nofTotalCurrentLiabilitiesData, data.totalCurrentLiabilitiesArr, qwtPlot);
 
-    if(data.nofTotalCurrentAssetsArrData == data.nofTotalCurrentLiabilitiesData)
-    {
-        for(int i = 0; i < data.nofTotalCurrentAssetsArrData; i++)
-        {
-            if(data.totalCurrentAssetsArr[i].date.toDouble() == data.totalCurrentLiabilitiesArr[i].date.toDouble())
-            {
-                tmpRatioArr[i].date = data.totalCurrentAssetsArr[i].date;
-
-                tmpRatioArr[i].data.sprintf("%.2f", data.totalCurrentAssetsArr[i].data.toDouble() /
-                                 data.totalCurrentLiabilitiesArr[i].data.toDouble());
-            }
-        }
-    }
 
     // Ratio CurrentAssets / TotalCurrentLiabilities
-    graphIndex= 2;
-    plotBarGraph(graphIndex, data.nofTotalCurrentLiabilitiesData, tmpRatioArr, qwtPlot);
+    subAnalysisCalcRation(data.totalCurrentAssetsArr,
+                          data.nofTotalCurrentAssetsArrData,
+                          data.totalCurrentLiabilitiesArr,
+                          data.nofTotalCurrentLiabilitiesData,
+                          tmpRatioArr,
+                          nofResultArrData);
 
+    graphIndex= 2;
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
 
     graphIndex= 3;
     plotBarGraph(graphIndex, data.nofTotalCurrentAssetsArrData, data.totalCurrentAssetsArr, qwtPlot);
@@ -98,215 +420,161 @@ void subAnalysisDisplayGraphData::subAnalysisShowDataInGraphs(HtmlStockAnalysPag
     plotBarGraph(graphIndex, data.nofTotalLiabilitiesData, data.totalLiabilitiesArr, qwtPlot);
 
 
-    if(data.nofTotalCurrentAssetsArrData == data.nofTotalCurrentLiabilitiesData)
-    {
-        for(int i = 0; i < data.nofTotalCurrentAssetsArrData; i++)
-        {
-            if(data.totalCurrentAssetsArr[i].date.toDouble() == data.totalLiabilitiesArr[i].date.toDouble())
-            {
-                tmpRatioArr[i].date = data.totalCurrentAssetsArr[i].date;
-
-                tmpRatioArr[i].data.sprintf("%.2f", data.totalCurrentAssetsArr[i].data.toDouble() /
-                                 data.totalLiabilitiesArr[i].data.toDouble());
-            }
-        }
-    }
-
     // Ratio CurrentAssets / TotalLiabilities
+    subAnalysisCalcRation(data.totalCurrentAssetsArr,
+                          data.nofTotalCurrentAssetsArrData,
+                          data.totalLiabilitiesArr,
+                          data.nofTotalLiabilitiesData,
+                          tmpRatioArr,
+                          nofResultArrData);
+
     graphIndex= 5;
-    plotBarGraph(graphIndex, data.nofTotalLiabilitiesData, tmpRatioArr, qwtPlot);
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
 
 
     graphIndex= 6;
     plotBarGraph(graphIndex, data.nofEarningsArrData, data.earningsDataArr, qwtPlot);
 
 
-    if(data.nofEarningsArrData > 1)
-    {
-        tmpRatioArr[0].date = data.earningsDataArr[0].date;
+    subAnalysisOneArrCalcRationPrevCurrSlot(data.earningsDataArr,
+                                            data.nofEarningsArrData,
+                                            tmpRatioArr,
+                                            nofResultArrData);
 
-        tmpRatioArr[0].data.sprintf("%.2f", 0);
-
-        for(int i = 1; i < data.nofEarningsArrData; i++)
-        {
-            tmpRatioArr[i].date = data.earningsDataArr[i].date;
-
-            tmpRatioArr[i].data.sprintf("%.2f", data.earningsDataArr[i].data.toDouble() /
-                             data.earningsDataArr[i-1].data.toDouble());
-    }
-
-        // Ratio CurrentAssets / TotalLiabilities
-        graphIndex= 7;
-        plotBarGraph(graphIndex, data.nofEarningsArrData, tmpRatioArr, qwtPlot);
-    }
+    // Ratio prev erarnings / curr erarnings
+    graphIndex= 7;
+    plotBarGraph(graphIndex, nofResultArrData, tmpRatioArr, qwtPlot);
 
     graphIndex = 9;
     plotBarGraph(graphIndex, data.nofDividendArrData, data.dividendDataArr, qwtPlot);
 
+}
 
 
-#if 0
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::
+subAnalysisShowDataInGraphs(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    int companyType;
+
+    subAnalysisClearAllGraphs(qwtPlot);
+
+    subAnalysisGetCompanyType(data, companyType);
+
     switch(companyType)
     {
-    case UNKNOW_COMPANY_TYPE:			// Okänd
+    // Okänd
+    case UNKNOW_COMPANY_TYPE:
+
+        // Detta är fel fixa detta
+        subAnalysisPlotGraphicDataIndustrialComp(data, qwtPlot);
         break;
 
-    case TRADING_COMPANY:                // handelsföretag
-        if(data.nofTotalCurrentAssetsArrData > 0)
-        {
-
-        }
-
-        if(data.nofTotalCurrentLiabilitiesData > 0)
-        {
-
-        }
-
-        if(data.nofTotalLiabilitiesData > 0)
-        {
-
-        }
-
+    // Handelsföretag
+    case TRADING_COMPANY:
+        subAnalysisPlotGraphicDataTradingComp(data, qwtPlot);
         break;
 
-    case INDUSTRIALS_COMPANY:            // Industriföretag
+    // Industriföretag
+    case INDUSTRIALS_COMPANY:
+        subAnalysisPlotGraphicDataIndustrialComp(data, qwtPlot);
         break;
 
-    case BANK_COMPANY:					// Bank
+    // Bank
+    case BANK_COMPANY:
+        subAnalysisPlotGraphicDataBankComp(data, qwtPlot);
         break;
 
-    case REAL_ESTATE_COMPANY:	    	// Fastighetsbolag
+    // Fastighetsbolag
+    case REAL_ESTATE_COMPANY:
+        subAnalysisPlotGraphicDataRealEstateComp(data, qwtPlot);
         break;
 
-    case UTILITIS_COMPANY:               // Allmännyttiga företag, Försörjningsbolag
+    // Allmännyttiga företag, Försörjningsbolag
+    case UTILITIS_COMPANY:
+        subAnalysisPlotGraphicDataUtilitisComp(data, qwtPlot);
         break;
 
-    case INVESTMENT_TRUST_COMPANY:    	// Investmentbolag
+    // Investmentbolag
+    case INVESTMENT_TRUST_COMPANY:
+        // Fixa detta
+        subAnalysisPlotGraphicDataRealEstateComp(data, qwtPlot);
         break;
 
-    case UTILITIS_COMPANY_2:             // Ska tas bort, Allmännyttiga företag, Försörjningsbolag
+    // Ska tas bort, Allmännyttiga företag, Försörjningsbolag
+    case UTILITIS_COMPANY_2:
+        subAnalysisPlotGraphicDataUtilitisComp(data, qwtPlot);
         break;
 
     default:
-        QMessageBox::Critical(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Error: Invalid company type"));
+        QMessageBox::critical(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Error: Invalid company type"));
         return;
     }
-
-
-
-    //data.
-
-
-    // ajn
-    m_barHistData[0].clear();
-    m_barHist[0]->detach();
-    m_barHist[0]->setData(NULL);
-    m_barHist[0]-> setStyle (QwtPlotHistogram :: Columns);
-    //m_mark[0]->detach();
-
-    for(int i = 0; i < 10; i++)
-    {
-        lableText.clear();
-
-         lableText.sprintf("%d", i+j);
-         txt.setText(lableText);
-         m_mark[0][i]->setLabel(txt);
-         m_mark[0][i]->setValue((double)(i+0.5),(double)(i+0.5));//here you have to set the coordinate axis i.e. where the axis are meeting.
-         m_mark[0][i]->attach(qwtPlot[0]);
-
-        //txt.setFont( QFont( "Helvetica", 14, QFont::Bold) );
-        //txt.setColor( QColor(Qt::black));
-        //txt.setBackgroundBrush(QColor(Qt::white));
-
-
-        m_y[i] = (double) i + j;
-        QwtInterval interval(i, i + 1);
-        interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
-         //double diff = (m_y[i]-m_y[i-1]);
-        m_barHistData[0].append (QwtIntervalSample(m_y[i], interval));
-        // qDebug() << m_y[i-1] << m_y[i] << "diff" << diff;
-    }
-
-    qwtPlot[0]->enableAxis(QwtPlot::xBottom, false);
-    qwtPlot[0]->enableAxis(QwtPlot::yLeft, false);
-    m_barHist[0]->setBrush(Qt::blue);
-    m_barHist[0]->setPen(QPen(Qt::black));
-    m_barHist[0]->setSamples(m_barHistData[0]);
-    m_barHist[0]->attach(qwtPlot[0]);
-    qwtPlot[0]->replot();
-
-#endif
-    //j++;
-
-#if 0
-
-    double m_x[1000];
-    double m_y[1000];
-    m_barHist = new QwtPlotHistogram();
-
-     QwtPlotMarker m_markers[10];
-
-
-
-    // ajn
-    m_barHistData.clear();
-    m_barHist->detach();
-    m_barHist->setData(NULL);
-    m_barHist-> setStyle (QwtPlotHistogram :: Columns);
-
-    for(int i = 0; i < 10; i++)
-    {
-        QwtText txt;
-        QString lableText;
-
-        //QwtSymbol *sym=new QwtSymbol(QwtSymbol::Diamond,QBrush(Qt::red),QPen(Qt::red),QSize(50,50));
-        QwtPlotMarker *mark = new QwtPlotMarker;
-         //mark->setSymbol(sym);
-         lableText.sprintf("%d", i);
-         txt.setText(lableText);
-         mark->setLabel(txt);
-         mark->setValue((double)(i+0.5),(double)(i+0.5));//here you have to set the coordinate axis i.e. where the axis are meeting.
-         mark->attach(ui->qwtPlot_2);
-
-
-        lableText.sprintf("Hej hopp %d", i);
-        txt.setText(lableText);
-
-        txt.setFont( QFont( "Helvetica", 14, QFont::Bold) );
-        txt.setColor( QColor(Qt::black));
-        txt.setBackgroundBrush(QColor(Qt::white));
-
-
-        m_y[i] = (double) i;
-        m_markers[i].setLabel(txt);
-        m_markers[i].setValue((double)i, (double)i);
-        m_markers[i].attach(ui->qwtPlot_2);
-        //m_markers
-        QwtInterval interval(i, i + 1);
-        interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
-         double diff = (m_y[i]-m_y[i-1]);
-        m_barHistData.append (QwtIntervalSample(m_y[i], interval));
-        qDebug() << m_y[i-1] << m_y[i] << "diff" << diff;
-    }
-
-
-    ui->qwtPlot_2->enableAxis(QwtPlot::xBottom, false);
-    ui->qwtPlot_2->enableAxis(QwtPlot::yLeft, false);
-    m_barHist->setBrush(Qt::blue);
-    m_barHist->setPen(QPen(Qt::black));
-    m_barHist->setSamples(m_barHistData);
-    m_barHist->attach(ui->qwtPlot_2);
-    ui->qwtPlot_2->replot();
-#endif
-
 }
+
+
+
 
 
 //txt.setFont( QFont( "Helvetica", 14, QFont::Bold) );
 //txt.setColor( QColor(Qt::black));
 //txt.setBackgroundBrush(QColor(Qt::white));
 
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void subAnalysisDisplayGraphData::subAnalysisClearAllGraphs(QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
 
+    QwtText txt;
+    QString lableText = " ";
+
+    txt.setText(lableText);
+
+    for(int i = 0; i < NOF_QWT_PLOTS; i++)
+    {
+        m_barHistData[i].clear();
+        m_barHist[i]->detach();
+        m_barHist[i]->setData(NULL);
+
+        for(int j = 0; j < MAX_NOF_QWT_MARKERS_IN_EACH_PLOT; j++)
+        {
+            m_mark[i][j]->setLabel(txt);
+            m_mark[i][j]->detach();
+        }
+
+        qwtPlot[i]->replot();
+    }
+
+}
+
+/******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
 void subAnalysisDisplayGraphData::plotBarGraph(int graphIndex,
                                                int nofArrData,
                                                SubAnalysDataST *subAnalysDataArr,

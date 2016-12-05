@@ -179,7 +179,7 @@ void StockAnalysisTab::initSubAnalysisPlots(void)
 
     // Hide axises
     m_qwtPlot[0] = ui->qwtPlot_0;
-    m_qwtPlot[0]->enableAxis(QwtPlot::xBottom, true);
+    m_qwtPlot[0]->enableAxis(QwtPlot::xBottom, false);
     m_qwtPlot[0]->enableAxis(QwtPlot::yLeft, false);
    // m_qwtPlot[0]->hide();
 

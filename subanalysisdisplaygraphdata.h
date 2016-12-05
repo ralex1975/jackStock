@@ -17,6 +17,29 @@ class subAnalysisDisplayGraphData
     QVector <QwtIntervalSample> m_barHistData[NOF_QWT_PLOTS];
 
     void plotBarGraph(int graphIndex, int nofArrData, SubAnalysDataST *coverageRatioArr, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisCalcRation(SubAnalysDataST *numeratorArr,   // Top of ratio
+                               int nofNumeratorArrData,
+                               SubAnalysDataST *denominatorArr, // Bottom of ratio
+                               int nofDenominatorData,
+                               SubAnalysDataST *resultArr,
+                               int &nofResultArrData);
+
+    void subAnalysisOneArrCalcRationPrevCurrSlot(SubAnalysDataST *inputArr,
+                                                 int nofInputArrData,
+                                                 SubAnalysDataST *resultArr,
+                                                 int &nofResultArrData);
+
+    void subAnalysisGetCompanyType(HtmlStockAnalysPageDataST data, int &companyType);
+    void subAnalysisPlotGraphicDataIndustrialComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisPlotGraphicDataTradingComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisPlotGraphicDataUtilitisComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisPlotGraphicDataRealEstateComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisPlotGraphicDataBankComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisClearAllGraphs(QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+
+
+
+
 
 
 
