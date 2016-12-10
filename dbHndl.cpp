@@ -325,6 +325,74 @@ bool CDbHndl::createTable(void)
         qry.finish();
 
 
+
+        // -2
+        // Date
+                //-----------------------------------------------------------------------
+                // TblDateOperatingCashFlowSubAnalysis (Operativt Kassaflöde)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateOperatingCashFlowSubAnalysis "
+                            " (DateOperatingCashFlowId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            " DateOperatingCashFlow DATE, "
+                            " MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateOperatingCashFlowSubAnalysis"), QString::fromUtf8("Fail create TblDateEquitySubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+        // Data
+                //-----------------------------------------------------------------------
+                // TblDataOperatingCashFlowSubAnalysis (Operativt Kassaflöde)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataOperatingCashFlowSubAnalysis "
+                            " (DataOperatingCashFlowId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            " DateOperatingCashFlowId INTEGER, "
+                            " DataOperatingCashFlow VARCHAR(255), "
+                            " MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDataOperatingCashFlowSubAnalysis"), QString::fromUtf8("Fail create TblOperatingCashFlowSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+
+
+
         // -1
         // Date
                 //-----------------------------------------------------------------------
@@ -379,7 +447,7 @@ bool CDbHndl::createTable(void)
                     qDebug() << qry.lastError();
                     if(m_disableMsgBoxes == false)
                     {
-                        QMessageBox::critical(NULL, QString::fromUtf8("TblDataEquitySubAnalysis"), QString::fromUtf8("Fail create TblDataEquitySubAnalysis"));
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDataCapexSubAnalysis"), QString::fromUtf8("Fail create TblDataCapexSubAnalysis"));
                     }
                     closeDb();
                     m_mutex.unlock();

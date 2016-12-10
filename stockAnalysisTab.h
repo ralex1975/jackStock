@@ -61,6 +61,10 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_cashFlowCapexArr[MAX_NOF_CASH_FLOW_CAPEX];
     int                   m_nofCashFlowCapexData;
 
+    SubAnalysDataST       m_operatingCashFlowArr[MAX_NOF_CASH_FLOW_CAPEX];
+    int                   m_nofOperatingCashFlowData;
+
+
 
 
 
@@ -148,6 +152,8 @@ private slots:
     void on_pushButtonSaveEquity_clicked();
 
     void on_pushButtonSaveCashFlowCapex_clicked();
+
+    void on_pushButtonSaveOperatingCashFlow_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

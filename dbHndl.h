@@ -196,6 +196,10 @@ struct SubAnalysDataST
 #define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CASH_FLOW_CAPEX                     MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_OPERATING_CASH_FLOW                 MAX_NOF_DIVIDEND_ARR_DATA
+
+
+
 
 
 enum SubAnalyseDataTypeET
@@ -209,12 +213,11 @@ enum SubAnalyseDataTypeET
     SAD_COVERAGE_RATIO,             // Räntetäckningsgrad
     SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
     SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation
-    SAD_EQUITY,                // Eget kapital
-    SAD_CASH_FLOW_CAPEX             // Kassaflöde Capex Investeringar/kapitalutgifter
+    SAD_EQUITY,                     // Eget kapital
+    SAD_CASH_FLOW_CAPEX,            // Kassaflöde Capex Investeringar/kapitalutgifter
+    SAD_OPERATING_CASH_FLOW         // Operativt kassaföde
 
 };
-
-
 
 
 
@@ -693,6 +696,43 @@ public:
 
 
     // start dbSubHndl.cpp
+
+    // OperatingCashFlow
+    bool subAnalysisOperatingCashFlowDateExists(QString date,
+                                         int mainAnalysisId,
+                                         int &OperatingCashFlowDateId);
+
+
+
+    bool insertSubAnalysisOperatingCashFlowDate(QString date,
+                           int mainAnalysisId,
+                           int &dateOperatingCashFlowId,
+                           bool dbIsHandledExternly = false);
+
+
+
+    bool getSubAnalysisOperatingCashFlowDataId(int mainAnalysisId,
+                      int operatingCashFlowDateId,
+                      int &operatingCashFlowDataId,
+                      bool dbIsHandledExternly = false);
+
+
+    bool insertSubAnalysisOperatingCashFlowData(int operatingCashFlowDateId,
+                              int mainAnalysisId,
+                              int inputOperatingCashFlowDataId,
+                              bool operatingCashFlowIdIsValid,
+                              QString dataOperatingCashFlow,
+                              int &operatingCashFlowDataId,
+                              bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisOperatingCashFlowData(QString stockName,
+                               QString stockSymbol,
+                               SubAnalysDataST *dataArr,
+                               int &nofArrData,
+                               bool dbIsHandledExternly = false);
+
+
 
     // CashFlowCapex
     bool subAnalysisCashFlowCapexDateExists(QString date,

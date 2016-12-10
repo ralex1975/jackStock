@@ -211,6 +211,9 @@ void StockAnalysisTab::initSubAnalysTables(void)
     initSubAnalyseTableWidget(ui->tableWidgetCashFlowCapex, dateHeader, dataHeader);
 
 
+    // CashFlowCapex ((operativt kassaflöde)
+    dataHeader = QString::fromUtf8("Operativt kflöde");
+    initSubAnalyseTableWidget(ui->tableWidgetOperatingCashFlow, dateHeader, dataHeader);
 
 }
 
@@ -525,6 +528,12 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_nofCashFlowCapexData);
 
 
+    updateTableWithSubAnalysData(ui->tableWidgetOperatingCashFlow,
+                                 SAD_OPERATING_CASH_FLOW,
+                                 m_operatingCashFlowArr,
+                                 m_nofOperatingCashFlowData);
+
+
 
 
     int mainAnalysisId;
@@ -668,6 +677,15 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
          if(nofArrData > MAX_NOF_CASH_FLOW_CAPEX)
          {
              QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 9: Too many array data"));
+         }
+         break;
+
+
+    case SAD_OPERATING_CASH_FLOW:
+         res = db.getSubAnalysisOperatingCashFlowData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+         if(nofArrData > MAX_NOF_OPERATING_CASH_FLOW)
+         {
+             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 10: Too many array data"));
          }
          break;
 
@@ -2622,3 +2640,119 @@ void StockAnalysisTab::on_pushButtonSaveCashFlowCapex_clicked()
     }
 
 }
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveEquity_clicked()
+ *
+ * Description: This function saves Operating Cash Flow data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveOperatingCashFlow_clicked()
+{
+
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName, m_stockSymbol, mainAnalysisId);
+
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName, m_stockSymbol, mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetOperatingCashFlow->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetOperatingCashFlow->item(row, 0))
+        {
+            date = ui->tableWidgetOperatingCashFlow->item(row, 0)->text();
+            data = ui->tableWidgetOperatingCashFlow->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("OperatingCashFlow is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+
+        res = db.subAnalysisOperatingCashFlowDateExists(date, mainAnalysisId, dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisOperatingCashFlowDate(date, mainAnalysisId, dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisOperatingCashFlowDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+           res = db.insertSubAnalysisOperatingCashFlowData(dateId, mainAnalysisId, inputDataId, dataIdIsValid,
+                                                       data, dataId);
+        }
+    }
+}
+
+
+
