@@ -195,7 +195,7 @@ struct SubAnalysDataST
 #define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
-
+#define MAX_NOF_CASH_FLOW_CAPEX                     MAX_NOF_DIVIDEND_ARR_DATA
 
 
 enum SubAnalyseDataTypeET
@@ -209,7 +209,8 @@ enum SubAnalyseDataTypeET
     SAD_COVERAGE_RATIO,             // Räntetäckningsgrad
     SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
     SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation
-    SAD_CORE_EQUITY                 // Eget kapital
+    SAD_EQUITY,                // Eget kapital
+    SAD_CASH_FLOW_CAPEX             // Kassaflöde Capex Investeringar/kapitalutgifter
 
 };
 
@@ -692,6 +693,48 @@ public:
 
 
     // start dbSubHndl.cpp
+
+    // CashFlowCapex
+    bool subAnalysisCashFlowCapexDateExists(QString date,
+                                         int mainAnalysisId,
+                                         int &earningsDateId);
+
+
+
+    bool insertSubAnalysisCashFlowCapexDate(QString date,
+                           int mainAnalysisId,
+                           int &dateEarningsId,
+                           bool dbIsHandledExternly = false);
+
+
+
+    bool getSubAnalysisCashFlowCapexDataId(int mainAnalysisId,
+                      int cashFlowCapexDateId,
+                      int &cashFlowCapexDataId,
+                      bool dbIsHandledExternly = false);
+
+
+
+
+    bool insertSubAnalysisCashFlowCapexData(int cashFlowCapexDateId,
+                              int mainAnalysisId,
+                              int inputCashFlowCapexDataId,
+                              bool cashFlowCapexDataIdIsValid,
+                              QString dataCashFlowCapex,
+                              int &cashFlowCapexDataId,
+                              bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisCashFlowCapexData(QString stockName,
+                               QString stockSymbol,
+                               SubAnalysDataST *dataArr,
+                               int &nofArrData,
+                               bool dbIsHandledExternly = false);
+
+
+
+
+    // Copany type
     bool subAnalysisCompanyTypeExists(int companyType,
                                       int mainAnalysisId,
                                       int &companyTypeId);

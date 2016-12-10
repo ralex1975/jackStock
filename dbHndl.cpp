@@ -325,6 +325,73 @@ bool CDbHndl::createTable(void)
         qry.finish();
 
 
+        // -1
+        // Date
+                //-----------------------------------------------------------------------
+                // TblDateCashFlowCapexSubAnalysis (Kassaflöde Capex Investeringar/kapitalutgifter)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateCashFlowCapexSubAnalysis "
+                            " (DateCashFlowCapexId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            " DateCashFlowCapex DATE, "
+                            " MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateCashFlowCapexSubAnalysis"), QString::fromUtf8("Fail create TblDateEquitySubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+        // Data
+                //-----------------------------------------------------------------------
+                // TblDataCashFlowCapexSubAnalysis (Kassaflöde Capex Investeringar/kapitalutgifter)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataCashFlowCapexSubAnalysis "
+                            " (DataCashFlowCapexId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            " DateCashFlowCapexId INTEGER, "
+                            " DataCashFlowCapex VARCHAR(255), "
+                            " MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDataEquitySubAnalysis"), QString::fromUtf8("Fail create TblDataEquitySubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+
+
+        //================
 
         // 0
         // Date

@@ -66,82 +66,6 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     ui->webView_2->load(QUrl("qrc:/database/AnalysDoc/AnalysDoc/Investeringskriterier.html"));
 
     initSubAnalysisPlots();
-
-#if 0
-        HtmlStockAnalysPageDataST data;
-        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
-
-        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
-
-        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
-
-        m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
-
-        //m_saDisply.subAnalysisShowDataInGraphs(data, m_qwtPlot);
-#endif
-
-
-
-#if 0
-    double m_x[1000];
-    double m_y[1000];
-    m_barHist = new QwtPlotHistogram();
-
-     QwtPlotMarker m_markers[10];
-
-
-
-    // ajn
-    m_barHistData.clear();
-    m_barHist->detach();
-    m_barHist->setData(NULL);
-    m_barHist-> setStyle (QwtPlotHistogram :: Columns);
-
-    for(int i = 0; i < 10; i++)
-    {
-        QwtText txt;
-        QString lableText;
-
-        //QwtSymbol *sym=new QwtSymbol(QwtSymbol::Diamond,QBrush(Qt::red),QPen(Qt::red),QSize(50,50));
-        QwtPlotMarker *mark = new QwtPlotMarker;
-         //mark->setSymbol(sym);
-         lableText.sprintf("%d", i);
-         txt.setText(lableText);
-         mark->setLabel(txt);
-         mark->setValue((double)(i+0.5),(double)(i+0.5));//here you have to set the coordinate axis i.e. where the axis are meeting.
-         mark->attach(ui->qwtPlot_2);
-
-
-        lableText.sprintf("Hej hopp %d", i);
-        txt.setText(lableText);
-
-        txt.setFont( QFont( "Helvetica", 14, QFont::Bold) );
-        txt.setColor( QColor(Qt::black));
-        txt.setBackgroundBrush(QColor(Qt::white));
-
-
-        m_y[i] = (double) i;
-        m_markers[i].setLabel(txt);
-        m_markers[i].setValue((double)i, (double)i);
-        m_markers[i].attach(ui->qwtPlot_2);
-        //m_markers
-        QwtInterval interval(i, i + 1);
-        interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
-         double diff = (m_y[i]-m_y[i-1]);
-        m_barHistData.append (QwtIntervalSample(m_y[i], interval));
-        qDebug() << m_y[i-1] << m_y[i] << "diff" << diff;
-    }
-
-
-    ui->qwtPlot_2->enableAxis(QwtPlot::xBottom, false);
-    ui->qwtPlot_2->enableAxis(QwtPlot::yLeft, false);
-    m_barHist->setBrush(Qt::blue);
-    m_barHist->setPen(QPen(Qt::black));
-    m_barHist->setSamples(m_barHistData);
-    m_barHist->attach(ui->qwtPlot_2);
-    ui->qwtPlot_2->replot();
-#endif
-
 }
 
 
@@ -281,6 +205,12 @@ void StockAnalysisTab::initSubAnalysTables(void)
     // CoreCapitalRatio (Kärnprimärkapitalrelation)
     dataHeader = QString::fromUtf8("Eget kapital");
     initSubAnalyseTableWidget(ui->tableWidgetEquity, dateHeader, dataHeader);
+
+    // CashFlowCapex ((Kassaflöde Capex Investeringar/kapitalutgifter))
+    dataHeader = QString::fromUtf8("    Capex    ");
+    initSubAnalyseTableWidget(ui->tableWidgetCashFlowCapex, dateHeader, dataHeader);
+
+
 
 }
 
@@ -585,10 +515,14 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_nofCoreCapitalRatioData);
 
     updateTableWithSubAnalysData(ui->tableWidgetEquity,
-                                 SAD_CORE_EQUITY,
+                                 SAD_EQUITY,
                                  m_equityArr,
                                  m_nofEquityData);
 
+    updateTableWithSubAnalysData(ui->tableWidgetCashFlowCapex,
+                                 SAD_CASH_FLOW_CAPEX,
+                                 m_cashFlowCapexArr,
+                                 m_nofCashFlowCapexData);
 
 
 
@@ -721,13 +655,21 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
         }
         break;
 
-   case SAD_CORE_EQUITY:
+   case SAD_EQUITY:
         res = db.getSubAnalysisEquityData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
-        if(nofArrData > MAX_NOF_CORE_CAPITAL_RATIO)
+        if(nofArrData > MAX_NOF_EQUITY)
         {
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 8: Too many array data"));
         }
         break;
+
+    case SAD_CASH_FLOW_CAPEX:
+         res = db.getSubAnalysisCashFlowCapexData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+         if(nofArrData > MAX_NOF_CASH_FLOW_CAPEX)
+         {
+             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 9: Too many array data"));
+         }
+         break;
 
     default:
         QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error: invalid subAnalyseType"));
@@ -2566,4 +2508,117 @@ void StockAnalysisTab::on_pushButtonSaveEquity_clicked()
                                                        data, dataId);
         }
     }
+}
+
+
+/******************************************************************
+ *
+ * Function:    on_pushButtonSaveEquity_clicked()
+ *
+ * Description: This function saves CashFlowCapex data to db
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::on_pushButtonSaveCashFlowCapex_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName, m_stockSymbol, mainAnalysisId);
+
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName, m_stockSymbol, mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetCashFlowCapex->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetCashFlowCapex->item(row, 0))
+        {
+            date = ui->tableWidgetCashFlowCapex->item(row, 0)->text();
+            data = ui->tableWidgetCashFlowCapex->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("CashFlowCapex is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+
+        res = db.subAnalysisCashFlowCapexDateExists(date, mainAnalysisId, dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisCashFlowCapexDate(date, mainAnalysisId, dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisCashFlowCapexDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+           res = db.insertSubAnalysisCashFlowCapexData(dateId, mainAnalysisId, inputDataId, dataIdIsValid,
+                                                       data, dataId);
+        }
+    }
+
 }

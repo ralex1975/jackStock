@@ -55,9 +55,13 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_coreCapitalRatioArr[MAX_NOF_CORE_CAPITAL_RATIO];
     int                   m_nofCoreCapitalRatioData;
 
-
     SubAnalysDataST       m_equityArr[MAX_NOF_EQUITY];
     int                   m_nofEquityData;
+
+    SubAnalysDataST       m_cashFlowCapexArr[MAX_NOF_CASH_FLOW_CAPEX];
+    int                   m_nofCashFlowCapexData;
+
+
 
 
 
@@ -142,6 +146,8 @@ private slots:
     void on_pushButtonSaveCoreCapitalRatio_clicked();
 
     void on_pushButtonSaveEquity_clicked();
+
+    void on_pushButtonSaveCashFlowCapex_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

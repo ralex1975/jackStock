@@ -18,7 +18,7 @@
     <rect>
      <x>290</x>
      <y>10</y>
-     <width>1051</width>
+     <width>1041</width>
      <height>648</height>
     </rect>
    </property>
@@ -1318,6 +1318,60 @@
      </property>
      <property name="text">
       <string>Räntetäckningsgraden</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>Analysdata 3</string>
+    </attribute>
+    <widget class="QTableWidget" name="tableWidgetCashFlowCapex">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>110</y>
+       <width>161</width>
+       <height>441</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>80</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Capex</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonSaveCashFlowCapex">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>80</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Spara</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>271</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Investment in property, plant and equipment</string>
      </property>
     </widget>
    </widget>
