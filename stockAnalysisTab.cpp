@@ -49,6 +49,9 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StockAnalysisTab)
 {
+
+    QString path;
+
     ui->setupUi(this);
     m_qwtcashFlowPlotData.nofStocksToPlot = 0;
 
@@ -65,6 +68,19 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     // Show html file that describes investment strategy
     ui->webView_2->load(QUrl("qrc:/database/AnalysDoc/AnalysDoc/Investeringskriterier.html"));
+
+    path = QString::fromUtf8("file:///");
+    path += qApp->applicationDirPath();
+    path += QString::fromUtf8("/");
+    path += QString::fromUtf8("/database/AnalysDoc/AnalysisStockhomLargeMidCap.html");
+
+    qDebug() << path;
+
+    //qDebug() << "App path : " << qApp->applicationDirPath();
+
+//    ui->webViewAllAnalyzedComp->load(QUrl("file:///home/ajn/Documents/OldPC/swProj/MyQtProj/JackStockProj/JackStock/database/AnalysDoc/Investeringskriterier.html"));
+    ui->webViewAllAnalyzedComp->load(QUrl(path));
+
 
     initSubAnalysisPlots();
 }
@@ -536,6 +552,8 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_nofOperatingCashFlowData);
 
 
+
+    m_saDisply.subAnalysisClearAllGraphs(m_qwtPlot);
 
     plotCashflowData();
 

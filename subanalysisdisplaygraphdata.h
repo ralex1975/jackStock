@@ -35,7 +35,7 @@ class subAnalysisDisplayGraphData
     void subAnalysisPlotGraphicDataUtilitisComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
     void subAnalysisPlotGraphicDataRealEstateComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
     void subAnalysisPlotGraphicDataBankComp(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
-    void subAnalysisClearAllGraphs(QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+
 
 
 
@@ -47,6 +47,7 @@ public:
     subAnalysisDisplayGraphData();
     ~subAnalysisDisplayGraphData();
     void subAnalysisShowDataInGraphs(HtmlStockAnalysPageDataST data, QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+    void subAnalysisClearAllGraphs(QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
 };
 
 #endif // SUBANALYSISDISPLAYGRAPHDATA_H
