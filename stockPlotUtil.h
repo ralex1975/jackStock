@@ -82,7 +82,7 @@ public:
     void updateMinMaxData(CStockPlotUtil::MinMaxAxisValues_ST &oldAxis, CStockPlotUtil::MinMaxAxisValues_ST &newAxis);
     //bool removePlotFromStock(PlotData_ST &allPlotData, QString stockName, int &removedIndex);
     bool findStock(PlotData_ST &allPlotData, QString stockName);
-    bool emtypPlotData(PlotData_ST &allPlotData);
+    bool emtypPlotData(CStockPlotUtil::PlotData_ST &allPlotData);
 
 
 };

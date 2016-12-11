@@ -1,11 +1,11 @@
 Stockname|Risk|Return|startDate|endDate|
 |||2015-12-10|2016-12-10|
-Bilia A|11.4|5.2|||
-Fortum Oyj|9.8|6.5|||
-Holmen AB|9.9|7.2|||
+Bilia A|11.3|5.3|||
+Fortum Oyj|9.6|6.6|||
+Holmen AB|10.0|7.6|||
 ICA Gruppen |5.4|-6.8|||
-New Wave B|19.3|13.7|||
-SCA Sv Cellulosa|4.5|6.9|||
-Seadrill|25.3|-48.9|||
-Swedbank AB|9.1|4.6|||
-Tele2 AB|4.9|-7.9|||
+New Wave B|19.5|14.5|||
+SCA Sv Cellulosa|4.5|6.8|||
+Seadrill|25.3|-48.8|||
+Swedbank AB|9.5|5.2|||
+Tele2 AB|4.8|-8.0|||

@@ -50,6 +50,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     ui(new Ui::StockAnalysisTab)
 {
     ui->setupUi(this);
+    m_qwtcashFlowPlotData.nofStocksToPlot = 0;
 
     m_stockNameIsInit = false;
 
@@ -143,8 +144,9 @@ void StockAnalysisTab::initSubAnalysisPlots(void)
     m_qwtPlot[9]->enableAxis(QwtPlot::xBottom, false);
     m_qwtPlot[9]->enableAxis(QwtPlot::yLeft, false);
 
-
-
+    // Is handle in difftent way ordinary graph
+    ui->qwtCashFlowPlot->enableAxis(QwtPlot::xBottom, false);
+    ui->qwtCashFlowPlot->enableAxis(QwtPlot::yLeft, false);
 }
 
 
@@ -533,6 +535,9 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_operatingCashFlowArr,
                                  m_nofOperatingCashFlowData);
 
+
+
+    plotCashflowData();
 
 
 
@@ -2756,3 +2761,154 @@ void StockAnalysisTab::on_pushButtonSaveOperatingCashFlow_clicked()
 
 
 
+
+
+
+/******************************************************************
+ *
+ * Function:    plotCashflowData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::plotCashflowData(void)
+{
+    int i;
+    CDbHndl db;
+    std::vector<double> data_y;
+    std::vector<double> data_x;
+    double minX;
+    double maxX;
+    double minY;
+    double maxY;
+
+
+    if((m_nofOperatingCashFlowData < 2) && (m_nofOperatingCashFlowData != m_nofCashFlowCapexData))
+    {
+        return;
+    }
+
+
+
+    minX = m_operatingCashFlowArr[0].date.toDouble();
+    maxX = m_operatingCashFlowArr[0].date.toDouble();
+    minY = m_operatingCashFlowArr[0].data.toDouble();
+    maxY = m_operatingCashFlowArr[0].data.toDouble();
+
+
+    for(i = 0; i < m_nofOperatingCashFlowData; i++)
+    {
+
+        data_x.push_back(m_operatingCashFlowArr[i].date.toDouble());
+        data_y.push_back(m_operatingCashFlowArr[i].data.toDouble());
+
+        // Check x
+        if(minX > m_operatingCashFlowArr[i].date.toDouble())
+        {
+            minX = m_operatingCashFlowArr[i].date.toDouble();
+        }
+
+        if(maxX < m_operatingCashFlowArr[i].date.toDouble())
+        {
+            maxX = m_operatingCashFlowArr[i].date.toDouble();
+        }
+
+        // Check y
+        if(minY > m_operatingCashFlowArr[i].data.toDouble())
+        {
+            minY = m_operatingCashFlowArr[i].data.toDouble();
+        }
+
+        if(maxY < m_operatingCashFlowArr[i].data.toDouble())
+        {
+            maxY = m_operatingCashFlowArr[i].data.toDouble();
+        }
+    }
+
+    // ui->qwtCashFlowPlot->setAxisScale(QwtPlot::xBottom, minX, maxX);
+    //ui->qwtCashFlowPlot->setAxisScale(QwtPlot::yLeft, minY, maxY); // Max av % satser
+
+    m_qwtcashFlowPlotData.stock[0].data.detach();
+    m_qwtcashFlowPlotData.stock[0].data.setData(NULL);
+
+
+    m_qwtcashFlowPlotData.stock[0].data.setSamples(data_x.data(),data_y.data(),data_y.size());
+    m_qwtcashFlowPlotData.stock[0].data.setPen(QPen(Qt::blue, 2));
+    //m_qwtcashFlowPlotData.stock[0].data.setStyle(QwtPlotCurve::Sticks); //setStyle(QwtPlotCurve::Steps);
+    m_qwtcashFlowPlotData.stock[0].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,
+                                                                 Qt::blue,
+                                                                 QPen( Qt::blue ),
+                                                                  QSize( 7, 7 ) ) );
+
+    // m_qwtcashFlowPlotData.stock[0].data.attach(ui->qwtCashFlowPlot);
+    // ui->qwtCashFlowPlot->replot();
+
+    data_x.clear();
+    data_y.clear();
+
+
+
+    //minX = m_cashFlowCapexArr[0].date.toDouble();
+    //maxX = m_cashFlowCapexArr[0].date.toDouble();
+    //minY = m_cashFlowCapexArr[0].data.toDouble();
+    //maxY = m_cashFlowCapexArr[0].data.toDouble();
+
+
+    for(i = 0; i < m_nofCashFlowCapexData; i++)
+    {
+
+        data_x.push_back(m_cashFlowCapexArr[i].date.toDouble());
+        data_y.push_back(-m_cashFlowCapexArr[i].data.toDouble());
+
+        // Check x
+        if(minX > m_cashFlowCapexArr[i].date.toDouble())
+        {
+            minX = m_cashFlowCapexArr[i].date.toDouble();
+        }
+
+        if(maxX < m_cashFlowCapexArr[i].date.toDouble())
+        {
+            maxX = m_cashFlowCapexArr[i].date.toDouble();
+        }
+
+        // Check y
+        if(minY > -m_cashFlowCapexArr[i].data.toDouble())
+        {
+            minY = -m_cashFlowCapexArr[i].data.toDouble();
+        }
+
+        if(maxY < -m_cashFlowCapexArr[i].data.toDouble())
+        {
+            maxY = -m_cashFlowCapexArr[i].data.toDouble();
+        }
+    }
+
+    ui->qwtCashFlowPlot->setAxisScale(QwtPlot::xBottom, minX, maxX);
+    ui->qwtCashFlowPlot->setAxisScale(QwtPlot::yLeft, minY, maxY); // Max av % satser
+
+    m_qwtcashFlowPlotData.stock[1].data.detach();
+    m_qwtcashFlowPlotData.stock[1].data.setData(NULL);
+
+
+    m_qwtcashFlowPlotData.stock[1].data.setSamples(data_x.data(),data_y.data(),data_y.size());
+    m_qwtcashFlowPlotData.stock[1].data.setPen(QPen(Qt::red, 2));
+    //m_qwtcashFlowPlotData.stock[1].data.setStyle(QwtPlotCurve::Sticks);
+    m_qwtcashFlowPlotData.stock[1].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,
+                                                                 Qt::red,
+                                                                 QPen( Qt::red ),
+                                                                  QSize( 7, 7 ) ) );
+
+    // 1:st curve
+    m_qwtcashFlowPlotData.stock[0].data.attach(ui->qwtCashFlowPlot);
+    ui->qwtCashFlowPlot->replot();
+
+    // 2:st curve
+    m_qwtcashFlowPlotData.stock[1].data.attach(ui->qwtCashFlowPlot);
+    ui->qwtCashFlowPlot->replot();
+
+    data_x.clear();
+    data_y.clear();
+
+}

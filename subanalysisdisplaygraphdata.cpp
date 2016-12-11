@@ -149,7 +149,6 @@ subAnalysisOneArrCalcRationPrevCurrSlot(SubAnalysDataST *inputArr,
             resultArr[i].data.sprintf("%.2f", inputArr[i-1].data.toDouble() / denominator);
         }
     }
-
 }
 
 

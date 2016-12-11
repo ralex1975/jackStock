@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1418,101 +1418,267 @@
     <widget class="QwtPlot" name="qwtPlot_1">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>20</y>
-       <width>201</width>
-       <height>91</height>
+       <x>530</x>
+       <y>10</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_3">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>140</y>
-       <width>201</width>
-       <height>91</height>
+       <x>270</x>
+       <y>150</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_5">
      <property name="geometry">
       <rect>
-       <x>830</x>
-       <y>140</y>
-       <width>201</width>
-       <height>91</height>
+       <x>790</x>
+       <y>150</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_0">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>20</y>
-       <width>201</width>
-       <height>91</height>
+       <x>270</x>
+       <y>10</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_2">
      <property name="geometry">
       <rect>
-       <x>830</x>
-       <y>20</y>
-       <width>201</width>
-       <height>91</height>
+       <x>790</x>
+       <y>10</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_4">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>140</y>
-       <width>201</width>
-       <height>91</height>
+       <x>530</x>
+       <y>150</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_6">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>260</y>
-       <width>201</width>
-       <height>91</height>
+       <x>270</x>
+       <y>290</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_7">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>260</y>
-       <width>201</width>
-       <height>91</height>
+       <x>530</x>
+       <y>290</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_8">
      <property name="geometry">
       <rect>
-       <x>830</x>
-       <y>260</y>
-       <width>201</width>
-       <height>91</height>
+       <x>790</x>
+       <y>290</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
     </widget>
     <widget class="QwtPlot" name="qwtPlot_9">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>380</y>
-       <width>201</width>
-       <height>91</height>
+       <x>270</x>
+       <y>430</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QwtPlot" name="qwtCashFlowPlot">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>241</width>
+       <height>121</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_27">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>191</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Operating cash flow = blå &gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_28">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>181</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Capex cash flow = röd</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_29">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>130</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_30">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>270</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_31">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>410</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_42">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>550</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_43">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>130</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_44">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>270</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_45">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>410</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_46">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>130</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_47">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>270</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_48">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>410</y>
+       <width>59</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
      </property>
     </widget>
    </widget>

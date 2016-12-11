@@ -5,6 +5,7 @@
 #include "inc/guiUtil/guiFinanceCtrls.h"
 #include "dbHndl.h"
 #include "subanalysisdisplaygraphdata.h"
+#include "stockPlotUtil.h"
 
 namespace Ui {
 class StockAnalysisTab;
@@ -64,11 +65,10 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_operatingCashFlowArr[MAX_NOF_CASH_FLOW_CAPEX];
     int                   m_nofOperatingCashFlowData;
 
+    // We using stock plot functions here even when data is cash flow
+    CStockPlotUtil::PlotData_ST m_qwtcashFlowPlotData;
 
-
-
-
-
+    void plotCashflowData(void);
 
 
     //QString m_html;

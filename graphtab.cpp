@@ -60,6 +60,10 @@ GraphTab::GraphTab(QWidget *parent) :
     qDebug("Close db 104b %s, %d", __FILE__, __LINE__);
     // db.closeDb();
 }
+
+
+
+
 GraphTab::~GraphTab()
 {
     delete ui;
