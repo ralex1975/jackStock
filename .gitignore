@@ -1,10 +1,11 @@
 moc_*.cpp
 ui_*.h
 .git
-.hg
+.hg/*.*
 database/*.*
 jackStock.db
 jackStock_last.db
+*.d
 *.db
 *.mp4
 *.slo
