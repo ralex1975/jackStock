@@ -1,5 +1,0 @@
-ajn@ajn-K55A:~/Documents/swProj/MyQtProj/JackStockProj/JackStock/Help/test$ qcollectiongenerator test.qhcp -o test.qhc
-
-
-ajn@ajn-K55A:~/Documents/swProj/MyQtProj/JackStockProj/JackStock/Help/test$ assistant -collectionFile test.qhc
-
