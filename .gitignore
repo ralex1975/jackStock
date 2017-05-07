@@ -3,6 +3,7 @@ ui_*.h
 database/*.*
 jackStock.db
 jackStock_last.db
+*.db
 *.mp4
 *.slo
 *.lo
