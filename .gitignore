@@ -2,6 +2,8 @@ moc_*.cpp
 ui_*.h
 database/*.*
 jackStock.db
+jackStock_last.db
+*.mp4
 *.slo
 *.lo
 *.o
