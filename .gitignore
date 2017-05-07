@@ -1,5 +1,7 @@
 moc_*.cpp
 ui_*.h
+.git
+.hg
 database/*.*
 jackStock.db
 jackStock_last.db
