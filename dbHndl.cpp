@@ -296,6 +296,77 @@ bool CDbHndl::createTable(void)
 
 
         //-----------------------------------------------------------------------
+        // TblDateIntrinsicValueSubAnalysis_1
+        //-----------------------------------------------------------------------
+        //Date
+                //-----------------------------------------------------------------------
+                // TblDateIntrinsicValueSubAnalysis_1 (Vinst)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateIntrinsicValueSubAnalysis_1 "
+                            " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  Date DATE, "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenue"), QString::fromUtf8("Fail create TblDateTotEarningsSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+        //Data
+                //-----------------------------------------------------------------------
+                // TblDataIntrinsicValueSubAnalysis_1
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataIntrinsicValueSubAnalysis_1 "
+                            " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  DateId INTEGER, "
+                            "  IntrinsicValue VARCHAR(255), "
+                            "  TenYearFedNodeInterestRate VARCHAR(255), "
+                            "  BackTrackYears VARCHAR(255), "
+                            "  CalcAnnualInterestRate VARCHAR(255), "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenue"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+
+
+        //-----------------------------------------------------------------------
         // TblSubAnalysisCompanyType
         //-----------------------------------------------------------------------
         tmp.sprintf("CREATE TABLE IF NOT EXISTS TblSubAnalysisCompanyType "
@@ -323,6 +394,331 @@ bool CDbHndl::createTable(void)
         }
 
         qry.finish();
+
+
+//================= Video help
+
+        //===================================================================
+        // TblExerciseTopDescp
+        //===================================================================
+        qry.prepare( "CREATE TABLE IF NOT EXISTS TblExerciseTopDescp "
+                     "(exerciseTopDescpId INTEGER UNIQUE PRIMARY KEY,"
+                     "exerciseTopDescp VARCHAR(255)"
+                     ")");
+
+        // qDebug() << qry;
+
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+        //===================================================================
+        // TblExerciseSubDescp
+        //===================================================================
+        qry.prepare( "CREATE TABLE IF NOT EXISTS TblExerciseSubDescp "
+                     "(exerciseSubDescpId INTEGER UNIQUE PRIMARY KEY,"
+                     "exerciseSubDescp VARCHAR(255), "
+                     "exerciseTopDescpId INTEGER"
+                     ")");
+
+        // qDebug() << qry;
+
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+        //===================================================================
+        // TblExerciseData
+        //===================================================================
+        qry.prepare( "CREATE TABLE IF NOT EXISTS TblNearlySameWords "
+                     "(nearlySameDataId INTEGER UNIQUE PRIMARY KEY, "
+                     "nearlySameWord1 VARCHAR(255), "
+                     "nearlySameWord2 VARCHAR(255) "
+                     ")");
+
+        // qDebug() << qry;
+
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+        //===================================================================
+        // TblExerciseData
+        //===================================================================
+            qry.prepare( "CREATE TABLE IF NOT EXISTS TblExerciseData "
+                     "(exerciseDataId INTEGER UNIQUE PRIMARY KEY, "
+                     "exerciseWord VARCHAR(255), "
+                     "exercisePronunciation VARCHAR(255), "
+                     "exerciseSoundPath VARCHAR(255), "
+                     "exerciseNearlySameWordIsValid INTEGER DEFAULT 0, "
+                     "exerciseNearlySameWordId INTEGER, "
+                     "exerciseTopDescpId INTEGER, "
+                     "exerciseSubDescpId INTEGER"
+                     ")");
+
+        // qDebug() << qry;
+
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("Database Error 3"), QString::fromUtf8("Fail create table"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+//=================  Stop video help
+
+// -5
+//Date
+        //-----------------------------------------------------------------------
+        // TblDateRevenueSubAnalysis (Vinst)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateRevenueSubAnalysis "
+                    " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  Date DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenue"), QString::fromUtf8("Fail create TblDateTotEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+//Data
+        //-----------------------------------------------------------------------
+        // TblDataRevenueSubAnalysis
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataRevenueSubAnalysis "
+                    " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateId INTEGER, "
+                    "  Data VARCHAR(255), "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenue"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+// -4
+//Date
+        //-----------------------------------------------------------------------
+        // TblDateTotEarningsSubAnalysis (Vinst)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotEarningsSubAnalysis "
+                    " (DateTotEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTotEarnings DATE, "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDateTotEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+//Data
+        //-----------------------------------------------------------------------
+        // TblDataTotEarningsSubAnalysis (Vinst)
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotEarningsSubAnalysis "
+                    " (DataTotEarningsId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "  DateTotEarningsId INTEGER, "
+                    "  DataTotEarnings VARCHAR(255), "
+                    "  MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateAnalysis"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
+
+
+// -3
+// Date
+        //-----------------------------------------------------------------------
+        // TblDateTotDividendsSubAnalysis (Total utdelning (ej per aktie))
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateTotDividendsSubAnalysis "
+                    " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " Date DATE, "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotDividendsSubAnalysis"), QString::fromUtf8("Fail create TblDateEquitySubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+// Data
+        //-----------------------------------------------------------------------
+        // TblDataTotDividendsSubAnalysis (Total utdelning (ej per aktie))
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataTotDividendsSubAnalysis "
+                    " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " DateId INTEGER, "
+                    " Data VARCHAR(255), "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotDividendsSubAnalysis"), QString::fromUtf8("Fail create TblOperatingCashFlowSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
 
 
 
@@ -458,10 +854,77 @@ bool CDbHndl::createTable(void)
 
 
 
+                //================
+
+                // 0
+                // Date
+                        //-----------------------------------------------------------------------
+                        // TblDateEquityPerShareSubAnalysis (Eget kapital)
+                        //-----------------------------------------------------------------------
+                        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateEquityPerShareSubAnalysis "
+                                    " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                    " Date DATE, "
+                                    " MainAnalysisId INTEGER);");
+
+                        qDebug() << tmp;
+
+
+                        qry.prepare(tmp);
+
+                        res = execSingleCmd(qry);
+
+                        if(res == false)
+                        {
+                            qDebug() << qry.lastError();
+                            if(m_disableMsgBoxes == false)
+                            {
+                                QMessageBox::critical(NULL, QString::fromUtf8("TblDateEquityPerShareSubAnalysis"), QString::fromUtf8("Fail create TblDateEquitySubAnalysis"));
+                            }
+                            closeDb();
+                            m_mutex.unlock();
+                            return false;
+                        }
+
+                        qry.finish();
+
+
+                // Data
+                        //-----------------------------------------------------------------------
+                        // TblDataEquityPerShareSubAnalysis (Eget kapital)
+                        //-----------------------------------------------------------------------
+                        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataEquityPerShareSubAnalysis "
+                                    " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                    " DateId INTEGER, "
+                                    " Data VARCHAR(255), "
+                                    " MainAnalysisId INTEGER);");
+
+                        qDebug() << tmp;
+
+
+                        qry.prepare(tmp);
+
+                        res = execSingleCmd(qry);
+
+                        if(res == false)
+                        {
+                            qDebug() << qry.lastError();
+                            if(m_disableMsgBoxes == false)
+                            {
+                                QMessageBox::critical(NULL, QString::fromUtf8("TblDataEquityPerShareSubAnalysis"), QString::fromUtf8("Fail create TblDataEquitySubAnalysis"));
+                            }
+                            closeDb();
+                            m_mutex.unlock();
+                            return false;
+                        }
+
+                        qry.finish();
+
+
+
 
         //================
 
-        // 0
+        // 0a
         // Date
                 //-----------------------------------------------------------------------
                 // TblDateEquitySubAnalysis (Eget kapital)
@@ -1190,7 +1653,14 @@ bool CDbHndl::createTable(void)
                     " goodOwnershipAnswer VARCHAR(255), "
                     " goodOwnershipComment VARCHAR(255),"
                     " otherInformation VARCHAR(255),"
-                    " MainAnalysisId INTEGER);");
+                    " MainAnalysisId INTEGER,"
+
+                    " TenYearNoteYield VARCHAR(255),"
+                    " CurrEquityPerShare VARCHAR(255),"
+                    " EstimateYearlyDividend VARCHAR(255),"
+                    " CalcIntrinsicValue VARCHAR(255),"
+                    " IntrinsicValueYearSpan VARCHAR(255),"
+                    " HistoricalYearlyInterestOnEquity VARCHAR(255));");
 
                 qry.prepare(tmp);
 
@@ -2675,6 +3145,14 @@ insertAnalysisData(int analysisDateId,
                    QString goodOwnershipAnswer,
                    QString goodOwnershipComment,
                    QString otherInformation,
+
+                   QString tenYearNoteYield,
+                   QString currEquityPerShare,
+                   QString estimateYearlyDividend,
+                   QString calcIntrinsicValue,
+                   QString intrinsicValueYearSpan,
+                   QString historicalYearlyInterestOnEquity,
+
                    int &analysisDataId,
                    bool dbIsHandledExternly)
 {
@@ -2725,11 +3203,19 @@ insertAnalysisData(int analysisDateId,
                  " goodOwnershipAnswer, "
                  " goodOwnershipComment,"
                  " otherInformation, "
+
+                 " TenYearNoteYield,"
+                 " CurrEquityPerShare,"
+                 " EstimateYearlyDividend,"
+                 " CalcIntrinsicValue,"
+                 " IntrinsicValueYearSpan,"
+                 " HistoricalYearlyInterestOnEquity,"
+
                  " AnalysisDataId,"
                  " MainAnalysisId) "
                  " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
                        " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
-                       " '%s', '%s', '%s', '%s', '%s', %d, %d);",
+                       " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d);",
                         analysisDateId,
                         companyDescription.toLocal8Bit().constData(),
                         bigEnoughAnswer.toLocal8Bit().constData(),
@@ -2755,6 +3241,15 @@ insertAnalysisData(int analysisDateId,
                         goodOwnershipAnswer.toLocal8Bit().constData(),
                         goodOwnershipComment.toLocal8Bit().constData(),
                         otherInformation.toLocal8Bit().constData(),
+
+                        tenYearNoteYield.toLocal8Bit().constData(),
+                        currEquityPerShare.toLocal8Bit().constData(),
+                        estimateYearlyDividend.toLocal8Bit().constData(),
+                        calcIntrinsicValue.toLocal8Bit().constData(),
+                        intrinsicValueYearSpan.toLocal8Bit().constData(),
+                        historicalYearlyInterestOnEquity.toLocal8Bit().constData(),
+
+
                         inputAnalysisDataId,
                         mainAnalysisId);
     }
@@ -2794,10 +3289,19 @@ insertAnalysisData(int analysisDateId,
                      " goodOwnershipAnswer, "
                      " goodOwnershipComment,"
                      " otherInformation, "
+
+                    " TenYearNoteYield,"
+                    " CurrEquityPerShare,"
+                    " EstimateYearlyDividend,"
+                    " CalcIntrinsicValue,"
+                    " IntrinsicValueYearSpan,"
+                    " HistoricalYearlyInterestOnEquity,"
+
+
                      " MainAnalysisId) "
                      " VALUES( %d,  '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
                            " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', "
-                           " '%s', '%s', '%s', '%s', '%s', %d);",
+                           " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d);",
                             analysisDateId,
                             companyDescription.toLocal8Bit().constData(),
                             bigEnoughAnswer.toLocal8Bit().constData(),
@@ -2823,6 +3327,14 @@ insertAnalysisData(int analysisDateId,
                             goodOwnershipAnswer.toLocal8Bit().constData(),
                             goodOwnershipComment.toLocal8Bit().constData(),
                             otherInformation.toLocal8Bit().constData(),
+
+                            tenYearNoteYield.toLocal8Bit().constData(),
+                            currEquityPerShare.toLocal8Bit().constData(),
+                            estimateYearlyDividend.toLocal8Bit().constData(),
+                            calcIntrinsicValue.toLocal8Bit().constData(),
+                            intrinsicValueYearSpan.toLocal8Bit().constData(),
+                            historicalYearlyInterestOnEquity.toLocal8Bit().constData(),
+
                             mainAnalysisId);             // Main list primary id);
     }
 
@@ -3136,6 +3648,15 @@ getStockAnalysisData(QString stockName,
                      QString &goodOwnershipAnswer,
                      QString &goodOwnershipComment,
                      QString &otherInformation,
+
+                     QString &tenYearNoteYield,
+                     QString &currEquityPerShare,
+                     QString &estimateYearlyDividend,
+                     QString &calcIntrinsicValue,
+                     QString &intrinsicValueYearSpan,
+                     QString &historicalYearlyInterestOnEquity,
+
+
                      bool dbIsHandledExternly)
 {
 
@@ -3376,6 +3897,52 @@ getStockAnalysisData(QString stockName,
                 {
                     otherInformation = rec.value("otherInformation").toString();
                 }
+
+                //================
+                otherInformation.clear();
+                if(rec.value("otherInformation").isNull() == false)
+                {
+                    otherInformation = rec.value("otherInformation").toString();
+                }
+
+                tenYearNoteYield.clear();
+                if(rec.value("TenYearNoteYield").isNull() == false)
+                {
+                    tenYearNoteYield = rec.value("TenYearNoteYield").toString();
+                }
+
+                currEquityPerShare.clear();
+                if(rec.value("CurrEquityPerShare").isNull() == false)
+                {
+                    currEquityPerShare = rec.value("CurrEquityPerShare").toString();
+                }
+
+                estimateYearlyDividend.clear();
+                if(rec.value("EstimateYearlyDividend").isNull() == false)
+                {
+                    estimateYearlyDividend = rec.value("EstimateYearlyDividend").toString();
+                }
+
+                calcIntrinsicValue.clear();
+                if(rec.value("CalcIntrinsicValue").isNull() == false)
+                {
+                    calcIntrinsicValue = rec.value("CalcIntrinsicValue").toString();
+                }
+
+                intrinsicValueYearSpan.clear();
+                if(rec.value("IntrinsicValueYearSpan").isNull() == false)
+                {
+                    intrinsicValueYearSpan = rec.value("IntrinsicValueYearSpan").toString();
+                }
+
+                historicalYearlyInterestOnEquity.clear();
+                if(rec.value("HistoricalYearlyInterestOnEquity").isNull() == false)
+                {
+                    historicalYearlyInterestOnEquity = rec.value("HistoricalYearlyInterestOnEquity").toString();
+                }
+
+
+
 
             }
         }
@@ -17911,7 +18478,7 @@ bool CDbHndl::filter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHn
     closeDb();
     m_mutex.unlock();
     tableView->resizeColumnsToContents();
-    tableView->resize(1100,500);
+    tableView->resize(1100,550);
     return true;
 }
 
@@ -18034,7 +18601,7 @@ initFilter1Dividend(QObject *thisPointer, QTableView *tableView, CDbHndl::TableT
     }
     m_mutex.unlock();
     tableView->resizeColumnsToContents();
-    tableView->resize(1100,500);
+    tableView->resize(1100,550);
     return true;
 }
 

@@ -3,562 +3,1640 @@
 #include <stdlib.h>
 
 
+
 #if 0
-// -2
-// Date
-        //-----------------------------------------------------------------------
-        // TblDateOperatingCashFlowSubAnalysis (Operativt Kassaflöde)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateOperatingCashFlowSubAnalysis "
-                    " (DateOperatingCashFlowId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    " DateOperatingCashFlow DATE, "
-                    " MainAnalysisId INTEGER);");
+/****************************************************************
+ *
+ * Function:    subAnalysisIntrinsicValueDateExists()
+ *
+ * Description: Operating Cash Flow
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysis1IntrinsicValueDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &dateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
 
 
 
-// Data
-        //-----------------------------------------------------------------------
-        // TblDataOperatingCashFlowSubAnalysis (Operativt Kassaflöde)
-        //-----------------------------------------------------------------------
-        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataOperatingCashFlowSubAnalysis "
-                    " (DataOperatingCashFlowId INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    " DateOperatingCashFlowId INTEGER, "
-                    " DataOperatingCashFlow VARCHAR(255), "
-                    " MainAnalysisId INTEGER);");
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
 
 
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateIntrinsicValueSubAnalysis_1 "
+                " WHERE Date = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateIntrinsicValueSubAnalysis_1 error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if((rec.value("Date").isNull() == true) || (true == rec.value("MainAnalysisId").isNull()))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                dateId = rec.value("DateId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisIntrinsicValueDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisIntrinsicValueDate(QString date,
+                       int mainAnalysisId,
+                       int &dateId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateIntrinsicValueSubAnalysis_1 "
+                "(Date, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateIntrinsicValueSubAnalysis_1"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisIntrinsicValueId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
+                  int dateId,
+                  int &dataId,
+                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataIntrinsicValueSubAnalysis_1.DataId, TblDataIntrinsicValueSubAnalysis_1.DateId, TblDataIntrinsicValueSubAnalysis_1.MainAnalysisId   "
+                " FROM TblDataIntrinsicValueSubAnalysis_1   "
+                " WHERE  "
+                "       TblDataIntrinsicValueSubAnalysis.DateId = %d AND "
+                "       TblDataIntrinsicValueSubAnalysis.MainAnalysisId = %d;",
+                                                                           dateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataId").isNull() == false)
+                {
+                    dataId = rec.value("DataId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisIntrinsicValueData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisIntrinsicValueData(int dateId,
+                                    int mainAnalysisId,
+                                    int inputDataId,
+                                    bool idIsValid,
+                                    QString intrinsicValue,
+                                    QString tenYearFedNodeInterestRate,
+                                    QString backTrackYears,
+                                    QString calcAnnualInterestRate,
+                                    int &dataId,
+                                    bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(idIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataIntrinsicValueSubAnalysis_1 "
+                " (DateId, "
+                "  IntrinsicValue, "
+                "  TenYearFedNodeInterestRate, "
+                "  BackTrackYears, "
+                "  CalcAnnualInterestRate, " // On equity per share
+                 " DataId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', '%s', '%s', '%s', %d, %d);",
+                        dateId,
+                        intrinsicValue.toLocal8Bit().constData(),
+                        tenYearFedNodeInterestRate.toLocal8Bit().constData(),
+                        backTrackYears.toLocal8Bit().constData(),
+                        calcAnnualInterestRate.toLocal8Bit().constData(),
+                        inputDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataTotDividendsSubAnalysis_1 "
+                    " (DateId, "
+                    "  IntrinsicValue, "
+                    "  TenYearFedNodeInterestRate, "
+                    "  BackTrackYears, "
+                    "  CalcAnnualInterestRate, " // On equity per share
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            dateId,
+                            intrinsicValue.toLocal8Bit().constData(),
+                            tenYearFedNodeInterestRate.toLocal8Bit().constData(),
+                            backTrackYears.toLocal8Bit().constData(),
+                            calcAnnualInterestRate.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotDividendsSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisIntrinsicValueData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisIntrinsicValueData(QString stockName,
+                           QString stockSymbol,
+                           QString &intrinsicValue,
+                           QString &tenYearFedNodeInterestRate,
+                           QString &backTrackYears,
+                           QString &calcAnnualInterestRate,
+                           int &nofArrData,
+                           bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    SubAnalysDataST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateIntrinsicValueSubAnalysis_1.*, TblDataIntrinsicValueSubAnalysis_1.* "
+                " FROM TblMainAnalysis, TblDateIntrinsicValueSubAnalysis_1, TblDataIntrinsicValueSubAnalysis_1  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateIntrinsicValueSubAnalysis_1.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataIntrinsicValueSubAnalysis_1.MainAnalysisId AND "
+                "       TblDateIntrinsicValueSubAnalysis_1.DateId = TblIntrinsicValueSubAnalysis_1.DateId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateIntrinsicValueSubAnalysis_1.Date AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+
+        qDebug() << qry.lastError();
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        // Should only be one record so this is unnecessary
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if( (rec.value("IntrinsicValue").isNull() == true)||
+                (rec.value("TenYearFedNodeInterestRate").isNull() == true)||
+                (rec.value("BackTrackYears").isNull() == true)||
+                (rec.value("CalcAnnualInterestRate").isNull() == true))
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                // qDebug() << rec.value("Date").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+
+                intrinsicValue.clear();
+                if(rec.value("IntrinsicValue").isNull() == false)
+                {
+                    intrinsicValue = rec.value("IntrinsicValue").toString();
+                }
+
+
+                tenYearFedNodeInterestRate.clear();
+                if(rec.value("TenYearFedNodeInterestRate").isNull() == false)
+                {
+                    tenYearFedNodeInterestRate = rec.value("TenYearFedNodeInterestRate").toString();
+                }
+
+                backTrackYears.clear();
+                if(rec.value("BackTrackYears").isNull() == false)
+                {
+                    backTrackYears = rec.value("BackTrackYears").toString();
+                }
+
+                calcAnnualInterestRate.clear();
+                if(rec.value("CalcAnnualInterestRate").isNull() == false)
+                {
+                    calcAnnualInterestRate = rec.value("CalcAnnualInterestRate").toString();
+                }
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
 #endif
 
 
 
 
-        /****************************************************************
-         *
-         * Function:    subAnalysisOperatingCashFlowDateExists()
-         *
-         * Description: Operating Cash Flow
-         *
-         *
-         *
-         *
-         *
-         ****************************************************************/
-        bool CDbHndl::subAnalysisOperatingCashFlowDateExists(QString date,
-                                             int mainAnalysisId,
-                                             int &OperatingCashFlowDateId)
+//=========================================
+
+
+/****************************************************************
+ *
+ * Function:    subAnalysisTotDividendsDateExists()
+ *
+ * Description: Operating Cash Flow
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisTotDividendsDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &OperatingCashFlowDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateTotDividendsSubAnalysis "
+                " WHERE Date = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
         {
-            QSqlRecord rec;
-            QString str;
-
-            m_mutex.lock();
-            openDb(PATH_JACK_STOCK_DB);
-            QSqlQuery qry(m_db);
-
-
-
-            QByteArray ba = date.toLocal8Bit();
-            const char *c_date = ba.data();
-
-
-
-            str.sprintf("SELECT * "
-                        " FROM  TblDateOperatingCashFlowSubAnalysis "
-                        " WHERE DateOperatingCashFlow = '%s' AND MainAnalysisId = %d;",
-                        c_date,
-                        mainAnalysisId);
-
-            qDebug() << str;
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotDividendsSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
 
 
-            qry.prepare(str);
 
-
-            if( !qry.exec() )
+            if(rec.value("Date").isNull() == true || true == rec.value("MainAnalysisId").isNull())
             {
-                if(m_disableMsgBoxes == false)
-                {
-                    QMessageBox::critical(NULL, QString::fromUtf8("TblDateOperatingCashFlowSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
-                }
-                qDebug() << qry.lastError();
+                qry.finish();
                 closeDb();
                 m_mutex.unlock();
                 return false;
             }
             else
             {
-                if(qry.next())
-                {
-                    rec = qry.record();
-
-
-
-                    if(rec.value("DateOperatingCashFlow").isNull() == true || true == rec.value("MainAnalysisId").isNull())
-                    {
-                        qry.finish();
-                        closeDb();
-                        m_mutex.unlock();
-                        return false;
-                    }
-                    else
-                    {
-                        OperatingCashFlowDateId = rec.value("DateOperatingCashFlowId").toInt();
-                        qry.finish();
-                        closeDb();
-                        m_mutex.unlock();
-                        return true;
-                    }
-                }
+                OperatingCashFlowDateId = rec.value("DateId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
             }
+        }
+    }
 
-            qry.finish();
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotDividendsDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotDividendsDate(QString date,
+                       int mainAnalysisId,
+                       int &dateId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateTotDividendsSubAnalysis "
+                "(Date, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotDividendsSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
             closeDb();
             m_mutex.unlock();
-            return false;
+        }
+        return false;
+    }
+
+
+    dateId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotDividendsId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotDividendsDataId(int mainAnalysisId,
+                  int dateId,
+                  int &dataId,
+                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataTotDividendsSubAnalysis.DataId, TblDataTotDividendsSubAnalysis.DateId, TblDataTotDividendsSubAnalysis.MainAnalysisId   "
+                " FROM TblDataTotDividendsSubAnalysis   "
+                " WHERE  "
+                "       TblDataTotDividendsSubAnalysis.DateId = %d AND "
+                "       TblDataTotDividendsSubAnalysis.MainAnalysisId = %d;",
+                                                                           dateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataId").isNull() == false)
+                {
+                    dataId = rec.value("DataId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotDividendsData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotDividendsData(int dateId,
+                          int mainAnalysisId,
+                          int inputDataId,
+                          bool idIsValid,
+                          QString data,
+                          int &dataId,
+                          bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(idIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataTotDividendsSubAnalysis "
+                " (DateId, "
+                "  Data, "
+                 " DataId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', %d, %d);",
+                        dateId,
+                        data.toLocal8Bit().constData(),
+                        inputDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataTotDividendsSubAnalysis "
+                    " (DateId, "
+                    " Data, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            dateId,
+                            data.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotDividendsSubAnalysis"), qry.lastError().text().toLatin1().constData());
         }
 
-
-
-
-
-
-        /****************************************************************
-         *
-         * Function:    insertSubAnalysisOperatingCashFlowDate()
-         *
-         * Description:
-         *
-         *
-         *
-         *
-         *
-         ****************************************************************/
-        bool CDbHndl::
-        insertSubAnalysisOperatingCashFlowDate(QString date,
-                               int mainAnalysisId,
-                               int &dateOperatingCashFlowId,
-                               bool dbIsHandledExternly)
+        if(dbIsHandledExternly == false)
         {
-            QString str;
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
 
-            if(dbIsHandledExternly == false)
+
+    dataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotDividendsData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotDividendsData(QString stockName,
+                           QString stockSymbol,
+                           SubAnalysDataST *dataArr,
+                           int &nofArrData,
+                           bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    SubAnalysDataST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateTotDividendsSubAnalysis.*, TblDataTotDividendsSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateTotDividendsSubAnalysis, TblDataTotDividendsSubAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateTotDividendsSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataTotDividendsSubAnalysis.MainAnalysisId AND "
+                "       TblDateTotDividendsSubAnalysis.DateId = TblDataTotDividendsSubAnalysis.DateId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateTotDividendsSubAnalysis.Date AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+
+        qDebug() << qry.lastError();
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if((rec.value("Date").isNull() == true) ||  // Date
+                (rec.value("Data").isNull() == true))   // Data
             {
-                m_mutex.lock();
-                openDb(PATH_JACK_STOCK_DB);
-            }
 
-            QSqlQuery qry(m_db);
-
-            QByteArray ba = date.toLocal8Bit();
-            const char *c_date = ba.data();
-
-
-            str.sprintf("INSERT OR REPLACE INTO TblDateOperatingCashFlowSubAnalysis "
-                        "(DateOperatingCashFlow, MainAnalysisId) "
-                        " VALUES('%s', %d);",
-                        c_date,
-                        mainAnalysisId);
-
-            qDebug() << str;
-
-            qry.prepare(str);
-
-            if(!qry.exec())
-            {
-                qDebug() << qry.lastError();
-
-                if(m_disableMsgBoxes == false)
+                if(found == true)
                 {
-                    QMessageBox::critical(NULL, QString::fromUtf8("TblDateOperatingCashFlowSubAnalysis"), qry.lastError().text().toUtf8().constData());
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("Date").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("Date").isNull() == false)
+                {
+                    data.date = rec.value("Date").toString();
                 }
 
-                if(dbIsHandledExternly == false)
+                // Data
+                data.data.clear();
+                if(rec.value("Data").isNull() == false)
                 {
-                    closeDb();
-                    m_mutex.unlock();
+                    data.data = rec.value("Data").toString();
                 }
-                return false;
+
+                dataArr[nofArrData] = data;
+                nofArrData++;
+
             }
+        }
+    }
 
 
-            dateOperatingCashFlowId = (int) qry.lastInsertId().toInt();
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
 
-            qry.finish();
+    if(found == true)
+    {
+        return true;
+    }
 
-            if(dbIsHandledExternly==false)
+    return false;
+}
+
+
+
+
+
+
+//=====================================
+
+
+
+/****************************************************************
+ *
+ * Function:    subAnalysisOperatingCashFlowDateExists()
+ *
+ * Description: Operating Cash Flow
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisOperatingCashFlowDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &OperatingCashFlowDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateOperatingCashFlowSubAnalysis "
+                " WHERE DateOperatingCashFlow = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateOperatingCashFlowSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("DateOperatingCashFlow").isNull() == true || true == rec.value("MainAnalysisId").isNull())
             {
+                qry.finish();
                 closeDb();
                 m_mutex.unlock();
+                return false;
             }
+            else
+            {
+                OperatingCashFlowDateId = rec.value("DateOperatingCashFlowId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
 
-            return true;
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisOperatingCashFlowDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisOperatingCashFlowDate(QString date,
+                       int mainAnalysisId,
+                       int &dateOperatingCashFlowId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateOperatingCashFlowSubAnalysis "
+                "(DateOperatingCashFlow, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateOperatingCashFlowSubAnalysis"), qry.lastError().text().toUtf8().constData());
         }
 
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateOperatingCashFlowId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
 
 
 
 
-        /*****************************************************************
-         *
-         * Function:		getSubAnalysisOperatingCashFlowId()
-         *
-         * Description:
-         *
-         *
-         *
-         *****************************************************************/
-        bool CDbHndl::
-        getSubAnalysisOperatingCashFlowDataId(int mainAnalysisId,
-                          int operatingCashFlowDateId,
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisOperatingCashFlowId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisOperatingCashFlowDataId(int mainAnalysisId,
+                  int operatingCashFlowDateId,
+                  int &operatingCashFlowDataId,
+                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataOperatingCashFlowSubAnalysis.DataOperatingCashFlowId, TblDataOperatingCashFlowSubAnalysis.DateOperatingCashFlowId, TblDataOperatingCashFlowSubAnalysis.MainAnalysisId   "
+                " FROM TblDataOperatingCashFlowSubAnalysis   "
+                " WHERE  "
+                "       TblDataOperatingCashFlowSubAnalysis.DateOperatingCashFlowId = %d AND "
+                "       TblDataOperatingCashFlowSubAnalysis.MainAnalysisId = %d;",
+                                                                           operatingCashFlowDateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataOperatingCashFlowId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataOperatingCashFlowId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataOperatingCashFlowId").isNull() == false)
+                {
+                    operatingCashFlowDataId = rec.value("DataOperatingCashFlowId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisOperatingCashFlow()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisOperatingCashFlowData(int operatingCashFlowDateId,
+                          int mainAnalysisId,
+                          int inputOperatingCashFlowDataId,
+                          bool operatingCashFlowIdIsValid,
+                          QString dataOperatingCashFlow,
                           int &operatingCashFlowDataId,
                           bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(operatingCashFlowIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataOperatingCashFlowSubAnalysis "
+                " (DateOperatingCashFlowId, "
+                "  DataOperatingCashFlow, "
+                 " DataOperatingCashFlowId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', %d, %d);",
+                        operatingCashFlowDateId,
+                        dataOperatingCashFlow.toLocal8Bit().constData(),
+                        inputOperatingCashFlowDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataOperatingCashFlowSubAnalysis "
+                    " (DateOperatingCashFlowId, "
+                    " DataOperatingCashFlow, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            operatingCashFlowDateId,
+                            dataOperatingCashFlow.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
         {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataOperatingCashFlowSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
 
 
-            QSqlRecord rec;
-            QString str;
+    operatingCashFlowDataId = (int) qry.lastInsertId().toInt();
 
-            if(dbIsHandledExternly == false)
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisOperatingCashFlowData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisOperatingCashFlowData(QString stockName,
+                           QString stockSymbol,
+                           SubAnalysDataST *dataArr,
+                           int &nofArrData,
+                           bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    SubAnalysDataST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateOperatingCashFlowSubAnalysis.*, TblDataOperatingCashFlowSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateOperatingCashFlowSubAnalysis, TblDataOperatingCashFlowSubAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateOperatingCashFlowSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataOperatingCashFlowSubAnalysis.MainAnalysisId AND "
+                "       TblDateOperatingCashFlowSubAnalysis.DateOperatingCashFlowId = TblDataOperatingCashFlowSubAnalysis.DateOperatingCashFlowId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateOperatingCashFlowSubAnalysis.DateOperatingCashFlow AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if((rec.value("DateOperatingCashFlow").isNull() == true) ||  // Date
+                (rec.value("DataOperatingCashFlow").isNull() == true))   // Data
             {
-                m_mutex.lock();
-                openDb(PATH_JACK_STOCK_DB);
-            }
 
-            QSqlQuery qry(m_db);
-
-          bool found = false;
-
-
-            str.sprintf("SELECT TblDataOperatingCashFlowSubAnalysis.DataOperatingCashFlowId, TblDataOperatingCashFlowSubAnalysis.DateOperatingCashFlowId, TblDataOperatingCashFlowSubAnalysis.MainAnalysisId   "
-                        " FROM TblDataOperatingCashFlowSubAnalysis   "
-                        " WHERE  "
-                        "       TblDataOperatingCashFlowSubAnalysis.DateOperatingCashFlowId = %d AND "
-                        "       TblDataOperatingCashFlowSubAnalysis.MainAnalysisId = %d;",
-                                                                                   operatingCashFlowDateId,
-                                                                                   mainAnalysisId);
-
-
-            qDebug() << str << "\n";
-
-            qry.prepare(str);
-
-
-            if( !qry.exec() )
-            {
-                if(m_disableMsgBoxes == false)
+                if(found == true)
                 {
-                    QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+                    continue;
                 }
-                qDebug() << qry.lastError();
-                if(dbIsHandledExternly == false)
+                else
                 {
-                    closeDb();
-                    m_mutex.unlock();
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
                 }
-                return false;
             }
             else
             {
-                while(qry.next())
+                found = true;
+                qDebug() << rec.value("DateOperatingCashFlow").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("DateOperatingCashFlow").isNull() == false)
                 {
-                    rec = qry.record();
-
-
-
-
-                    if(rec.value("DataOperatingCashFlowId").isNull() == true)
-                    {
-
-                        if(found == true)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            qry.finish();
-                            if(dbIsHandledExternly == false)
-                            {
-                                closeDb();
-                                m_mutex.unlock();
-                            }
-
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        found = true;
-                        qDebug() << rec.value("DataOperatingCashFlowId").toString();
-                        qDebug() << rec.value("MainAnalysisId").toString();
-
-
-                        if(rec.value("DataOperatingCashFlowId").isNull() == false)
-                        {
-                            operatingCashFlowDataId = rec.value("DataOperatingCashFlowId").toInt();
-                        }
-
-                    }
+                    data.date = rec.value("DateOperatingCashFlow").toString();
                 }
+
+                // Data
+                data.data.clear();
+                if(rec.value("DataOperatingCashFlow").isNull() == false)
+                {
+                    data.data = rec.value("DataOperatingCashFlow").toString();
+                }
+
+                dataArr[nofArrData] = data;
+                nofArrData++;
+
             }
-
-
-            qry.finish();
-            if(dbIsHandledExternly == false)
-            {
-                closeDb();
-                m_mutex.unlock();
-            }
-
-            if(found == true)
-            {
-                return true;
-            }
-
-            return false;
         }
+    }
 
 
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
 
+    if(found == true)
+    {
+        return true;
+    }
 
-
-
-        /****************************************************************
-         *
-         * Function:    insertSubAnalysisOperatingCashFlow()
-         *
-         * Description:
-         *
-         *
-         *
-         *
-         *
-         ****************************************************************/
-        bool CDbHndl::
-        insertSubAnalysisOperatingCashFlowData(int operatingCashFlowDateId,
-                                  int mainAnalysisId,
-                                  int inputOperatingCashFlowDataId,
-                                  bool operatingCashFlowIdIsValid,
-                                  QString dataOperatingCashFlow,
-                                  int &operatingCashFlowDataId,
-                                  bool dbIsHandledExternly)
-        {
-            QString str;
-
-            if(dbIsHandledExternly == false)
-            {
-                m_mutex.lock();
-                openDb(PATH_JACK_STOCK_DB);
-            }
-
-
-            QSqlQuery qry(m_db);
-
-
-            if(operatingCashFlowIdIsValid == true)
-            {
-                str.sprintf("INSERT OR REPLACE INTO TblDataOperatingCashFlowSubAnalysis "
-                        " (DateOperatingCashFlowId, "
-                        "  DataOperatingCashFlow, "
-                         " DataOperatingCashFlowId,"
-                         " MainAnalysisId) "
-                         " VALUES( %d,  '%s', %d, %d);",
-                                operatingCashFlowDateId,
-                                dataOperatingCashFlow.toLocal8Bit().constData(),
-                                inputOperatingCashFlowDataId,
-                                mainAnalysisId);
-            }
-            // New data
-            else
-            {
-                str.sprintf("INSERT INTO TblDataOperatingCashFlowSubAnalysis "
-                            " (DateOperatingCashFlowId, "
-                            " DataOperatingCashFlow, "
-                            " MainAnalysisId) "
-                            " VALUES( %d, '%s', %d);",
-                                    operatingCashFlowDateId,
-                                    dataOperatingCashFlow.toLocal8Bit().constData(),
-                                    mainAnalysisId);
-            }
-
-
-            qDebug() << str;
-
-            qry.prepare(str);
-
-
-            if(!qry.exec())
-            {
-                qDebug() << qry.lastError();
-                if(m_disableMsgBoxes == false)
-                {
-                    QMessageBox::critical(NULL, QString::fromUtf8("TblDataOperatingCashFlowSubAnalysis"), qry.lastError().text().toLatin1().constData());
-                }
-
-                if(dbIsHandledExternly == false)
-                {
-                    closeDb();
-                    m_mutex.unlock();
-                }
-                return false;
-            }
-
-
-            operatingCashFlowDataId = (int) qry.lastInsertId().toInt();
-
-
-            qry.finish();
-            if(dbIsHandledExternly == false)
-            {
-                closeDb();
-                m_mutex.unlock();
-            }
-
-            return true;
-        }
-
-
-
-
-
-        /*****************************************************************
-         *
-         * Function:		getSubAnalysisOperatingCashFlowData()
-         *
-         * Description:
-         *
-         *
-         *
-         *****************************************************************/
-        bool CDbHndl::
-        getSubAnalysisOperatingCashFlowData(QString stockName,
-                                   QString stockSymbol,
-                                   SubAnalysDataST *dataArr,
-                                   int &nofArrData,
-                                   bool dbIsHandledExternly)
-        {
-
-
-            QSqlRecord rec;
-            QString str;
-            SubAnalysDataST data;
-
-            nofArrData = 0;
-
-
-            if(dbIsHandledExternly == false)
-            {
-                m_mutex.lock();
-                openDb(PATH_JACK_STOCK_DB);
-            }
-
-            QSqlQuery qry(m_db);
-
-          bool found = false;
-
-
-            str.sprintf("SELECT TblMainAnalysis.*, TblDateOperatingCashFlowSubAnalysis.*, TblDataOperatingCashFlowSubAnalysis.* "
-                        " FROM TblMainAnalysis, TblDateOperatingCashFlowSubAnalysis, TblDataOperatingCashFlowSubAnalysis  "
-                        " WHERE  "
-                        "       TblMainAnalysis.MainAnalysisId = TblDateOperatingCashFlowSubAnalysis.MainAnalysisId AND "
-                        "       TblMainAnalysis.MainAnalysisId = TblDataOperatingCashFlowSubAnalysis.MainAnalysisId AND "
-                        "       TblDateOperatingCashFlowSubAnalysis.DateOperatingCashFlowId = TblDataOperatingCashFlowSubAnalysis.DateOperatingCashFlowId AND "
-                        "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
-                        "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
-                        " ORDER BY (CAST(TblDateOperatingCashFlowSubAnalysis.DateOperatingCashFlow AS REAL)) ASC;",              // DESC";",
-                                                                                   stockName.toLocal8Bit().constData(),
-                                                                                   stockSymbol.toLocal8Bit().constData());
-
-
-            qDebug() << str << "\n";
-
-            qry.prepare(str);
-
-
-            if( !qry.exec() )
-            {
-                if(m_disableMsgBoxes == false)
-                {
-                    QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
-                }
-                qDebug() << qry.lastError();
-                if(dbIsHandledExternly == false)
-                {
-                    closeDb();
-                    m_mutex.unlock();
-                }
-                return false;
-            }
-            else
-            {
-                while(qry.next())
-                {
-                    rec = qry.record();
-
-                    if((rec.value("DateOperatingCashFlow").isNull() == true) ||  // Date
-                        (rec.value("DataOperatingCashFlow").isNull() == true))   // Data
-                    {
-
-                        if(found == true)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            qry.finish();
-                            if(dbIsHandledExternly == false)
-                            {
-                                closeDb();
-                                m_mutex.unlock();
-                            }
-
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        found = true;
-                        qDebug() << rec.value("DateOperatingCashFlow").toString() << "\n";
-                        qDebug() << rec.value("stockSymbol").toString();
-                        qDebug() << rec.value("stockName").toString();
-
-
-
-
-                        // Date
-                        data.date.clear();
-                        if(rec.value("DateOperatingCashFlow").isNull() == false)
-                        {
-                            data.date = rec.value("DateOperatingCashFlow").toString();
-                        }
-
-                        // Data
-                        data.data.clear();
-                        if(rec.value("DataOperatingCashFlow").isNull() == false)
-                        {
-                            data.data = rec.value("DataOperatingCashFlow").toString();
-                        }
-
-                        dataArr[nofArrData] = data;
-                        nofArrData++;
-
-                    }
-                }
-            }
-
-
-            qry.finish();
-            if(dbIsHandledExternly == false)
-            {
-                closeDb();
-                m_mutex.unlock();
-            }
-
-            if(found == true)
-            {
-                return true;
-            }
-
-            return false;
-        }
+    return false;
+}
 
 
 
@@ -1301,10 +2379,9 @@ bool CDbHndl::deleteCompanyType(int mainAnalysisId)
 
 
 
-
 /*****************************************************************
  *
- * Function:		getSubAnalysisEarningsId()
+ * Function:		getSubAnalysisCompanyType()
  *
  * Description:
  *
@@ -1414,23 +2491,21 @@ getSubAnalysisCompanyType(int mainAnalysisId,
     return false;
 }
 
-
-
-
+//=========================
 
 
 /****************************************************************
  *
- * Function:    subAnalysisEarningsDateExists()
+ * Function:    subAnalysisEarningsPerShareDateExists()
  *
  * Description:
  *
- *
+ * EarningsPerShare
  *
  *
  *
  ****************************************************************/
-bool CDbHndl::subAnalysisEarningsDateExists(QString date,
+bool CDbHndl::subAnalysisEarningsPerShareDateExists(QString date,
                                      int mainAnalysisId,
                                      int &earningsDateId)
 {
@@ -1508,7 +2583,7 @@ bool CDbHndl::subAnalysisEarningsDateExists(QString date,
 
 /****************************************************************
  *
- * Function:    insertSubAnalysisEarningsDate()
+ * Function:    insertSubAnalysisEarningsPerShareDate()
  *
  * Description:
  *
@@ -1518,7 +2593,7 @@ bool CDbHndl::subAnalysisEarningsDateExists(QString date,
  *
  ****************************************************************/
 bool CDbHndl::
-insertSubAnalysisEarningsDate(QString date,
+insertSubAnalysisEarningsPerShareDate(QString date,
                        int mainAnalysisId,
                        int &dateEarningsId,
                        bool dbIsHandledExternly)
@@ -1585,7 +2660,7 @@ insertSubAnalysisEarningsDate(QString date,
 
 /*****************************************************************
  *
- * Function:		getSubAnalysisEarningsId()
+ * Function:		getSubAnalysisEarningsPerShareId()
  *
  * Description:
  *
@@ -1593,7 +2668,7 @@ insertSubAnalysisEarningsDate(QString date,
  *
  *****************************************************************/
 bool CDbHndl::
-getSubAnalysisEarningsId(int mainAnalysisId,
+getSubAnalysisEarningsPerShareId(int mainAnalysisId,
                   int earningsDateId,
                   int &earningsDataId,
                   bool dbIsHandledExternly)
@@ -1708,7 +2783,7 @@ getSubAnalysisEarningsId(int mainAnalysisId,
 
 /****************************************************************
  *
- * Function:    insertSubAnalysisEarnings()
+ * Function:    insertSubAnalysisEarningsPerShare()
  *
  * Description:
  *
@@ -1718,7 +2793,7 @@ getSubAnalysisEarningsId(int mainAnalysisId,
  *
  ****************************************************************/
 bool CDbHndl::
-insertSubAnalysisEarnings(int earningsDateId,
+insertSubAnalysisEarningsPerShare(int earningsDateId,
                           int mainAnalysisId,
                           int inputEarningsDataId,
                           bool earningsDataIdIsValid,
@@ -1808,7 +2883,7 @@ insertSubAnalysisEarnings(int earningsDateId,
 
 /*****************************************************************
  *
- * Function:		getSubAnalysisEarningsData()
+ * Function:		getSubAnalysisEarningsPerShareData()
  *
  * Description:
  *
@@ -1816,7 +2891,7 @@ insertSubAnalysisEarnings(int earningsDateId,
  *
  *****************************************************************/
 bool CDbHndl::
-getSubAnalysisEarningsData(QString stockName,
+getSubAnalysisEarningsPerShareData(QString stockName,
                            QString stockSymbol,
                            SubAnalysDataST *dataArr,
                            int &nofArrData,
@@ -1947,6 +3022,1082 @@ getSubAnalysisEarningsData(QString stockName,
     return false;
 }
 
+//======================================
+
+#if 1
+/****************************************************************
+ *
+ * Function:    subAnalysisRevenueDateExists()
+ *
+ * Description:
+ *
+ * EarningsPerShare
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisRevenueDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &earningsDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateRevenueSubAnalysis "
+                " WHERE Date = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenueSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("Date").isNull() == true || true == rec.value("MainAnalysisId").isNull())
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                earningsDateId = rec.value("DateId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisRevenueDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisRevenueDate(QString date,
+                       int mainAnalysisId,
+                       int &dateEarningsId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateRevenueSubAnalysis "
+                "(Date, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenueSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateEarningsId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisRevenueId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisRevenueDataId(int mainAnalysisId,
+                  int dateId,
+                  int &dataId,
+                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataRevenueSubAnalysis.DataId, TblDataRevenueSubAnalysis.DateId, TblDataRevenueSubAnalysis.MainAnalysisId   "
+                " FROM TblDataRevenueSubAnalysis   "
+                " WHERE  "
+                "       TblDataRevenueSubAnalysis.DateId = %d AND "
+                "       TblDataRevenueSubAnalysis.MainAnalysisId = %d;",
+                                                                           dateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataId").isNull() == false)
+                {
+                    dataId = rec.value("DataId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisRevenue()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisRevenueData(int dateId,
+                          int mainAnalysisId,
+                          int inputDataId,
+                          bool dataIdIsValid,
+                          QString data,
+                          int &dataId,
+                          bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(dataIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataRevenueSubAnalysis "
+                " (DateId, "
+                "  Data, "
+                 " DataId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', %d, %d);",
+                        dateId,
+                        data.toLocal8Bit().constData(),
+                        inputDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataRevenueSubAnalysis "
+                    " (DateId, "
+                    " Data, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            dateId,
+                            data.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataRevenueSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisRevenueData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisRevenueData(QString stockName,
+                           QString stockSymbol,
+                           SubAnalysDataST *dataArr,
+                           int &nofArrData,
+                           bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    SubAnalysDataST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateRevenueSubAnalysis.*, TblDataRevenueSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateRevenueSubAnalysis, TblDataRevenueSubAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateRevenueSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataRevenueSubAnalysis.MainAnalysisId AND "
+                "       TblDateRevenueSubAnalysis.DateId = TblDataRevenueSubAnalysis.DateId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateRevenueSubAnalysis.Date AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if((rec.value("Date").isNull() == true) ||  // Date
+                (rec.value("Data").isNull() == true))   // Data
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("Date").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("Date").isNull() == false)
+                {
+                    data.date = rec.value("Date").toString();
+                }
+
+                // Data
+                data.data.clear();
+                if(rec.value("Data").isNull() == false)
+                {
+                    data.data = rec.value("Data").toString();
+                }
+
+                dataArr[nofArrData] = data;
+                nofArrData++;
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+#endif
+
+
+
+
+
+//=============================================
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    subAnalysisTotEarningsDateExists()
+ *
+ * Description:
+ *
+ * EarningsPerShare
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisTotEarningsDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &earningsDateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateTotEarningsSubAnalysis "
+                " WHERE DateTotEarnings = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotEarningsSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if(rec.value("DateTotEarnings").isNull() == true || true == rec.value("MainAnalysisId").isNull())
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                earningsDateId = rec.value("DateTotEarningsId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotEarningsDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotEarningsDate(QString date,
+                       int mainAnalysisId,
+                       int &dateEarningsId,
+                       bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateTotEarningsSubAnalysis "
+                "(DateTotEarnings, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateTotEarningsSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateEarningsId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotEarningsDataId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotEarningsDataId(int mainAnalysisId,
+                            int earningsDateId,
+                            int &earningsDataId,
+                            bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataTotEarningsSubAnalysis.DataTotEarningsId, TblDataTotEarningsSubAnalysis.DateTotEarningsId, TblDataTotEarningsSubAnalysis.MainAnalysisId   "
+                " FROM TblDataTotEarningsSubAnalysis   "
+                " WHERE  "
+                "       TblDataTotEarningsSubAnalysis.DateTotEarningsId = %d AND "
+                "       TblDataTotEarningsSubAnalysis.MainAnalysisId = %d;",
+                                                                           earningsDateId,
+                                                                           mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+
+
+            if(rec.value("DataTotEarningsId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataTotEarningsId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataTotEarningsId").isNull() == false)
+                {
+                    earningsDataId = rec.value("DataTotEarningsId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisTotEarnings()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisTotEarningsData(int earningsDateId,
+                                 int mainAnalysisId,
+                                 int inputEarningsDataId,
+                                 bool earningsDataIdIsValid,
+                                 QString dataEarnings,
+                                 int &earningsDataId,
+                                 bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(earningsDataIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataTotEarningsSubAnalysis "
+                " (DateTotEarningsId, "
+                "  DataTotEarnings, "
+                 " DataTotEarningsId,"
+                 " MainAnalysisId) "
+                 " VALUES( %d,  '%s', %d, %d);",
+                        earningsDateId,
+                        dataEarnings.toLocal8Bit().constData(),
+                        inputEarningsDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataTotEarningsSubAnalysis "
+                    " (DateTotEarningsId, "
+                    " DataTotEarnings, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            earningsDateId,
+                            dataEarnings.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotEarningsSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    earningsDataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisTotEarningsData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisTotEarningsData(QString stockName,
+                           QString stockSymbol,
+                           SubAnalysDataST *dataArr,
+                           int &nofArrData,
+                           bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+    SubAnalysDataST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateTotEarningsSubAnalysis.*, TblDataTotEarningsSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateTotEarningsSubAnalysis, TblDataTotEarningsSubAnalysis  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateTotEarningsSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataTotEarningsSubAnalysis.MainAnalysisId AND "
+                "       TblDateTotEarningsSubAnalysis.DateTotEarningsId = TblDataTotEarningsSubAnalysis.DateTotEarningsId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateTotEarningsSubAnalysis.DateTotEarnings AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if((rec.value("DateTotEarnings").isNull() == true) ||  // Date
+                (rec.value("DataTotEarnings").isNull() == true))   // Data
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DateTotEarnings").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("DateTotEarnings").isNull() == false)
+                {
+                    data.date = rec.value("DateTotEarnings").toString();
+                }
+
+                // Data
+                data.data.clear();
+                if(rec.value("DataTotEarnings").isNull() == false)
+                {
+                    data.data = rec.value("DataTotEarnings").toString();
+                }
+
+                dataArr[nofArrData] = data;
+                nofArrData++;
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
 
 
 
@@ -6237,10 +8388,530 @@ getSubAnalysisCoreCapitalRatioData(QString stockName,
 
 
 //=================================================
+// EquityPerShare
+
+
+
+/****************************************************************
+ *
+ * Function:    subAnalysisEquityDateExists()
+ *
+ * Description:  (Eget kapital)
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisEquityPerShareDateExists(QString date,
+                                          int mainAnalysisId,
+                                          int &dateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
+
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateEquityPerShareSubAnalysis "
+                " WHERE Date = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateEquityPerShareSubAnalysis error 1"), qry.lastError().text().toUtf8().constData());
+        }
+
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+            if((rec.value("Date").isNull() == true) ||
+               (true == rec.value("MainAnalysisId").isNull()))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                dateId = rec.value("DateId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
 
 
 
 
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisEquityPerShareDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisEquityPerShareDate(QString date,
+                            int mainAnalysisId,
+                            int &dateId,
+                            bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateEquityPerShareSubAnalysis "
+                "(Date, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateEquityPerShareSubAnalysis"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisEquityPerShareDataId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisEquityPerShareDataId(int mainAnalysisId,
+                                  int dateId,
+                                  int &dataId,
+                                  bool dbIsHandledExternly)
+{
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataEquityPerShareSubAnalysis.*   "
+                " FROM TblDataEquityPerShareSubAnalysis   "
+                " WHERE  "
+                "       DateId = %d AND "
+                "       MainAnalysisId = %d;",
+                                                  dateId,
+                                                  mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+            if(rec.value("DataId").isNull() == true)
+            {
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                // qDebug() << rec.value("DataId").toString();
+                // qDebug() << rec.value("MainAnalysisId").toString();
+
+                if(rec.value("DataId").isNull() == false)
+                {
+                    dataId = rec.value("DataId").toInt();
+                }
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisEquityPerShareData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisEquityPerShareData(int dateId,
+                            int mainAnalysisId,
+                            int inputDataId,
+                            bool dataIdIsValid,
+                            QString data,
+                            int &dataId,
+                            bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(dataIdIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataEquityPerShareSubAnalysis "
+                    " (DateId, "
+                    "  Data, "
+                    "  DataId,"
+                    "  MainAnalysisId) "
+                    " VALUES( %d,  '%s', %d, %d);",
+                        dateId,
+                        data.toLocal8Bit().constData(),
+                        inputDataId,
+                        mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataEquityPerShareSubAnalysis "
+                    " (DateId, "
+                    "  Data, "
+                    "  MainAnalysisId) "
+                    "  VALUES( %d, '%s', %d);",
+                            dateId,
+                            data.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataEquityPerShareSubAnalysis"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisEquityPerShareData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisEquityPerShareData(QString stockName,
+                                   QString stockSymbol,
+                                   SubAnalysDataST *dataArr,
+                                   int &nofArrData,
+                                   bool dbIsHandledExternly)
+{
+    QSqlRecord rec;
+    QString str;
+    SubAnalysDataST data;
+
+    nofArrData = 0;
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateEquityPerShareSubAnalysis.*, TblDataEquityPerShareSubAnalysis.* "
+                " FROM TblMainAnalysis, TblDateEquityPerShareSubAnalysis, TblDataEquityPerShareSubAnalysis "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateEquityPerShareSubAnalysis.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataEquityPerShareSubAnalysis.MainAnalysisId AND "
+                "       TblDateEquityPerShareSubAnalysis.DateId = TblDataEquityPerShareSubAnalysis.DateId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateEquityPerShareSubAnalysis.Date AS REAL)) ASC;",              // DESC";",
+                                                                           stockName.toLocal8Bit().constData(),
+                                                                           stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+
+            if( (rec.value("Date").isNull() == true) ||  // Date
+                (rec.value("Data").isNull() == true))   // Data
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                // qDebug() << rec.value("CoverageRatioDate").toString() << "\n";
+                // qDebug() << rec.value("stockSymbol").toString();
+                // qDebug() << rec.value("stockName").toString();
+
+
+                // Date
+                data.date.clear();
+                if(rec.value("Date").isNull() == false)
+                {
+                    data.date = rec.value("Date").toString();
+                }
+
+                // Data
+                data.data.clear();
+                if(rec.value("Data").isNull() == false)
+                {
+                    data.data = rec.value("Data").toString();
+                }
+
+                dataArr[nofArrData] = data;
+                nofArrData++;
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+//=======================================================
 
 /****************************************************************
  *

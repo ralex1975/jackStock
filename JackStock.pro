@@ -88,7 +88,14 @@ SOURCES += main.cpp\
     extendedLineEdit.cpp \
     createstockanalysishtmlpage.cpp \
     dbSubHndl.cpp \
-    subanalysisdisplaygraphdata.cpp
+    subanalysisdisplaygraphdata.cpp \
+    video.cpp \
+    readexercisefile.cpp \
+    dbvideohelp.cpp \
+    parseomxallfinancelinkdata.cpp \
+    parseomxbridgedata.cpp \
+    calcavgannualgrowthrateequity.cpp
+
 
 HEADERS  += WebBrowserTab.h \
     util.h \
@@ -154,7 +161,13 @@ HEADERS  += WebBrowserTab.h \
     stockAnalysisTab.h \
     extendedLineEdit.h \
     createstockanalysishtmlpage.h \
-    subanalysisdisplaygraphdata.h
+    subanalysisdisplaygraphdata.h \
+    video.h \
+    readexercisefile.h \
+    parseomxallfinancelinkdata.h \
+    parseomxbridgedata.h \
+    calcavgannualgrowthrateequity.h
+
 
 FORMS    += \
     WebBrowserTab.ui \
@@ -173,7 +186,9 @@ FORMS    += \
     leastsquarestadlg.ui \
     keyIndicators_3.ui \
     adminmyportfolio.ui \
-    stockanalysistab.ui
+    stockanalysistab.ui \
+    video.ui \
+    calcavgannualgrowthrateequity.ui
 
 RESOURCES += \
     database/resourcedb.qrc

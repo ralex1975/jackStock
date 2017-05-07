@@ -651,3 +651,5 @@ void CJackStock::on_pushButtonReqCompanyHistory_clicked()
 {
 
 }
+
+

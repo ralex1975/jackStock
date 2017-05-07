@@ -6,6 +6,7 @@
 #include "dbHndl.h"
 #include "subanalysisdisplaygraphdata.h"
 #include "stockPlotUtil.h"
+#include "calcavgannualgrowthrateequity.h"
 
 namespace Ui {
 class StockAnalysisTab;
@@ -20,6 +21,11 @@ class StockAnalysisTab : public QDialog
 {
     Q_OBJECT
 
+    QString m_fildata;
+    QPalette *m_red_palette;
+    QPalette *m_blue_palette;
+
+
     QwtPlot *m_qwtPlot[10];
     subAnalysisDisplayGraphData m_saDisply;
 
@@ -28,6 +34,12 @@ class StockAnalysisTab : public QDialog
     QVector <QwtIntervalSample> m_barHistData;
 
 
+
+    SubAnalysDataST       m_totEarningsDataArr[MAX_NOF_TOT_EARNINGS];
+    int                   m_nofTotEarningsArrData;
+
+    SubAnalysDataST       m_revenueDataArr[MAX_NOF_REVENUE];
+    int                   m_nofRevenueArrData;
 
     SubAnalysDataST       m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
     int                   m_nofDividendArrData;
@@ -56,14 +68,21 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_coreCapitalRatioArr[MAX_NOF_CORE_CAPITAL_RATIO];
     int                   m_nofCoreCapitalRatioData;
 
-    SubAnalysDataST       m_equityArr[MAX_NOF_EQUITY];
-    int                   m_nofEquityData;
+    SubAnalysDataST       m_totEquityArr[MAX_NOF_EQUITY];
+    int                   m_nofTotEquityData;
+
+    SubAnalysDataST       m_equityPerShareArr[MAX_NOF_EQUITY_PER_SHARE];
+    int                   m_nofEquityPerShareData;
 
     SubAnalysDataST       m_cashFlowCapexArr[MAX_NOF_CASH_FLOW_CAPEX];
     int                   m_nofCashFlowCapexData;
 
     SubAnalysDataST       m_operatingCashFlowArr[MAX_NOF_CASH_FLOW_CAPEX];
     int                   m_nofOperatingCashFlowData;
+
+    SubAnalysDataST       m_totDividensArr[MAX_NOF_TOT_DIVIDENT];
+    int                   m_nofTotDividensData;
+
 
     // We using stock plot functions here even when data is cash flow
     CStockPlotUtil::PlotData_ST m_qwtcashFlowPlotData;
@@ -103,8 +122,25 @@ class StockAnalysisTab : public QDialog
                                       SubAnalysDataST *subAnalysDataArr,
                                       int &nofArrData);
 
+    bool insertTableWidgetIntrinsicValueTotCurrAssetDivTotLiabilities(QTableWidget *tableWidget,
+                                                                      SubAnalysDataST *totalCurrentAssetArr,
+                                                                      int nofTotalCurrentAssetArrData,
+                                                                      SubAnalysDataST *totalLiabilities,
+                                                                      int nofTotalLiabilitiesArrData);
+
+
+    bool calcLeastSqrtFit(SubAnalysDataST *dataArr,
+                          int nofArrData,
+                          double &k,
+                          double &m,
+                          double &minX,
+                          double &maxX);
+
 
     void initCompanyTypeComboBox(void);
+
+    void writeHtmlArrDataToTxtFile(void);
+
 
 
 
@@ -155,8 +191,41 @@ private slots:
 
     void on_pushButtonSaveOperatingCashFlow_clicked();
 
+    void on_pushButtonSaveTotDividends_clicked();
+
+    void on_pushButtonSaveRevenue_clicked();
+
+    void on_pushButtonSaveNetIncome_clicked();
+
+    void on_pushButtonSaveEquityPerShare_clicked();
+
+    void on_pushButtonCalcIntrinsicValue_clicked();
+
+    void on_pushButtonCalcYearlyIntrestRateOnEquity_clicked();
+
+    void plotEquityPerShareData(SubAnalysDataST *dataArr, int nofData, bool plotPrediction = false);
+
+    void on_pushSaveIValueDividend_clicked();
+
+    void on_pushButtonAltCalcAvgAnnualGrowthRateEquity_clicked();
+
+    void on_pushButtonAltcalcAvgAnnualGrowthRateEquity_clicked();
+
 private:
     Ui::StockAnalysisTab *ui;
+    calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;
+
+    // Cannot extract x,y data. Contains all data that is send to graph
+    CYahooStockPlotUtil::PlotData_ST m_qwtPlotData;
+
+    double m_x[1000];
+    double m_y[1000];
+
+    void getminMaxLogScale(double minIn, double &minOut, double maxIn, double &maxOut);
+    void clearGUIIntrinsicValue(void);
+    void calcTotSubdataForIntrinsicValue(void);
+
+
 };
 
 #endif // STOCKANALYSISTAB_H

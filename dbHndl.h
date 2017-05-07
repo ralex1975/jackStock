@@ -195,8 +195,12 @@ struct SubAnalysDataST
 #define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_EQUITY_PER_SHARE                    MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CASH_FLOW_CAPEX                     MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_OPERATING_CASH_FLOW                 MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOT_DIVIDENT                        MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_TOT_EARNINGS                        MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_REVENUE                             MAX_NOF_DIVIDEND_ARR_DATA
 
 
 
@@ -204,8 +208,8 @@ struct SubAnalysDataST
 
 enum SubAnalyseDataTypeET
 {
-    SAD_DIVIDEND,
-    SAD_EARNINGS,
+    SAD_DIVIDEND,                   // Utdelning/Aktie
+    SAD_EARNINGS,                   // Vinst/Aktie
     SAD_TOTAL_CURRENT_ASSETS,       // Omsättningstillgångar
     SAD_TOTAL_CURRENT_LIABILITIES,  // Kortfristiga skulder
     SAD_TOTAL_LIABILITIES,          // Totala skulder
@@ -214,9 +218,12 @@ enum SubAnalyseDataTypeET
     SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
     SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation
     SAD_EQUITY,                     // Eget kapital
+    SAD_EQUITY_PER_SHARE,           // Eget kapital/Aktie
     SAD_CASH_FLOW_CAPEX,            // Kassaflöde Capex Investeringar/kapitalutgifter
-    SAD_OPERATING_CASH_FLOW         // Operativt kassaföde
-
+    SAD_OPERATING_CASH_FLOW,        // Operativt kassaföde
+    SAD_TOTAL_DIVIDENT,             // Total utdelning
+    SAD_REVENUE,                    // Försäljning
+    SAD_TOT_EARNINGS                // Vinst
 };
 
 
@@ -336,11 +343,25 @@ struct HtmlStockAnalysPageDataST
     int nofEquityData;
     SubAnalysDataST *coreCapitalRatioArr;
     int nofCoreCapitalRatioData;
-
+    SubAnalysDataST *cashFlowCapexArr;
+    int nofCashFlowCapexData;
+    SubAnalysDataST *operatingCashFlowArr;
+    int nofOperatingCashFlowData;
+    SubAnalysDataST *totDividensArr;
+    int nofTotDividensData;
 
     QString  riskStdDev;
     QString  meanReturns;
     QString returnOnEquity;
+
+    // Intrinsic value
+    QString tenYearNoteYield;
+    QString currEquityPerShare;
+    QString estimateYearlyDividend;
+    QString calcIntrinsicValue;
+    QString intrinsicValueYearSpan; // Start stop Year of Equity/Share used during intrinsic value calc.
+    QString historicalYearlyInterestOnEquity;
+
 };
 
 
@@ -695,7 +716,180 @@ public:
      };
 
 
+    // Start Video help
+
+    struct exerciseData_ST
+    {
+        QString exerciseWord;
+        QString exercisePronunciation;
+        QString exerciseSound;
+    };
+
+    //
+    bool foundExerciseSounds(QString searchPattern,
+                                 QString filePath);
+
+    bool addExerciseSoundData(QString exerciseWord,
+                                  QString exerciseSoundPath,
+                                  bool dbIsHandledExternly = false);
+
+    bool inserOrReplaceExerciseSoundData(QString exerciseWord,
+                                  QString exerciseSoundPath,
+                                  bool dbIsHandledExternly);
+
+    bool replaceExerciseSoundAbbrvToFullName(QString exerciseWord,
+                                  QString exerciseSoundFile,
+                                  bool dbIsHandledExternly);
+
+
+
+    bool findExerciseListId(QString exerciseListName, int &exerciseListId, bool dbIsHandledExternly=false);
+    bool addExerciseName(QString exerciseWord, QString exercisePronunciation, int exerciseListId, bool dbIsHandledExternly=false);
+    bool addExerciseListsToComboBox(QComboBox *comboBox);
+
+    bool addExerciseDataToTreeWidget(QTreeWidget *treeWidget,
+                                     int exerciseListId,
+                                     CDbHndl::SortSymbolNameTreeWidget_ET sortOn,
+                                     char *sortOrder);
+
+    bool addExerciseDataToTreeWidget(QTreeWidget *treeWidget,
+                                     QVector<CDbHndl::exerciseData_ST> &exerciseDataArr,
+                                     int exerciseListId);
+
+    bool insertTopExerciseListData(QString topExerciseName, bool dbIsHandledExternly=false);
+
+    bool findTopExerciseDataId(QString topExerciseName, int &topExerciseDescpId, bool dbIsHandledExternly=false);
+
+    bool insertSubExerciseListData(QString subExerciseName,
+                                       int exerciseTopDescpId,
+                                       bool dbIsHandledExternly=false);
+
+    bool findSubExerciseDataId(QString subExerciseName,
+                               int topExerciseDescpId,
+                               int &subExerciseDescpId,
+                               bool dbIsHandledExternly=false);
+
+    bool addExerciseData(QString exerciseWord,
+                         QString exercisePronunciation,
+                         int exerciseTopDescpId,
+                         int exerciseSubDescpId,
+                         bool dbIsHandledExternly=false);
+
+
+
+    bool delAllExerciseTopData(void);
+    bool delAllExerciseSubData(void);
+    bool delAllExerciseData(void);
+
+    bool addTopExerciseDataToComboBox(QComboBox *comboBox);
+
+    bool addSubExerciseDataToComboBox(QComboBox *comboBox,
+                                      QString topExerciseName,
+                                      bool dbIsHandledExternly=false);
+
+    bool addExerciseDataToTreeWidget(QTreeWidget *treeWidget,
+                                     QVector<CDbHndl::exerciseData_ST> &exerciseDataArr,
+                                     QString exerciseTopDescp,
+                                     QString exerciseSubDescp,
+                                     bool random = true,
+                                     bool clearExerciseDataArr = true,
+                                     bool dbIsHandledExternly=false);
+
+    bool saveExerciseWordAndSoundToFile(QString filename,
+                                         bool dbIsHandledExternly=false);
+
+    bool findExerciseWithNoSound(void);
+
+
+
+    // Stop video help
+
+
+    //===========================================
+
     // start dbSubHndl.cpp
+
+#if 0
+    bool subAnalysis1IntrinsicValueDateExists(QString date,
+                                         int mainAnalysisId,
+                                         int &dateId);
+
+
+    bool insertSubAnalysisIntrinsicValueDate(QString date,
+                           int mainAnalysisId,
+                           int &dateId,
+                           bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
+                      int dateId,
+                      int &dataId,
+                      bool dbIsHandledExternly = false);
+
+
+
+    bool insertSubAnalysisIntrinsicValueData(int dateId,
+                                        int mainAnalysisId,
+                                        int inputDataId,
+                                        bool idIsValid,
+                                        QString intrinsicValue,
+                                        QString tenYearFedNodeInterestRate,
+                                        QString backTrackYears,
+                                        QString calcAnnualInterestRate,
+                                        int &dataId,
+                                        bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisIntrinsicValueData(QString stockName,
+                               QString stockSymbol,
+                               QString &intrinsicValue,
+                               QString &tenYearFedNodeInterestRate,
+                               QString &backTrackYears,
+                               QString &calcAnnualInterestRate,
+                               int &nofArrData,
+                               bool dbIsHandledExternly = false);
+#endif
+
+
+    //---------------------------------------------------------------
+
+    bool subAnalysisTotDividendsDateExists(QString date,
+                                         int mainAnalysisId,
+                                         int &OperatingCashFlowDateId);
+
+
+
+    bool insertSubAnalysisTotDividendsDate(QString date,
+                           int mainAnalysisId,
+                           int &dateId,
+                           bool dbIsHandledExternly = false);
+
+
+
+
+    bool getSubAnalysisTotDividendsDataId(int mainAnalysisId,
+                      int dateId,
+                      int &dataId,
+                      bool dbIsHandledExternly = false);
+
+
+
+    bool insertSubAnalysisTotDividendsData(int dateId,
+                              int mainAnalysisId,
+                              int inputDataId,
+                              bool idIsValid,
+                              QString data,
+                              int &dataId,
+                              bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisTotDividendsData(QString stockName,
+                               QString stockSymbol,
+                               SubAnalysDataST *dataArr,
+                               int &nofArrData,
+                               bool dbIsHandledExternly = false);
+
+
+
 
     // OperatingCashFlow
     bool subAnalysisOperatingCashFlowDateExists(QString date,
@@ -823,23 +1017,100 @@ public:
                                int &nofDividendArrData,
                                bool dbIsHandledExternly = false);
 
+    // TotEarnings
+    bool subAnalysisTotEarningsDateExists(QString date,
+                                         int mainAnalysisId,
+                                         int &earningsDateId);
 
-    //Earnings
-    bool subAnalysisEarningsDateExists(QString date,
+
+
+    bool insertSubAnalysisTotEarningsDate(QString date,
+                           int mainAnalysisId,
+                           int &dateEarningsId,
+                           bool dbIsHandledExternly = false);
+
+
+
+    bool getSubAnalysisTotEarningsDataId(int mainAnalysisId,
+                                int earningsDateId,
+                                int &earningsDataId,
+                                bool dbIsHandledExternly = false);
+
+
+
+
+
+
+    bool insertSubAnalysisTotEarningsData(int earningsDateId,
+                              int mainAnalysisId,
+                              int inputEarningsDataId,
+                              bool earningsDataIdIsValid,
+                              QString dataEarnings,
+                              int &earningsDataId,
+                              bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisTotEarningsData(QString stockName,
+                               QString stockSymbol,
+                               SubAnalysDataST *dataArr,
+                               int &nofArrData,
+                               bool dbIsHandledExternly = false);
+
+
+    //===========================================
+    // Revenue
+
+    bool subAnalysisRevenueDateExists(QString date,
+                                      int mainAnalysisId,
+                                      int &earningsDateId);
+
+    bool insertSubAnalysisRevenueDate(QString date,
+                           int mainAnalysisId,
+                           int &dateEarningsId,
+                           bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisRevenueDataId(int mainAnalysisId,
+                      int dateId,
+                      int &dataId,
+                      bool dbIsHandledExternly = false);
+
+
+    bool insertSubAnalysisRevenueData(int dateId,
+                              int mainAnalysisId,
+                              int inputDataId,
+                              bool dataIdIsValid,
+                              QString data,
+                              int &DataId,
+                              bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisRevenueData(QString stockName,
+                               QString stockSymbol,
+                               SubAnalysDataST *dataArr,
+                               int &nofArrData,
+                               bool dbIsHandledExternly = false);
+
+
+
+
+    //---------------------------
+
+    //Earnings per share
+    bool subAnalysisEarningsPerShareDateExists(QString date,
                                        int mainAnalysisId,
                                        int &earningsDateId);
 
-    bool insertSubAnalysisEarningsDate(QString date,
+    bool insertSubAnalysisEarningsPerShareDate(QString date,
                                        int mainAnalysisId,
                                        int &dateEarningsId,
                                        bool dbIsHandledExternly = false);
 
-    bool getSubAnalysisEarningsId(int mainAnalysisId,
+    bool getSubAnalysisEarningsPerShareId(int mainAnalysisId,
                                   int earningsDateId,
                                   int &earningsDataId,
                                   bool dbIsHandledExternly = false);
 
-    bool insertSubAnalysisEarnings(int earningsDateId,
+    bool insertSubAnalysisEarningsPerShare(int earningsDateId,
                                    int mainAnalysisId,
                                    int inputEarningsDataId,
                                    bool earningsDataIdIsValid,
@@ -849,7 +1120,7 @@ public:
 
 
 
-    bool getSubAnalysisEarningsData(QString stockName,
+    bool getSubAnalysisEarningsPerShareData(QString stockName,
                                     QString stockSymbol,
                                     SubAnalysDataST *earningsDataArr,
                                     int &nofEarningsArrData,
@@ -1076,6 +1347,40 @@ public:
                                             bool dbIsHandledExternly = false);
 
 
+    bool subAnalysisEquityPerShareDateExists(QString date,
+                                              int mainAnalysisId,
+                                              int &dateId);
+
+
+    bool insertSubAnalysisEquityPerShareDate(QString date,
+                                int mainAnalysisId,
+                                int &dateId,
+                                bool dbIsHandledExternly  = false);
+
+
+    bool getSubAnalysisEquityPerShareDataId(int mainAnalysisId,
+                                      int dateId,
+                                      int &dataId,
+                                      bool dbIsHandledExternly = false);
+
+
+
+    bool insertSubAnalysisEquityPerShareData(int dateId,
+                                int mainAnalysisId,
+                                int inputDataId,
+                                bool dataIdIsValid,
+                                QString data,
+                                int &dataId,
+                                bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisEquityPerShareData(QString stockName,
+                                       QString stockSymbol,
+                                       SubAnalysDataST *dataArr,
+                                       int &nofArrData,
+                                       bool dbIsHandledExternly = false);
+
+
+
 
     // Equity
     bool subAnalysisEquityDateExists(QString date,
@@ -1177,6 +1482,14 @@ public:
                        QString goodOwnershipAnswer,
                        QString goodOwnershipComment,
                        QString otherInformation,
+
+                       QString tenYearNoteYield,
+                       QString currEquityPerShare,
+                       QString estimateYearlyDividend,
+                       QString calcIntrinsicValue,
+                       QString intrinsicValueYearSpan,
+                       QString historicalYearlyInterestOnEquity,
+
                        int &analysisDataId,
                        bool dbIsHandledExternly = false);
 
@@ -1225,6 +1538,15 @@ public:
                          QString &goodOwnershipAnswer,
                          QString &goodOwnershipComment,
                          QString &otherInformation,
+
+                         QString &tenYearNoteYield,
+                         QString &currEquityPerShare,
+                         QString &estimateYearlyDividend,
+                         QString &calcIntrinsicValue,
+                         QString &intrinsicValueYearSpan,
+                         QString &historicalYearlyInterestOnEquity,
+
+
                          bool dbIsHandledExternly = false);
 
 

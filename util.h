@@ -1305,6 +1305,7 @@ public:
     static const ColorRgb_ST m_colorRgbArr[CUtil::MAX_NOF_RGB_COLORS];
 
     CUtil();
+    bool saveTextFile(QString dataToStore, QString filename, QString path);
     QColor getQColor(CUtil::ColorRgb_ET color);
     QPen setColor(CUtil::ColorRgb_ET color);
     bool calcMeanAndStdDeviation(double inputData[], int nofData, double &mean, double &stdDev);

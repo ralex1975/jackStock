@@ -1284,6 +1284,10 @@ const CUtil::ColorRgb_ST CUtil::m_colorRgbArr[CUtil::MAX_NOF_RGB_COLORS]=
 };
 #endif
 
+
+
+
+
 /*********************************************************************
  * Function: CUtil()
  *
@@ -1292,7 +1296,42 @@ const CUtil::ColorRgb_ST CUtil::m_colorRgbArr[CUtil::MAX_NOF_RGB_COLORS]=
  *********************************************************************/
 CUtil::CUtil()
 {
+
 }
+
+
+/*********************************************************************
+ * Function: CUtil()
+ *
+ * Description:
+ *
+ *********************************************************************/
+bool CUtil::saveTextFile(QString dataToStore, QString filename, QString path)
+{
+    QString outputFilename;
+    outputFilename = path;
+    outputFilename += "/";
+    outputFilename += filename;
+
+
+    QFile outputFile(outputFilename);
+    outputFile.open(QIODevice::WriteOnly);
+
+    if(!outputFile.isOpen())
+    {
+        qDebug()  << "Failed to open file" << outputFilename;
+        return false;
+    }
+
+    // Point a QTextStream object at the file
+    QTextStream outStream(&outputFile);
+
+   //* Write data to the file
+   outStream << dataToStore;
+
+   outputFile.close();
+}
+
 
 
 /*********************************************************************
@@ -1855,8 +1894,11 @@ void CUtil::htmlCodesToChar(QString inStr, QString &outStr)
     outStr = outStr.replace(QString::fromUtf8("&#233;"), QString::fromUtf8("é"));
     outStr = outStr.replace(QString::fromUtf8("&#248;"), QString::fromUtf8("ø"));
     outStr = outStr.replace(QString::fromUtf8("'"), QString::fromUtf8("\''"));
+    outStr = outStr.replace(QString::fromUtf8("&amp;"), QString::fromUtf8("&"));
 
 }
+
+
 
 
 /*********************************************************************

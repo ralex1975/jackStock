@@ -44,11 +44,17 @@ public:
 
     };
 
+    static bool m_supressRedirectionMessageBox;
+
     HttpFinishStatus_ET m_httpStatus;
      int m_fileNumber;
     HttpWindow(QWidget *parent = 0);
     void startRequest(QUrl url, QString fileName, int fileNumber);
     void cancelDownload();
+
+    static void setSupressRedirectionMessageBox(bool value);
+    static bool getSupressRedirectionMessageBox(void);
+
 
 private slots:
     void httpFinished();

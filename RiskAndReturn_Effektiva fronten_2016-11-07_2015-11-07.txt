@@ -1,2 +1,0 @@
-Stockname|Risk|Return|startDate|endDate|
-|||2015-11-07|2016-11-07|

@@ -13,6 +13,7 @@
 
 #include "httpwindow.h"
 
+bool HttpWindow::m_supressRedirectionMessageBox = true; // ajn 170423 = false;
 
 
 /****************************************************************
@@ -30,6 +31,7 @@ HttpWindow::HttpWindow(QWidget *parent)
 {
     m_httpStatus = HTTP_STATUS_IDLE;
     m_fileNumber = 0;
+
 }
 
 
@@ -109,6 +111,38 @@ void HttpWindow::cancelDownload()
 }
 
 
+/****************************************************************
+ *
+ * Function:    setSupressRedirectionMessageBox()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void HttpWindow::setSupressRedirectionMessageBox(bool value)
+{
+    m_supressRedirectionMessageBox = value;
+
+}
+
+/****************************************************************
+ *
+ * Function:    getSupressRedirectionMessageBox()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool HttpWindow::getSupressRedirectionMessageBox(void)
+{
+    return m_supressRedirectionMessageBox;
+
+}
+
 
 /****************************************************************
  *
@@ -122,6 +156,7 @@ void HttpWindow::cancelDownload()
  ****************************************************************/
 void HttpWindow::httpFinished()
 {
+    bool supressMsgBox = false;
 
     // Have user canceld the downloading
     if (httpRequestAborted)
@@ -140,8 +175,6 @@ void HttpWindow::httpFinished()
     }
 
     // All data is received flush and close file
-
-
     file->flush();
     file->close();
 
@@ -151,12 +184,33 @@ void HttpWindow::httpFinished()
     if (reply->error())
     {
         file->remove();
-        QMessageBox::information(this, tr("HTTP"), tr("Download failed: %1.").arg(reply->errorString()));
+
+        // Do not show this error when download omx data
+        bool supressMsgBox = getSupressRedirectionMessageBox();
+
+        if(supressMsgBox == false)
+        {
+            QMessageBox::information(this, tr("HTTP"), tr("Download failed: %1.").arg(reply->errorString()));
+        }
     }
     else if (!redirectionTarget.isNull())
     {
+
         QUrl newUrl = url.resolved(redirectionTarget.toUrl());
-        if (QMessageBox::question(this, tr("HTTP"), tr("Redirect to %1 ?").arg(newUrl.toString()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+
+
+        supressMsgBox = getSupressRedirectionMessageBox();
+        // Do not show this message box when download omx data
+        if(supressMsgBox == true)
+        {
+            url = newUrl;
+            reply->deleteLater();
+            file->open(QIODevice::WriteOnly);
+            file->resize(0);
+            startRequest(url,  m_fileName, m_fileNumber);
+            return;
+        }
+        else if (QMessageBox::question(this, tr("HTTP"), tr("Redirect to %1 ?").arg(newUrl.toString()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
         {
             url = newUrl;
             reply->deleteLater();
@@ -223,9 +277,11 @@ void HttpWindow::sslErrors(QNetworkReply*,const QList<QSslError> &errors)
         errorString += error.errorString();
     }
     
+
     if (QMessageBox::warning(this, tr("HTTP"), tr("One or more SSL errors has occurred: %1").arg(errorString),
                              QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore)
     {
         reply->ignoreSslErrors();
     }
+
 }

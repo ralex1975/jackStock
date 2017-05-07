@@ -23,9 +23,11 @@
 #include <QString>
 #include "inc/GetHtmlPage/getYahooKeyStatistics.h"
 
+#include "readexercisefile.h"
+#include "parseomxbridgedata.h"
 
 
-
+#define MAX_SIZE_OMX_BRIDGE_DATA 1000
 
 namespace Ui {
 class ImportData;
@@ -34,6 +36,11 @@ class ImportData;
 class ImportData : public QDialog
 {
     Q_OBJECT
+
+    struct OmxBridgeDataST m_omxBridgeDataArr[MAX_SIZE_OMX_BRIDGE_DATA];
+    int m_nofOmxBridgeArrData;
+    int m_omxBridgeArrIndex;
+
 
     enum StockListColName_ET
     {
@@ -126,7 +133,7 @@ class ImportData : public QDialog
     CYahooStockPlotUtil::StockData_ST m_stockData;
     QVector <CYahooStockPlotUtil::StockData_ST> m_stockArr;
 
-
+    readExerciseFile m_ref;
 
 
     
@@ -172,8 +179,11 @@ public:
 private:
     void reqCompanyDescriptionHtmlFile(QString path, QUrl url);
 
-
     bool parseCompanyName(QTextStream &inStream, QString &result);
+
+    // Omx Bridge Data
+    void reqOmxBridgeDataHtmlFile(QString path, QUrl url);
+
 
 signals:
      void emitReqSingleStockDataFromServer();
@@ -185,6 +195,10 @@ public slots:
     void slotImportSingelStockDataIsFinish(int);
    // void slotImportSingelStockDataIsFinish(int);
    // void slotReceivedAssetTaDataFromServer(int);
+
+    // Omx Bridge Data
+    void slotOmxBridgeDataHtmlPageIsRecv(int number);
+    void slotReqNextOmxBridgData();
 
 
 private slots:
@@ -211,6 +225,10 @@ private slots:
 
 
     void on_pushButton_2_clicked();
+    void on_pushButtonImportVideoHelp_clicked();
+    // void on_pushButton_3_clicked();
+    // void on_pushButtonGetAnualData_clicked();
+    void on_pushButtonParseOmxBridgeData_clicked();
 };
 
 #endif // IMPORTDATA_H

@@ -2,6 +2,13 @@
 #define COMMON_H
 
 #include <QString>
+
+
+#define PATH_EXERCICE_FILE "database/Video/exerciseList.txt"
+#define PATH_EXERCICE_FILES "database/Video/"
+
+
+
 #define PATH_JACK_STOCK_DB "jackStock.db"
 
 #define NO_DATA_RECIVED 0x00

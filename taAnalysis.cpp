@@ -14,7 +14,8 @@
 #include <qwt_plot_layout.h>
 
 
-#define TIME_2_MIN ((int)120000)
+#define INDEX_MY_PORTFOLIO      ((int) 2)
+#define TIME_2_MIN              ((int) 120000)
 
 const TaAnalysis::TimePeriodDays_ST TaAnalysis::m_timePeriodDaysArr[TaAnalysis::MAX_NOF_TIME_PERIOD_DAYS_ITEMS] =
 {
@@ -62,7 +63,7 @@ TaAnalysis::TaAnalysis(QWidget *parent) :
 
     ui->StockListComboBox->clear();
     db.addStockListsToComboBox(ui->StockListComboBox);
-    ui->StockListComboBox->setCurrentIndex(0);
+    ui->StockListComboBox->setCurrentIndex(INDEX_MY_PORTFOLIO);
 
     on_SelStockListButton_clicked();
 

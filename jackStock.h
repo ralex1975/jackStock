@@ -18,6 +18,7 @@ class CJackStock : public QMainWindow
 public:
     explicit CJackStock(QWidget *parent = 0);
     ~CJackStock();
+
     
 private slots:
     void on_pushButton_clicked();

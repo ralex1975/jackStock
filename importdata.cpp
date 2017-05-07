@@ -18,6 +18,9 @@
 #include "parsecompdescription.h"
 
 #include "inc/guiUtil/guiFinanceCtrls.h"
+#include "parseomxallfinancelinkdata.h"
+#include "parseomxbridgedata.h"
+
 
 
 
@@ -67,6 +70,9 @@ ImportData::ImportData(QWidget *parent) :
     ui(new Ui::ImportData)
 {
     GuiFinanceCtrls gfc;
+
+    // special case
+    m_nofOmxBridgeArrData = 0;
 
 
     ui->setupUi(this);
@@ -335,7 +341,6 @@ void ImportData::slotReqNextCompanyData()
  *******************************************************************/
 void ImportData::slotHtmlPageIsRecv(int number)
 {
-
     number = number;
     m_waitOnServerResp = false;
 
@@ -1555,6 +1560,10 @@ void ImportData::reqCompanyDescriptionHtmlFile(QString path, QUrl url)
  *******************************************************************/
 void ImportData::slotCompanyDescriptionHtmlPageIsRecv(int number)
 {
+    QString req;
+    QString path;
+    QUrl url;
+
 
     number = number;
     m_waitOnServerResp = false;
@@ -1572,6 +1581,8 @@ void ImportData::slotCompanyDescriptionHtmlPageIsRecv(int number)
     else
     {
         m_timeoutTimer->stop();
+
+        // Shall we parse OMX bridge data
         if(m_displayFinish == true)
         {
             m_displayFinish = false;
@@ -1732,3 +1743,275 @@ void ImportData::on_pushButton_2_clicked()
 
 
 }
+
+
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description: Import video help data from file
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::on_pushButtonImportVideoHelp_clicked()
+{
+
+    m_ref.readTopExerciseFile();
+
+    QMessageBox::information(NULL, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
+
+
+
+
+}
+
+#if 0
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description: Get all stock names and anual data links from omx
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::on_pushButton_3_clicked()
+{
+    ParseOmxAllFinanceLinkData po;
+    // bool res;
+    QString filename = "database/inputData/Omx/AllCompLinks.html";
+
+    po.parseFinanceLinks(filename);
+}
+#endif
+
+
+#if 0
+/****************************************************************
+ *
+ * Function:    on_pushButtonGetAnualData_clicked()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::on_pushButtonGetAnualData_clicked()
+{
+#if 0
+    QString req;
+    QString path;
+    QUrl url;
+    // CDbHndl db;
+    m_displayFinish = true;
+
+    m_waitOnServerResp = false;
+    path = "database/inputData/Omx/result1.html";
+
+    req.sprintf("http://lt.morningstar.com/gj8uge2g9k/stockreport/default.aspx?&SecurityToken=0P0000A6R4]3]1]E0EXG$XSTO_3110&externalidexchange=EX$$$$XSTO&LanguageId=en-GB&CurrencyId=SEK&BaseCurrencyId=SEK&tab=10&ClearXrayPort");
+    url = req;
+
+    reqCompanyDescriptionHtmlFile(path, url);
+    m_sendNextReq = true;
+
+
+
+    ParseOmxAllFinanceLinkData po;
+    QString filename = "database/inputData/Omx/result1.html";
+
+    po.parseAnualData(filename);
+
+    #endif
+
+}
+#endif
+
+
+/****************************************************************
+ *
+ * Function:    on_pushButtonParseOmxBridgeData_clicked()
+ *
+ * Description:
+ *
+ * The file JackStockOmxBridge.csv is handmade, and Stock number can be find here:
+ * https://www.youinvest.co.uk/research-tools/quickrank/shares
+ *
+ * You need to extract 0P0000A6HC by hand from this list
+ * BEIA-B.ST|Beijer Alma B|Beijer Alma AB B|0P0000A6HC|
+ *
+ ****************************************************************/
+void ImportData::on_pushButtonParseOmxBridgeData_clicked()
+{
+    QString filename = "database/inputData/KeyTaBridgeData/JackStockOmxBridge.csv";
+    ParseOmxBridgeData pob;
+
+    QString req;
+    QString path;
+    QUrl url;
+    QString tmpStr;
+
+    tmpStr = QString::fromUtf8("Vänta...");
+
+
+    ui->lineEditParsedOmxStockName->clear();
+    ui->lineEditParsedOmxStockName->insert(tmpStr);
+
+   // Get all OMX bridge data
+   if(true == pob.readFile(filename, m_omxBridgeDataArr, m_nofOmxBridgeArrData, MAX_SIZE_OMX_BRIDGE_DATA))
+   {
+       if(m_nofOmxBridgeArrData > 0)
+       {
+           m_omxBridgeArrIndex = 0;
+
+
+
+           path = "database/inputData/Omx/result1.html";
+
+           // req = m_omxBridgeDataArr[m_omxBridgeArrIndex].omxLink;
+           req.sprintf("http://lt.morningstar.com/gj8uge2g9k/stockreport/default.aspx?&SecurityToken=%s]3]1]E0EXG$XSTO_3110&externalidexchange=EX$$$$XSTO&LanguageId=en-GB&CurrencyId=SEK&BaseCurrencyId=SEK&tab=10&ClearXrayPort", m_omxBridgeDataArr[m_omxBridgeArrIndex].omxLink.toLocal8Bit().constData());
+           qDebug() << req;
+           url = req;
+
+
+           // Request html page received in function slotOmxBridgeDataHtmlPageIsRecv()
+           m_waitOnServerResp = false;
+           reqOmxBridgeDataHtmlFile(path, url);
+
+       }
+   }
+
+}
+
+
+//============================
+
+// Get OMX bridge data html file
+
+
+/****************************************************************
+ *
+ * Function:    reqOmxBridgeDataHtmlFile()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::reqOmxBridgeDataHtmlFile(QString path, QUrl url)
+{
+    if(m_waitOnServerResp == true)
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Vänta: Upptagen med hämta data"));
+        return;
+    }
+
+    QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotOmxBridgeDataHtmlPageIsRecv(int)));
+
+    m_hw1.startRequest(url, path, 0x01);
+    m_waitOnServerResp = true;
+    m_sendNextReq = true;
+}
+
+
+/*******************************************************************
+ *
+ * Function:    slotCompanyDescriptionHtmlPageIsRecv()
+ *
+ * Description: This function is invoked when a html page is
+ *              completely received.
+ *
+ *              Do not parse here instead wait. And then call callback
+ *              function that parse and request next page.
+ *
+ *******************************************************************/
+void ImportData::slotOmxBridgeDataHtmlPageIsRecv(int number)
+{
+    number = number;
+    m_waitOnServerResp = false;
+
+    m_timeoutTimer->stop();
+
+    if(m_omxBridgeArrIndex < m_nofOmxBridgeArrData)
+    {
+        if(m_sendNextReq == true)
+        {
+            m_timeoutTimer->singleShot(200, this, SLOT(slotReqNextOmxBridgData()));
+            m_sendNextReq = false;
+        }
+    }
+    else
+    {
+        QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
+    }
+
+}
+
+
+/****************************************************************
+ *
+ * Function:    slotReqNextOmxBridgData()
+ *
+ * Description: Parse data and request next htm l file
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::slotReqNextOmxBridgData()
+{
+    QString path;
+    QString req;
+    QUrl url;
+
+    // Stop timer
+    m_timeoutTimer->stop();
+
+
+    // Parse data
+    ParseOmxAllFinanceLinkData po;
+    QString filename = "database/inputData/Omx/result1.html";
+    if(m_omxBridgeDataArr[m_omxBridgeArrIndex].omxStockName.length() > 0)
+    {
+        QString tmpStr;
+        tmpStr.sprintf("%d, (%d) ", m_omxBridgeArrIndex, m_nofOmxBridgeArrData-1);
+        tmpStr += m_omxBridgeDataArr[m_omxBridgeArrIndex].omxStockName;
+        ui->lineEditParsedOmxStockName->clear();
+        ui->lineEditParsedOmxStockName->insert(tmpStr);
+    }
+    po.parseAnualData(filename, m_omxBridgeDataArr, m_omxBridgeArrIndex);
+
+    m_omxBridgeArrIndex++;
+
+    // Request next html page to parse
+    if(m_omxBridgeArrIndex < m_nofOmxBridgeArrData)
+    {
+        // Path to file that is downloaded
+        path = "database/inputData/Omx/result1.html";
+
+        // req.sprintf("http://lt.morningstar.com/gj8uge2g9k/stockreport/default.aspx?&SecurityToken=0P0000A6R4]3]1]E0EXG$XSTO_3110&externalidexchange=EX$$$$XSTO&LanguageId=en-GB&CurrencyId=SEK&BaseCurrencyId=SEK&tab=10&ClearXrayPort");
+
+
+        // FIXA DETTA
+        req.sprintf("http://lt.morningstar.com/gj8uge2g9k/stockreport/default.aspx?&SecurityToken=%s]3]1]E0EXG$XSTO_3110&externalidexchange=EX$$$$XSTO&LanguageId=en-GB&CurrencyId=SEK&BaseCurrencyId=SEK&tab=10&ClearXrayPort", m_omxBridgeDataArr[m_omxBridgeArrIndex].omxLink.toLocal8Bit().constData());
+        url = req;
+        // url = m_omxBridgeDataArr[m_omxBridgeArrIndex].omxLink;
+
+        // Request html page received in function slotOmxBridgeDataHtmlPageIsRecv()
+        m_waitOnServerResp = false;
+        reqOmxBridgeDataHtmlFile(path, url);
+        m_sendNextReq = true;
+    }
+    else
+    {
+        QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
+    }
+
+}
+
+
+

@@ -31,6 +31,7 @@
 #include "keyIndicators_3.h"
 #include "adminMyPortFolio.h"
 #include "stockAnalysisTab.h"
+#include "video.h"
 
 
 TabDialog *g_TabDialog;
@@ -65,21 +66,20 @@ TabDialog::TabDialog(QWidget *parent)
 
     tabWidget->addTab(new CWebBrowserTab(parent), QString::fromUtf8("Webläsare"));
     tabWidget->addTab(new CTableTab(parent),QString::fromUtf8("Nyckeltal"));
-    tabWidget->addTab(new FaTab(parent), QString::fromUtf8("FA"));
     tabWidget->addTab(new TaAnalysis(parent), QString::fromUtf8("TA"));
+    tabWidget->addTab(new FaTab(parent), QString::fromUtf8("FA"));
     tabWidget->addTab(new CTADlg(parent), QString::fromUtf8("TA/FA"));
-    tabWidget->addTab(new Portfolio(parent), QString::fromUtf8("Portfölj"));
     tabWidget->addTab(new EfficientPortfolio(parent), QString::fromUtf8("Portföljoptimering"));
     tabWidget->addTab(new ImportData(parent), QString::fromUtf8("Importera"));
     tabWidget->addTab(new TabHelp(parent), QString::fromUtf8("Anteckningar"));
-    tabWidget->addTab(new GraphTab(parent), QString::fromUtf8("Test, Graf"));
-    tabWidget->addTab(new CJackStock(parent), QString::fromUtf8("Färgtest"));
     tabWidget->addTab(new LeastSquaresTaDlg(parent), QString::fromUtf8("Nyckeltal2"));
     tabWidget->addTab(new keyIndicators_3(parent), QString::fromUtf8("Nyckeltal3"));
     tabWidget->addTab(new AdminMyPortfolio(parent), QString::fromUtf8("Portföljutveckling"));
     tabWidget->addTab(new StockAnalysisTab(parent), QString::fromUtf8("Analys"));
-
-
+    tabWidget->addTab(new Video(parent), QString::fromUtf8("Video"));
+    tabWidget->addTab(new GraphTab(parent), QString::fromUtf8("Test, Graf"));
+    tabWidget->addTab(new CJackStock(parent), QString::fromUtf8("Färgtest"));
+    tabWidget->addTab(new Portfolio(parent), QString::fromUtf8("Portfölj"));
 
 
 

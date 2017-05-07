@@ -863,8 +863,6 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
         qDebug() << "maxY" << allPlotData.axis.maxY;
     }
 
-
-
     allPlotData.stock[index].data.attach(qwtPlot);
     qDebug() << "index" << index;
     qwtPlot->replot();

@@ -322,6 +322,9 @@ void CTableTab::on_FilterData_clicked()
     // Set Filter Combo Box last Selection
     (void)db.dbDataSetFilterComboSel(&m_filterCtrls);
 
+    //ui->tableView->resizeColumnsToContents();
+    //ui->tableView->resize(1100,550);
+
     m_sortWithoutfilter = true;
 
 }

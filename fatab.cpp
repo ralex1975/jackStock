@@ -3,13 +3,13 @@
 #include "util.h"
 
 
-#define GROWTH_TYPE_SALES 0
-#define GROWTH_TYPE_PROFIT 1
+#define GROWTH_TYPE_SALES       0
+#define GROWTH_TYPE_PROFIT      1
 
 
 /*******************************************************************
  *
- * Function:    ()
+ * Function:    FaTab()
  *
  * Description:
  *
@@ -357,12 +357,18 @@ void FaTab::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
             ui->labelReportAvg_2->clear();
             ui->labelReportAvg_2->setText(reportAvg);
 
-            if(growthRate > 0)
+
+            bool isDouble;
+            double earningPerShare;
+            // avgResult[0].toDouble() = Earning per share
+            isDouble = cu.number2double(avgResult[0], earningPerShare);
+
+            if((growthRate > 0) && (isDouble == true))
             {
                 qDebug() << growthRate;
-                double calcPe = 8.5 + growthRate * 2;
+                double intrinsicValue = earningPerShare * (8.5 + (growthRate * 2));
                 QString str;
-                str.sprintf("P/E = %.2f, (g = %.2f)", calcPe, growthRate);
+                str.sprintf("Intrinsic value = %.2f, (g = %.2f)", intrinsicValue, growthRate);
                 ui->labelGrahamCalcPe->clear();
                 ui->labelGrahamCalcPe->setText(str);
             }

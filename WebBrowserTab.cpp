@@ -41,9 +41,11 @@ CWebBrowserTab::CWebBrowserTab(QWidget *parent) :
     ui->setupUi(this);
     ui->webView->setUrl(url);
     //ui->webView->load(url);
+    //QString str;
+
+
 
     installEventFilter(this);
-
 }
 
 /*******************************************************************
@@ -92,6 +94,8 @@ void CWebBrowserTab::on_pushButton_3_clicked()
 {
     QUrl url("https://www.nordnet.se/mux/web/marknaden/kurslista/aktier.html?marknad=Sverige&lista=1_1&large=on&mid=on&sektor=0&subtyp=price&sortera=aktie&sorteringsordning=stigande");
     ui->webView->setUrl(url);
+
+    // http://quotes.wsj.com/bond/BX/TMBMKSE-10Y
 }
 
 
@@ -118,4 +122,16 @@ void CWebBrowserTab::on_pushButton_4_clicked()
 void CWebBrowserTab::on_pushButton_5_clicked()
 {
     ui->webView->forward();
+}
+
+void CWebBrowserTab::on_pushButton_6_clicked()
+{
+    QUrl url("https://www.investing.com/rates-bonds/sweden-government-bonds");
+    ui->webView->setUrl(url);
+}
+
+void CWebBrowserTab::on_pushButtonShillerPe_clicked()
+{
+    QUrl url("http://www.gurufocus.com/shiller-PE.php");
+    ui->webView->setUrl(url);
 }

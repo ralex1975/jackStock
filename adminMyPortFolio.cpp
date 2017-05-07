@@ -374,10 +374,10 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
     int month;
     int minYear;
     int minMonth;
-    double investedMoney;
+    double investedMoney = 0;
     double withdraw;
     //double addedMoney;
-    double valueIncrease;
+    double valueIncrease = 0;
     QString data;
     CDbHndl db;
     QString doubleNumber;
@@ -444,6 +444,7 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
     }
 
 
+    investedMoney = 0;
     for(int i = 1, row = maxRow - 2; row >= 0; row--)
     {
         // Get month count since min date
@@ -463,7 +464,7 @@ void AdminMyPortfolio::plotPortfolioMarketValue(CExtendedTable &table, int maxRo
         // Calc increased marked value
         double diff = (m_y[row]-m_y[row+1]);
 
-        double investedMoney;
+        //double investedMoney = 0;
 
 
         withdraw = 0;

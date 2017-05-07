@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -396,6 +396,52 @@
      </property>
      <property name="text">
       <string>Välj Mid Cap</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>Video help</string>
+    </attribute>
+    <widget class="QPushButton" name="pushButtonImportVideoHelp">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Import data from file</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>OMX Finance data</string>
+    </attribute>
+    <widget class="QPushButton" name="pushButtonParseOmxBridgeData">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Parse omx bridge data</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditParsedOmxStockName">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>30</y>
+       <width>841</width>
+       <height>22</height>
+      </rect>
      </property>
     </widget>
    </widget>

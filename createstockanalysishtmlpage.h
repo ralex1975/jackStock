@@ -11,6 +11,8 @@
 class createStockAnalysisHtmlPage
 {
 
+
+
 public:
     createStockAnalysisHtmlPage();
     void createHtmlPage(struct HtmlStockAnalysPageDataST &hSAPData);

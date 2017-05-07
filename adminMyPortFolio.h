@@ -11,6 +11,7 @@
 #include "yahooStockPlotUtil.h"
 #include <qwt_plot_histogram.h>
 #include "extendedQwtPlot.h"
+#include "yahooStockPlotUtil.h"
 
 
 namespace Ui {

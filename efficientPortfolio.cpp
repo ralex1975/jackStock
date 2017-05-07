@@ -652,7 +652,10 @@ void EfficientPortfolio::uppdateStockArrWithRiskAndReturn(void)
     QString endDate = ui->lineEditEndDate->text();
     int colorNumber = 0;
 
-    filename = QString::fromUtf8("RiskAndReturn_");
+    filename = qApp->applicationDirPath();
+    filename += "/database/inputData/RiskAndReturn/";
+
+    filename += QString::fromUtf8("RiskAndReturn_");
     filename += ui->StockListComboBox->currentText();
     filename += "_";
     filename += endDate;

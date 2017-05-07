@@ -81,7 +81,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -533,7 +533,7 @@
       </font>
      </property>
      <property name="text">
-      <string>P/E = 8,5 + 2g  (g = vinsttillväxten i %)</string>
+      <string>Intrinsic value = vinst/aktie * (8,5 + 2g)  (g = vinsttillväxten i %)</string>
      </property>
     </widget>
     <widget class="QLabel" name="labelGrahamCalcPe">
@@ -551,7 +551,7 @@
       </font>
      </property>
      <property name="text">
-      <string>P/E =</string>
+      <string>Intrinsic value =</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_9">
@@ -783,7 +783,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>190</y>
        <width>271</width>
        <height>121</height>
       </rect>
@@ -803,7 +803,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>170</y>
        <width>181</width>
        <height>17</height>
       </rect>
@@ -824,7 +824,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>170</y>
+       <y>30</y>
        <width>271</width>
        <height>131</height>
       </rect>
@@ -847,7 +847,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>150</y>
+       <y>10</y>
        <width>91</width>
        <height>17</height>
       </rect>
