@@ -1964,3 +1964,17 @@ void FaTab::displayHistorcalStockPrices(QTreeWidget *treeWidget, int coly, int i
     // Reset zoomer
     m_plot.initPlotPicker(ui->qwtPlotPePrice);
 }
+
+
+#if 0
+void FaTab::on_pushButtonSaveImage4_clicked()
+{
+
+    QwtPlotRenderer renderer;
+    ui->qwtPlotSalesGrowth->replot();
+    renderer.renderDocument(ui->qwtPlotSalesGrowth, "test.svg", QSizeF(671, 481));
+
+}
+#endif
+
+

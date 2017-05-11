@@ -146,6 +146,8 @@ private slots:
     void on_pushButNextTab_2_clicked();
     void on_pushButNextTabPg3_clicked();
 
+    void on_pushButtonSaveImage4_clicked();
+
 private:
     Ui::FaTab *ui;
 };
