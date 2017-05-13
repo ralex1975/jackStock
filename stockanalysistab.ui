@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>8</number>
+    <number>9</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1527,7 +1527,7 @@
    </widget>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
-     <string>Grafer</string>
+     <string>Grafer1</string>
     </attribute>
     <widget class="QwtPlot" name="qwtPlot_1">
      <property name="geometry">
@@ -1809,6 +1809,237 @@
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="tab_24">
+    <attribute name="title">
+     <string>Grafer2</string>
+    </attribute>
+    <widget class="QTabWidget" name="tabWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1031</width>
+       <height>561</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_25">
+      <attribute name="title">
+       <string>Industri / Handel</string>
+      </attribute>
+      <widget class="QTabWidget" name="tabWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1031</width>
+         <height>561</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_12">
+        <attribute name="title">
+         <string>Kort skuld</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_11">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_13">
+        <attribute name="title">
+         <string>Tot skuld</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_12">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_14">
+        <attribute name="title">
+         <string>Vinst</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_13">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_15">
+        <attribute name="title">
+         <string>Omst, Vinst</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_17">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_16">
+        <attribute name="title">
+         <string>Utdel</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_14">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_17">
+        <attribute name="title">
+         <string>Vinst/Utdel</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_16">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_18">
+        <attribute name="title">
+         <string>Kflöde1</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_15">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_19">
+        <attribute name="title">
+         <string>Kflöde2 </string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_18">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_20">
+        <attribute name="title">
+         <string>Vtillvxt</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_19">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_21">
+        <attribute name="title">
+         <string>Vmrg</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_20">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_22">
+        <attribute name="title">
+         <string>Avk eget kap</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_22">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_23">
+        <attribute name="title">
+         <string>Skuld, Eget kap, Vinst, Utdel</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlot_21">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_26">
+      <attribute name="title">
+       <string>Fastighetsbolag</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_27">
+      <attribute name="title">
+       <string>Försörjningsbolag</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_28">
+      <attribute name="title">
+       <string>Bank</string>
+      </attribute>
+     </widget>
+    </widget>
+   </widget>
    <widget class="QWidget" name="tab_6">
     <attribute name="title">
      <string>Analys alla</string>
@@ -1841,6 +2072,9 @@
        <width>1041</width>
        <height>571</height>
       </rect>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_10">
       <attribute name="title">
@@ -2244,7 +2478,7 @@
      </widget>
      <widget class="QWidget" name="tab_11">
       <attribute name="title">
-       <string>Tab 2</string>
+       <string>Page2</string>
       </attribute>
      </widget>
     </widget>
