@@ -14,7 +14,7 @@
 #include <qwt_plot_layout.h>
 
 
-#define INDEX_MY_PORTFOLIO      ((int) 2)
+#define INDEX_MY_PORTFOLIO      ((int) 3)
 #define TIME_2_MIN              ((int) 120000)
 
 const TaAnalysis::TimePeriodDays_ST TaAnalysis::m_timePeriodDaysArr[TaAnalysis::MAX_NOF_TIME_PERIOD_DAYS_ITEMS] =

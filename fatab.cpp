@@ -1978,3 +1978,28 @@ void FaTab::on_pushButtonSaveImage4_clicked()
 #endif
 
 
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void FaTab::on_pushButtonSaveImage4_clicked()
+{
+    QString filename = "img_test.png";
+
+    QPixmap qPix = QPixmap::grabWidget(ui->qwtPlotSalesGrowth);
+
+    if(qPix.isNull())
+    {
+        qDebug("Failed to capture the plot for saving");
+        return;
+    }
+
+   qPix.save(filename, "png");
+
+}
+
+

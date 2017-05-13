@@ -29,3 +29,10 @@ database
 Help
 test
 .hg
+bigobjects.txt
+bigtosmall.txt
+img_test.png
+res_files.txt
+res_list.txt
+res_push.txt
+

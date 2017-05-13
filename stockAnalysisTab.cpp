@@ -11,7 +11,7 @@
 #include "math.h"
 #include <qwt_scale_engine.h>
 
-#define INDEX_MY_PORTFOLIO      ((int) 2)
+#define INDEX_MY_PORTFOLIO      ((int) 3)
 
 
 //Sub Analys Tables defines
