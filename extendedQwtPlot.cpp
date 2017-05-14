@@ -139,6 +139,119 @@ void CExtendedQwtPlot::setYAxisScale(QwtPlot *qwtPlot, double min, double max)
 
 /*******************************************************************
  *
+ * Function: setCanvasBackground()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::setCanvasBackground(QwtPlot *qwtPlot, QColor color)
+{
+    qwtPlot->setCanvasBackground( QColor( color ) );
+
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *  QwtSymbol::Ellipse,     // OK
+ *  QwtSymbol::Rect,        // OK
+ *  QwtSymbol::Diamond,     // OK
+ *  QwtSymbol::Triangle,    // OK
+ *  QwtSymbol::DTriangle,   // OK
+ *  QwtSymbol::UTriangle,
+ *  QwtSymbol::LTriangle,
+ *  QwtSymbol::RTriangle,
+ *  QwtSymbol::Cross,
+ *  QwtSymbol::XCross,
+ *  QwtSymbol::HLine,
+ *  QwtSymbol::VLine,
+ *  QwtSymbol::Star1,
+ *  QwtSymbol::Star2,
+ *  QwtSymbol::Hexagon,
+ *
+ *
+ *  Qt::color0,
+ *  Qt::color1,
+ *  Qt::black,
+ *  Qt::white,
+ *  Qt::darkGray,
+ *  Qt::gray,
+ *  Qt::lightGray,
+ *  Qt::red,
+ *  Qt::green,
+ *  Qt::blue,
+ *  Qt::cyan,
+ *  Qt::magenta,
+ *  Qt::yellow,
+ *  Qt::darkRed,
+ *  Qt::darkGreen,
+ *  Qt::darkBlue,
+ *  Qt::darkCyan,
+ *  Qt::darkMagenta,
+ *  Qt::darkYellow,
+ *
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::setLegendSymbol(QwtPlot *qwtPlot,
+                                       QString legendText,
+                                       QwtSymbol legendSymbol,
+                                       QColor legendColor,
+                                       int legendSize)
+{
+
+    // Grab curve legend belong to
+    QwtPlotCurve *curve = new QwtPlotCurve(legendText);
+    curve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    curve->setPen(QPen(legendColor));
+    //d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    //d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowSymbol );
+    //d_curve1->setYAxis( QwtPlot::yLeft);
+
+    // Set legen symbol (Ex: QwtSymbol::Rect)
+    QwtSymbol *symbol = new QwtSymbol(legendSymbol);  // QwtSymbol::DTriangle /*QwtSymbol::Rect*/
+    symbol->setPen(QPen(legendColor));     // Frame color               (Ex: Qt:red)
+    symbol->setBrush(legendColor);         // Fill color                (Ex: Qt:red)
+    symbol->setSize(legendSize);           // Set symbolsize            (Ex: 10)
+    curve->setSymbol(symbol);              // Add symbol info to cuve
+    curve->attach(qwtPlot);                // Add curve info to plot
+
+
+#if 0
+    QWidget* w = d_curve1->legendItem();
+    //QWidget* w = QwtPlotCurve::legendItem();
+    int width;
+    int hight;
+    QSize defaultSize = d_curve1->legendItem()->minimumSizeHint();
+    width = int( (double) defaultSize.height() * (double) 10);
+    hight = int((double)defaultSize.width() * (double) 10);
+    defaultSize.setWidth(width);
+    defaultSize.setHeight(hight);
+    w->setMinimumSize(defaultSize);
+    d_curve1->legendItem()->setBaseSize(defaultSize);
+    qwtPlot->setStyleSheet("background-color:white; color:black; border-radius: 0px; font: 12pt \"Deja Vu\";");
+#endif
+    // eqp.setRightLegend(qwtPlot);
+    //eqp.setCanvasBackground(qwtPlot, canvasColor);
+    // eqp.setXAxisTitle(qwtPlot, QString title, int fontSize=10);
+    //eqp.setYAxisTitle(qwtPlot, QString title);
+    // eqp.setYAxisFontSize(qwtPlot, int fontSize);
+    // eqp.setXAxisScale(QwtPlot *qwtPlot, double min, double max);
+    //eqp.setYAxisScale(QwtPlot *qwtPlot, double min, double max);
+
+}
+
+
+
+
+/*******************************************************************
+ *
  * Function: setRightLegend()
  *
  * Description: OBS Memory leaks need to be fixed here (several places)
@@ -157,7 +270,7 @@ void CExtendedQwtPlot::setRightLegend(QwtPlot *qwtPlot)
 
 /*******************************************************************
  *
- * Function: setRightLegend()
+ * Function: setLegend()
  *
  * Description: OBS Memory leaks need to be fixed here (several places)
  *
@@ -166,12 +279,12 @@ void CExtendedQwtPlot::setRightLegend(QwtPlot *qwtPlot)
  *       QwtPlot::RightLegend
  *
  *******************************************************************/
-void CExtendedQwtPlot::setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos)
+void CExtendedQwtPlot::setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition location)
 {
     QwtLegend *legend = new QwtLegend;
     legend->setItemMode( QwtLegend::ReadOnlyItem );
     legend->setFont(QFont("Helvetica", 10));
-    qwtPlot->insertLegend(legend, pos);
+    qwtPlot->insertLegend(legend, location);
 }
 
 

@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>9</number>
+    <number>7</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1829,7 +1829,7 @@
       <attribute name="title">
        <string>Industri / Handel</string>
       </attribute>
-      <widget class="QTabWidget" name="tabWidget_3">
+      <widget class="QTabWidget" name="tabWidgetCurrAssTotLiab">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1845,14 +1845,27 @@
         <attribute name="title">
          <string>Kort skuld</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_11">
+        <widget class="QwtPlot" name="qwtPlotCurrAssLiab">
          <property name="geometry">
           <rect>
-           <x>300</x>
-           <y>0</y>
-           <width>681</width>
-           <height>491</height>
+           <x>250</x>
+           <y>20</y>
+           <width>651</width>
+           <height>401</height>
           </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButtonSaveImg_2">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>80</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>PushButton</string>
          </property>
         </widget>
        </widget>
@@ -1875,7 +1888,7 @@
         <attribute name="title">
          <string>Vinst</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_13">
+        <widget class="QwtPlot" name="qwtPlotEarnings_13">
          <property name="geometry">
           <rect>
            <x>300</x>
@@ -1890,7 +1903,7 @@
         <attribute name="title">
          <string>Omst, Vinst</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_17">
+        <widget class="QwtPlot" name="qwtPlotRevenueEarnings_17">
          <property name="geometry">
           <rect>
            <x>290</x>
@@ -1905,7 +1918,7 @@
         <attribute name="title">
          <string>Utdel</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_14">
+        <widget class="QwtPlot" name="qwtPlotDiv_14">
          <property name="geometry">
           <rect>
            <x>290</x>
@@ -1920,7 +1933,7 @@
         <attribute name="title">
          <string>Vinst/Utdel</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_16">
+        <widget class="QwtPlot" name="qwtPlotEarningDiv_16">
          <property name="geometry">
           <rect>
            <x>300</x>
@@ -1935,7 +1948,7 @@
         <attribute name="title">
          <string>Kflöde1</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_15">
+        <widget class="QwtPlot" name="qwtPlotCashflow1_15">
          <property name="geometry">
           <rect>
            <x>290</x>
@@ -1950,7 +1963,7 @@
         <attribute name="title">
          <string>Kflöde2 </string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_18">
+        <widget class="QwtPlot" name="qwtPlotCashFlow2_18">
          <property name="geometry">
           <rect>
            <x>290</x>
@@ -1980,7 +1993,7 @@
         <attribute name="title">
          <string>Vmrg</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_20">
+        <widget class="QwtPlot" name="qwtPlotEarningMargin_20">
          <property name="geometry">
           <rect>
            <x>290</x>
@@ -1995,7 +2008,7 @@
         <attribute name="title">
          <string>Avk eget kap</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_22">
+        <widget class="QwtPlot" name="qwtPlotEquityMargin_22">
          <property name="geometry">
           <rect>
            <x>290</x>
@@ -2010,7 +2023,7 @@
         <attribute name="title">
          <string>Skuld, Eget kap, Vinst, Utdel</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlot_21">
+        <widget class="QwtPlot" name="qwtPlotLiabEquityEarningDiv_21">
          <property name="geometry">
           <rect>
            <x>290</x>

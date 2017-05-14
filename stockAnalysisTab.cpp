@@ -10,6 +10,7 @@
 #include "util.h"
 #include "math.h"
 #include <qwt_scale_engine.h>
+#include "extendedQwtPlot.h"
 
 #define INDEX_MY_PORTFOLIO      ((int) 3)
 
@@ -2399,6 +2400,8 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     calcTotSubdataForIntrinsicValue();
     on_pushButtonCalcYearlyIntrestRateOnEquity_clicked();
 
+    // Display report graphs
+    plotAndSaveAllReportData();
 
 }
 
@@ -5105,7 +5108,7 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
     }
 
     m_qwtPlotData.stock[index].data.setSamples(m_x, m_y, nofData);
-    ui->qwtPlot_10->setAxisMaxMinor(QwtPlot::xBottom, 1);
+    ui->qwtPlot_10->setAxisMaxMinor(QwtPlot::xBottom, 2);
     ui->qwtPlot_10->setAxisMaxMajor(QwtPlot::xBottom, nofData - 1);
 
     if(index == 1)
@@ -5128,6 +5131,241 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
     m_qwtPlotData.stock[index].data.attach(ui->qwtPlot_10);
     ui->qwtPlot_10->replot();
 }
+
+
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::plotAndSaveAllReportData(void)
+{
+
+    QString plotHeader;
+    QString legendText;
+    QColor canvasColor = Qt::white;
+    QwtSymbol legendSymbol = QwtSymbol::Rect;
+    QColor legendColor = Qt::red;
+    QwtPlot::LegendPosition location = QwtPlot::TopLegend;
+    int legendSize = 10;
+
+
+
+    plotHeader = QString::fromUtf8("Omsättningstillgångarna / Kortfristiga skulder > 2");
+    legendText = QString::fromUtf8("OT/ KS");
+    //initPlotLinearReportData(ui->qwtPlotCurrAssLiab, plotHeader, LegendStr, XAxisTitle, yAxisTitle, Qt::white, Qt::red /*Qt::yellow*/);
+    // insertLegend(d_legend, QwtPlot::ExternalLegend);
+
+    initPlotLinearReportData(ui->qwtPlotCurrAssLiab, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                                                    location, legendSize);
+
+
+}
+
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ * pos = QwtPlot::TopLegend
+ *       QwtPlot::BottomLegend
+ *       QwtPlot::RightLegend
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initPlotLinearReportData(QwtPlot *qwtPlot,
+                                                QString plotHeader,
+                                                QColor canvasColor,
+                                                QString legendText,
+                                                QwtSymbol legendSymbol,
+                                                QColor legendColor,
+                                                QwtPlot::LegendPosition location,
+                                                int legendSize)
+{
+    CExtendedQwtPlot eqp;
+
+    eqp.setPlotTitle(qwtPlot, plotHeader);
+    eqp.setCanvasBackground(qwtPlot, canvasColor);
+
+    eqp.setLegendSymbol(qwtPlot, legendText,legendSymbol, legendColor, legendSize);
+    eqp.setLegend(qwtPlot, location);
+    eqp.setLegend(qwtPlot, location);
+
+
+
+#if 0 // NU
+    // curves
+    QwtPlotCurve *d_curve1 = new QwtPlotCurve(legendStr);
+    d_curve1->setRenderHint(QwtPlotItem::RenderAntialiased);
+    d_curve1->setPen(QPen(legendColor));
+    //d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowSymbol );
+    d_curve1->setYAxis( QwtPlot::yLeft);
+#endif
+
+
+#if 0
+    QwtSymbol::Ellipse,     // OK
+    QwtSymbol::Rect,        // OK
+    QwtSymbol::Diamond,     // OK
+    QwtSymbol::Triangle,    // OK
+    QwtSymbol::DTriangle,   // OK
+    QwtSymbol::UTriangle,
+    QwtSymbol::LTriangle,
+    QwtSymbol::RTriangle,
+    QwtSymbol::Cross,
+    QwtSymbol::XCross,
+    QwtSymbol::HLine,
+    QwtSymbol::VLine,
+    QwtSymbol::Star1,
+    QwtSymbol::Star2,
+    QwtSymbol::Hexagon,
+
+#endif
+
+
+#if 0 // Nu
+    QwtSymbol *symbol = new QwtSymbol( QwtSymbol::DTriangle /*QwtSymbol::Rect*/ );
+    symbol->setBrush(legendColor);
+    symbol->setSize( 10 );
+    symbol->setPen( QPen(legendColor) );
+    d_curve1->setSymbol(symbol);
+#endif
+
+
+#if 0
+    d_curve1->setStyle( QwtPlotIntervalCurve::NoCurve );
+
+    QColor c( qwtPlot->brush().color().rgb() ); // skip alpha
+
+    QwtIntervalSymbol *errorBar =
+        new QwtIntervalSymbol( QwtIntervalSymbol::Bar );
+    errorBar->setWidth( 8 ); // should be something even
+    errorBar->setPen( c );
+#endif
+
+#if 0
+    QWidget* w = d_curve1->legendItem();
+    //QWidget* w = QwtPlotCurve::legendItem();
+    int width;
+    int hight;
+    QSize defaultSize = d_curve1->legendItem()->minimumSizeHint();
+    width = int( (double) defaultSize.height() * (double) 10);
+    hight = int((double)defaultSize.width() * (double) 10);
+    defaultSize.setWidth(width);
+    defaultSize.setHeight(hight);
+    w->setMinimumSize(defaultSize);
+    d_curve1->legendItem()->setBaseSize(defaultSize);
+ #endif
+
+#if 0 // NU
+    qwtPlot->setStyleSheet("background-color:white; color:black; border-radius: 0px; font: 12pt \"Deja Vu\";");
+
+
+    d_curve1->attach(qwtPlot);
+    eqp.setRightLegend(qwtPlot);
+#endif
+
+
+    //eqp.setCanvasBackground(qwtPlot, canvasColor);
+    // eqp.setXAxisTitle(qwtPlot, QString title, int fontSize=10);
+    //eqp.setYAxisTitle(qwtPlot, QString title);
+    // eqp.setYAxisFontSize(qwtPlot, int fontSize);
+    // eqp.setXAxisScale(QwtPlot *qwtPlot, double min, double max);
+    //eqp.setYAxisScale(QwtPlot *qwtPlot, double min, double max);
+
+
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
+                                            SubAnalysDataST *dataArr,
+                                            int nofData,
+                                            int indexToPlot,
+                                            QColor  &LineColor,
+                                            bool removeOldPlots)
+{
+
+#if 0
+    CExtendedQwtPlot();
+    void setPlotTitle(QwtPlot *qwtPlot, QString title);
+    void setXAxisTitle(QwtPlot *qwtPlot, QString title, int fontSize=10);
+    void setYAxisTitle(QwtPlot *qwtPlot, QString title);
+    void setXAxisFontSize(QwtPlot *qwtPlot, int fontSize);
+    void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
+    void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
+    void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
+#endif
+
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::savePlotLinearReportData(QwtPlot *qwtPlot,
+                                                QString stockName,
+                                                QString date)
+{
+
+#if 0
+    CExtendedQwtPlot();
+    void setPlotTitle(QwtPlot *qwtPlot, QString title);
+    void setXAxisTitle(QwtPlot *qwtPlot, QString title, int fontSize=10);
+    void setYAxisTitle(QwtPlot *qwtPlot, QString title);
+    void setXAxisFontSize(QwtPlot *qwtPlot, int fontSize);
+    void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
+    void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
+    void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
+#endif
+
+}
+
+
+
+#if 0
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::plotLogarithmicReportData()
+{
+
+}
+#endif
 
 /*******************************************************************
  *
@@ -5386,3 +5624,19 @@ void StockAnalysisTab::on_pushButtonAltcalcAvgAnnualGrowthRateEquity_clicked()
 
 
 
+
+void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
+{
+
+    QString filename = "img_test1.png";
+
+    QPixmap qPix = QPixmap::grabWidget(ui->qwtPlotCurrAssLiab);
+
+    if(qPix.isNull())
+    {
+        qDebug("Failed to capture the plot for saving");
+        return;
+    }
+
+   qPix.save(filename, "png");
+}

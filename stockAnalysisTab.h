@@ -211,6 +211,8 @@ private slots:
 
     void on_pushButtonAltcalcAvgAnnualGrowthRateEquity_clicked();
 
+    void on_pushButtonSaveImg_2_clicked();
+
 private:
     Ui::StockAnalysisTab *ui;
     calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;
@@ -224,6 +226,32 @@ private:
     void getminMaxLogScale(double minIn, double &minOut, double maxIn, double &maxOut);
     void clearGUIIntrinsicValue(void);
     void calcTotSubdataForIntrinsicValue(void);
+
+
+    void initPlotLinearReportData(QwtPlot *qwtPlot,
+                                  QString plotHeader,
+                                  QColor canvasColor,
+                                  QString legendText,
+                                  QwtSymbol legendSymbol,
+                                  QColor legendColor,
+                                  QwtPlot::LegendPosition location,
+                                  int legendSize = 10);
+
+    void plotLinearReportData(QwtPlot *qwtPlot,
+                              SubAnalysDataST *dataArr,
+                              int nofData,
+                              int indexToPlot,
+                              QColor  &LineColor,
+                              bool removeOldPlots);
+
+    void savePlotLinearReportData(QwtPlot *qwtPlot,
+                                  QString stockName,
+                                  QString date);
+
+
+    void plotAndSaveAllReportData(void);
+
+
 
 
 };

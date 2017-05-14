@@ -2,14 +2,17 @@
 #define CEXTENDEDQWTPLOT_H
 
 
+#include <QtCore>
+#include <QtGui>
+
+
 #include <qwt_plot.h>
 #include <qwt_plot_zoomer.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_renderer.h>
 #include <qwt_picker_machine.h>
-#include <QtCore>
-#include <QtGui>
-//#include "qwt_plot.h"
+#include <qwt_symbol.h>
+#include <qwt_plot_curve.h>
 
 
 //=============================================================================
@@ -55,6 +58,7 @@ public:
     void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
     void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
     void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
+    void setLegendSymbol(QwtPlot *qwtPlot, QString legendText, QwtSymbol legendSymbol, QColor legendColor, int legendSize = 10);
     void setRightLegend(QwtPlot *qwtPlot);
     void setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos);
     void initPlotPicker(QwtPlot *qwtPlot);
@@ -65,6 +69,7 @@ public:
     void ZoomOut(void);
     void enablePanningMode(bool on);
     void panLeftRight(int dx);
+    void setCanvasBackground(QwtPlot *qwtPlot, QColor color);
 
 };
 

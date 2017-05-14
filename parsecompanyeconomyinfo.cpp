@@ -645,7 +645,7 @@ readFile(QString filename, QString assetName)
     QTextStream inStream(&file);
     inStream.setCodec("ISO 8859-1");
 
-    int maxIndex;
+    int maxIndex = 0;  // ajn 170514
     int dateIndex = 0;
     int i = 0;
     int j = 0;
