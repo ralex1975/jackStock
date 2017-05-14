@@ -96,6 +96,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     ui->webViewAllAnalyzedComp->load(QUrl(path));
 
 
+
     initSubAnalysisPlots();
 }
 
@@ -133,6 +134,8 @@ StockAnalysisTab::~StockAnalysisTab()
  *****************************************************************/
 void StockAnalysisTab::initSubAnalysisPlots(void)
 {
+    CExtendedQwtPlot eqp;
+
 
     // Hide axises
     m_qwtPlot[0] = ui->qwtPlot_0;
@@ -179,6 +182,8 @@ void StockAnalysisTab::initSubAnalysisPlots(void)
     // Is handle in difftent way ordinary graph
     ui->qwtCashFlowPlot->enableAxis(QwtPlot::xBottom, false);
     ui->qwtCashFlowPlot->enableAxis(QwtPlot::yLeft, false);
+
+    eqp.initPlotPicker(ui->qwtPlot_10);
 }
 
 
@@ -5066,6 +5071,8 @@ void StockAnalysisTab::on_pushButtonCalcYearlyIntrestRateOnEquity_clicked()
         ui->lineEditHistoricalInterestOnEquity->setText(trendLineGrowth);
     }
 }
+
+
 
 
 

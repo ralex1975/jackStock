@@ -205,46 +205,18 @@ void CExtendedQwtPlot::setLegendSymbol(QwtPlot *qwtPlot,
                                        QColor legendColor,
                                        int legendSize)
 {
-
     // Grab curve legend belong to
     QwtPlotCurve *curve = new QwtPlotCurve(legendText);
     curve->setRenderHint(QwtPlotItem::RenderAntialiased);
     curve->setPen(QPen(legendColor));
-    //d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    //d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowSymbol );
-    //d_curve1->setYAxis( QwtPlot::yLeft);
 
     // Set legen symbol (Ex: QwtSymbol::Rect)
-    QwtSymbol *symbol = new QwtSymbol(legendSymbol);  // QwtSymbol::DTriangle /*QwtSymbol::Rect*/
-    symbol->setPen(QPen(legendColor));     // Frame color               (Ex: Qt:red)
-    symbol->setBrush(legendColor);         // Fill color                (Ex: Qt:red)
-    symbol->setSize(legendSize);           // Set symbolsize            (Ex: 10)
-    curve->setSymbol(symbol);              // Add symbol info to cuve
-    curve->attach(qwtPlot);                // Add curve info to plot
-
-
-#if 0
-    QWidget* w = d_curve1->legendItem();
-    //QWidget* w = QwtPlotCurve::legendItem();
-    int width;
-    int hight;
-    QSize defaultSize = d_curve1->legendItem()->minimumSizeHint();
-    width = int( (double) defaultSize.height() * (double) 10);
-    hight = int((double)defaultSize.width() * (double) 10);
-    defaultSize.setWidth(width);
-    defaultSize.setHeight(hight);
-    w->setMinimumSize(defaultSize);
-    d_curve1->legendItem()->setBaseSize(defaultSize);
-    qwtPlot->setStyleSheet("background-color:white; color:black; border-radius: 0px; font: 12pt \"Deja Vu\";");
-#endif
-    // eqp.setRightLegend(qwtPlot);
-    //eqp.setCanvasBackground(qwtPlot, canvasColor);
-    // eqp.setXAxisTitle(qwtPlot, QString title, int fontSize=10);
-    //eqp.setYAxisTitle(qwtPlot, QString title);
-    // eqp.setYAxisFontSize(qwtPlot, int fontSize);
-    // eqp.setXAxisScale(QwtPlot *qwtPlot, double min, double max);
-    //eqp.setYAxisScale(QwtPlot *qwtPlot, double min, double max);
-
+    QwtSymbol *symbol = new QwtSymbol(legendSymbol);    // QwtSymbol::DTriangle /*QwtSymbol::Rect*/
+    symbol->setPen(QPen(legendColor));                  // Frame color               (Ex: Qt:red)
+    symbol->setBrush(legendColor);                      // Fill color                (Ex: Qt:red)
+    symbol->setSize(legendSize);                        // Set symbolsize            (Ex: 10)
+    curve->setSymbol(symbol);                           // Add symbol info to cuve
+    curve->attach(qwtPlot);                             // Add curve info to plot
 }
 
 
