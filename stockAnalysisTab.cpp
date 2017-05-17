@@ -5288,6 +5288,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     int nofPlotToClear;
     QColor lineColor;
     bool useAutoScale;
+    bool skipDenominatorEqZero = true;
     bool convToProcent;
 
     CYahooStockPlotUtil cyspu;
@@ -5414,13 +5415,16 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Vinstmarginal (%) (Vinst efter skatt / Omsättning)
     //-----------------------------------------------------------------------------------
     // Beräkna kvoten
+    skipDenominatorEqZero = true;
     convToProcent = true;
+
     subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totEarningsDataArr,
                             m_nofTotEarningsArrData,
                             m_revenueDataArr,
                             m_nofRevenueArrData,
+                            skipDenominatorEqZero,
                             convToProcent);
 
 
@@ -5441,13 +5445,17 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]
     //-----------------------------------------------------------------------------------
     // Beräkna kvoten
+
+    skipDenominatorEqZero = true;
     convToProcent = true;
+
     subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totEarningsDataArr,
                             m_nofTotEarningsArrData,
                             m_totEquityArr,
                             m_nofTotEquityData,
+                            skipDenominatorEqZero,
                             convToProcent);
 
     indexToPlot = 8;
@@ -5483,6 +5491,8 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
                                                bool convToProcent)
 {
     double tmpRes;
+    double procent = 100.0;
+    double result;
 
     nofDataResultArr = 0;
     for(int i = 0; i < nofDataNumeratorArr; i++)
@@ -5510,11 +5520,12 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
 
                 }
 
+                result =tmpRes;
                 if(convToProcent == true)
                 {
-                    tmpRes = tmpRes * (double) 100.0;
+                    result = tmpRes * procent;
                 }
-                resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
+                resultArr[nofDataResultArr].data.sprintf("%f", result);
                 nofDataResultArr++;
             }
         }
