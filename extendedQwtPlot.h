@@ -42,6 +42,9 @@ public:
 //=============================================================================
 class CExtendedQwtPlot
 {
+private:
+
+
 protected:
     //QwtPlotZoomer *m_zoomer;
     Zoomer *m_zoomer;

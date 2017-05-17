@@ -410,3 +410,4 @@ void CExtendedQwtPlot::enablePanningMode(bool on)
 }
 
 
+

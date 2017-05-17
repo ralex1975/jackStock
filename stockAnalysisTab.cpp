@@ -11,6 +11,7 @@
 #include "math.h"
 #include <qwt_scale_engine.h>
 #include "extendedQwtPlot.h"
+#include <qwt_plot_histogram.h>
 
 #define INDEX_MY_PORTFOLIO      ((int) 3)
 
@@ -39,6 +40,11 @@ const QString StockAnalysisTab::m_companyTypesArr[NOF_COMPANY_TYPE_ARR_DATA] =
 
 
 
+
+
+
+
+
 /******************************************************************
  *
  * Function:    ()
@@ -55,6 +61,21 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 {
 
     QString path;
+
+#if 0
+    int i, j;
+
+    // Create bar graph memory
+    for(i = 0; i < NOF_QWT_PLOTS; i++)
+    {
+        m_barHistArr[i] = new QwtPlotHistogram;
+
+        for(j = 0; j < MAX_NOF_QWT_MARKERS_IN_EACH_PLOT; j++)
+        {
+            m_mark[i][j] = new QwtPlotMarker;
+        }
+    }
+#endif
 
 
     m_red_palette = new QPalette();
@@ -96,7 +117,10 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     ui->webViewAllAnalyzedComp->load(QUrl(path));
 
 
+    // New plots
+    initAllAnalysisPlots();
 
+    // Old plots
     initSubAnalysisPlots();
 }
 
@@ -115,6 +139,21 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
  *****************************************************************/
 StockAnalysisTab::~StockAnalysisTab()
 {
+
+#if 0
+    int i, j ;
+
+    for(i = 0; i < NOF_QWT_PLOTS; i++)
+    {
+        delete m_barHistArr[i];
+
+        for(j = 0; j < MAX_NOF_QWT_MARKERS_IN_EACH_PLOT; j++)
+        {
+            delete m_mark[i][j];
+        }
+    }
+#endif
+
     delete ui;
     delete m_barHist;
     delete m_red_palette;
@@ -743,6 +782,10 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
         }
     }
 
+    // Display all analysis graphs
+    displayAllAnalysisPlots();
+
+
 }
 
 
@@ -1200,6 +1243,10 @@ void StockAnalysisTab::on_pushButton_clicked()
 
     // Save excel data to file
     writeHtmlArrDataToTxtFile();
+
+    // Display all analysis graphs
+    displayAllAnalysisPlots();
+
 
 }
 
@@ -2405,8 +2452,8 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     calcTotSubdataForIntrinsicValue();
     on_pushButtonCalcYearlyIntrestRateOnEquity_clicked();
 
-    // Display report graphs
-    plotAndSaveAllReportData();
+    // Display all analysis graphs
+    displayAllAnalysisPlots();
 
 }
 
@@ -5096,48 +5143,105 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
     }
     else
     {
-        m_qwtPlotData.stock[1].data.detach();
-        m_qwtPlotData.stock[1].data.setData(NULL);
+        m_qwtEquityPlotData.stock[1].data.detach();
+        m_qwtEquityPlotData.stock[1].data.setData(NULL);
     }
 
-    m_qwtPlotData.stock[index].data.detach();
-    m_qwtPlotData.stock[index].data.setData(NULL);
+    m_qwtEquityPlotData.stock[index].data.detach();
+    m_qwtEquityPlotData.stock[index].data.setData(NULL);
 
-    cyspu.removePlotData(m_qwtPlotData, index, ui->qwtPlot_10);
+    cyspu.removePlotData(m_qwtEquityPlotData, index, ui->qwtPlot_10);
 
-    m_qwtPlotData.axis.minMaxIsInit = false;
+    m_qwtEquityPlotData.axis.minMaxIsInit = false;
 
     for(int i = 0; i < nofData; i++)
     {
         m_x[i] = dataArr[i].date.toDouble();
         m_y[i] = dataArr[i].data.toDouble();
-        cyspu.updateMinMaxAxis(m_qwtPlotData.axis, m_x[i], m_y[i]);
+        cyspu.updateMinMaxAxis(m_qwtEquityPlotData.axis, m_x[i], m_y[i]);
     }
 
-    m_qwtPlotData.stock[index].data.setSamples(m_x, m_y, nofData);
+    m_qwtEquityPlotData.stock[index].data.setSamples(m_x, m_y, nofData);
     ui->qwtPlot_10->setAxisMaxMinor(QwtPlot::xBottom, 2);
     ui->qwtPlot_10->setAxisMaxMajor(QwtPlot::xBottom, nofData - 1);
 
     if(index == 1)
     {
-        //m_qwtPlotData.stock[index].data.setBrush(Qt::blue);
-        m_qwtPlotData.stock[index].data.setPen(QPen(Qt::blue, 2));
-        m_qwtPlotData.stock[index].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
+        m_qwtEquityPlotData.stock[index].data.setPen(QPen(Qt::blue, 2));
+        m_qwtEquityPlotData.stock[index].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
                                                                      QPen( Qt::blue ),
                                                                       QSize( 7, 7 ) ) );
     }
     else
     {
-        m_qwtPlotData.stock[index].data.setPen(QPen(Qt::black, 2));
-        m_qwtPlotData.stock[index].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
+        m_qwtEquityPlotData.stock[index].data.setPen(QPen(Qt::black, 2));
+        m_qwtEquityPlotData.stock[index].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
                                                                      QPen( Qt::black ),
                                                                       QSize( 7, 7 ) ) );
     }
 
-    cyspu.plotData(m_qwtPlotData, ui->qwtPlot_10, index, true);
-    m_qwtPlotData.stock[index].data.attach(ui->qwtPlot_10);
+    cyspu.plotData(m_qwtEquityPlotData, ui->qwtPlot_10, index, true);
+    m_qwtEquityPlotData.stock[index].data.attach(ui->qwtPlot_10);
     ui->qwtPlot_10->replot();
 }
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initAllAnalysisPlots(void)
+{
+    QString plotHeader;
+    QString legendText;
+    QColor canvasColor = Qt::white;
+    QwtSymbol legendSymbol = QwtSymbol::Ellipse;// QwtSymbol::Rect;
+    QColor legendColor = Qt::blue;
+    QwtPlot::LegendPosition location = QwtPlot::TopLegend;
+    int legendSize = 10;
+
+
+    //===================================================================================
+    // Trading company industrial companies
+    //===================================================================================
+
+    //-----------------------------------------------------------------------------------
+    // Omsättningstillgångarna / Kortfristiga skulder > 2
+    //-----------------------------------------------------------------------------------
+
+    plotHeader = QString::fromUtf8("Omsättningstillgångarna / Kortfristiga skulder > 2");
+    legendText = QString::fromUtf8("OT/KS");
+
+    initPlotLinearReportData(ui->qwtPlotCurrAssLiab, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+    //-----------------------------------------------------------------------------------
+    // Omsättningstillgångarna / Totala skulder >= 1
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Omsättningstillgångarna / Totala skulder >= 1");
+    legendText = QString::fromUtf8("OT/TS");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initPlotLinearReportData(ui->qwtPlotCurrAssTotLiab_12, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinst/Aktie
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Vinst/Aktie");
+    legendText = QString::fromUtf8("V/A");
+
+    initPlotLinearReportData(ui->qwtPlotEarningsPerShare_13, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+}
+
 
 
 
@@ -5152,29 +5256,226 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
  *
  *
  *******************************************************************/
-void StockAnalysisTab::plotAndSaveAllReportData(void)
+void StockAnalysisTab::displayAllAnalysisPlots(void)
 {
+    SubAnalysDataST tmpArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    SubAnalysDataST resultArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    int nofDataResultArr;
+    int nofTmpArrData;
+    double tmpRes;
+    int indexToPlot;
+    int nofPlotToClear;
+    QColor lineColor;
+    bool useAutoScale;
 
-    QString plotHeader;
-    QString legendText;
-    QColor canvasColor = Qt::white;
-    QwtSymbol legendSymbol = QwtSymbol::Rect;
-    QColor legendColor = Qt::red;
-    QwtPlot::LegendPosition location = QwtPlot::TopLegend;
-    int legendSize = 10;
+    CYahooStockPlotUtil cyspu;
+    m_qwtAllAnalysisPlotData.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
+    cyspu.emtypPlotData(m_qwtAllAnalysisPlotData, false);
 
 
 
-    plotHeader = QString::fromUtf8("Omsättningstillgångarna / Kortfristiga skulder > 2");
-    legendText = QString::fromUtf8("OT/ KS");
-    //initPlotLinearReportData(ui->qwtPlotCurrAssLiab, plotHeader, LegendStr, XAxisTitle, yAxisTitle, Qt::white, Qt::red /*Qt::yellow*/);
-    // insertLegend(d_legend, QwtPlot::ExternalLegend);
+    //===================================================================================
+    // Trading company industrial companies
+    //===================================================================================
 
-    initPlotLinearReportData(ui->qwtPlotCurrAssLiab, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
-                                                    location, legendSize);
+    //-----------------------------------------------------------------------------------
+    // Omsättningstillgångarna / Kortfristiga skulder > 2
+    //-----------------------------------------------------------------------------------
+#if 0
+    nofTmpArrData = 0;
+    for(int i = 0; i < m_nofTotalCurrentAssetsArrData; i++)
+    {
+        for(int j = 0; j < m_nofTotalCurrentLiabilitiesData; j++)
+        {
+            if(m_totalCurrentAssetsArr[i].date.toInt() == m_totalCurrentLiabilitiesArr[j].date.toInt())
+            {
+                tmpArr[nofTmpArrData].date = m_totalCurrentAssetsArr[i].date;
 
+                // Do not divide by zero
+                if((m_totalCurrentLiabilitiesArr[j].data.toDouble() >= 0) &&
+                   (m_totalCurrentLiabilitiesArr[j].data.toDouble() <  0.0001))
+                {
+                    tmpRes = m_totalCurrentAssetsArr[i].data.toDouble() / 0.0001;
+                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
+                    nofTmpArrData++;
+                }
+                else
+                {
+                    tmpRes = (m_totalCurrentAssetsArr[i].data.toDouble() / m_totalCurrentLiabilitiesArr[j].data.toDouble());
+                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
+                    nofTmpArrData++;
+                }
+
+            }
+
+        }
+    }
+#endif
+
+
+    subAnalysisCalcQuotient(resultArr,
+                            nofDataResultArr,
+                            m_totalCurrentAssetsArr,
+                            m_nofTotalCurrentAssetsArrData,
+                            m_totalCurrentLiabilitiesArr,
+                            m_nofTotalCurrentLiabilitiesData);
+
+
+    indexToPlot = 0;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    plotLinearReportData(ui->qwtPlotCurrAssLiab,
+                          useAutoScale,
+                          resultArr,
+                          nofDataResultArr,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
+
+    //-----------------------------------------------------------------------------------
+    // Omsättningstillgångarna / Totala skulder >= 1
+    //-----------------------------------------------------------------------------------
+    nofTmpArrData = 0;
+    for(int i = 0; i < m_nofTotalCurrentAssetsArrData; i++)
+    {
+        for(int j = 0; j < m_nofTotalLiabilitiesData; j++)
+        {
+            if(m_totalCurrentAssetsArr[i].date.toInt() == m_totalCurrentLiabilitiesArr[j].date.toInt())
+            {
+                tmpArr[nofTmpArrData].date = m_totalCurrentAssetsArr[i].date;
+
+                // Do not divide by zero
+                if((m_totalLiabilitiesArr[j].data.toDouble() >= 0) &&
+                   (m_totalLiabilitiesArr[j].data.toDouble() <  0.0001))
+                {
+                    tmpRes = m_totalCurrentAssetsArr[i].data.toDouble() / 0.0001;
+                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
+                    nofTmpArrData++;
+                }
+                else
+                {
+                    tmpRes = (m_totalCurrentAssetsArr[i].data.toDouble() / m_totalLiabilitiesArr[j].data.toDouble());
+                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
+                    nofTmpArrData++;
+                }
+
+            }
+
+        }
+    }
+
+  //  if(nofTmpArrData > 1)
+    {
+        indexToPlot = 1;
+        nofPlotToClear = 0;
+        lineColor = Qt::blue;
+        useAutoScale = false;
+        plotLinearReportData(ui->qwtPlotCurrAssTotLiab_12,
+                              useAutoScale,
+                              tmpArr,
+                              nofTmpArrData,
+                              indexToPlot,
+                              nofPlotToClear,
+                              lineColor);
+    }
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinst/Aktie
+    //-----------------------------------------------------------------------------------
+//    if(m_nofEarningsArrData > 1)
+    {
+        indexToPlot = 2;
+        nofPlotToClear = 0;
+        lineColor = Qt::blue;
+        useAutoScale = false;
+        plotLinearReportData(ui->qwtPlotEarningsPerShare_13,
+                              useAutoScale,
+                              m_earningsDataArr,
+                              m_nofEarningsArrData,
+                              indexToPlot,
+                              nofPlotToClear,
+                              lineColor);
+    }
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Utdelning
+    //-----------------------------------------------------------------------------------
+
+    indexToPlot = 3;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+
+    plotBarGraphReportData(ui->qwtPlotDiv_14,
+                                useAutoScale,
+                                m_dividendDataArr,
+                                m_nofDividendArrData,
+                                indexToPlot,
+                                nofPlotToClear,
+                                lineColor);
+
+#if 0
+    int graphIndex = 0;
+    m_qwtPlot[0] = ui->qwtPlotDiv_14;
+
+    plotBarGraph(graphIndex,
+                 m_nofDividendArrData,
+                 m_dividendDataArr,
+                 m_qwtPlot);
+ #endif
 
 }
+
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *              Numerator =     täljare
+ *              Denominator =   nämnare
+ *
+ *******************************************************************/
+void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     int &nofDataResultArr,
+                                                SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,
+                                               SubAnalysDataST *denominatorArr, int nofDataDenominatorArr)
+{
+    double tmpRes;
+
+    nofDataResultArr = 0;
+    for(int i = 0; i < nofDataNumeratorArr; i++)
+    {
+        for(int j = 0; j < nofDataDenominatorArr; j++)
+        {
+            if(numeratorArr[i].date.toInt() == denominatorArr[j].date.toInt())
+            {
+                resultArr[nofDataResultArr].date = numeratorArr[i].date;
+
+                // Do not divide by zero
+                if((denominatorArr[j].data.toDouble() >= 0) &&
+                   (denominatorArr[j].data.toDouble() <  0.0001))
+                {
+                    tmpRes = numeratorArr[i].data.toDouble() / 0.0001;
+                    resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
+                    nofDataResultArr++;
+                }
+                else
+                {
+                    tmpRes = (numeratorArr[i].data.toDouble() / denominatorArr[j].data.toDouble());
+                    resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
+                    nofDataResultArr++;
+                }
+            }
+        }
+    }
+}
+
 
 
 
@@ -5205,101 +5506,90 @@ void StockAnalysisTab::initPlotLinearReportData(QwtPlot *qwtPlot,
     eqp.setPlotTitle(qwtPlot, plotHeader);
     eqp.setCanvasBackground(qwtPlot, canvasColor);
 
-    eqp.setLegendSymbol(qwtPlot, legendText,legendSymbol, legendColor, legendSize);
+    eqp.setLegendSymbol(qwtPlot, legendText, legendSymbol, legendColor, legendSize);
     eqp.setLegend(qwtPlot, location);
-    eqp.setLegend(qwtPlot, location);
-
-
-
-#if 0 // NU
-    // curves
-    QwtPlotCurve *d_curve1 = new QwtPlotCurve(legendStr);
-    d_curve1->setRenderHint(QwtPlotItem::RenderAntialiased);
-    d_curve1->setPen(QPen(legendColor));
-    //d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowSymbol );
-    d_curve1->setYAxis( QwtPlot::yLeft);
-#endif
-
-
-#if 0
-    QwtSymbol::Ellipse,     // OK
-    QwtSymbol::Rect,        // OK
-    QwtSymbol::Diamond,     // OK
-    QwtSymbol::Triangle,    // OK
-    QwtSymbol::DTriangle,   // OK
-    QwtSymbol::UTriangle,
-    QwtSymbol::LTriangle,
-    QwtSymbol::RTriangle,
-    QwtSymbol::Cross,
-    QwtSymbol::XCross,
-    QwtSymbol::HLine,
-    QwtSymbol::VLine,
-    QwtSymbol::Star1,
-    QwtSymbol::Star2,
-    QwtSymbol::Hexagon,
-
-#endif
-
-
-#if 0 // Nu
-    QwtSymbol *symbol = new QwtSymbol( QwtSymbol::DTriangle /*QwtSymbol::Rect*/ );
-    symbol->setBrush(legendColor);
-    symbol->setSize( 10 );
-    symbol->setPen( QPen(legendColor) );
-    d_curve1->setSymbol(symbol);
-#endif
-
-
-#if 0
-    d_curve1->setStyle( QwtPlotIntervalCurve::NoCurve );
-
-    QColor c( qwtPlot->brush().color().rgb() ); // skip alpha
-
-    QwtIntervalSymbol *errorBar =
-        new QwtIntervalSymbol( QwtIntervalSymbol::Bar );
-    errorBar->setWidth( 8 ); // should be something even
-    errorBar->setPen( c );
-#endif
-
-#if 0
-    QWidget* w = d_curve1->legendItem();
-    //QWidget* w = QwtPlotCurve::legendItem();
-    int width;
-    int hight;
-    QSize defaultSize = d_curve1->legendItem()->minimumSizeHint();
-    width = int( (double) defaultSize.height() * (double) 10);
-    hight = int((double)defaultSize.width() * (double) 10);
-    defaultSize.setWidth(width);
-    defaultSize.setHeight(hight);
-    w->setMinimumSize(defaultSize);
-    d_curve1->legendItem()->setBaseSize(defaultSize);
- #endif
-
-#if 0 // NU
-    qwtPlot->setStyleSheet("background-color:white; color:black; border-radius: 0px; font: 12pt \"Deja Vu\";");
-
-
-    d_curve1->attach(qwtPlot);
-    eqp.setRightLegend(qwtPlot);
-#endif
-
-
-    //eqp.setCanvasBackground(qwtPlot, canvasColor);
-    // eqp.setXAxisTitle(qwtPlot, QString title, int fontSize=10);
-    //eqp.setYAxisTitle(qwtPlot, QString title);
-    // eqp.setYAxisFontSize(qwtPlot, int fontSize);
-    // eqp.setXAxisScale(QwtPlot *qwtPlot, double min, double max);
-    //eqp.setYAxisScale(QwtPlot *qwtPlot, double min, double max);
-
-
 }
+
+
+/*******************************************************************
+ *
+ * Function:        plotLinearReportData()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::plotBarGraphReportData(QwtPlot *qwtPlot,
+                                            bool useAutoScale,
+                                            SubAnalysDataST *dataArr,
+                                            int nofData,
+                                            int indexToPlot,
+                                            int nofPlotToClear,
+                                            QColor lineColor)
+{
+    CYahooStockPlotUtil cyspu;
+
+    // Do not excide array bondary
+    if((indexToPlot >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS) ||
+       (nofPlotToClear >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS))
+    {
+        return;
+    }
+
+
+    for(int i = 0; i < nofPlotToClear; i++)
+    {
+        cyspu.removePlotData(m_qwtAllAnalysisPlotData, i, qwtPlot);
+    }
+
+
+    m_qwtAllAnalysisPlotData.nofStocksToPlot =
+    m_qwtAllAnalysisPlotData.axis.minMaxIsInit = false;
+
+    for(int i = 0; i < nofData; i++)
+    {
+        m_x[i] = dataArr[i].date.toDouble();
+        m_y[i] = dataArr[i].data.toDouble();
+        cyspu.updateMinMaxAxis(m_qwtAllAnalysisPlotData.axis, m_x[i], m_y[i]);
+    }
+
+
+    m_qwtAllAnalysisPlotData.axis.minX -= 0.5;
+    m_qwtAllAnalysisPlotData.axis.maxX += 0.5;
+
+
+    if((useAutoScale == false) && (m_qwtAllAnalysisPlotData.axis.minY > 0))
+    {
+        m_qwtAllAnalysisPlotData.axis.minY = 0;
+    }
+
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSamples(m_x, m_y, nofData);
+    qwtPlot->setAxisMaxMinor(QwtPlot::xBottom, 1);
+    qwtPlot->setAxisMaxMajor(QwtPlot::xBottom, nofData);
+
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
+                                                               QPen(lineColor),
+                                                               QSize(7, 7) ) );
+
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setStyle(QwtPlotCurve::Sticks);
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 50));
+
+
+    cyspu.plotData(m_qwtAllAnalysisPlotData, qwtPlot, indexToPlot, useAutoScale);
+
+    // Disable legend when we plot to not get two
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setItemAttribute(QwtPlotItem::Legend, false);
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.attach(qwtPlot);
+    qwtPlot->replot();
+}
+
 
 
 
 /*******************************************************************
  *
- * Function:        clearGUIIntrinsicValue()
+ * Function:        plotLinearReportData()
  *
  * Description:
  *
@@ -5307,25 +5597,210 @@ void StockAnalysisTab::initPlotLinearReportData(QwtPlot *qwtPlot,
  *
  *******************************************************************/
 void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
+                                            bool useAutoScale,
                                             SubAnalysDataST *dataArr,
                                             int nofData,
                                             int indexToPlot,
-                                            QColor  &LineColor,
-                                            bool removeOldPlots)
+                                            int nofPlotToClear,
+                                            QColor lineColor)
 {
+    CYahooStockPlotUtil cyspu;
+
+    // Do not excide array bondary
+    if((indexToPlot >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS) ||
+       (nofPlotToClear >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS))
+    {
+        return;
+    }
+
+
+    for(int i = 0; i < nofPlotToClear; i++)
+    {
+        cyspu.removePlotData(m_qwtAllAnalysisPlotData, i, qwtPlot);
+    }
+
+
+    m_qwtAllAnalysisPlotData.nofStocksToPlot =
+    m_qwtAllAnalysisPlotData.axis.minMaxIsInit = false;
+
+    for(int i = 0; i < nofData; i++)
+    {
+        m_x[i] = dataArr[i].date.toDouble();
+        m_y[i] = dataArr[i].data.toDouble();
+        cyspu.updateMinMaxAxis(m_qwtAllAnalysisPlotData.axis, m_x[i], m_y[i]);
+    }
+
+
+    if((useAutoScale == false) && (m_qwtAllAnalysisPlotData.axis.minY > 0))
+    {
+        m_qwtAllAnalysisPlotData.axis.minY = 0;
+    }
+
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSamples(m_x, m_y, nofData);
+    qwtPlot->setAxisMaxMinor(QwtPlot::xBottom, 2);
+    qwtPlot->setAxisMaxMajor(QwtPlot::xBottom, nofData - 1);
+
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 2));
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
+                                                               QPen(lineColor),
+                                                               QSize(7, 7) ) );
+
+
+    cyspu.plotData(m_qwtAllAnalysisPlotData, qwtPlot, indexToPlot, useAutoScale);
+
+    // Disable legend when we plot to not get two
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setItemAttribute(QwtPlotItem::Legend, false);
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.attach(qwtPlot);
+    qwtPlot->replot();
+}
+
+
 
 #if 0
-    CExtendedQwtPlot();
-    void setPlotTitle(QwtPlot *qwtPlot, QString title);
-    void setXAxisTitle(QwtPlot *qwtPlot, QString title, int fontSize=10);
-    void setYAxisTitle(QwtPlot *qwtPlot, QString title);
-    void setXAxisFontSize(QwtPlot *qwtPlot, int fontSize);
-    void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
-    void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
-    void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
-#endif
+/******************************************************************
+ *
+ * Function:    clearBarGraph()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::clearBarGraph(void)
+{
+    for(int i = 0; i < NOF_QWT_PLOTS; i++)
+    {
+        // Clear graph
+        m_barHistDataArr[i].clear();
+        m_barHistArr[i]->detach();
+        m_barHistArr[i]->setData(NULL);
+        m_barHistArr[i]-> setStyle (QwtPlotHistogram :: Columns);
+    }
 
 }
+
+
+
+/******************************************************************
+ *
+ * Function:    plotBarGraph()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::plotBarGraph(int graphIndex,
+                                    int nofArrData,
+                                    SubAnalysDataST *subAnalysDataArr,
+                                    QwtPlot *qwtPlot[NOF_QWT_PLOTS])
+{
+    QwtText txt;
+    QString lableText;
+
+    double date;
+    double data;
+
+    double xMin;
+    double xMax;
+
+    double yMin;
+    double yMax;
+
+
+    if((nofArrData < 1) || (graphIndex > 9))
+    {
+        return;
+    }
+
+    // Clear graph
+    m_barHistDataArr[graphIndex].clear();
+    m_barHistArr[graphIndex]->detach();
+    m_barHistArr[graphIndex]->setData(NULL);
+    m_barHistArr[graphIndex]-> setStyle (QwtPlotHistogram :: Columns);
+
+
+    for(int i = 0; i < nofArrData; i++)
+    {
+        date = subAnalysDataArr[i].date.toDouble();
+        data = subAnalysDataArr[i].data.toDouble();
+
+        if(i == 0)
+        {
+           xMin = date;
+           xMax = date;
+
+           yMin = data;
+           yMax = data;
+
+        }
+        else
+        {
+            if(xMin > (date))
+            {
+                xMin = (date + 0.5);
+            }
+
+            if(xMax < (date + 1.0))
+            {
+                xMax = date + 1.0;
+            }
+
+
+            if(yMin > data)
+            {
+                yMin = (data);
+            }
+
+            if(yMax < (data + 1.0))
+            {
+                yMax = (data + 1.0);
+            }
+
+        }
+
+
+        // Insert data value at the top of the bar
+        lableText.clear();
+        lableText.sprintf("%.2f", data);
+        txt.setText(lableText);
+
+        m_mark[graphIndex][i]->detach();
+        m_mark[graphIndex][i]->setLabel(txt);
+        m_mark[graphIndex][i]->setValue((double)(date+0.5),(double)(data+0.5)); //here you have to set the coordinate axis i.e. where the axis are meeting.
+        m_mark[graphIndex][i]->attach(qwtPlot[graphIndex]);
+
+        // Add data to graph
+        QwtInterval interval(date, date + 1);
+        interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
+        m_barHistDataArr[graphIndex].append (QwtIntervalSample(data, interval));
+    }
+
+    // qwtPlot[graphIndex]->enableAxis(QwtPlot::xBottom, false);
+    // qwtPlot[graphIndex]->enableAxis(QwtPlot::yLeft, false);
+
+    if(yMin > 0)
+        yMin = 0;
+
+    // qwtPlot[graphIndex]->setAxisAutoScale(QwtPlot::yLeft, true);
+    qwtPlot[graphIndex]->setAxisScale(QwtPlot::yLeft, yMin, yMax);
+    // qwtPlot[graphIndex]->setAxisScale(QwtPlot::xBottom, xMin, xMax);
+
+    qwtPlot[graphIndex]->setAxisMaxMinor(QwtPlot::xBottom, 2);
+    qwtPlot[graphIndex]->setAxisMaxMajor(QwtPlot::xBottom, nofArrData);
+
+
+    // Display graph data
+    m_barHistArr[graphIndex]->setBrush(Qt::blue);
+    m_barHistArr[graphIndex]->setPen(QPen(Qt::black));
+    m_barHistArr[graphIndex]->setSamples(m_barHistDataArr[graphIndex]);
+    m_barHistArr[graphIndex]->attach(qwtPlot[graphIndex]);
+    qwtPlot[graphIndex]->replot();
+
+}
+#endif
 
 
 
@@ -5403,7 +5878,7 @@ void StockAnalysisTab::clearGUIIntrinsicValue(void)
 
     ui->lineEditIntrinsicValueResult->clear();
     for(int i = 0; i < 2; i++)
-        cyspu.removePlotData(m_qwtPlotData, i, ui->qwtPlot_10);
+        cyspu.removePlotData(m_qwtEquityPlotData, i, ui->qwtPlot_10);
 }
 
 
@@ -5647,3 +6122,4 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
 
    qPix.save(filename, "png");
 }
+

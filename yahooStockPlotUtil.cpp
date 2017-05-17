@@ -283,7 +283,7 @@ addStockToPlot(CYahooStockPlotUtil::PlotData_ST &allPlotData,
 
 /*****************************************************************
  *
- * Function:		addStockToPlot()
+ * Function:		addIndicatorToPlot()
  *
  * Description:		This function
  *
@@ -697,7 +697,7 @@ plotDataSetXScaleStep(CYahooStockPlotUtil::PlotData_ST &allPlotData,
          int xScaleStep)
 {
     QString str;
-    QString tmp;
+    // QString tmp;
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -751,12 +751,12 @@ plotDataSetXScaleStep(CYahooStockPlotUtil::PlotData_ST &allPlotData,
         {
             qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)); // Max av % satser
         }
+
         qwtPlot->setAxisScale(QwtPlot::xBottom, allPlotData.axis.minX, allPlotData.axis.maxX, xScaleStep);
         qDebug() << "minY" << allPlotData.axis.minY;
         qDebug() << "maxY" << allPlotData.axis.maxY;
 
     }
-
 
 
     allPlotData.stock[index].data.attach(qwtPlot);
@@ -826,7 +826,6 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
          bool useAutoScale)
 {
     QString str;
-    // QString tmp;
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -895,15 +894,19 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
  *
  *
  *****************************************************************/
-bool CYahooStockPlotUtil::emtypPlotData(PlotData_ST &allPlotData)
+bool CYahooStockPlotUtil::emtypPlotData(PlotData_ST &allPlotData, bool clearLegend)
 {
     for(int i = 0; i < allPlotData.nofStocksToPlot; i++)
     {
         allPlotData.stock[i].data.detach();
         allPlotData.stock[i].data.setData(NULL);
         allPlotData.stock[i].name.clear();
-        allPlotData.stock[i].data.setLegendAttribute(QwtPlotCurve::LegendShowLine, false);
-        allPlotData.stock[i].data.setLegendAttribute(QwtPlotCurve::LegendShowSymbol, false);
+        // allPlotData.stock[i].data.setLegendAttribute(QwtPlotCurve::LegendShowLine, false);
+        // allPlotData.stock[i].data.setLegendAttribute(QwtPlotCurve::LegendShowSymbol, false);
+        if(clearLegend == true)
+        {
+            allPlotData.stock[i].data.setItemAttribute(QwtPlotItem::Legend, false);
+        }
 
     }
     allPlotData.axis.minMaxIsInit = false;
@@ -932,8 +935,10 @@ removePlotData(PlotData_ST &allPlotData , int index, QwtPlot *qwtPlot)
     allPlotData.stock[index].data.detach();
     allPlotData.stock[index].data.setData(NULL);
     allPlotData.stock[index].name.clear();
-    allPlotData.stock[index].data.setLegendAttribute(QwtPlotCurve::LegendShowLine, false);
-    allPlotData.stock[index].data.setLegendAttribute(QwtPlotCurve::LegendShowSymbol, false);
+    // allPlotData.stock[index].data.setLegendAttribute(QwtPlotCurve::LegendShowLine, false);
+    // allPlotData.stock[index].data.setLegendAttribute(QwtPlotCurve::LegendShowSymbol, false);
+    // allPlotData.stock[index].data.setLegendAttribute(QwtPlotCurve::LegendNoAttribute, false);
+    allPlotData.stock[index].data.setItemAttribute(QwtPlotItem::Legend, false);
 
 
     allPlotData.axis.minMaxIsInit = false;

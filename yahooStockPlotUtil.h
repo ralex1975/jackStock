@@ -70,7 +70,6 @@ public:
 
         QString minXDate;
         QString maxXDate;
-
     };
 
     struct XYStockPlotData_ST
@@ -126,7 +125,7 @@ public:
     void updateMinMaxXAxisScales(CYahooStockPlotUtil::MinMaxAxisValues_ST &axis,
                                  CYahooStockPlotUtil::MinMaxAxisValues_ST &qwtPlotAxis);
     bool findStock(CYahooStockPlotUtil::PlotData_ST &allPlotData, QString stockName);
-    bool emtypPlotData(CYahooStockPlotUtil::PlotData_ST &allPlotData);
+    bool emtypPlotData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool clearLegend =true);
     void removePlotData(PlotData_ST &allPlotData , int index, QwtPlot *qwtPlot);
     void panningX1(PlotData_ST &allPlotData ,bool inc, QwtPlot *qwtPlot);
     void addLastOnePlotData(StockData_ST &stockData, CYahooStockPlotUtil::PlotData_ST &qwtStockPlotData, double y, QString date="");

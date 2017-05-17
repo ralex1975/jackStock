@@ -170,10 +170,8 @@ bool CStockPlotUtil::addStockToPlot(PlotData_ST &allPlotData,
 {
     int i;
     QString str;
-    // double x[1000];
-    //double y[1000];
-    double *x = new double [stock.data.x.count()+5];
-    double *y = new double [stock.data.x.count()+5];
+    double *x = new double [stock.data.x.count() + 5];
+    double *y = new double [stock.data.x.count() + 5];
 
 
     if(index >= MAX_NOF_PLOT_COLORS)

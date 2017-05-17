@@ -566,7 +566,7 @@ void subAnalysisDisplayGraphData::subAnalysisClearAllGraphs(QwtPlot *qwtPlot[NOF
 
 /******************************************************************
  *
- * Function:    ()
+ * Function:    plotBarGraph()
  *
  * Description:
  *

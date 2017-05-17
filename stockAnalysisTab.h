@@ -1,6 +1,8 @@
 #ifndef STOCKANALYSISTAB_H
 #define STOCKANALYSISTAB_H
 
+#include <qwt_plot_histogram.h>
+#include <qwt_plot_marker.h>
 #include <QDialog>
 #include "inc/guiUtil/guiFinanceCtrls.h"
 #include "dbHndl.h"
@@ -8,10 +10,16 @@
 #include "stockPlotUtil.h"
 #include "calcavgannualgrowthrateequity.h"
 
-namespace Ui {
-class StockAnalysisTab;
+
+
+namespace Ui
+{
+    class StockAnalysisTab;
 }
 
+
+#define NOF_QWT_PLOTS 10
+#define MAX_NOF_QWT_MARKERS_IN_EACH_PLOT 100
 
 
 
@@ -25,8 +33,13 @@ class StockAnalysisTab : public QDialog
     QPalette *m_red_palette;
     QPalette *m_blue_palette;
 
+    //QwtPlotHistogram *m_barHistArr[NOF_QWT_PLOTS];
+    //QwtPlotMarker *m_mark[NOF_QWT_PLOTS][MAX_NOF_QWT_MARKERS_IN_EACH_PLOT];
+   // QVector <QwtIntervalSample> m_barHistDataArr[NOF_QWT_PLOTS];
 
-    QwtPlot *m_qwtPlot[10];
+
+
+    QwtPlot *m_qwtPlot[NOF_QWT_PLOTS];
     subAnalysisDisplayGraphData m_saDisply;
 
 
@@ -90,7 +103,6 @@ class StockAnalysisTab : public QDialog
     void plotCashflowData(void);
 
 
-    //QString m_html;
 
     GuiFinanceCtrls m_gfc;
     QString m_stockName;
@@ -213,12 +225,16 @@ private slots:
 
     void on_pushButtonSaveImg_2_clicked();
 
+
 private:
     Ui::StockAnalysisTab *ui;
     calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;
 
     // Cannot extract x,y data. Contains all data that is send to graph
-    CYahooStockPlotUtil::PlotData_ST m_qwtPlotData;
+    CYahooStockPlotUtil::PlotData_ST m_qwtEquityPlotData;
+
+    // Cannot extract x,y data. Contains all data that is send to graph
+    CYahooStockPlotUtil::PlotData_ST m_qwtAllAnalysisPlotData;
 
     double m_x[1000];
     double m_y[1000];
@@ -238,18 +254,43 @@ private:
                                   int legendSize = 10);
 
     void plotLinearReportData(QwtPlot *qwtPlot,
+                              bool useAutoScale,
                               SubAnalysDataST *dataArr,
                               int nofData,
                               int indexToPlot,
-                              QColor  &LineColor,
-                              bool removeOldPlots);
+                              int nofPlotToClear,
+                              QColor LineColor);
+
+    void plotBarGraphReportData(QwtPlot *qwtPlot,
+                                bool useAutoScale,
+                                SubAnalysDataST *dataArr,
+                                int nofData,
+                                int indexToPlot,
+                                int nofPlotToClear,
+                                QColor lineColor);
+
+#if 0
+    void clearBarGraph(void);
+
+    void plotBarGraph(int graphIndex,
+                      int nofArrData,
+                      SubAnalysDataST *subAnalysDataArr,
+                      QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
+#endif
 
     void savePlotLinearReportData(QwtPlot *qwtPlot,
                                   QString stockName,
                                   QString date);
 
 
-    void plotAndSaveAllReportData(void);
+    void initAllAnalysisPlots(void);
+    void displayAllAnalysisPlots(void);
+    void subAnalysisCalcQuotient(SubAnalysDataST *resultArr, int &nofDataResultArr,
+                                 SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,
+                                 SubAnalysDataST *denominatorArr, int nofDataDenominatorArr);
+
+
+
 
 
 

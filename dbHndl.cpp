@@ -5788,10 +5788,10 @@ bool CDbHndl::addFa2NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
     QString tmp;
     CUtil cu;
 
-    double growth;
-    double profitDivNofShares;
-    double profitIncomeDiv1000;
-    double refProfit;
+    double growth = 0;
+    double profitDivNofShares = 0;
+    double profitIncomeDiv1000 = 0;
+    double refProfit = 0;
     bool profitRefIsInit = false;
 
 
@@ -6442,10 +6442,10 @@ bool CDbHndl::addFa2operatingIncomeToTreeWidget(QTreeWidget *treeWidget,
     QString str;
     QString tmp;
 
-    double growth;
-    double operatingIncomeDivNofShares;
-    double operatingIncomeDiv1000;
-    double refOperatingIncome;
+    double growth = 0;
+    double operatingIncomeDivNofShares = 0;
+    double operatingIncomeDiv1000 = 0;
+    double refOperatingIncome = 0;
     bool operatingCostRefIsInit = false;
 
 
@@ -9274,10 +9274,10 @@ efficPortfCreateVarianceArr(const QString startDate,
     // Data from database
     // Lets start -1 so we can handle price and time on same loaction
     int timeCnt = -1;
-    double price;
-    double subRes;
+    double price = 0;
+    double subRes = 0;
     VarianceData_ST resData;
-    double refPrice;
+    double refPrice = 0;
     bool initStart = true;
     StateBollingerBand_ET state = BOLLSTATE_PREPARE;
     double result = 0;
@@ -9453,9 +9453,9 @@ efficPortfCalcMeanAndStdDev(const QString startDate,
     // Data from database
     // Lets start -1 so we can handle price and time on same loaction
     int timeCnt = -1;
-    double price;
-    double subRes;
-    double refPrice;
+    double price = 0;
+    double subRes = 0;
+    double refPrice = 0;
     double sumOfPrice = 0;
     bool initStartDate = true;
     StateBollingerBand_ET state = BOLLSTATE_PREPARE;
@@ -11915,10 +11915,10 @@ bool CDbHndl::calcMacdSignalHist(const double dbTimePeriod,
 
     // Data from database
     // Lets start -1 so we can handle price and time on same loaction
-    double sumOfPrice;
-    double histogram;
-    double signal;
-    double oldSignal;
+    double sumOfPrice = 0;
+    double histogram = 0;
+    double signal = 0;
+    double oldSignal = 0;
 
     // Fifo help variable
     int i;
@@ -16338,7 +16338,7 @@ updateFilterParam(QComboBox *indicatorComboBox,
 
     FilterSettings_ET *f;
     QString str;
-    quint64 compParamMask;
+    quint64 compParamMask = 0;
     int len;
 
 
@@ -16405,9 +16405,9 @@ insertFilterParam(QComboBox *indicatorComboBox,
 {
     FilterSettings_ET *f;
     char dbIndictorName[GUI_PARAM_MAX_STR_SIZE];
-    quint64 selParamMask;
-    quint64 compParamMask;
-    int len;
+    quint64 selParamMask = 0;
+    quint64 compParamMask = 0;
+    int len = 0;
 
     f = &m_filter;
 
