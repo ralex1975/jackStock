@@ -269,15 +269,6 @@ private:
                                 int nofPlotToClear,
                                 QColor lineColor);
 
-#if 0
-    void clearBarGraph(void);
-
-    void plotBarGraph(int graphIndex,
-                      int nofArrData,
-                      SubAnalysDataST *subAnalysDataArr,
-                      QwtPlot *qwtPlot[NOF_QWT_PLOTS]);
-#endif
-
     void savePlotLinearReportData(QwtPlot *qwtPlot,
                                   QString stockName,
                                   QString date);
@@ -287,7 +278,9 @@ private:
     void displayAllAnalysisPlots(void);
     void subAnalysisCalcQuotient(SubAnalysDataST *resultArr, int &nofDataResultArr,
                                  SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,
-                                 SubAnalysDataST *denominatorArr, int nofDataDenominatorArr);
+                                 SubAnalysDataST *denominatorArr, int nofDataDenominatorArr,
+                                 bool skipDenominatorEqZero = true,
+                                 bool convToProcent=false);
 
 
 

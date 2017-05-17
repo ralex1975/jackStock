@@ -62,22 +62,6 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     QString path;
 
-#if 0
-    int i, j;
-
-    // Create bar graph memory
-    for(i = 0; i < NOF_QWT_PLOTS; i++)
-    {
-        m_barHistArr[i] = new QwtPlotHistogram;
-
-        for(j = 0; j < MAX_NOF_QWT_MARKERS_IN_EACH_PLOT; j++)
-        {
-            m_mark[i][j] = new QwtPlotMarker;
-        }
-    }
-#endif
-
-
     m_red_palette = new QPalette();
     m_red_palette->setColor(QPalette::WindowText,Qt::red);
 
@@ -140,19 +124,6 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 StockAnalysisTab::~StockAnalysisTab()
 {
 
-#if 0
-    int i, j ;
-
-    for(i = 0; i < NOF_QWT_PLOTS; i++)
-    {
-        delete m_barHistArr[i];
-
-        for(j = 0; j < MAX_NOF_QWT_MARKERS_IN_EACH_PLOT; j++)
-        {
-            delete m_mark[i][j];
-        }
-    }
-#endif
 
     delete ui;
     delete m_barHist;
@@ -5240,6 +5211,57 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
     initPlotLinearReportData(ui->qwtPlotEarningsPerShare_13, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
+
+    //-----------------------------------------------------------------------------------
+    // Utdelning
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Utdelning");
+    legendText = QString::fromUtf8("UT");
+
+    initPlotLinearReportData(ui->qwtPlotDiv_14, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinst/Utdelning
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Vinst/Utdelning");
+    legendText = QString::fromUtf8("V/UT");
+
+    initPlotLinearReportData(ui->qwtPlotEarningDiv_16, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinstmarginal (%) (Vinst efter skatt / Omsättning)
+    //-----------------------------------------------------------------------------------
+
+    plotHeader = QString::fromUtf8("Vinstmarginal (%) (Vinst efter skatt / Omsättning)");
+    legendText = QString::fromUtf8("Vm");
+
+    initPlotLinearReportData(ui->qwtPlot_19, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]");
+    legendText = QString::fromUtf8("Ak/Ek");
+
+    initPlotLinearReportData(ui->qwtPlotEarningMargin_20, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
+
+
+
+
+
 }
 
 
@@ -5258,15 +5280,15 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
  *******************************************************************/
 void StockAnalysisTab::displayAllAnalysisPlots(void)
 {
-    SubAnalysDataST tmpArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
+    //SubAnalysDataST tmpArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
     SubAnalysDataST resultArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
     int nofDataResultArr;
-    int nofTmpArrData;
-    double tmpRes;
+    //int nofTmpArrData;
     int indexToPlot;
     int nofPlotToClear;
     QColor lineColor;
     bool useAutoScale;
+    bool convToProcent;
 
     CYahooStockPlotUtil cyspu;
     m_qwtAllAnalysisPlotData.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
@@ -5281,38 +5303,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Omsättningstillgångarna / Kortfristiga skulder > 2
     //-----------------------------------------------------------------------------------
-#if 0
-    nofTmpArrData = 0;
-    for(int i = 0; i < m_nofTotalCurrentAssetsArrData; i++)
-    {
-        for(int j = 0; j < m_nofTotalCurrentLiabilitiesData; j++)
-        {
-            if(m_totalCurrentAssetsArr[i].date.toInt() == m_totalCurrentLiabilitiesArr[j].date.toInt())
-            {
-                tmpArr[nofTmpArrData].date = m_totalCurrentAssetsArr[i].date;
-
-                // Do not divide by zero
-                if((m_totalCurrentLiabilitiesArr[j].data.toDouble() >= 0) &&
-                   (m_totalCurrentLiabilitiesArr[j].data.toDouble() <  0.0001))
-                {
-                    tmpRes = m_totalCurrentAssetsArr[i].data.toDouble() / 0.0001;
-                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
-                    nofTmpArrData++;
-                }
-                else
-                {
-                    tmpRes = (m_totalCurrentAssetsArr[i].data.toDouble() / m_totalCurrentLiabilitiesArr[j].data.toDouble());
-                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
-                    nofTmpArrData++;
-                }
-
-            }
-
-        }
-    }
-#endif
-
-
+    // Beräkna kvoten
     subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totalCurrentAssetsArr,
@@ -5336,75 +5327,48 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Omsättningstillgångarna / Totala skulder >= 1
     //-----------------------------------------------------------------------------------
-    nofTmpArrData = 0;
-    for(int i = 0; i < m_nofTotalCurrentAssetsArrData; i++)
-    {
-        for(int j = 0; j < m_nofTotalLiabilitiesData; j++)
-        {
-            if(m_totalCurrentAssetsArr[i].date.toInt() == m_totalCurrentLiabilitiesArr[j].date.toInt())
-            {
-                tmpArr[nofTmpArrData].date = m_totalCurrentAssetsArr[i].date;
+    // Beräkna kvoten
+    subAnalysisCalcQuotient(resultArr,
+                            nofDataResultArr,
+                            m_totalCurrentAssetsArr,
+                            m_nofTotalCurrentAssetsArrData,
+                            m_totalLiabilitiesArr,
+                            m_nofTotalLiabilitiesData);
 
-                // Do not divide by zero
-                if((m_totalLiabilitiesArr[j].data.toDouble() >= 0) &&
-                   (m_totalLiabilitiesArr[j].data.toDouble() <  0.0001))
-                {
-                    tmpRes = m_totalCurrentAssetsArr[i].data.toDouble() / 0.0001;
-                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
-                    nofTmpArrData++;
-                }
-                else
-                {
-                    tmpRes = (m_totalCurrentAssetsArr[i].data.toDouble() / m_totalLiabilitiesArr[j].data.toDouble());
-                    tmpArr[nofTmpArrData].data.sprintf("%f", tmpRes);
-                    nofTmpArrData++;
-                }
 
-            }
-
-        }
-    }
-
-  //  if(nofTmpArrData > 1)
-    {
-        indexToPlot = 1;
-        nofPlotToClear = 0;
-        lineColor = Qt::blue;
-        useAutoScale = false;
-        plotLinearReportData(ui->qwtPlotCurrAssTotLiab_12,
-                              useAutoScale,
-                              tmpArr,
-                              nofTmpArrData,
-                              indexToPlot,
-                              nofPlotToClear,
-                              lineColor);
-    }
+    indexToPlot = 1;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    plotLinearReportData(ui->qwtPlotCurrAssTotLiab_12,
+                          useAutoScale,
+                          resultArr,
+                          nofDataResultArr,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
 
 
     //-----------------------------------------------------------------------------------
     // Vinst/Aktie
     //-----------------------------------------------------------------------------------
-//    if(m_nofEarningsArrData > 1)
-    {
-        indexToPlot = 2;
-        nofPlotToClear = 0;
-        lineColor = Qt::blue;
-        useAutoScale = false;
-        plotLinearReportData(ui->qwtPlotEarningsPerShare_13,
-                              useAutoScale,
-                              m_earningsDataArr,
-                              m_nofEarningsArrData,
-                              indexToPlot,
-                              nofPlotToClear,
-                              lineColor);
-    }
+    indexToPlot = 2;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    plotLinearReportData(ui->qwtPlotEarningsPerShare_13,
+                          useAutoScale,
+                          m_earningsDataArr,
+                          m_nofEarningsArrData,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
 
 
 
     //-----------------------------------------------------------------------------------
     // Utdelning
     //-----------------------------------------------------------------------------------
-
     indexToPlot = 3;
     nofPlotToClear = 0;
     lineColor = Qt::blue;
@@ -5418,15 +5382,85 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                 nofPlotToClear,
                                 lineColor);
 
-#if 0
-    int graphIndex = 0;
-    m_qwtPlot[0] = ui->qwtPlotDiv_14;
 
-    plotBarGraph(graphIndex,
-                 m_nofDividendArrData,
-                 m_dividendDataArr,
-                 m_qwtPlot);
- #endif
+    //-----------------------------------------------------------------------------------
+    // Vinst/Utdelning
+    //-----------------------------------------------------------------------------------
+
+    // Beräkna kvoten
+    subAnalysisCalcQuotient(resultArr,
+                            nofDataResultArr,
+                            m_earningsDataArr,
+                            m_nofEarningsArrData,
+                            m_dividendDataArr,
+                            m_nofDividendArrData);
+
+    indexToPlot = 4;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    plotLinearReportData(ui->qwtPlotEarningDiv_16,
+                          useAutoScale,
+                          resultArr,
+                          nofDataResultArr,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
+
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinstmarginal (%) (Vinst efter skatt / Omsättning)
+    //-----------------------------------------------------------------------------------
+    // Beräkna kvoten
+    convToProcent = true;
+    subAnalysisCalcQuotient(resultArr,
+                            nofDataResultArr,
+                            m_totEarningsDataArr,
+                            m_nofTotEarningsArrData,
+                            m_revenueDataArr,
+                            m_nofRevenueArrData,
+                            convToProcent);
+
+
+
+    indexToPlot = 7;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    plotLinearReportData(ui->qwtPlot_19,
+                          useAutoScale,
+                          resultArr,
+                          nofDataResultArr,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
+
+    //-----------------------------------------------------------------------------------
+    // Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]
+    //-----------------------------------------------------------------------------------
+    // Beräkna kvoten
+    convToProcent = true;
+    subAnalysisCalcQuotient(resultArr,
+                            nofDataResultArr,
+                            m_totEarningsDataArr,
+                            m_nofTotEarningsArrData,
+                            m_totEquityArr,
+                            m_nofTotEquityData,
+                            convToProcent);
+
+    indexToPlot = 8;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    plotLinearReportData(ui->qwtPlotEarningMargin_20/*ui->qwtPlot_19*/,
+                          useAutoScale,
+                          resultArr,
+                          nofDataResultArr,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
 
 }
 
@@ -5444,7 +5478,9 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
  *******************************************************************/
 void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     int &nofDataResultArr,
                                                 SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,
-                                               SubAnalysDataST *denominatorArr, int nofDataDenominatorArr)
+                                               SubAnalysDataST *denominatorArr, int nofDataDenominatorArr,
+                                               bool skipDenominatorEqZero,
+                                               bool convToProcent)
 {
     double tmpRes;
 
@@ -5453,6 +5489,11 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
     {
         for(int j = 0; j < nofDataDenominatorArr; j++)
         {
+            if((skipDenominatorEqZero == true) && (denominatorArr[j].data.toDouble() == 0))
+            {
+                continue;
+            }
+
             if(numeratorArr[i].date.toInt() == denominatorArr[j].date.toInt())
             {
                 resultArr[nofDataResultArr].date = numeratorArr[i].date;
@@ -5462,15 +5503,19 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
                    (denominatorArr[j].data.toDouble() <  0.0001))
                 {
                     tmpRes = numeratorArr[i].data.toDouble() / 0.0001;
-                    resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
-                    nofDataResultArr++;
                 }
                 else
                 {
                     tmpRes = (numeratorArr[i].data.toDouble() / denominatorArr[j].data.toDouble());
-                    resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
-                    nofDataResultArr++;
+
                 }
+
+                if(convToProcent == true)
+                {
+                    tmpRes = tmpRes * (double) 100.0;
+                }
+                resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
+                nofDataResultArr++;
             }
         }
     }
@@ -5554,7 +5599,7 @@ void StockAnalysisTab::plotBarGraphReportData(QwtPlot *qwtPlot,
         cyspu.updateMinMaxAxis(m_qwtAllAnalysisPlotData.axis, m_x[i], m_y[i]);
     }
 
-
+    // Make bars fit on plot
     m_qwtAllAnalysisPlotData.axis.minX -= 0.5;
     m_qwtAllAnalysisPlotData.axis.maxX += 0.5;
 
@@ -5564,16 +5609,21 @@ void StockAnalysisTab::plotBarGraphReportData(QwtPlot *qwtPlot,
         m_qwtAllAnalysisPlotData.axis.minY = 0;
     }
 
+    // Data to be plotted
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSamples(m_x, m_y, nofData);
+
+    // set plot grid
     qwtPlot->setAxisMaxMinor(QwtPlot::xBottom, 1);
     qwtPlot->setAxisMaxMajor(QwtPlot::xBottom, nofData);
 
-    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
-                                                               QPen(lineColor),
-                                                               QSize(7, 7) ) );
 
+
+    // Set plot to bar graph
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setStyle(QwtPlotCurve::Sticks);
-    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 50));
+
+    // Do not increase curve thickness (above 4) the y-value will be wrong
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 4));
+    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setBaseline(0);
 
 
     cyspu.plotData(m_qwtAllAnalysisPlotData, qwtPlot, indexToPlot, useAutoScale);
@@ -5638,7 +5688,7 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
 
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSamples(m_x, m_y, nofData);
     qwtPlot->setAxisMaxMinor(QwtPlot::xBottom, 2);
-    qwtPlot->setAxisMaxMajor(QwtPlot::xBottom, nofData - 1);
+    qwtPlot->setAxisMaxMajor(QwtPlot::xBottom, nofData);
 
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 2));
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
@@ -5648,6 +5698,9 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
 
     cyspu.plotData(m_qwtAllAnalysisPlotData, qwtPlot, indexToPlot, useAutoScale);
 
+    // Dirty way to acutoscale y axis
+    //qwtPlot->setAxisAutoScale(QwtPlot::yLeft, true);
+
     // Disable legend when we plot to not get two
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setItemAttribute(QwtPlotItem::Legend, false);
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.attach(qwtPlot);
@@ -5656,151 +5709,6 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
 
 
 
-#if 0
-/******************************************************************
- *
- * Function:    clearBarGraph()
- *
- * Description:
- *
- *
- *
- *
- *****************************************************************/
-void StockAnalysisTab::clearBarGraph(void)
-{
-    for(int i = 0; i < NOF_QWT_PLOTS; i++)
-    {
-        // Clear graph
-        m_barHistDataArr[i].clear();
-        m_barHistArr[i]->detach();
-        m_barHistArr[i]->setData(NULL);
-        m_barHistArr[i]-> setStyle (QwtPlotHistogram :: Columns);
-    }
-
-}
-
-
-
-/******************************************************************
- *
- * Function:    plotBarGraph()
- *
- * Description:
- *
- *
- *
- *
- *****************************************************************/
-void StockAnalysisTab::plotBarGraph(int graphIndex,
-                                    int nofArrData,
-                                    SubAnalysDataST *subAnalysDataArr,
-                                    QwtPlot *qwtPlot[NOF_QWT_PLOTS])
-{
-    QwtText txt;
-    QString lableText;
-
-    double date;
-    double data;
-
-    double xMin;
-    double xMax;
-
-    double yMin;
-    double yMax;
-
-
-    if((nofArrData < 1) || (graphIndex > 9))
-    {
-        return;
-    }
-
-    // Clear graph
-    m_barHistDataArr[graphIndex].clear();
-    m_barHistArr[graphIndex]->detach();
-    m_barHistArr[graphIndex]->setData(NULL);
-    m_barHistArr[graphIndex]-> setStyle (QwtPlotHistogram :: Columns);
-
-
-    for(int i = 0; i < nofArrData; i++)
-    {
-        date = subAnalysDataArr[i].date.toDouble();
-        data = subAnalysDataArr[i].data.toDouble();
-
-        if(i == 0)
-        {
-           xMin = date;
-           xMax = date;
-
-           yMin = data;
-           yMax = data;
-
-        }
-        else
-        {
-            if(xMin > (date))
-            {
-                xMin = (date + 0.5);
-            }
-
-            if(xMax < (date + 1.0))
-            {
-                xMax = date + 1.0;
-            }
-
-
-            if(yMin > data)
-            {
-                yMin = (data);
-            }
-
-            if(yMax < (data + 1.0))
-            {
-                yMax = (data + 1.0);
-            }
-
-        }
-
-
-        // Insert data value at the top of the bar
-        lableText.clear();
-        lableText.sprintf("%.2f", data);
-        txt.setText(lableText);
-
-        m_mark[graphIndex][i]->detach();
-        m_mark[graphIndex][i]->setLabel(txt);
-        m_mark[graphIndex][i]->setValue((double)(date+0.5),(double)(data+0.5)); //here you have to set the coordinate axis i.e. where the axis are meeting.
-        m_mark[graphIndex][i]->attach(qwtPlot[graphIndex]);
-
-        // Add data to graph
-        QwtInterval interval(date, date + 1);
-        interval.setBorderFlags( QwtInterval::ExcludeMaximum | QwtInterval::ExcludeMinimum);
-        m_barHistDataArr[graphIndex].append (QwtIntervalSample(data, interval));
-    }
-
-    // qwtPlot[graphIndex]->enableAxis(QwtPlot::xBottom, false);
-    // qwtPlot[graphIndex]->enableAxis(QwtPlot::yLeft, false);
-
-    if(yMin > 0)
-        yMin = 0;
-
-    // qwtPlot[graphIndex]->setAxisAutoScale(QwtPlot::yLeft, true);
-    qwtPlot[graphIndex]->setAxisScale(QwtPlot::yLeft, yMin, yMax);
-    // qwtPlot[graphIndex]->setAxisScale(QwtPlot::xBottom, xMin, xMax);
-
-    qwtPlot[graphIndex]->setAxisMaxMinor(QwtPlot::xBottom, 2);
-    qwtPlot[graphIndex]->setAxisMaxMajor(QwtPlot::xBottom, nofArrData);
-
-
-    // Display graph data
-    m_barHistArr[graphIndex]->setBrush(Qt::blue);
-    m_barHistArr[graphIndex]->setPen(QPen(Qt::black));
-    m_barHistArr[graphIndex]->setSamples(m_barHistDataArr[graphIndex]);
-    m_barHistArr[graphIndex]->attach(qwtPlot[graphIndex]);
-    qwtPlot[graphIndex]->replot();
-
-}
-#endif
 
 
 

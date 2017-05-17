@@ -829,7 +829,7 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
-        str.sprintf("Felaktigt index för inte vara större (Max = %d)", MAX_NOF_PLOT_COLORS);
+        str.sprintf("Felaktigt index får inte vara större (Max = %d)", MAX_NOF_PLOT_COLORS);
         QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
         return false;
     }
