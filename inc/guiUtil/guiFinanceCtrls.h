@@ -7,7 +7,7 @@
 
 #include "guiFinanceColor.h"
 #include "myTreeWidget.h"
-#include "../../dbHndl.h"
+#include "dbHndl.h"
 
 
 class GuiFinanceCtrls : public QWidget

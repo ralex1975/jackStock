@@ -4,7 +4,7 @@
 
 #include <QThread>
 #include <QtCore>
-#include "../myOs/mytaskQue.h"
+#include "mytaskQue.h"
 #include "stdlib.h"
 #include "stdio.h"
 

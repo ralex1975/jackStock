@@ -9,10 +9,10 @@
  *
  ********************************************************************************/
 
-#include "../../inc/guiUtil/guiFinanceCtrls.h"
-#include "../../inc/guiUtil/guiFinanceColor.h"
-#include "../../common.h"
-#include "../../util.h"
+#include "guiFinanceCtrls.h"
+#include "guiFinanceColor.h"
+#include "common.h"
+#include "util.h"
 
 
 
