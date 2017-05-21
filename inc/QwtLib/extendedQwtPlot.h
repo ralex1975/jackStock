@@ -64,6 +64,7 @@ public:
     void setLegendSymbol(QwtPlot *qwtPlot, QString legendText, QwtSymbol legendSymbol, QColor legendColor, int legendSize = 10);
     void setRightLegend(QwtPlot *qwtPlot);
     void setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition pos);
+    void turnOnPlotMarker(QwtPlot *qwtPlot, QColor color = Qt::green);
     void initPlotPicker(QwtPlot *qwtPlot);
     void initPlotZoomer(QwtPlot *qwtPlot);
     void initPlotPanner(QwtPlot *qwtPlot);
@@ -73,6 +74,8 @@ public:
     void enablePanningMode(bool on);
     void panLeftRight(int dx);
     void setCanvasBackground(QwtPlot *qwtPlot, QColor color);
+    void turnOnPlotGrid(QwtPlot *qwtPlot, QColor color, bool enableMinorXGrid,
+                        bool enableMajorXGrid, bool enableMinorYGrid, bool enableMajorYGrid);
 
 };
 

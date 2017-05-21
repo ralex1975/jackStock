@@ -98,7 +98,6 @@ EfficientPortfolio::~EfficientPortfolio()
     delete [] m_riskReturPlotArr;
     delete [] m_riskReturTxtArr;
     delete m_xAxisPlot;
-    delete m_plotGrid;
     delete m_plotflashLabel;
 
 }
@@ -483,16 +482,21 @@ void EfficientPortfolio::enterPlotLabel(int index, double x, double y, QwtPlot *
  *********************************************************************/
 void EfficientPortfolio::plotXAxis(QwtPlot *qwtPlot)
 {
-    //QwtPlotGrid *grid = new QwtPlotGrid;
-    m_plotGrid->enableXMin(true);
-    m_plotGrid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    m_plotGrid->setMinPen(QPen(Qt::darkYellow, 0 , Qt::DotLine));
-    m_plotGrid->attach(qwtPlot);
+    CExtendedQwtPlot eqp;
+    bool enableMinorXGrid = true;
+    bool enableMajorXGrid = false;
+    bool enableMinorYGrid = false;
+    bool enableMajorYGrid = true;
 
     double x[2];
     double y[2];
 
     double minX, minY, maxX, maxY;
+
+
+    eqp.turnOnPlotGrid(qwtPlot, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                       enableMinorYGrid, enableMajorYGrid);
+
 
     if(m_minMaxReturPlotArr.minX >= 0)
         minX = m_minMaxReturPlotArr.minX*0.9;
@@ -595,13 +599,6 @@ bool EfficientPortfolio::createQwtPlotArrMemSpace(int nofStocks)
     }
 
 
-    m_plotGrid = new QwtPlotGrid;
-
-    if((m_plotGrid) == 0)
-    {
-        return false;
-    }
-
     return true;
 }
 
@@ -617,7 +614,6 @@ void EfficientPortfolio::removeQwtPlotArrMemSpace(void)
     delete [] m_riskReturPlotArr;
     delete [] m_riskReturTxtArr;
     delete m_xAxisPlot;
-    delete m_plotGrid;
 }
 
 /*******************************************************************

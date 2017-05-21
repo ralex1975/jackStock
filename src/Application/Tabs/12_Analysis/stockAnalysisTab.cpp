@@ -101,6 +101,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     ui->webViewAllAnalyzedComp->load(QUrl(path));
 
 
+
     // New plots
     initAllAnalysisPlots();
 
@@ -5189,7 +5190,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Omsättningstillgångarna / Kortfristiga skulder > 2");
     legendText = QString::fromUtf8("OT/KS");
 
-    initPlotLinearReportData(ui->qwtPlotCurrAssLiab, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotCurrAssLiab, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
     //-----------------------------------------------------------------------------------
@@ -5199,7 +5200,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     legendText = QString::fromUtf8("OT/TS");
     legendSymbol = QwtSymbol::Ellipse;
 
-    initPlotLinearReportData(ui->qwtPlotCurrAssTotLiab_12, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotCurrAssTotLiab_12, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
 
@@ -5209,8 +5210,19 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Vinst/Aktie");
     legendText = QString::fromUtf8("V/A");
 
-    initPlotLinearReportData(ui->qwtPlotEarningsPerShare_13, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotEarningsPerShare_13, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Omsättning, Vinst efter skatt
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Omsättning, Vinst efter skatt");
+    legendText = QString::fromUtf8("O, V");
+
+    initAnalysisPlot(ui->qwtPlotRevenueEarnings_17, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
 
     //-----------------------------------------------------------------------------------
     // Utdelning
@@ -5218,7 +5230,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Utdelning");
     legendText = QString::fromUtf8("UT");
 
-    initPlotLinearReportData(ui->qwtPlotDiv_14, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotDiv_14, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
 
@@ -5230,7 +5242,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Vinst/Utdelning");
     legendText = QString::fromUtf8("V/UT");
 
-    initPlotLinearReportData(ui->qwtPlotEarningDiv_16, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotEarningDiv_16, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
 
@@ -5242,7 +5254,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Vinsttillväxt (%)");
     legendText = QString::fromUtf8("Vt");
 
-    initPlotLinearReportData(ui->qwtPlot_19, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlot_19, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
 
@@ -5254,7 +5266,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Vinstmarginal (%) (Vinst efter skatt / Omsättning)");
     legendText = QString::fromUtf8("Vm");
 
-    initPlotLinearReportData(ui->qwtPlotEarningMargin_20, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotEarningMargin_20, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
 
@@ -5265,9 +5277,62 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]");
     legendText = QString::fromUtf8("Ak/Ek");
 
-    initPlotLinearReportData(ui->qwtPlotEquityMargin_22, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotEquityMargin_22, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Totala Skulder, Eget kapital, Vinst, Utdelning");
+    legendText = QString::fromUtf8("Totala Skulder");
+    legendColor = Qt::red;
+    legendSize = 10;
+
+    initAnalysisPlot(ui->qwtPlotLiabEquityEarningDiv_21, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+    ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
+
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+
+    ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
+
+    CExtendedQwtPlot eqp;
+
+    eqp.setRightLegend(ui->qwtPlotLiabEquityEarningDiv_21);
+
+
+    legendText = legendText.fromUtf8("Eget kapital");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::blue;
+    legendSize = 10;
+
+
+    eqp.setLegendSymbol(ui->qwtPlotLiabEquityEarningDiv_21, legendText, legendSymbol, legendColor, legendSize);
+
+    legendText = legendText.fromUtf8("Vinst");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::magenta;
+    legendSize = 10;
+
+
+    eqp.setLegendSymbol(ui->qwtPlotLiabEquityEarningDiv_21, legendText, legendSymbol, legendColor, legendSize);
+
+    legendText = legendText.fromUtf8("Utdelning");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::black;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotLiabEquityEarningDiv_21, legendText, legendSymbol, legendColor, legendSize);
+
 }
+
 
 
 
@@ -5276,7 +5341,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
 /*******************************************************************
  *
- * Function:        clearGUIIntrinsicValue()
+ * Function:        displayAllAnalysisPlots()
  *
  * Description:
  *
@@ -5295,10 +5360,17 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     bool useAutoScale;
     bool skipDenominatorEqZero = true;
     bool convToProcent;
+    bool resetMinMaxScale;
+    int xScaleStep;
+    bool clearLegend = true;
 
     CYahooStockPlotUtil cyspu;
     m_qwtAllAnalysisPlotData.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
-    cyspu.emtypPlotData(m_qwtAllAnalysisPlotData, false);
+    cyspu.emtypPlotData(m_qwtAllAnalysisPlotData, clearLegend);
+
+    m_qwtAnalysisPlotDataArr2.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
+    cyspu.emtypPlotData(m_qwtAnalysisPlotDataArr2, clearLegend);
+
 
 
 
@@ -5369,6 +5441,29 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                           indexToPlot,
                           nofPlotToClear,
                           lineColor);
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Omsättning, Vinst efter skatt 1,(2)
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 9;
+    resetMinMaxScale = true;
+    xScaleStep = 1;
+    plotYAxisLogData(m_qwtAllAnalysisPlotData, resetMinMaxScale,
+                     m_revenueDataArr, m_nofRevenueArrData,
+                     ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::blue, xScaleStep);
+
+
+    //-----------------------------------------------------------------------------------
+    // Omsättning, Vinst efter skatt 2,(2)
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 10;
+    resetMinMaxScale = false;
+    xScaleStep = 1;
+    plotYAxisLogData(m_qwtAllAnalysisPlotData, resetMinMaxScale,
+                     m_totEarningsDataArr, m_nofTotEarningsArrData,
+                     ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::red, xScaleStep);
 
 
 
@@ -5498,9 +5593,53 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                           nofPlotToClear,
                           lineColor);
 
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 0;
+    resetMinMaxScale = true;
+    xScaleStep = 1;
+    plotYAxisLogData(m_qwtAnalysisPlotDataArr2, resetMinMaxScale,
+                     m_totalCurrentLiabilitiesArr, m_nofTotalLiabilitiesData,
+                     ui->qwtPlotLiabEquityEarningDiv_21, indexToPlot, Qt::red, xScaleStep);
+
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 1;
+    resetMinMaxScale = false;
+    xScaleStep = 1;
+    plotYAxisLogData(m_qwtAnalysisPlotDataArr2, resetMinMaxScale,
+                     m_totEquityArr, m_nofTotEquityData,
+                     ui->qwtPlotLiabEquityEarningDiv_21, indexToPlot, Qt::blue, xScaleStep);
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 2;
+    resetMinMaxScale = false;
+    xScaleStep = 1;
+    plotYAxisLogData(m_qwtAnalysisPlotDataArr2, resetMinMaxScale,
+                     m_totEarningsDataArr, m_nofTotEarningsArrData,
+                     ui->qwtPlotLiabEquityEarningDiv_21, indexToPlot, Qt::magenta, xScaleStep);
+
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 3;
+    resetMinMaxScale = false;
+    xScaleStep = 1;
+    bool changeSignYdata = true;
+    plotYAxisLogData(m_qwtAnalysisPlotDataArr2, resetMinMaxScale,
+                     m_totDividensArr, m_nofTotDividensData,
+                     ui->qwtPlotLiabEquityEarningDiv_21, indexToPlot, Qt::black,
+                     xScaleStep, changeSignYdata);
+
+
 }
-
-
 
 
 /*******************************************************************
@@ -5576,7 +5715,7 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
  *
  *
  *******************************************************************/
-void StockAnalysisTab::initPlotLinearReportData(QwtPlot *qwtPlot,
+void StockAnalysisTab::initAnalysisPlot(QwtPlot *qwtPlot,
                                                 QString plotHeader,
                                                 QColor canvasColor,
                                                 QString legendText,
@@ -5587,17 +5726,30 @@ void StockAnalysisTab::initPlotLinearReportData(QwtPlot *qwtPlot,
 {
     CExtendedQwtPlot eqp;
 
+    bool enableMinorXGrid = false;
+    bool enableMajorXGrid = true;
+    bool enableMinorYGrid = false;
+    bool enableMajorYGrid = true;
+
+
+
     eqp.setPlotTitle(qwtPlot, plotHeader);
     eqp.setCanvasBackground(qwtPlot, canvasColor);
 
     eqp.setLegendSymbol(qwtPlot, legendText, legendSymbol, legendColor, legendSize);
     eqp.setLegend(qwtPlot, location);
+
+    eqp.turnOnPlotGrid(qwtPlot, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                       enableMinorYGrid, enableMajorYGrid);
+
+    // Displays x,y coordinate on screen when user moves mouse over the plot.
+    eqp.initPlotPicker(qwtPlot);
 }
 
 
 /*******************************************************************
  *
- * Function:        plotLinearReportData()
+ * Function:        plotBarGraphReportData()
  *
  * Description:
  *
@@ -5628,7 +5780,7 @@ void StockAnalysisTab::plotBarGraphReportData(QwtPlot *qwtPlot,
     }
 
 
-    m_qwtAllAnalysisPlotData.nofStocksToPlot =
+    m_qwtAllAnalysisPlotData.nofStocksToPlot = 1;
     m_qwtAllAnalysisPlotData.axis.minMaxIsInit = false;
 
     for(int i = 0; i < nofData; i++)
@@ -5717,7 +5869,7 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
     }
 
 
-    m_qwtAllAnalysisPlotData.nofStocksToPlot =
+    m_qwtAllAnalysisPlotData.nofStocksToPlot = 1;
     m_qwtAllAnalysisPlotData.axis.minMaxIsInit = false;
 
     for(int i = 0; i < nofData; i++)
@@ -5756,6 +5908,471 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.attach(qwtPlot);
     qwtPlot->replot();
 }
+
+
+#define START_VALUE_FIND_PLOT_SCALES 0.000000001
+#define MAX_MAJOR_TICKS 20
+
+/*******************************************************************
+ *
+ * Function:        logScaleFindStartStopTicksValue()
+ *
+ * Description:     Try to find First and last value on any log axis
+ *
+ *                  |.....|.....|.....|
+ *                  10    100   1000  10000
+ *
+ *******************************************************************/
+bool StockAnalysisTab::
+logScaleFindStartStopTicksValue(double minValue,
+                                double maxValue,
+                                double &minPlotTicValue,
+                                double &maxPlotTicValue,
+                                int &nofTicks)
+{
+    bool foundMin = false;      // 1, 10, 100.          Coarse search of correct decad
+    bool tmpFoundMin = false;   // 100, 200, 300        Fine search in same correct decad
+
+    bool foundMax = false;      // 1, 10, 100
+    bool tmpFoundMax = false;   // 100, 200, 300  searching for optomal value in a decad
+
+    double cmpMinValue = START_VALUE_FIND_PLOT_SCALES;
+    double cmpMaxValue;
+
+    if((maxValue < 0) ||
+       (minValue >= maxValue) ||
+       (minValue < START_VALUE_FIND_PLOT_SCALES))
+    {
+        return false;
+    }
+
+    cmpMinValue = START_VALUE_FIND_PLOT_SCALES;
+
+    //========================================
+    // Find min value
+    //========================================
+
+    // Increment test cnt 1, 10, 100 ...
+    for(int cnt = 0; cnt < 1000; cnt++)
+    {
+        if(cmpMinValue >= minValue)
+        {
+            // Step back one step so min scale is less than min y value
+            cmpMinValue = cmpMinValue / (double) 10.0;
+            qDebug() << "found" << "cmpMinValue" << cmpMinValue;
+            foundMin = true;
+            break;
+        }
+
+        cmpMinValue = cmpMinValue * (double) 10.0;
+
+    }
+
+    double tmpCmpMinValue = cmpMinValue;
+
+    // Now increment 100, 200 , 300, ... 900
+    for(int i = 1; i < 9; i++)
+    {
+        tmpCmpMinValue = cmpMinValue * (double) i;
+
+        if(tmpCmpMinValue >= minValue)
+        {
+            if(i > 2)
+            {
+                tmpCmpMinValue = cmpMinValue * (double) (i - 1);
+                qDebug() << "found" << "tmpCmpMinValue" << tmpCmpMinValue;
+                tmpFoundMin = true;
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+
+    //========================================
+    // Find max value
+    //========================================
+    cmpMaxValue = cmpMinValue;
+
+    // Increment test cnt 1, 10, 100 ...
+    for(int cnt = 0; cnt < 1000; cnt++)
+    {
+        if(cmpMaxValue >= maxValue)
+        {
+            qDebug() << "found" << "cmpMaxValue" << cmpMaxValue;
+            foundMax = true;
+            break;
+        }
+
+        cmpMaxValue = cmpMaxValue * (double) 10.0;
+
+    }
+
+    double scaleFactor = cmpMaxValue / 10;
+    double tmpCmpMaxValue = scaleFactor * (double) 9.0;
+
+
+    // Now increment 100, 200 , 300, ... 900
+    for(int i = 9; i > 1; i--)
+    {
+        if(tmpCmpMaxValue < maxValue)
+        {
+            if(i < 9)
+            {
+                tmpCmpMaxValue = scaleFactor * (double) (i + 1);
+                tmpCmpMaxValue = tmpCmpMaxValue * (double) 10.0;
+                qDebug() << "found" << "tmpCmpMaxValue" << tmpCmpMaxValue;
+                tmpFoundMax = true;
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        tmpCmpMaxValue = scaleFactor * (double) i;
+    }
+
+
+    // Select best minvalue
+    if(tmpFoundMin == true && foundMin == true)
+    {
+        qDebug() << "minValue" << minValue;
+        qDebug() << "cmpMinValue" << cmpMinValue;
+        qDebug() << "tmpCmpMinValue" << tmpCmpMinValue;
+
+        if(cmpMinValue > tmpCmpMinValue)
+        {
+            minPlotTicValue = cmpMinValue;
+        }
+        else
+        {
+            minPlotTicValue = tmpCmpMinValue;
+        }
+        qDebug() << "minPlotTicValue" << minPlotTicValue;
+    }
+    else
+    {
+        // Set Min plot tick on plot
+        if(tmpFoundMin == true)
+        {
+            minPlotTicValue = tmpCmpMinValue;
+        }
+        else
+        {
+            minPlotTicValue = cmpMinValue;
+        }
+    }
+
+
+
+    if((tmpFoundMax == true) && (foundMax == true))
+    {
+        qDebug() << "maxValue" << maxValue;
+        qDebug() << "cmpMaxValue" << cmpMaxValue;
+        qDebug() << "tmpCmpMaxValue" << tmpCmpMaxValue;
+
+
+        if(cmpMaxValue < tmpCmpMaxValue)
+        {
+            maxPlotTicValue = cmpMaxValue;
+        }
+        else
+        {
+            maxPlotTicValue = tmpCmpMaxValue;
+        }
+        qDebug() << "maxPlotTicValue" << maxPlotTicValue;
+    }
+    else
+    {
+        // Set Max plot tick on plot
+        if(tmpFoundMax == true)
+        {
+            maxPlotTicValue = tmpCmpMaxValue;
+        }
+        else
+        {
+            maxPlotTicValue = cmpMaxValue;
+        }
+    }
+
+
+
+
+
+    if( ((foundMin == true) || (tmpFoundMin == true)) &&
+        ((foundMax == true) || (tmpFoundMax == true) ))
+    {
+
+        double res = minPlotTicValue;
+        // Calc number of Major tixs;
+        for(nofTicks = 0; nofTicks < MAX_MAJOR_TICKS; nofTicks++)
+        {
+            if(res  >  maxPlotTicValue)
+            {
+                qDebug() << "nofTicks" << nofTicks;
+                if(nofTicks < 2)
+                {
+                    nofTicks = 2;
+                    qDebug() << "adj nofTicks" << nofTicks;
+                }
+                return true;
+            }
+            res = res * (double) 10.0;
+        }
+    }
+
+    return false;
+}
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		plotYAxisLogData()
+ *
+ * Description:		This function plots with log scale on Y-axis.
+ *
+ * CYahooStockPlotUtil::StockData_ST
+ *
+ *****************************************************************/
+bool StockAnalysisTab::
+plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMaxScale,
+                 SubAnalysDataST *dataArr, int nofData,
+                 QwtPlot *qwtPlot, int index, QColor lineColor, int xScaleStep,bool changeSignYdata)
+{
+    CYahooStockPlotUtil cyspu;
+
+    QString str;
+    double yAxisStartTicValue;
+    double yAxisStopTicValue;
+    int nofTicks;
+
+
+    if(index >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS)
+    {
+        str.sprintf("Felaktigt index för inte vara större (Max = %d)", CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS);
+        QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
+        return false;
+    }
+
+    if(index < 0)
+    {
+        str.sprintf("Felaktigt index. (Max = %d)", index);
+        QMessageBox::information(NULL, QString::fromUtf8("Index förlite"), str);
+        return false;
+    }
+
+
+    if(nofData == 0)
+    {
+        cyspu.removePlotData(m_qwtAllAnalysisPlotData, index, qwtPlot);
+    }
+
+
+    if(resetMinMaxScale == true)
+    {
+        allPlotData.axis.minMaxIsInit = false;
+    }
+
+    allPlotData.nofStocksToPlot = 1;
+
+
+
+    // Find min max x and y values
+    for(int i = 0; i < nofData; i++)
+    {
+        m_x[i] = dataArr[i].date.toDouble();
+        m_y[i] = dataArr[i].data.toDouble();
+        if(changeSignYdata == true)
+        {
+            m_y[i] = -m_y[i];
+        }
+        cyspu.updateMinMaxAxis(allPlotData.axis, m_x[i], m_y[i]);
+    }
+
+    // Insert data to data array suitable to update qwt plot
+    allPlotData.stock[index].data.setSamples(m_x, m_y, nofData);
+
+
+    // Calc start stop tick value for Y axis
+    if(false == logScaleFindStartStopTicksValue(allPlotData.axis.minY, allPlotData.axis.maxY,
+                                                yAxisStartTicValue, yAxisStopTicValue, nofTicks))
+    {
+        return false;
+    }
+
+    // Set curve color
+    allPlotData.stock[index].data.setPen(QPen(lineColor, 2));
+    allPlotData.stock[index].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
+                                                               QPen(lineColor),
+                                                               QSize(7, 7) ) );
+
+    //-----------------------------------------
+    // Set x axis scale
+    //-----------------------------------------
+    qwtPlot->setAxisScale(QwtPlot::xBottom, allPlotData.axis.minX, allPlotData.axis.maxX, xScaleStep);
+
+
+    //-----------------------------------------
+    // Init y axis scale
+    //-----------------------------------------
+    qwtPlot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLog10ScaleEngine);
+
+    // Set number of major tix on the plot
+    qwtPlot->setAxisMaxMajor(QwtPlot::yLeft, nofTicks+1);
+
+    // Set number of minor tix inbetween the major tix. | .... |    Where | = major . = minior
+    qwtPlot->setAxisMaxMinor(QwtPlot::yLeft, 10);
+
+    // Set x-axis scale
+    //qwtPlot->setAxisScale(QwtPlot::yLeft, yAxisStartTicValue, yAxisStopTicValue, 1);
+    qwtPlot->setAxisScale(QwtPlot::yLeft, (yAxisStartTicValue/10.0), yAxisStopTicValue, 0);
+
+    // Update plot with new data
+    allPlotData.stock[index].data.attach(qwtPlot);
+    qDebug() << "index" << index;
+    qwtPlot->replot();
+
+     #if 0
+    //qwtPlot->setAxisScaleDiv();
+    //qwtPlot->setAxisScale()
+    //qwtPlot->setAxisScale(QwtPlot::yLeft, 5, 250);
+    //qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)/*1, 100000000*/);
+
+
+    // qDebug() << "minY" << allPlotData.axis.minY;
+    // qDebug() << "maxY" << allPlotData.axis.maxY;
+
+    //QwtScaleDiv *scaleDiv = new QwtPlotGrid;
+
+    //scaleDiv->setTicks();
+
+    // qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound(); //  and ->hBound()
+    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound());
+    qDebug() << "x axis upper" << tmp << "\n";
+
+    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->lowerBound());
+    qDebug() << "x axis lower" << tmp << "\n";
+
+    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->range());
+    qDebug() << "x range " << tmp << "\n";
+
+    qDebug() << "x axisInterval" << tmp << "\n";
+    #endif
+
+    return true;
+}
+
+
+
+
+#if 0
+/*****************************************************************
+ *
+ * Function:		plotYAxisLogData()
+ *
+ * Description:		This function plots with log scale on Y-axis.
+ *
+ *
+ *
+ *****************************************************************/
+bool StockAnalysisTab::
+plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
+                 QwtPlot *qwtPlot,
+                 int index, int xScaleStep)
+{
+    QString str;
+
+
+
+    if(index >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS)
+    {
+        str.sprintf("Felaktigt index för inte vara större (Max = %d)", CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS);
+        QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
+        return false;
+    }
+
+    if(index < 0)
+    {
+        str.sprintf("Felaktigt index. (Max = %d)", index);
+        QMessageBox::information(NULL, QString::fromUtf8("Index förlite"), str);
+        return false;
+    }
+
+
+    //QwtScaleDiv *scaleDiv = new QwtPlotGrid;
+
+    //scaleDiv->setTicks();
+
+
+    qwtPlot->setAxisScale(QwtPlot::xBottom, allPlotData.axis.minX, allPlotData.axis.maxX, xScaleStep);
+    // qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)); // Max av % satser
+    // qDebug() << "minY" << allPlotData.axis.minY;
+    // qDebug() << "maxY" << allPlotData.axis.maxY;
+
+
+    qwtPlot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLog10ScaleEngine);
+
+    // Cannot have a scale less than or equal to zero
+    if(allPlotData.axis.maxY < 0)
+    {
+        return false;
+    }
+
+    double minY;
+    if(allPlotData.axis.minY < 0)
+    {
+         minY = allPlotData.axis.maxY / (double) 100.0;
+    }
+    else
+    {
+        minY = allPlotData.axis.minY / 10;
+    }
+
+    // ajn 170522 plot->axisScaleEngine( QwtPlot::xBottom )->setAttribute( QwtScaleEngine::Floating, true );
+
+    // Set number of major tix on the plot
+    qwtPlot->setAxisMaxMajor(QwtPlot::yLeft, 6);
+
+    // Set number of Minor tix inbetween the major tix. | .... |    Where | = major . = minior
+    qwtPlot->setAxisMaxMinor(QwtPlot::yLeft, 10);
+    qwtPlot->setAxisScale(QwtPlot::yLeft, minY, (allPlotData.axis.maxY * 5), 1);
+
+
+    //qwtPlot->setAxisScaleDiv();
+    //qwtPlot->setAxisScale()
+    //qwtPlot->setAxisScale(QwtPlot::yLeft, 5, 250);
+    //qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)/*1, 100000000*/);
+
+
+
+    allPlotData.stock[index].data.attach(qwtPlot);
+    qDebug() << "index" << index;
+    qwtPlot->replot();
+
+     #if 0
+    // qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound(); //  and ->hBound()
+    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound());
+    qDebug() << "x axis upper" << tmp << "\n";
+
+    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->lowerBound());
+    qDebug() << "x axis lower" << tmp << "\n";
+
+    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->range());
+    qDebug() << "x range " << tmp << "\n";
+
+    qDebug() << "x axisInterval" << tmp << "\n";
+    #endif
+
+    return true;
+}
+#endif
 
 
 

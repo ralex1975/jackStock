@@ -236,6 +236,9 @@ private:
     // Cannot extract x,y data. Contains all data that is send to graph
     CYahooStockPlotUtil::PlotData_ST m_qwtAllAnalysisPlotData;
 
+    // Cannot extract x,y data. Contains all data that is send to graph
+    CYahooStockPlotUtil::PlotData_ST m_qwtAnalysisPlotDataArr2;
+
     double m_x[1000];
     double m_y[1000];
 
@@ -244,7 +247,7 @@ private:
     void calcTotSubdataForIntrinsicValue(void);
 
 
-    void initPlotLinearReportData(QwtPlot *qwtPlot,
+    void initAnalysisPlot(QwtPlot *qwtPlot,
                                   QString plotHeader,
                                   QColor canvasColor,
                                   QString legendText,
@@ -260,6 +263,20 @@ private:
                               int indexToPlot,
                               int nofPlotToClear,
                               QColor LineColor);
+
+    bool logScaleFindStartStopTicksValue(double minValue,
+                                     double maxValue,
+                                     double &minPlotTicValue,
+                                     double &maxPlotTicValue,
+                                     int &nofTicks);
+
+
+    bool plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMaxScale,
+                          SubAnalysDataST *dataArr, int nofData,
+                          QwtPlot *qwtPlot, int index, QColor lineColor, int xScaleStep = 2, bool changeSignYdata = false);
+
+
+
 
     void plotBarGraphReportData(QwtPlot *qwtPlot,
                                 bool useAutoScale,
@@ -281,6 +298,9 @@ private:
                                  SubAnalysDataST *denominatorArr, int nofDataDenominatorArr,
                                  bool skipDenominatorEqZero = true,
                                  bool convToProcent=false);
+
+
+
 
 
 

@@ -20,6 +20,13 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminMyPortfolio)
 {
+    CExtendedQwtPlot eqp;
+
+    bool enableMinorXGrid = true;
+    bool enableMajorXGrid = false;
+    bool enableMinorYGrid = false;
+    bool enableMajorYGrid = true;
+
     ui->setupUi(this);
 
     m_barHist = new QwtPlotHistogram();
@@ -70,9 +77,6 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
    m_eqp.enablePanningMode(true);
    // m_eqp.enableZoomMode(true);
 
-
-
-
    m_eqp1.initPlotPicker(ui->qwtPlot_2);
    m_eqp1.initPlotZoomer(ui->qwtPlot_2);
    m_eqp1.initPlotPanner(ui->qwtPlot_2);
@@ -81,11 +85,8 @@ AdminMyPortfolio::AdminMyPortfolio(QWidget *parent) :
     m_eqp1.enablePanningMode(true);
 //   m_plot.enableZoomMode(false);
 
-    QwtPlotGrid *grid = new QwtPlotGrid;
-    grid->enableXMin(true);
-    grid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->setMinPen(QPen(Qt::darkYellow, 0 , Qt::DotLine));
-    grid->attach(ui->qwtPlot_2);
+    eqp.turnOnPlotGrid(ui->qwtPlot_2, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                       enableMinorYGrid, enableMajorYGrid);
 
     QPalette* palette1 = new QPalette();
     palette1->setColor(QPalette::WindowText,Qt::red);

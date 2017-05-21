@@ -16,6 +16,7 @@
 #include <qwt_plot_grid.h>
 #include <qwt_plot_picker.h>
 #include <qwt_scale_engine.h>
+#include "extendedQwtPlot.h"
 
 
 QwtSymbol::Style CStockPlotUtil::m_coordSymArr[MAX_NOF_PLOT_COLORS]=
@@ -370,6 +371,12 @@ void CStockPlotUtil::updateMinMaxData(CStockPlotUtil::MinMaxAxisValues_ST &oldAx
 bool CStockPlotUtil::plotData(PlotData_ST &allPlotData, QwtPlot *qwtPlot, int index)
 {
     QString str;
+    CExtendedQwtPlot eqp;
+   bool enableMinorXGrid = true;
+   bool enableMajorXGrid = false;
+   bool enableMinorYGrid = false;
+   bool enableMajorYGrid = false;
+
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -385,11 +392,9 @@ bool CStockPlotUtil::plotData(PlotData_ST &allPlotData, QwtPlot *qwtPlot, int in
         return false;
     }
 
-    QwtPlotGrid *grid = new QwtPlotGrid;
-    grid->enableXMin(true);
-    grid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->setMinPen(QPen(Qt::darkYellow, 0 , Qt::DotLine));
-    grid->attach(qwtPlot);
+    // Note this sould be done in an init function
+     eqp.turnOnPlotGrid(qwtPlot, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                        enableMinorYGrid, enableMajorYGrid);
 
 
     #if 0

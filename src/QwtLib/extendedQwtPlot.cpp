@@ -12,6 +12,9 @@
 #include "extendedQwtPlot.h"
 #include <qwt_plot.h>
 #include <qwt_legend.h>
+#include <qwt_plot_grid.h>
+#include <qwt_plot_marker.h>
+
 
 
 /*******************************************************************
@@ -153,6 +156,37 @@ void CExtendedQwtPlot::setCanvasBackground(QwtPlot *qwtPlot, QColor color)
 }
 
 
+/*******************************************************************
+ *
+ * Function:    turnOnPlotGrid()
+ *
+ * Description: Turn on plot grid
+ *
+ * Usee: QColor color = Qt::darkYellow
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::turnOnPlotGrid(QwtPlot *qwtPlot,
+                                      QColor color,
+                                      bool enableMinorXGrid,
+                                      bool enableMajorXGrid,
+                                      bool enableMinorYGrid,
+                                      bool enableMajorYGrid)
+{
+    QwtPlotGrid *grid = new QwtPlotGrid;
+
+    grid->enableXMin(enableMinorXGrid);
+    grid->enableX(enableMajorXGrid);
+    grid->enableYMin(enableMinorYGrid);
+    grid->enableX(enableMajorYGrid);
+
+    grid->setMajPen(QPen(color, 0, Qt::DotLine));
+    grid->setMinPen(QPen(color, 0, Qt::DotLine));
+    grid->attach(qwtPlot);
+}
+
+
+
+
 
 /*******************************************************************
  *
@@ -260,19 +294,41 @@ void CExtendedQwtPlot::setLegend(QwtPlot *qwtPlot, QwtPlot::LegendPosition locat
 }
 
 
+/*******************************************************************
+ *
+ * Function:        initPlotPicker()
+ *
+ * Description:     Do not know what this is used for. See Bode example
+ *                  for more information. (Works as extra measurements lines on Osc)
+ *
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::turnOnPlotMarker(QwtPlot *qwtPlot, QColor color)
+{
+    QwtPlotMarker *marker = new QwtPlotMarker();
+
+    marker->setValue( 0.0, 0.0 );
+    marker->setLineStyle( QwtPlotMarker::VLine );
+    marker->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
+    marker->setLinePen( QPen( color, 0, Qt::DashDotLine ) );
+    marker->attach(qwtPlot);
+
+}
 
 /*******************************************************************
  *
  * Function:        initPlotPicker()
  *
- * Description:
- *
+ * Description:     This function turn on x,y values on screen when
+ *                  user move mouse over the plot.
  *
  *
  *******************************************************************/
 void CExtendedQwtPlot::initPlotPicker(QwtPlot *qwtPlot)
 {
-    m_picker = new QwtPlotPicker( QwtPlot::xBottom, QwtPlot::yLeft, QwtPlotPicker::CrossRubberBand, QwtPicker::AlwaysOn, qwtPlot->canvas() );
+    m_picker = new QwtPlotPicker( QwtPlot::xBottom, QwtPlot::yLeft,
+                                  QwtPlotPicker::CrossRubberBand,
+                                  QwtPicker::AlwaysOn, qwtPlot->canvas() );
     m_picker->setStateMachine( new QwtPickerDragPointMachine() );
     m_picker->setRubberBandPen( QColor( Qt::green ) );
     m_picker->setRubberBand( QwtPicker::CrossRubberBand );

@@ -43,7 +43,6 @@ private:
     QwtPlotCurve *m_riskReturPlotArr;
     QwtPlotMarker *m_riskReturTxtArr;
     QwtPlotCurve *m_xAxisPlot;
-    QwtPlotGrid *m_plotGrid;
     int m_nofRiskReturPlotData;
 
     QwtPlotMarker *m_plotflashLabel;

@@ -1646,6 +1646,24 @@ bool CUtil::splitDate(QString date, QString &year, QString &month, QString &day)
 }
 
 
+#if 0  // ajn 170522
+<time.h>
+tm lDate;
+
+lDate.tm_sec = 0;
+lDate.tm_min = 0;
+lDate.tm_hour = 0;
+lDate.tm_mday = 1;
+lDate.tm_mon = 10;
+lDate.tm_year = 2010 - 1900;
+
+time_t lTimeEpoch = mktime(&lDate);
+
+cout << "Epoch: " << lTimeEpoch << endl;
+
+#endif
+
+
 
 /*********************************************************************
  * Function: addDays()

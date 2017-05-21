@@ -606,7 +606,12 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
          int index, int xScaleStep)
 {
     QString str;
-    // QString tmp;
+    CExtendedQwtPlot eqp;
+    bool enableMinorXGrid = true;
+    bool enableMajorXGrid = false;
+    bool enableMinorYGrid = false;
+    bool enableMajorYGrid = true;
+
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -626,11 +631,12 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
 
     //scaleDiv->setTicks();
 
-    QwtPlotGrid *grid = new QwtPlotGrid;
-    grid->enableXMin(true);
-    grid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->setMinPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->attach(qwtPlot);
+
+
+    // This should be moved to an init function (Memmory issue)
+    eqp.turnOnPlotGrid(qwtPlot, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                       enableMinorYGrid, enableMajorYGrid
+);
 
     qwtPlot->setAxisScale(QwtPlot::xBottom, allPlotData.axis.minX, allPlotData.axis.maxX, xScaleStep);
     // qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)); // Max av % satser
@@ -697,7 +703,13 @@ plotDataSetXScaleStep(CYahooStockPlotUtil::PlotData_ST &allPlotData,
          int xScaleStep)
 {
     QString str;
-    // QString tmp;
+    CExtendedQwtPlot eqp;
+    bool enableMinorXGrid = true;
+    bool enableMajorXGrid = false;
+    bool enableMinorYGrid = false;
+    bool enableMajorYGrid = true;
+
+
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -713,11 +725,10 @@ plotDataSetXScaleStep(CYahooStockPlotUtil::PlotData_ST &allPlotData,
         return false;
     }
 
-    QwtPlotGrid *grid = new QwtPlotGrid;
-    grid->enableXMin(true);
-    grid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->setMinPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->attach(qwtPlot);
+
+    // Move this to init function
+    eqp.turnOnPlotGrid(qwtPlot, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                       enableMinorYGrid, enableMajorYGrid);
 
 
     qwtPlot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLinearScaleEngine);
@@ -826,6 +837,13 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
          bool useAutoScale)
 {
     QString str;
+    CExtendedQwtPlot eqp;
+
+    bool enableMinorXGrid = true;
+    bool enableMajorXGrid = false;
+    bool enableMinorYGrid = false;
+    bool enableMajorYGrid = true;
+
 
     if(index >= MAX_NOF_PLOT_COLORS)
     {
@@ -841,11 +859,8 @@ plotData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
         return false;
     }
 
-    QwtPlotGrid *grid = new QwtPlotGrid;
-    grid->enableXMin(true);
-    grid->setMajPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->setMinPen(QPen(Qt::darkYellow, 0, Qt::DotLine));
-    grid->attach(qwtPlot);
+    eqp.turnOnPlotGrid(qwtPlot, Qt::darkYellow, enableMinorXGrid, enableMajorXGrid,
+                       enableMinorYGrid, enableMajorYGrid);
 
     qwtPlot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLinearScaleEngine);
 

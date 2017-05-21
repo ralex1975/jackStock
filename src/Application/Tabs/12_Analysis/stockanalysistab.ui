@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>11</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
