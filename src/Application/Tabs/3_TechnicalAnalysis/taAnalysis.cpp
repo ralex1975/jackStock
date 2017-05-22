@@ -1041,6 +1041,101 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
     QString endMonth;
     QString endDay;
 
+    uint unixStartTime;
+    uint unixEndTime;
+
+    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
+    {
+        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
+
+        QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
+        const char *c_reqStockSymbol = ba1.data();
+
+  //      m_reqStartDate = "2013-12-01";
+
+        // cu.splitDate(m_reqStartDate, startYear, startMonth, startDay);
+
+        // cu.splitDate(m_reqEndDate, endYear, endMonth, endDay);
+
+
+        if(false == cu.getLinuxTime(m_reqStartDate, unixStartTime))
+        {
+            return;
+        }
+
+        if(false == cu.getLinuxTime(m_reqEndDate, unixEndTime))
+        {
+            return;
+        }
+
+                  // https://query1.finance.yahoo.com/v7/finance/download/ABB.ST?period1=1492722268&period2=1495314268&interval=1d&events=history&crumb=.dCDNsa0z5Q
+        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
+        c_reqStockSymbol,
+        unixStartTime,
+        unixEndTime);
+
+       #if 0
+       // OLd wrong
+        qry.sprintf("http://ichart.finance.yahoo.com/table.csv?s=%s&d=%d&e=%d&f=%d&g=d&a=%d&b=%d&c=%d&ignore=.csv",
+                    c_reqStockSymbol,
+                    (endMonth.toInt()-1),
+                    endDay.toInt(),
+                    endYear.toInt(),
+                    (startMonth.toInt()-1),
+                    startDay.toInt(),
+                    startYear.toInt());
+
+    //    qDebug() << startDate;
+        qDebug() << startYear;
+        qDebug() << startMonth;
+        qDebug() << startDay;
+
+      //  qDebug() << endDate;
+        qDebug() << endYear;
+        qDebug() << endMonth;
+        qDebug() << endDay;
+        #endif
+
+        qDebug() << qry;
+
+
+        QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
+        QUrl url(qry);
+
+        startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
+        m_hw1.startRequest(url, filename, 0x01);
+    }
+}
+
+
+
+
+#if 0
+/*******************************************************************
+ *
+ * Function:    slotReqSingleStockDataFromServer()
+ *
+ * Description: This function is invoked when singel stock data need
+ *              to be updated. (price data is old)
+ *
+ *******************************************************************/
+void TaAnalysis::slotReqSingleStockDataFromServer()
+{
+    QString qry;
+    CUtil cu;
+
+    QString filename = DWLD_PATH_TA_LIST_FILE;
+
+//    QString startDate;
+    QString startYear;
+    QString startMonth;
+    QString startDay;
+
+  //  QString endDate;
+    QString endYear;
+    QString endMonth;
+    QString endDay;
+
 
     if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
     {
@@ -1084,7 +1179,7 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
         m_hw1.startRequest(url, filename, 0x01);
     }
 }
-
+#endif
 
 /*******************************************************************
  *

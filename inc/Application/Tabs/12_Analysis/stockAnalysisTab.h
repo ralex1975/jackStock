@@ -299,6 +299,12 @@ private:
                                  bool skipDenominatorEqZero = true,
                                  bool convToProcent=false);
 
+    void subAnalysisCalcDifference(SubAnalysDataST *resultArr,     int &nofDataResultArr,
+                                   SubAnalysDataST *firstTermArr, int nofDataFirstTermArr,
+                                   SubAnalysDataST *secondTermArr, int nofDataSecondTermArr,
+                                   bool changeSignFirstTerm, bool changeSignSecondTerm);
+
+
 
 
 

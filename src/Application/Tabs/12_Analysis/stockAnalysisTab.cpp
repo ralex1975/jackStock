@@ -5511,6 +5511,69 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 
     //-----------------------------------------------------------------------------------
+    // Operativt kassaflöde - CAPEX - Utdelning > 0
+    //-----------------------------------------------------------------------------------
+    SubAnalysDataST resultArr2[MAX_NOF_CASH_FLOW_CAPEX];
+    int nofDataResultArr2;
+
+    // Data is receive
+    bool changeSignFirstTerm = false;
+    bool changeSignSecondTerm = true;
+
+    // Step 1 (2) res2 = operating Cash Flow - Capex
+    subAnalysisCalcDifference(resultArr2,
+                              nofDataResultArr2,
+                              m_operatingCashFlowArr,
+                              m_nofOperatingCashFlowData,
+                              m_cashFlowCapexArr,
+                              m_nofCashFlowCapexData,
+                              changeSignFirstTerm,
+                              changeSignSecondTerm);
+
+    changeSignFirstTerm = false;
+    changeSignSecondTerm = true;
+
+    // Step 2 (2) Res = operating Cash Flow - Capex - dividens
+    subAnalysisCalcDifference(resultArr,
+                              nofDataResultArr,
+                              resultArr2,
+                              nofDataResultArr2,
+                              m_totDividensArr,
+                              m_nofTotDividensData,
+                              changeSignFirstTerm,
+                              changeSignSecondTerm);
+
+    indexToPlot = 6;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    skipDenominatorEqZero = true;
+    plotLinearReportData(ui->qwtPlotCashflow1_15,
+                          useAutoScale,
+                          resultArr,
+                          nofDataResultArr,
+                          indexToPlot,
+                          nofPlotToClear,
+                          lineColor);
+
+
+
+
+    #if 0
+    SubAnalysDataST       m_cashFlowCapexArr[MAX_NOF_CASH_FLOW_CAPEX];
+    int                   m_nofCashFlowCapexData;
+
+    SubAnalysDataST       m_operatingCashFlowArr[MAX_NOF_CASH_FLOW_CAPEX];
+    int                   m_nofOperatingCashFlowData;
+
+    SubAnalysDataST       m_totDividensArr[MAX_NOF_TOT_DIVIDENT];
+    int                   m_nofTotDividensData;
+
+    #endif
+
+
+
+    //-----------------------------------------------------------------------------------
     // Vinsttillväxt (%)
     //-----------------------------------------------------------------------------------
     subAnalysisDisplayGraphData sadgd;
@@ -5693,6 +5756,58 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
                     result = tmpRes * procent;
                 }
                 resultArr[nofDataResultArr].data.sprintf("%f", result);
+                nofDataResultArr++;
+            }
+        }
+    }
+}
+
+
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *              Numerator =     täljare
+ *              Denominator =   nämnare
+ *
+ *******************************************************************/
+void StockAnalysisTab::subAnalysisCalcDifference(SubAnalysDataST *resultArr,     int &nofDataResultArr,
+                                                 SubAnalysDataST *firstTermArr, int nofDataFirstTermArr,
+                                                 SubAnalysDataST *secondTermArr, int nofDataSecondTermArr,
+                                                 bool changeSignFirstTerm, bool changeSignSecondTerm)
+{
+    double tmpRes;
+    double tmpFirstTerm;
+    double tmpSeconfTerm;
+
+    nofDataResultArr = 0;
+    for(int i = 0; i < nofDataFirstTermArr; i++)
+    {
+        for(int j = 0; j < nofDataSecondTermArr; j++)
+        {
+            if(firstTermArr[i].date.toInt() == secondTermArr[j].date.toInt())
+            {
+                resultArr[nofDataResultArr].date = firstTermArr[i].date;
+
+                tmpFirstTerm = firstTermArr[i].data.toDouble();
+                tmpSeconfTerm = secondTermArr[j].data.toDouble();
+
+                if(changeSignFirstTerm == true)
+                {
+                    tmpFirstTerm = -tmpFirstTerm;
+                }
+
+                if(changeSignSecondTerm == true)
+                {
+                    tmpSeconfTerm = -tmpSeconfTerm;
+                }
+
+                tmpRes = (tmpFirstTerm - tmpSeconfTerm);
+
+                resultArr[nofDataResultArr].data.sprintf("%f", tmpRes);
                 nofDataResultArr++;
             }
         }

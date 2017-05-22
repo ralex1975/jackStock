@@ -34,7 +34,21 @@ CWebBrowserTab::CWebBrowserTab(QWidget *parent) :
     QWidget(parent),
                 ui(new Ui::CWebBrowserTab)
 {
-    QUrl url("https://www.nordnet.se/mux/web/marknaden/kurslista/aktier.html?marknad=Sverige&lista=1_1&large=on&mid=on&sektor=0&subtyp=price&sortera=aktie&sorteringsordning=stigande");
+    // http://stockcharts.com/h-sc/ui?s=ABB
+
+    // ajn 170523 Gamla som ska vara kvar
+    //QUrl url("https://www.nordnet.se/mux/web/marknaden/kurslista/aktier.html?marknad=Sverige&lista=1_1&large=on&mid=on&sektor=0&subtyp=price&sortera=aktie&sorteringsordning=stigande");
+
+    // funkar med nya browsern qt 5.7
+    //QUrl url("http://www.google.com/finance/historical?q=AAPL&startdate=Nov 1, 2011&enddate=Nov 30, 2011&output=csv");
+    QUrl url("https://borsdata.se/");
+
+    // QUrl url("http://performance.morningstar.com/perform/Performance/stock/exportStockPrice.action?t=XNYS:ABB&pd=1y&freq=d&sd=&ed=&pg=0&culture=en-US&cur=USD");
+
+
+    // Test nya Yahoo funkar inte
+    // QUrl url("https://query1.finance.yahoo.com/v7/finance/download/AZN.ST?period1=1494540000&period2=1495404000&interval=1d&events=history&crumb=.dCDNsa0z5Q");
+
 
    // QUrl url("file:///home/ajn/Documents/myAnalysisTemplate.html");
 

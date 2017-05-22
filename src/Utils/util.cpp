@@ -1749,6 +1749,37 @@ bool CUtil::addYear(QString inputDate, QString &outputDate, int intYear)
 }
 
 
+/*********************************************************************
+ * Function: addYear()
+ *
+ * Description: .
+ *
+ *
+ *
+ *
+ *********************************************************************/
+bool CUtil::getLinuxTime(QString inputDate, uint &unixtimestamp)
+{
+    QDate myDate;
+    QDateTime myDateTime;
+    QString strYear;
+    QString strMonth;
+    QString strDay;
+
+    if(false == dateIsValid(inputDate))
+        return false;
+
+    splitDate(inputDate, strYear, strMonth, strDay);
+
+    myDate.setDate(strYear.toInt(), strMonth.toInt(), strDay.toInt());
+    myDateTime.setDate(myDate);
+    unixtimestamp = myDateTime.toTime_t();
+
+    qDebug() << "unixtimestamp" << unixtimestamp;
+    return true;
+}
+
+
 
 /*********************************************************************
  * Function:    calcDeltaMonth()
