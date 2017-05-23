@@ -5559,20 +5559,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 
 
-    #if 0
-    SubAnalysDataST       m_cashFlowCapexArr[MAX_NOF_CASH_FLOW_CAPEX];
-    int                   m_nofCashFlowCapexData;
-
-    SubAnalysDataST       m_operatingCashFlowArr[MAX_NOF_CASH_FLOW_CAPEX];
-    int                   m_nofOperatingCashFlowData;
-
-    SubAnalysDataST       m_totDividensArr[MAX_NOF_TOT_DIVIDENT];
-    int                   m_nofTotDividensData;
-
-    #endif
-
-
-
     //-----------------------------------------------------------------------------------
     // Vinsttillväxt (%)
     //-----------------------------------------------------------------------------------
@@ -5702,6 +5688,81 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                      xScaleStep, changeSignYdata);
 
 
+
+
+    //--------------------------------------------------------
+
+    indexToPlot = 4;
+    useAutoScale = false;
+    resetMinMaxScale = true;
+    xScaleStep = 1;
+    changeSignYdata = false;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    double xOffset = -0.25;
+
+    plotBarGraphReportDataWithXOffset(ui->qwtPlotCashFlow2_18,
+                                      m_qwtAnalysisPlotDataArr2,
+                                      useAutoScale,
+                                      m_operatingCashFlowArr,
+                                      m_nofOperatingCashFlowData,
+                                      indexToPlot,
+                                      nofPlotToClear,
+                                      lineColor,
+                                      changeSignYdata,
+                                      xOffset,
+                                      resetMinMaxScale);
+
+
+
+    //--------------------------------------------------------
+
+    indexToPlot = 5;
+    useAutoScale = false;
+    resetMinMaxScale = false;
+    xScaleStep = 1;
+    changeSignYdata = true;
+    nofPlotToClear = 0;
+    lineColor = Qt::magenta;
+    xOffset = 0;
+
+
+    plotBarGraphReportDataWithXOffset(ui->qwtPlotCashFlow2_18,
+                                      m_qwtAnalysisPlotDataArr2,
+                                      useAutoScale,
+                                      m_cashFlowCapexArr,
+                                      m_nofOperatingCashFlowData,
+                                      indexToPlot,
+                                      nofPlotToClear,
+                                      lineColor,
+                                      changeSignYdata,
+                                      xOffset,
+                                      resetMinMaxScale);
+
+
+    //--------------------------------------------------------
+    indexToPlot = 6;
+    useAutoScale = false;
+    resetMinMaxScale = false;
+    xScaleStep = 1;
+    changeSignYdata = true;
+    nofPlotToClear = 0;
+    lineColor = Qt::red;
+    xOffset = +0.25;
+
+
+
+    plotBarGraphReportDataWithXOffset(ui->qwtPlotCashFlow2_18,
+                                      m_qwtAnalysisPlotDataArr2,
+                                      useAutoScale,
+                                      m_totDividensArr,
+                                      m_nofTotDividensData,
+                                      indexToPlot,
+                                      nofPlotToClear,
+                                      lineColor,
+                                      changeSignYdata,
+                                      xOffset,
+                                      resetMinMaxScale);
 }
 
 
@@ -5945,6 +6006,110 @@ void StockAnalysisTab::plotBarGraphReportData(QwtPlot *qwtPlot,
     // Disable legend when we plot to not get two
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setItemAttribute(QwtPlotItem::Legend, false);
     m_qwtAllAnalysisPlotData.stock[indexToPlot].data.attach(qwtPlot);
+    qwtPlot->replot();
+}
+
+/*******************************************************************
+ *
+ * Function:        plotBarGraphReportData()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::plotBarGraphReportDataWithXOffset(QwtPlot *qwtPlot,
+                                                         CYahooStockPlotUtil::PlotData_ST &allPlotData,
+                                                         bool useAutoScale,
+                                                         SubAnalysDataST *dataArr,
+                                                         int nofData,
+                                                         int indexToPlot,
+                                                         int nofPlotToClear,
+                                                         QColor lineColor,
+                                                         bool changeSignYdata,
+                                                         double xOffset,
+                                                         bool initMinMaxData)
+{
+    CYahooStockPlotUtil cyspu;
+
+    // Do not excide array bondary
+    if((indexToPlot >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS) ||
+       (nofPlotToClear >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS))
+    {
+        return;
+    }
+
+
+    for(int i = 0; i < nofPlotToClear; i++)
+    {
+        cyspu.removePlotData(allPlotData, i, qwtPlot);
+    }
+
+
+    allPlotData.nofStocksToPlot = 1;
+
+    if(initMinMaxData == true)
+    {
+        allPlotData.axis.minMaxIsInit = false;
+    }
+    else
+    {
+        allPlotData.axis.minMaxIsInit = true;
+    }
+
+
+    for(int i = 0; i < nofData; i++)
+    {
+        m_x[i] = xOffset + dataArr[i].date.toDouble();
+        m_y[i] = dataArr[i].data.toDouble();
+        if(changeSignYdata == true)
+        {
+            m_y[i] = -m_y[i];
+        }
+
+        cyspu.updateMinMaxAxis(allPlotData.axis, m_x[i], m_y[i]);
+    }
+
+    // Make bars fit on plot
+    allPlotData.axis.minX -= 0.5;
+    allPlotData.axis.maxX += 0.5;
+
+
+    if((useAutoScale == false) && (allPlotData.axis.minY > 0))
+    {
+        allPlotData.axis.minY = 0;
+    }
+
+    // Data to be plotted
+    allPlotData.stock[indexToPlot].data.setSamples(m_x, m_y, nofData);
+
+    // set plot grid
+    qwtPlot->setAxisMaxMinor(QwtPlot::xBottom, 1);
+    qwtPlot->setAxisMaxMajor(QwtPlot::xBottom, nofData);
+
+
+    // Set plot to bar graph
+    allPlotData.stock[indexToPlot].data.setStyle(QwtPlotCurve::Sticks);
+
+
+    // Importent to use Qt::FlatCap together with QwtPlotCurve::Sticks if width
+    // is larger then 4 otherwise you get wrong y - value
+    QPen pen;
+    pen.setWidth(20);
+    pen.setBrush(lineColor);
+    pen.setCapStyle(Qt::FlatCap);
+    pen.setJoinStyle(Qt::MiterJoin);
+    pen.setStyle(Qt::SolidLine);
+
+    allPlotData.stock[indexToPlot].data.setPen(pen);
+    allPlotData.stock[indexToPlot].data.setBaseline(0);
+
+
+    cyspu.plotData(allPlotData, qwtPlot, indexToPlot, useAutoScale);
+
+    // Disable legend when we plot to not get two
+    allPlotData.stock[indexToPlot].data.setItemAttribute(QwtPlotItem::Legend, false);
+    allPlotData.stock[indexToPlot].data.attach(qwtPlot);
     qwtPlot->replot();
 }
 

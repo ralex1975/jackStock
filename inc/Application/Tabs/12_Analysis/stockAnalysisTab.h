@@ -286,6 +286,19 @@ private:
                                 int nofPlotToClear,
                                 QColor lineColor);
 
+    void plotBarGraphReportDataWithXOffset(QwtPlot *qwtPlot,
+                                           CYahooStockPlotUtil::PlotData_ST &allPlotData,
+                                           bool useAutoScale,
+                                           SubAnalysDataST *dataArr,
+                                           int nofData,
+                                           int indexToPlot,
+                                           int nofPlotToClear,
+                                           QColor lineColor,
+                                           bool changeSignYdata,
+                                           double xOffset,
+                                           bool initMinMaxData);
+
+
     void savePlotLinearReportData(QwtPlot *qwtPlot,
                                   QString stockName,
                                   QString date);
