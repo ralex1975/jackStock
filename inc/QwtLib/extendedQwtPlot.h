@@ -59,6 +59,8 @@ public:
     void setYAxisTitle(QwtPlot *qwtPlot, QString title);
     void setXAxisFontSize(QwtPlot *qwtPlot, int fontSize);
     void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
+    void saveQwtPlotAsImage(QString filename, QwtPlot *qwtPlot);
+    void removeLegend( QwtPlotCurve *data);
     void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
     void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
     void setLegendSymbol(QwtPlot *qwtPlot, QString legendText, QwtSymbol legendSymbol, QColor legendColor, int legendSize = 10);

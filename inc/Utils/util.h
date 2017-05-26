@@ -1316,6 +1316,8 @@ public:
     bool dateIsValid(QString date);
     void getCurrentDate(QString &date);
     bool getLinuxTime(QString inputDate, uint &unixtimestamp);
+    bool createFileDriectory(QString pathAndMapname);
+    bool createProperFilname(QString inFilename, QString &outFilename, bool checkExeDot=true);
     int  calcDeltaMonth(int year, int month, int minYear, int minMonth);
     bool splitDate(QString date, QString &year, QString &month, QString &day);
     bool addDays(QString inputDate, QString &outputDate, int day);

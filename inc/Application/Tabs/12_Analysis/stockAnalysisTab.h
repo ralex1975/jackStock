@@ -242,6 +242,10 @@ private:
     double m_x[1000];
     double m_y[1000];
 
+    QString m_stocknameImgDir;
+    QString m_dateImgDir;
+
+
     void getminMaxLogScale(double minIn, double &minOut, double maxIn, double &maxOut);
     void clearGUIIntrinsicValue(void);
     void calcTotSubdataForIntrinsicValue(void);
@@ -299,10 +303,8 @@ private:
                                            bool initMinMaxData);
 
 
-    void savePlotLinearReportData(QwtPlot *qwtPlot,
-                                  QString stockName,
-                                  QString date);
-
+    bool makeAnalysPlotDirectory(QString stockname, QString date);
+    void saveAnalysisPlotAsImages(void);
 
     void initAllAnalysisPlots(void);
     void displayAllAnalysisPlots(void);

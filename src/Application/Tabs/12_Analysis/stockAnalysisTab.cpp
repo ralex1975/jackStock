@@ -484,6 +484,7 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     ui->stockNameLineEdit->setText(m_stockName);
     ui->stockSymbolLineEdit->setText(m_stockSymbol);
 
+
     if(m_stockName.size() > 0 && m_stockSymbol.size() > 0)
     {
         m_stockNameIsInit = true;
@@ -1049,6 +1050,7 @@ insertTableWidgetIntrinsicValueTotCurrAssetDivTotLiabilities(QTableWidget *table
 void StockAnalysisTab::on_pushButton_clicked()
 {
 
+//    CExtendedQwtPlot ceqp;
     CDbHndl db;
     bool res;
     int mainAnalysisId;
@@ -1067,6 +1069,12 @@ void StockAnalysisTab::on_pushButton_clicked()
     if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
     {
         return;
+    }
+
+    // Create directory so we are able to save anaysis images
+    if(true == makeAnalysPlotDirectory(m_stockName, m_analysisDate))
+    {
+       saveAnalysisPlotAsImages();
     }
 
     // Check if this stocksymbol and stockname is already added
@@ -4081,9 +4089,6 @@ void StockAnalysisTab::on_pushButtonSaveOperatingCashFlow_clicked()
 
 
 
-
-
-
 /******************************************************************
  *
  * Function:    plotCashflowData()
@@ -4109,7 +4114,6 @@ void StockAnalysisTab::plotCashflowData(void)
     {
         return;
     }
-
 
 
     minX = m_operatingCashFlowArr[0].date.toDouble();
@@ -4157,7 +4161,6 @@ void StockAnalysisTab::plotCashflowData(void)
     m_qwtcashFlowPlotData.stock[0].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
                                                                  QPen( Qt::blue ),
                                                                   QSize( 7, 7 ) ) );
-
 
     data_x.clear();
     data_y.clear();
@@ -4843,7 +4846,7 @@ void StockAnalysisTab::on_pushButtonCalcIntrinsicValue_clicked()
 
 /*******************************************************************
  *
- * Function:    ()
+ * Function:    calcLeastSqrtFit()
  *
  * Description:
  *
@@ -4870,8 +4873,6 @@ calcLeastSqrtFit(SubAnalysDataST *dataArr,
 
 
     db.init1dLeastSrq(nofData, meanXSum, meanYSum, prodXXSum, prodYYSum, prodXYSum);
-
-
 
 
     if(nofArrData < 2)
@@ -4931,7 +4932,7 @@ calcLeastSqrtFit(SubAnalysDataST *dataArr,
 
 /*******************************************************************
  *
- * Function:    ()
+ * Function:    calcTotSubdataForIntrinsicValue()
  *
  * Description:
  *
@@ -5033,7 +5034,7 @@ void StockAnalysisTab::calcTotSubdataForIntrinsicValue(void)
 
 /*******************************************************************
  *
- * Function:    ()
+ * Function:    on_pushButtonCalcYearlyIntrestRateOnEquity_clicked()
  *
  * Description:
  *
@@ -5106,8 +5107,10 @@ void StockAnalysisTab::on_pushButtonCalcYearlyIntrestRateOnEquity_clicked()
  *******************************************************************/
 void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofData, bool plotPrediction)
 {
+    CExtendedQwtPlot eqp;
     CYahooStockPlotUtil cyspu;
     int index = 0;
+
 
     if(plotPrediction == true)
     {
@@ -5123,6 +5126,11 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
     m_qwtEquityPlotData.stock[index].data.setData(NULL);
 
     cyspu.removePlotData(m_qwtEquityPlotData, index, ui->qwtPlot_10);
+
+    QString title;
+    title = QString::fromUtf8("Eget kapital/Aktie (Historiskt & beräknat)");
+    eqp.setPlotTitle(ui->qwtPlot_10, title);
+
 
     m_qwtEquityPlotData.axis.minMaxIsInit = false;
 
@@ -5159,6 +5167,205 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
 
 
 
+
+
+#define STOCK_ANALYSIS_IMAGE_BASE_PATH QString::fromUtf8("database/AnalysDoc/htmlReports/MinaAnalyser/Images/")
+
+/*******************************************************************
+ *
+ * Function:        makeAnalysPlotDirectory()
+ *
+ * Description:     Create directory where plot images is stored.
+ *
+ *
+ *
+ *******************************************************************/
+bool StockAnalysisTab::makeAnalysPlotDirectory(QString stockname, QString date)
+{
+    CUtil cu;
+    QString propStockname;
+    QString propDate;
+    QString path = STOCK_ANALYSIS_IMAGE_BASE_PATH;
+
+
+    // Remove improper characters
+    cu.createProperFilname(stockname, propStockname, false);
+    cu.createProperFilname(date, propDate, false);
+
+    // Make stockname directory name
+    m_stocknameImgDir = path;
+    m_stocknameImgDir += propStockname;
+
+    // Make date directory name
+    m_dateImgDir = m_stocknameImgDir;
+    m_dateImgDir += "/";
+    m_dateImgDir += propDate;
+
+
+    if(false == cu.createFileDriectory(m_stocknameImgDir))
+    {
+        QMessageBox::information(NULL,
+                                 QString::fromUtf8("Error"),
+                                 QString::fromUtf8("Fail to create stockname directory"));
+        return false;
+    }
+
+
+    if(false == cu.createFileDriectory(m_dateImgDir))
+    {
+        QMessageBox::information(NULL,
+                                 QString::fromUtf8("Error"),
+                                 QString::fromUtf8("Fail to create date directory"));
+        return false;
+    }
+
+    return true;
+}
+
+
+/*******************************************************************
+ *
+ * Function:        clearGUIIntrinsicValue()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::saveAnalysisPlotAsImages(void)
+{
+    QString filename;
+    CExtendedQwtPlot ceqp;
+
+    if(m_stocknameImgDir.length() < 5 || m_dateImgDir.length() < 5)
+    {
+        QMessageBox::information(NULL,
+                                 QString::fromUtf8("Error"),
+                                 QString::fromUtf8("Missing path to analysis image map"));
+        return;
+
+    }
+
+
+    //----------------------------------------------------------------------------------
+    // Omsättningstillgångarna / Kortfristiga skulder > 2
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_1.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCurrAssLiab);
+
+
+    //-----------------------------------------------------------------------------------
+    // Omsättningstillgångarna / Totala skulder >= 1
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_2.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCurrAssTotLiab_12);
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinst/Aktie
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_3.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotEarningsPerShare_13);
+
+
+    //-----------------------------------------------------------------------------------
+    // Omsättning, Vinst efter skatt
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_4.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotRevenueEarnings_17);
+
+    //-----------------------------------------------------------------------------------
+    // Utdelning
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_5.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotDiv_14);
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinst/Utdelning
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_6.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotEarningDiv_16);
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinsttillväxt (%)
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_7.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlot_19);
+
+    //-----------------------------------------------------------------------------------
+    // Operativt kassaflöde - CAPEX - Utdelning > 0
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_8.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCashflow1_15);
+
+
+    //-----------------------------------------------------------------------------------
+    // Operativt kassaflöde, CAPEX, Utdelning
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_9.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCashFlow2_18);
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinstmarginal (%) (Vinst efter skatt / Omsättning)
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_10.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotEarningMargin_20);
+
+    //-----------------------------------------------------------------------------------
+    // Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_11.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotEquityMargin_22);
+
+
+    //-----------------------------------------------------------------------------------
+    // Totala Skulder, Eget kapital, Vinst, Utdelning
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_12.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotLiabEquityEarningDiv_21);
+
+    //-----------------------------------------------------------------------------------
+    // (Intrinsic value) Eget kapital / Aktie
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_13.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlot_10);
+
+}
+
+
+
+
+
 /*******************************************************************
  *
  * Function:        clearGUIIntrinsicValue()
@@ -5177,13 +5384,17 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     QColor legendColor = Qt::blue;
     QwtPlot::LegendPosition location = QwtPlot::BottomLegend; //QwtPlot::TopLegend;
     int legendSize = 10;
+    CExtendedQwtPlot eqp;
+
+
+
 
 
     //===================================================================================
     // Trading company industrial companies
     //===================================================================================
 
-    //-----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
     // Omsättningstillgångarna / Kortfristiga skulder > 2
     //-----------------------------------------------------------------------------------
 
@@ -5247,6 +5458,46 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
 
 
+
+    //-----------------------------------------------------------------------------------
+    // Operativt kassaflöde - CAPEX - Utdelning > 0  1(2)
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Operativt kassaflöde - CAPEX - Utdelning > 0");
+    legendText = QString::fromUtf8("Ok-CA-UT");
+
+    initAnalysisPlot(ui->qwtPlotCashflow1_15, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Operativt kassaflöde, CAPEX, Utdelning   2(2)
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Operativt kassaflöde - CAPEX - Utdelning > 0");
+    legendText = QString::fromUtf8("Op kassaflöde");
+    eqp.setRightLegend(ui->qwtPlotCashFlow2_18);
+
+
+    initAnalysisPlot(ui->qwtPlotCashFlow2_18, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+    legendText = legendText.fromUtf8("CAPEX");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::blue;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotCashFlow2_18, legendText, legendSymbol, legendColor, legendSize);
+
+
+    legendText = legendText.fromUtf8("Utdelning");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::magenta;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotCashFlow2_18, legendText, legendSymbol, legendColor, legendSize);
+
+
+
+
     //-----------------------------------------------------------------------------------
     // Vinsttillväxt (%)
     //-----------------------------------------------------------------------------------
@@ -5303,8 +5554,6 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
     ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
 
-    CExtendedQwtPlot eqp;
-
     eqp.setRightLegend(ui->qwtPlotLiabEquityEarningDiv_21);
 
 
@@ -5332,11 +5581,6 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     eqp.setLegendSymbol(ui->qwtPlotLiabEquityEarningDiv_21, legendText, legendSymbol, legendColor, legendSize);
 
 }
-
-
-
-
-
 
 
 /*******************************************************************
@@ -5688,8 +5932,8 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                      xScaleStep, changeSignYdata);
 
 
-
-
+    //-------------------------------------------------------
+    // Cashflow 2
     //--------------------------------------------------------
 
     indexToPlot = 4;
@@ -6382,8 +6626,6 @@ logScaleFindStartStopTicksValue(double minValue,
 
 
 
-
-
     if( ((foundMin == true) || (tmpFoundMin == true)) &&
         ((foundMax == true) || (tmpFoundMax == true) ))
     {
@@ -6550,252 +6792,6 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMax
 }
 
 
-
-
-#if 0
-/*****************************************************************
- *
- * Function:		plotYAxisLogData()
- *
- * Description:		This function plots with log scale on Y-axis.
- *
- *
- *
- *****************************************************************/
-bool StockAnalysisTab::
-plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData,
-                 QwtPlot *qwtPlot,
-                 int index, int xScaleStep)
-{
-    QString str;
-
-
-
-    if(index >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS)
-    {
-        str.sprintf("Felaktigt index för inte vara större (Max = %d)", CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS);
-        QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
-        return false;
-    }
-
-    if(index < 0)
-    {
-        str.sprintf("Felaktigt index. (Max = %d)", index);
-        QMessageBox::information(NULL, QString::fromUtf8("Index förlite"), str);
-        return false;
-    }
-
-
-    //QwtScaleDiv *scaleDiv = new QwtPlotGrid;
-
-    //scaleDiv->setTicks();
-
-
-    qwtPlot->setAxisScale(QwtPlot::xBottom, allPlotData.axis.minX, allPlotData.axis.maxX, xScaleStep);
-    // qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)); // Max av % satser
-    // qDebug() << "minY" << allPlotData.axis.minY;
-    // qDebug() << "maxY" << allPlotData.axis.maxY;
-
-
-    qwtPlot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLog10ScaleEngine);
-
-    // Cannot have a scale less than or equal to zero
-    if(allPlotData.axis.maxY < 0)
-    {
-        return false;
-    }
-
-    double minY;
-    if(allPlotData.axis.minY < 0)
-    {
-         minY = allPlotData.axis.maxY / (double) 100.0;
-    }
-    else
-    {
-        minY = allPlotData.axis.minY / 10;
-    }
-
-    // ajn 170522 plot->axisScaleEngine( QwtPlot::xBottom )->setAttribute( QwtScaleEngine::Floating, true );
-
-    // Set number of major tix on the plot
-    qwtPlot->setAxisMaxMajor(QwtPlot::yLeft, 6);
-
-    // Set number of Minor tix inbetween the major tix. | .... |    Where | = major . = minior
-    qwtPlot->setAxisMaxMinor(QwtPlot::yLeft, 10);
-    qwtPlot->setAxisScale(QwtPlot::yLeft, minY, (allPlotData.axis.maxY * 5), 1);
-
-
-    //qwtPlot->setAxisScaleDiv();
-    //qwtPlot->setAxisScale()
-    //qwtPlot->setAxisScale(QwtPlot::yLeft, 5, 250);
-    //qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)/*1, 100000000*/);
-
-
-
-    allPlotData.stock[index].data.attach(qwtPlot);
-    qDebug() << "index" << index;
-    qwtPlot->replot();
-
-     #if 0
-    // qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound(); //  and ->hBound()
-    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound());
-    qDebug() << "x axis upper" << tmp << "\n";
-
-    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->lowerBound());
-    qDebug() << "x axis lower" << tmp << "\n";
-
-    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->range());
-    qDebug() << "x range " << tmp << "\n";
-
-    qDebug() << "x axisInterval" << tmp << "\n";
-    #endif
-
-    return true;
-}
-#endif
-
-
-
-#if 0
-
-/*!
-  \brief build a logarithmic scale
-*/
-00300 void QwtAutoScale::buildLogScale ()
-{
-    if (!d_autoScale)
-        return;
-
-    double minval = d_minValue; // the calculation of scale divisions
-    double maxval = d_maxValue; // is based on the input data.
-
-    if (d_loMargin > 0.0)
-        minval /= pow(10.0, d_loMargin);
-    if (d_hiMargin > 0.0)
-        maxval *= pow(10.0, d_hiMargin);
-
-    if (d_scaleOpt & Symmetric)
-    {
-        const double delta = qwtMax(maxval / d_lref,  d_lref / minval);
-        maxval = d_lref * delta;
-        minval = d_lref / delta;
-    }
-    else if (d_scaleOpt & IncludeRef)
-    {
-        if (maxval < d_lref)
-            maxval = d_lref;
-        else if (minval > d_lref)
-            minval = d_lref;
-    }
-
-    const double ticks = (d_maxMajor > 0) ? double(d_maxMajor) : 1;
-
-    setRange(minval, maxval);
-
-    // decades included in the interval
-    const double decades = qwtAbs(log10 (d_scaleMax / d_scaleMin));
-
-    // calculate step size in decades
-
-    double step;
-    if ((decades > 1.0) && (decades > ticks))
-    {
-        double ipart;
-        // One interval contains more than one decade.
-        // The number of decades in an interval is adjusted
-        // to be a multiple of 2,3,5, or 10.
-        double fpart = modf (log10 (ceil (decades * 0.999999 / ticks)), &ipart);
-        if (fpart < MinEps)
-           fpart = 1.0;
-        else if ((fpart - LOG10_2) < MinEps)
-           fpart = 2.0;
-        else if ((fpart - LOG10_3) < MinEps)
-           fpart = 3.0;
-        else if ((fpart - LOG10_5) < MinEps)
-           fpart = 5.0;
-        else
-           fpart = 10.0;
-
-        step = pow (10.0, ipart) * fpart;
-
-    }
-    else                // The minimal step size is one decade.
-    {
-        step = 1.0;
-    }
-
-    if (!(d_scaleOpt & Floating))
-    {
-        d_scaleMin = pow (10.0, step *
-            floor ((log10(d_scaleMin) + MinEps * step) / step));
-        d_scaleMax = pow (10.0, step *
-            ceil ((log10(d_scaleMax) - MinEps * step) / step));
-    }
-
-    if (d_scaleOpt & Inverted)
-    {
-        step = -step;
-        d_scldiv.rebuild(d_scaleMax, d_scaleMin, d_maxMajor, d_maxMinor, TRUE,
-             step, FALSE);
-    }
-    else
-    {
-        d_scldiv.rebuild(d_scaleMin, d_scaleMax, d_maxMajor, d_maxMinor,
-             TRUE, step, TRUE);
-    }
-}
-
-
-
-#endif
-
-
-
-
-/*******************************************************************
- *
- * Function:        clearGUIIntrinsicValue()
- *
- * Description:
- *
- *
- *
- *******************************************************************/
-void StockAnalysisTab::savePlotLinearReportData(QwtPlot *qwtPlot,
-                                                QString stockName,
-                                                QString date)
-{
-
-#if 0
-    CExtendedQwtPlot();
-    void setPlotTitle(QwtPlot *qwtPlot, QString title);
-    void setXAxisTitle(QwtPlot *qwtPlot, QString title, int fontSize=10);
-    void setYAxisTitle(QwtPlot *qwtPlot, QString title);
-    void setXAxisFontSize(QwtPlot *qwtPlot, int fontSize);
-    void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
-    void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
-    void setYAxisScale(QwtPlot *qwtPlot, double min, double max);
-#endif
-
-}
-
-
-
-#if 0
-/*******************************************************************
- *
- * Function:        clearGUIIntrinsicValue()
- *
- * Description:
- *
- *
- *
- *******************************************************************/
-void StockAnalysisTab::plotLogarithmicReportData()
-{
-
-}
-#endif
 
 /*******************************************************************
  *
@@ -7031,13 +7027,7 @@ void StockAnalysisTab::on_pushButtonAltCalcAvgAnnualGrowthRateEquity_clicked()
  *******************************************************************/
 void StockAnalysisTab::on_pushButtonAltcalcAvgAnnualGrowthRateEquity_clicked()
 {
-
     QString nofYears;
-
-
-
-
-
 
     if(m_nofEquityPerShareData >  2)
     {

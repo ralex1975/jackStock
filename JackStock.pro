@@ -5,10 +5,15 @@
 #-------------------------------------------------
 
 CONFIG   += qwt
+
 LIBS += -L/home/ajn/qwt-6.0.2/lib -lqwt
+LIBS += -lcurl
+
 DEPENDPATH += /home/ajn/qwt-6.0.2/lib
 
 INCLUDEPATH +=/home/ajn/qwt-6.0.2/include
+
+TARGET = curl
 
 
 INCLUDEPATH += $$PWD/inc/GetHtmlPage
@@ -53,8 +58,7 @@ TARGET = JackStock
 TEMPLATE = app
 
 
-SOURCES += 	jackStock.cpp \
-		src/GetHtmlPage/getYahooKeyStatistics.cpp \
+SOURCES += 	\
 		src/TaBuySellIdicator/taBuySellIdicator.cpp \
     		src/TaBuySellIdicator/taBuySellTask.cpp \
 		src/debug/debug.cpp \
@@ -82,8 +86,6 @@ SOURCES += 	jackStock.cpp \
     		src/Utils/linkedList.cpp\
 		src/Application/assistant.cpp \
                 src/Application/main.cpp \
-		src/Application/httpwindow.cpp \
-    		src/Application/httpdownloader.cpp \
 		src/Application/selIndicatorsDlg.cpp \
 		src/Application/stockPlotUtil.cpp \
 		src/Application/tabdialog.cpp \
@@ -122,12 +124,14 @@ SOURCES += 	jackStock.cpp \
 		src/Application/Tabs/13_video/video.cpp \
 		src/Application/Tabs/14_others/graphtab.cpp \
 		src/Application/Tabs/14_others/parseavanzadata.cpp \
-                src/Application/Tabs/14_others/portfolio.cpp
+                src/Application/Tabs/14_others/portfolio.cpp \
+                src/Application/Tabs/14_others/jackStock.cpp \
+                src/Application/Tabs/7_ImportData/getYahooKeyStatistics.cpp \
+                src/GetHtmlPage/httpwindow.cpp
 
 			    
     
-HEADERS  +=	jackStock.h \
-		inc/GetHtmlPage/getYahooKeyStatistics.h \
+HEADERS  += \
 		inc/TaBuySellIdicator/taBuySellTask.h \
 		inc/TaBuySellIdicator/taBuySellIdicator.h \
 	    	inc/debug/debug.h \
@@ -157,8 +161,6 @@ HEADERS  +=	jackStock.h \
     		inc/Application/yahooStockPlotUtil.h \
 		inc/Application/tabdialog.h \
 	    	inc/Application/selIndicatorsDlg.h \
-	 	inc/Application/httpwindow.h \
-	    	inc/Application/httpdownloader.h \
 	    	inc/Application/common.h \
 	    	inc/Application/assistant.h \
 	    	inc/Application/textedit.h \
@@ -192,15 +194,17 @@ HEADERS  +=	jackStock.h \
 		inc/Application/Tabs/12_Analysis/stockAnalysisTab.h \
     		inc/Application/Tabs/12_Analysis/createstockanalysishtmlpage.h \
     		inc/Application/Tabs/12_Analysis/subanalysisdisplaygraphdata.h \
-               inc/Application/Tabs/13_video/video.h \
+                inc/Application/Tabs/13_video/video.h \
     		inc/Application/Tabs/14_others/graphtab.h \
 		inc/Application/Tabs/14_others/parseavanzadata.h \
                 inc/Application/Tabs/14_others/portfolio.h \
                 inc/Application/Tabs/14_others/ui_ctab2.h \
-                inc/Application/Tabs/14_others/ui_ctab3.h
+                inc/Application/Tabs/14_others/ui_ctab3.h \
+                inc/Application/Tabs/14_others/jackStock.h \
+                inc/Application/Tabs/7_ImportData/getYahooKeyStatistics.h \
+                inc/GetHtmlPage/httpwindow.h
 
 FORMS    += \
-    jackStock.ui \
     src/Application/selIndicatorsDlg.ui \
     src/Application/Tabs/1_Web/WebBrowserTab.ui \
     src/Application/Tabs/2_KeyNumber1/tableTab.ui \
@@ -218,7 +222,8 @@ FORMS    += \
     src/Application/Tabs/12_Analysis/calcavgannualgrowthrateequity.ui \
     src/Application/Tabs/13_video/video.ui \
     src/Application/Tabs/14_others/portfolio.ui \
-    src/Application/Tabs/14_others/graphtab.ui
+    src/Application/Tabs/14_others/graphtab.ui \
+    src/Application/Tabs/14_others/jackStock.ui
 
 RESOURCES += \
     database/resourcedb.qrc

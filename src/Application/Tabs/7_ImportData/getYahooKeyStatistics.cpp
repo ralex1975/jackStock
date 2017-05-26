@@ -1,4 +1,4 @@
-#include "../../inc/GetHtmlPage/getYahooKeyStatistics.h"
+#include "getYahooKeyStatistics.h"
 #include <QMessageBox>
 #include <QtCore>
 #include <QMessageBox>

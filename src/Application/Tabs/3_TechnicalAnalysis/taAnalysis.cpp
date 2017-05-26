@@ -13,6 +13,10 @@
 #include <QMessageBox>
 #include <qwt_plot_layout.h>
 
+#ifdef TEST_COOKIE
+#include <QNetworkCookieJar>
+#endif
+
 
 #define INDEX_MY_PORTFOLIO      ((int) 3)
 #define TIME_2_MIN              ((int) 120000)
@@ -35,6 +39,9 @@ const TaAnalysis::TimePeriodDays_ST TaAnalysis::m_timePeriodDaysArr[TaAnalysis::
 
 
 
+
+
+
 /*******************************************************************
  *
  * Function:    ()
@@ -51,6 +58,7 @@ TaAnalysis::TaAnalysis(QWidget *parent) :
 {
     int i;
     CDbHndl db;
+
 
     ui->setupUi(this);
     initStockList();
@@ -1030,17 +1038,6 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
     CUtil cu;
 
     QString filename = DWLD_PATH_TA_LIST_FILE;
-
-//    QString startDate;
-    QString startYear;
-    QString startMonth;
-    QString startDay;
-
-  //  QString endDate;
-    QString endYear;
-    QString endMonth;
-    QString endDay;
-
     uint unixStartTime;
     uint unixEndTime;
 
@@ -1048,15 +1045,9 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
     {
         m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
 
+        // Do not remove need when select difften stocks
         QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
         const char *c_reqStockSymbol = ba1.data();
-
-  //      m_reqStartDate = "2013-12-01";
-
-        // cu.splitDate(m_reqStartDate, startYear, startMonth, startDay);
-
-        // cu.splitDate(m_reqEndDate, endYear, endMonth, endDay);
-
 
         if(false == cu.getLinuxTime(m_reqStartDate, unixStartTime))
         {
@@ -1068,14 +1059,100 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
             return;
         }
 
-                  // https://query1.finance.yahoo.com/v7/finance/download/ABB.ST?period1=1492722268&period2=1495314268&interval=1d&events=history&crumb=.dCDNsa0z5Q
         qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
         c_reqStockSymbol,
         unixStartTime,
         unixEndTime);
 
-       #if 0
-       // OLd wrong
+        //qry.sprintf("https://finance.yahoo.com/quote/ABB?p=ABB");
+        //qry.sprintf("https://uk.finance.yahoo.com/quote/AAPL/history");
+
+        QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
+
+        qDebug() << qry;
+        QUrl url(qry);
+
+        // Send html request to server (and set timeout)
+        startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
+        m_hw1.startRequest(url, filename, 0x01);
+    }
+}
+
+
+
+
+#if 0
+/*******************************************************************
+ *
+ * Function:    slotReqSingleStockDataFromServer()
+ *
+ * Description: This function is invoked when singel stock data need
+ *              to be updated. (price data is old)
+ *
+ *******************************************************************/
+void TaAnalysis::slotReqSingleStockDataFromServer()
+{
+    QString qry;
+    CUtil cu;
+
+    QString filename = DWLD_PATH_TA_LIST_FILE;
+
+#if 0 // Old yahoo interface
+//    QString startDate;
+    QString startYear;
+    QString startMonth;
+    QString startDay;
+
+  //  QString endDate;
+    QString endYear;
+    QString endMonth;
+    QString endDay;
+#endif
+
+    uint unixStartTime;
+    uint unixEndTime;
+
+    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
+    {
+        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
+
+        QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
+
+        const char *c_reqStockSymbol = ba1.data();
+
+#if 0 // Old yahoo interface
+  //      m_reqStartDate = "2013-12-01";
+
+        // cu.splitDate(m_reqStartDate, startYear, startMonth, startDay);
+
+        // cu.splitDate(m_reqEndDate, endYear, endMonth, endDay);
+#endif
+
+        if(false == cu.getLinuxTime(m_reqStartDate, unixStartTime))
+        {
+            return;
+        }
+
+        if(false == cu.getLinuxTime(m_reqEndDate, unixEndTime))
+        {
+            return;
+        }
+
+    #ifdef TEST_COOKIE
+                  // https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=cI6dnQuNRz2
+        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=%d&period2=%d&interval=1d&events=history&crumb=pmgEoB9HeYB",
+                    unixStartTime,
+                    unixEndTime);
+    #else
+       // https://query1.finance.yahoo.com/v7/finance/download/ABB.ST?period1=1492722268&period2=1495314268&interval=1d&events=history&crumb=.dCDNsa0z5Q
+        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
+        c_reqStockSymbol,
+        unixStartTime,
+        unixEndTime);
+    #endif
+
+       #if 0 // Stop working 2017-05-17 Yahoo change download interface (cookie is no needed)
+       // Old wrong
         qry.sprintf("http://ichart.finance.yahoo.com/table.csv?s=%s&d=%d&e=%d&f=%d&g=d&a=%d&b=%d&c=%d&ignore=.csv",
                     c_reqStockSymbol,
                     (endMonth.toInt()-1),
@@ -1102,11 +1179,36 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
         QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
         QUrl url(qry);
 
+#if 0 // his is wrong this need to be inside m_hw1.startRequest()
+        if(false ==  m_networkCookieJar.setCookiesFromUrl(m_cookieList, url))
+        {
+            qDebug() << QString::fromUtf8("Fail set cookies");
+
+            qDebug() << "len" <<  m_cookieList.count();
+            for( int i=0; i < m_cookieList.count(); ++i )
+            {
+                qDebug() << m_cookieList[i];
+                // process items in numerical order by index
+                // do something with "list[i]";
+            }
+        }
+
+        qDebug() << "len" <<  m_cookieList.count();
+        for( int i=0; i < m_cookieList.count(); ++i )
+        {
+            qDebug() << m_cookieList[i].domain();
+            qDebug() << m_cookieList[i].expirationDate();
+            qDebug() << m_cookieList[i].value();
+            // process items in numerical order by index
+            // do something with "list[i]";
+        }
+#endif
+
         startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
         m_hw1.startRequest(url, filename, 0x01);
     }
 }
-
+#endif
 
 
 

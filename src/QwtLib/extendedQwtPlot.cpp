@@ -93,6 +93,51 @@ void CExtendedQwtPlot::setYAxisFontSize(QwtPlot *qwtPlot, int fontSize)
 }
 
 
+/*******************************************************************
+ *
+ * Function:    removeLegend(()
+ *
+ * Description: Remove legend (Label connected to a curve on the plot)
+ *              This function inhibit to display a new entry of the
+ *              legend each time the plot is updated.
+ *
+ *              Invoke this function before you do a replot to
+ *              suppress the additional entries,
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::removeLegend( QwtPlotCurve *data)
+{
+    data->setItemAttribute(QwtPlotItem::Legend, false);
+}
+
+
+/*******************************************************************
+ *
+ * Function:    saveQwtPlotAsImage(()
+ *
+ * Description: Save Plot as an png-image on disk.
+ *
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::saveQwtPlotAsImage(QString filename, QwtPlot *qwtPlot)
+{
+    QPixmap qPix = QPixmap::grabWidget(qwtPlot);
+
+    if(qPix.isNull())
+    {
+        qDebug("Failed to save image on disk");
+        QMessageBox::information(NULL, QString::fromUtf8("Image error"),
+                                       QString::fromUtf8("Failed to save image on disk"));
+        return;
+    }
+
+   qPix.save(filename, "png");
+
+}
+
+
+
+
 
 /*******************************************************************
  *

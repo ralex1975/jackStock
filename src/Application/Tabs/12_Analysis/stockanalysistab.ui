@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>9</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>6</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -1848,10 +1848,10 @@
         <widget class="QwtPlot" name="qwtPlotCurrAssLiab">
          <property name="geometry">
           <rect>
-           <x>250</x>
-           <y>20</y>
-           <width>651</width>
-           <height>401</height>
+           <x>330</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
           </rect>
          </property>
         </widget>
@@ -1876,8 +1876,8 @@
         <widget class="QwtPlot" name="qwtPlotCurrAssTotLiab_12">
          <property name="geometry">
           <rect>
-           <x>300</x>
-           <y>0</y>
+           <x>330</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1891,8 +1891,8 @@
         <widget class="QwtPlot" name="qwtPlotEarningsPerShare_13">
          <property name="geometry">
           <rect>
-           <x>300</x>
-           <y>0</y>
+           <x>330</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1906,8 +1906,8 @@
         <widget class="QwtPlot" name="qwtPlotRevenueEarnings_17">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>330</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1921,8 +1921,8 @@
         <widget class="QwtPlot" name="qwtPlotDiv_14">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>340</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1936,8 +1936,8 @@
         <widget class="QwtPlot" name="qwtPlotEarningDiv_16">
          <property name="geometry">
           <rect>
-           <x>300</x>
-           <y>0</y>
+           <x>340</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1951,8 +1951,8 @@
         <widget class="QwtPlot" name="qwtPlotCashflow1_15">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>340</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1966,8 +1966,8 @@
         <widget class="QwtPlot" name="qwtPlotCashFlow2_18">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>330</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1981,8 +1981,8 @@
         <widget class="QwtPlot" name="qwtPlot_19">
          <property name="geometry">
           <rect>
-           <x>300</x>
-           <y>0</y>
+           <x>340</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -1996,8 +1996,8 @@
         <widget class="QwtPlot" name="qwtPlotEarningMargin_20">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>340</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -2011,8 +2011,8 @@
         <widget class="QwtPlot" name="qwtPlotEquityMargin_22">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>330</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -2026,8 +2026,8 @@
         <widget class="QwtPlot" name="qwtPlotLiabEquityEarningDiv_21">
          <property name="geometry">
           <rect>
-           <x>290</x>
-           <y>0</y>
+           <x>330</x>
+           <y>10</y>
            <width>681</width>
            <height>491</height>
           </rect>
@@ -2362,19 +2362,6 @@
         <string>Senast eget kapital / Aktie</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_63">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>250</y>
-         <width>431</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Eget kapital/Aktie (Historiskt och predikterat)</string>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="lineEditTotErningsPerShare">
        <property name="geometry">
         <rect>
@@ -2480,7 +2467,6 @@
       <zorder>lineEditCurrEquityPerShare</zorder>
       <zorder>lineEditEstimateYearlyDividend</zorder>
       <zorder>label_61</zorder>
-      <zorder>label_63</zorder>
       <zorder>lineEditTotErningsPerShare</zorder>
       <zorder>lineEditTotEquityIncPerShare</zorder>
       <zorder>lineEditTotDividendPerShare</zorder>

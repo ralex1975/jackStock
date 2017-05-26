@@ -8,6 +8,7 @@
 #include "canvaspicker.h"
 #include <qwt_plot_histogram.h>
 #include "common.h"
+#include <QNetworkCookie>
 
 #include <QString>
 #include <QtCore>
@@ -21,6 +22,7 @@ namespace Ui
 {
 class TaAnalysis;
 }
+
 
 
 
@@ -67,8 +69,12 @@ class TaAnalysis : public QDialog
         SUBPLOT_INDEX_MAX
     };
 
-
+    // Test cookie made wrong
+    //QNetworkCookieJar m_networkCookieJar;
+    //QNetworkCookie m_NetworkCookie;
+    //QList<QNetworkCookie> m_cookieList;
     CYahooStockPlotUtil m_plot;
+
 
     // Cannot extract x,y data. Contains all data that is send to graph
     CYahooStockPlotUtil::PlotData_ST m_qwtStockPlotData;

@@ -43,6 +43,9 @@ CWebBrowserTab::CWebBrowserTab(QWidget *parent) :
     //QUrl url("http://www.google.com/finance/historical?q=AAPL&startdate=Nov 1, 2011&enddate=Nov 30, 2011&output=csv");
     QUrl url("https://borsdata.se/");
 
+    // Ska funka
+   //QUrl url("http://www.google.com/finance/historical?q=NASDAQ:ADBE&startdate=Jan+01%2C+2009&enddate=Aug+2%2C+2012&output=csv");
+
     // QUrl url("http://performance.morningstar.com/perform/Performance/stock/exportStockPrice.action?t=XNYS:ABB&pd=1y&freq=d&sd=&ed=&pg=0&culture=en-US&cur=USD");
 
 

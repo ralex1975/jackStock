@@ -21,7 +21,7 @@
 
 #include "importYahooTaData.h"
 #include <QString>
-#include "inc/GetHtmlPage/getYahooKeyStatistics.h"
+#include "getYahooKeyStatistics.h"
 
 #include "readexercisefile.h"
 #include "parseomxbridgedata.h"

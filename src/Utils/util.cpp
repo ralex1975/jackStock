@@ -1577,6 +1577,102 @@ bool CUtil::number2double(QString number, QString &doubleNumber)
     return true;
 }
 
+/*********************************************************************
+ * Function: createFileDriectory()
+ *
+ * Description:
+ *
+ *
+ *********************************************************************/
+bool CUtil::createFileDriectory(QString pathAndMapname)
+{
+
+    // Create sockname directory
+    if(QDir(pathAndMapname).exists() == false)
+    {
+        if(QDir().mkdir(pathAndMapname) == false)
+        {
+            //QMessageBox::information(NULL,
+            //                         QString::fromUtf8("Error"),
+            //                         QString::fromUtf8("Fail to create directory"));
+            return false;
+        }
+    }
+    return true;
+}
+
+/*********************************************************************
+ * Function: createProperFilname()
+ *
+ * Description: The filname are using following chaacters:
+ *
+ *              A - Z
+ *              a - z
+ *              0 - 9
+ *              '-',      minus
+ *              '_',      undersore
+ *              '.'       dot 4 char from end.
+ *
+ *********************************************************************/
+bool CUtil::createProperFilname(QString inFilename, QString &outFilename, bool checkExeDot)
+{
+    int extentionPos = (inFilename.length() - 4);
+
+    // Filname need to be 5 chars (y.xxx)
+    if(extentionPos < 1)
+    {
+        return false;
+    }
+
+    QString tmp = ".";
+    // check if file contains .xxx in the end
+    if((checkExeDot == true) && (inFilename[extentionPos] != tmp[0]))
+    {
+        return false;
+    }
+
+    // Only add valid charachters
+    for(int i = 0, j = 0; i < inFilename.length(); i++)
+    {
+        if((inFilename.at(i)) >= 'a' && (inFilename.at(i) <= 'z'))
+        {
+            outFilename.insert(j++, inFilename[i]);
+        }
+        else if((inFilename.at(i)) >= 'A' && (inFilename.at(i) <= 'Z'))
+        {
+            outFilename.insert(j++, inFilename[i]);
+        }
+        else if((inFilename.at(i)) >= '0' && (inFilename.at(i) <= '9'))
+        {
+            outFilename.insert(j++, inFilename[i]);
+        }
+        else if((inFilename.at(i) == '.') && (inFilename.length() - 4 == i))
+        {
+            outFilename.insert(j++, inFilename[i]);
+        }
+        else if((inFilename.at(i)) == '-' || (inFilename.at(i) == '_'))
+        {
+            outFilename.insert(j++, inFilename[i]);
+        }
+        else if((inFilename.at(i)) == ' ')
+        {
+            QString tmp;
+                    tmp.clear();
+                    tmp = "_";
+            outFilename.insert(j++, tmp);
+        }
+    }
+
+    if(outFilename.length() > 2)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
 
 /*********************************************************************
  * Function: dateIsValid()
@@ -1646,22 +1742,6 @@ bool CUtil::splitDate(QString date, QString &year, QString &month, QString &day)
 }
 
 
-#if 0  // ajn 170522
-<time.h>
-tm lDate;
-
-lDate.tm_sec = 0;
-lDate.tm_min = 0;
-lDate.tm_hour = 0;
-lDate.tm_mday = 1;
-lDate.tm_mon = 10;
-lDate.tm_year = 2010 - 1900;
-
-time_t lTimeEpoch = mktime(&lDate);
-
-cout << "Epoch: " << lTimeEpoch << endl;
-
-#endif
 
 
 
