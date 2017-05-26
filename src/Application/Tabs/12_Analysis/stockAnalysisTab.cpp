@@ -5806,13 +5806,40 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Vinsttillväxt (%)
     //-----------------------------------------------------------------------------------
+    // Add zero line to plot
+     SubAnalysDataST  zeroLineDataArr[MAX_NOF_EARNINGS_ARR_DATA];
+     int              m_nofZeroLineArrData;
+
+     QString data("0.0");
+     m_nofZeroLineArrData = m_nofEarningsArrData;
+     for(int zz = 0; zz < m_nofEarningsArrData; zz++)
+     {
+         zeroLineDataArr[zz].date = m_earningsDataArr[zz].date;
+         zeroLineDataArr[zz].data = data;
+     }
+
+     indexToPlot = 12;
+     nofPlotToClear = 0;
+     lineColor = Qt::black;
+     useAutoScale = false;
+     bool hideDataSample = true;
+     skipDenominatorEqZero = true;
+     plotLinearReportData(ui->qwtPlot_19,
+                           useAutoScale,
+                           zeroLineDataArr,
+                           m_nofZeroLineArrData,
+                           indexToPlot,
+                           nofPlotToClear,
+                           lineColor,
+                          hideDataSample);
+
+
     subAnalysisDisplayGraphData sadgd;
     sadgd.subAnalysisOneArrCalcProcentRationPrevCurrSlot(m_earningsDataArr,
                                                   m_nofEarningsArrData,
                                                   resultArr,
                                                   nofDataResultArr,
-                                                  skipDenominatorEqZero);
-
+                                                  skipDenominatorEqZero);    
     indexToPlot = 5;
     nofPlotToClear = 0;
     lineColor = Qt::blue;
@@ -5825,6 +5852,8 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                 indexToPlot,
                                 nofPlotToClear,
                                 lineColor);
+
+
 
 
     //-----------------------------------------------------------------------------------
@@ -6375,7 +6404,8 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
                                             int nofData,
                                             int indexToPlot,
                                             int nofPlotToClear,
-                                            QColor lineColor)
+                                            QColor lineColor,
+                                            bool hideDataSample)
 {
     CYahooStockPlotUtil cyspu;
 
@@ -6416,11 +6446,12 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
     qwtPlot->setAxisMaxMinor(QwtPlot::yLeft, 10);
 
 
-    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 2));
-    m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
-                                                               QPen(lineColor),
-                                                               QSize(7, 7) ) );
-
+    if(hideDataSample == false)
+    {
+        m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setPen(QPen(lineColor, 2));
+        m_qwtAllAnalysisPlotData.stock[indexToPlot].data.setSymbol(new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
+                                                                   QPen(lineColor), QSize(7, 7) ) );
+    }
 
     cyspu.plotData(m_qwtAllAnalysisPlotData, qwtPlot, indexToPlot, useAutoScale);
 

@@ -266,7 +266,8 @@ private:
                               int nofData,
                               int indexToPlot,
                               int nofPlotToClear,
-                              QColor LineColor);
+                              QColor LineColor,
+                              bool hideDataSample=false);
 
     bool logScaleFindStartStopTicksValue(double minValue,
                                      double maxValue,
