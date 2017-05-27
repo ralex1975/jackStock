@@ -12,6 +12,7 @@
 #include <qwt_scale_engine.h>
 #include "extendedQwtPlot.h"
 #include <qwt_plot_histogram.h>
+#include "myLibCurl.h"
 
 #define INDEX_MY_PORTFOLIO      ((int) 3)
 
@@ -36,13 +37,6 @@ const QString StockAnalysisTab::m_companyTypesArr[NOF_COMPANY_TYPE_ARR_DATA] =
                             QString::fromUtf8("Försörjningsbolag"),
                             QString::fromUtf8("Investmentbolag"),
                             QString::fromUtf8("Allmännyttiga företag")}; // t.ex energibolag (Skulder/eget kapital exklusive immateriella tillgångar < 2)
-
-
-
-
-
-
-
 
 
 /******************************************************************
@@ -7076,8 +7070,82 @@ void StockAnalysisTab::on_pushButtonAltcalcAvgAnnualGrowthRateEquity_clicked()
 
 
 
+/*******************************************************************
+ *
+ * Function:    ()
+ *
+ * Description: Test LibCurl
+ *
+ *
+ *******************************************************************/
 void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
 {
+    MyLibCurl mlc;
+    CURL *curlHndl;
+    char url[256];
+    char filename[80];
+    char cookieResArr[256];
+
+    char hostname[80];
+    char incSubdomains[80];       // "TRUE"
+    char path[80];                // "/",
+    char secure[80];              // "FALSE"
+    char expirationDate[80];      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
+    char name[80];                // "B"
+    char value[80];               // "95jdfnpci12gs&b=3&s=to",
+    char cookieArr[256];
+
+    // ".yahoo.com	TRUE	/	FALSE	1527437638	B	btn35mhcij9e6&b=3&s=e6"
+    strcpy(hostname, ".yahoo.com");
+    strcpy(incSubdomains, "TRUE");
+    strcpy(path, "/");
+    strcpy(secure, "FALSE");
+    strcpy(expirationDate, "1527424259");
+    strcpy(name, "B");
+    strcpy(value, "5ljb2u1ciiiki&b=3&s=m8");
+
+
+    strcpy(filename, "curlAbb.txt");
+
+    //Crumb: 'mWnh3sO2quo', Cookie: '5ljb2u1ciiiki&b=3&s=m8'
+    strcpy(url,"https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=mWnh3sO2quo");
+
+    // strcpy(url,"https://finance.yahoo.com/quote/ABB?p=ABB");
+
+
+
+    curlHndl = mlc.beginCurlSession();
+    if(curlHndl)
+    {
+#if 0
+        mlc.addYahooCookie(curlHndl,
+                           hostname,            // ".yahoo.com",
+                           incSubdomains,       // "TRUE"
+                           path,                // "/",
+                           secure,              // "FALSE"
+                           expirationDate,      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
+                           name,                // "B"
+                           value,               // "95jdfnpci12gs&b=3&s=to",
+                           cookieArr);
+#endif
+
+        if(true == mlc.requestYahooWebPageAndCookie(curlHndl, url, filename, cookieResArr))
+        {
+            QString str;
+            str.sprintf("%s", cookieResArr);
+            QMessageBox::information(NULL, QString::fromUtf8("Cookie"), str);
+        }
+        mlc.endCurlSession(curlHndl);
+    }
+
+}
+
+
+
+#if 0
+void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
+{
+
 
     QString filename = "img_test1.png";
 
@@ -7091,4 +7159,4 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
 
    qPix.save(filename, "png");
 }
-
+#endif

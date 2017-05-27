@@ -18,6 +18,7 @@ TARGET = curl
 
 INCLUDEPATH += $$PWD/inc/GetHtmlPage
 INCLUDEPATH += $$PWD/inc/guiUtil
+INCLUDEPATH += $$PWD/inc/LibCurl
 INCLUDEPATH += $$PWD/inc/Utils
 INCLUDEPATH += $$PWD/inc/debug
 INCLUDEPATH += $$PWD/inc/MyOs
@@ -127,7 +128,8 @@ SOURCES += 	\
                 src/Application/Tabs/14_others/portfolio.cpp \
                 src/Application/Tabs/14_others/jackStock.cpp \
                 src/Application/Tabs/7_ImportData/getYahooKeyStatistics.cpp \
-                src/GetHtmlPage/httpwindow.cpp
+                src/GetHtmlPage/httpwindow.cpp \
+    src/LibCurl/myLibCurl.cpp
 
 			    
     
@@ -202,7 +204,8 @@ HEADERS  += \
                 inc/Application/Tabs/14_others/ui_ctab3.h \
                 inc/Application/Tabs/14_others/jackStock.h \
                 inc/Application/Tabs/7_ImportData/getYahooKeyStatistics.h \
-                inc/GetHtmlPage/httpwindow.h
+                inc/GetHtmlPage/httpwindow.h \
+    inc/LibCurl/myLibCurl.h
 
 FORMS    += \
     src/Application/selIndicatorsDlg.ui \

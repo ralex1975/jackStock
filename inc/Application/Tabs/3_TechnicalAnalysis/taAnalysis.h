@@ -134,6 +134,9 @@ public:
 
     QPalette *m_faDataPalette[FA_NOF_DATA];
 
+    static void httpSend(void);
+
+
     void initFa3MinMaxPePrice(void);
     void initFa3ProfitabilityAnalysis(void);
     void initFa2OperatingIncomeList(void);

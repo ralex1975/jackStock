@@ -138,6 +138,53 @@ TaAnalysis::~TaAnalysis()
  *
  * Description:
  *
+ * Note: This is a static function: (to be able to hadle curllib)
+ *
+ * address to get cookie and crumb: https://finance.yahoo.com/quote/ABB?p=ABB
+ * -----------------------------------------------------------------
+ * Crumb: 'mWnh3sO2quo',
+ * Cookie: 'B=5ljb2u1ciiiki&b=3&s=m8'
+ * -----------------------------------------------------------------
+ *
+ * Address to get cvs file from
+ * -----------------------------------------------------------------
+ * https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=mWnh3sO2quo
+ *
+ *
+ * Cookie received from  https://finance.yahoo.com/quote/ABB?p=ABB
+ * ------------------------------------------------------------------
+ *     "domain": ".yahoo.com",
+ *     "expirationDate": 1527138120,
+ *     "hostOnly": false,
+ *     "httpOnly": false,
+ *     "name": "B",
+ *     "path": "/",
+ *     "sameSite": "no_restriction",
+ *     "secure": false,
+ *     "session": false,
+ *     "storeId": "0",
+ *     "value": "95jdfnpci12gs&b=3&s=to",
+ *     "id": 2
+ *
+ *******************************************************************/
+void TaAnalysis::httpSend(void)
+{
+    QMessageBox::information(NULL, QString::fromUtf8("Info"), QString::fromUtf8("Hej"));
+
+}
+
+
+
+
+
+
+
+/*******************************************************************
+ *
+ * Function:    initFa2OperatingIncomeList()
+ *
+ * Description:
+ *
  *
  *******************************************************************/
 void TaAnalysis::initFa2OperatingIncomeList(void)
@@ -1063,6 +1110,8 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
         c_reqStockSymbol,
         unixStartTime,
         unixEndTime);
+
+        httpSend();
 
         //qry.sprintf("https://finance.yahoo.com/quote/ABB?p=ABB");
         //qry.sprintf("https://uk.finance.yahoo.com/quote/AAPL/history");
