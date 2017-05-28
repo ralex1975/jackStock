@@ -211,10 +211,6 @@ void StockAnalysisTab::initSubAnalysTables(void)
     initCompanyTypeComboBox();
 
 
-
-
-
-
     //------------------------------------------------------------------------------
     // Dividend
     dataHeader = QString::fromUtf8("Utdel/Aktie");
@@ -5135,9 +5131,15 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
         cyspu.updateMinMaxAxis(m_qwtEquityPlotData.axis, m_x[i], m_y[i]);
     }
 
+    int nofXTicks;
     m_qwtEquityPlotData.stock[index].data.setSamples(m_x, m_y, nofData);
     ui->qwtPlot_10->setAxisMaxMinor(QwtPlot::xBottom, 2);
-    ui->qwtPlot_10->setAxisMaxMajor(QwtPlot::xBottom, nofData - 1);
+    nofXTicks = nofData - 1;
+    if(nofData - 1 >= 10)
+    {
+        nofXTicks = (nofData / 2) + 1;
+    }
+    ui->qwtPlot_10->setAxisMaxMajor(QwtPlot::xBottom, nofXTicks);
 
     if(index == 1)
     {
@@ -5295,19 +5297,11 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
 
 
     //-----------------------------------------------------------------------------------
-    // Vinsttillväxt (%)
-    //-----------------------------------------------------------------------------------
-    filename = m_dateImgDir;
-    filename += "/";
-    filename += "image_7.png";
-    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlot_19);
-
-    //-----------------------------------------------------------------------------------
     // Operativt kassaflöde - CAPEX - Utdelning > 0
     //-----------------------------------------------------------------------------------
     filename = m_dateImgDir;
     filename += "/";
-    filename += "image_8.png";
+    filename += "image_7.png";
     ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCashflow1_15);
 
 
@@ -5316,8 +5310,17 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     //-----------------------------------------------------------------------------------
     filename = m_dateImgDir;
     filename += "/";
-    filename += "image_9.png";
+    filename += "image_8.png";
     ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCashFlow2_18);
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinsttillväxt (%)
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_9.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlot_19);
 
 
 
@@ -5451,13 +5454,11 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
                              location, legendSize);
 
 
-
-
     //-----------------------------------------------------------------------------------
     // Operativt kassaflöde - CAPEX - Utdelning > 0  1(2)
     //-----------------------------------------------------------------------------------
     plotHeader = QString::fromUtf8("Operativt kassaflöde - CAPEX - Utdelning > 0");
-    legendText = QString::fromUtf8("Ok-CA-UT");
+    legendText = QString::fromUtf8("Op kassaflöde");
 
     initAnalysisPlot(ui->qwtPlotCashflow1_15, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
@@ -5466,23 +5467,16 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Operativt kassaflöde, CAPEX, Utdelning   2(2)
     //-----------------------------------------------------------------------------------
+    legendColor = Qt::blue;
     plotHeader = QString::fromUtf8("Operativt kassaflöde - CAPEX - Utdelning > 0");
     legendText = QString::fromUtf8("Op kassaflöde");
     eqp.setRightLegend(ui->qwtPlotCashFlow2_18);
 
 
     initAnalysisPlot(ui->qwtPlotCashFlow2_18, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
-                             location, legendSize);
+                     location, legendSize);
 
     legendText = legendText.fromUtf8("CAPEX");
-    legendSymbol = QwtSymbol::Rect;
-    legendColor = Qt::blue;
-    legendSize = 10;
-
-    eqp.setLegendSymbol(ui->qwtPlotCashFlow2_18, legendText, legendSymbol, legendColor, legendSize);
-
-
-    legendText = legendText.fromUtf8("Utdelning");
     legendSymbol = QwtSymbol::Rect;
     legendColor = Qt::magenta;
     legendSize = 10;
@@ -5490,12 +5484,18 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     eqp.setLegendSymbol(ui->qwtPlotCashFlow2_18, legendText, legendSymbol, legendColor, legendSize);
 
 
+    legendText = legendText.fromUtf8("Utdelning");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::red;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotCashFlow2_18, legendText, legendSymbol, legendColor, legendSize);
+    legendColor = Qt::blue;
 
 
     //-----------------------------------------------------------------------------------
     // Vinsttillväxt (%)
     //-----------------------------------------------------------------------------------
-
     plotHeader = QString::fromUtf8("Vinsttillväxt (%)");
     legendText = QString::fromUtf8("Vt");
 
