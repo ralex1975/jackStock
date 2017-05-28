@@ -29,7 +29,7 @@
     <attribute name="title">
      <string>Html Rapport</string>
     </attribute>
-    <widget class="QWebView" name="webView">
+    <widget class="QWebView" name="webView" native="true">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -38,7 +38,7 @@
        <height>541</height>
       </rect>
      </property>
-     <property name="url">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>
@@ -51,8 +51,8 @@
     </attribute>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QWebView" name="webView_2">
-       <property name="url">
+      <widget class="QWebView" name="webView_2" native="true">
+       <property name="url" stdset="0">
         <url>
          <string>about:blank</string>
         </url>
@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -1891,10 +1891,10 @@
         <widget class="QwtPlot" name="qwtPlotEarningsPerShare_13">
          <property name="geometry">
           <rect>
-           <x>330</x>
+           <x>320</x>
            <y>10</y>
-           <width>681</width>
-           <height>491</height>
+           <width>691</width>
+           <height>481</height>
           </rect>
          </property>
         </widget>
@@ -2057,7 +2057,7 @@
     <attribute name="title">
      <string>Analys alla</string>
     </attribute>
-    <widget class="QWebView" name="webViewAllAnalyzedComp">
+    <widget class="QWebView" name="webViewAllAnalyzedComp" native="true">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -2066,7 +2066,7 @@
        <height>541</height>
       </rect>
      </property>
-     <property name="url">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>
@@ -2549,15 +2549,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
-  <customwidget>
    <class>QwtPlot</class>
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
  <resources/>
