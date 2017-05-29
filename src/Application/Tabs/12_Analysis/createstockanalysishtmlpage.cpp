@@ -255,7 +255,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
         hSAPData.htmlStr += QString::fromUtf8("<tr>");
         hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Tidsspann&nbsp;&nbsp;&nbsp;&nbsp;");
         hSAPData.htmlStr += QString::fromUtf8("</td>");
-        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Intrisic&nbsp;value</td>");
+        hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Intrinsic&nbsp;value</td>");
         hSAPData.htmlStr += QString::fromUtf8("<td>Årlig Ränta eget kapital</td>");
         hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">Senaste Eget kap/Aktie</td>");
         hSAPData.htmlStr += QString::fromUtf8("<td style=\"text-align: left; vertical-align: top; background-color: white;\">10års oblg.ränta</td>");
@@ -938,7 +938,7 @@ void createStockAnalysisHtmlPage::createHtmlPage(struct HtmlStockAnalysPageDataS
             QString tmpStr;
 
             if(res > 1.03)
-                tmpStr = QString::fromUtf8("<font color=\"blue\">Årlig tillväxt: ");
+                tmpStr = QString::fromUtf8("<font color=\"blue\">Årlig vinsttillväxt: ");
             else
                 tmpStr = QString::fromUtf8("<font color=\"red\">Årlig tillväxt: ");
 

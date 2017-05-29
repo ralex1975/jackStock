@@ -309,9 +309,12 @@ private:
 
     void initAllAnalysisPlots(void);
     void displayAllAnalysisPlots(void);
-    void subAnalysisCalcQuotient(SubAnalysDataST *resultArr, int &nofDataResultArr,
+    bool subAnalysisCalcQuotient(SubAnalysDataST *resultArr, int &nofDataResultArr,
                                  SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,
                                  SubAnalysDataST *denominatorArr, int nofDataDenominatorArr,
+                                 double &min,
+                                 double &max,
+                                 double &average,
                                  bool skipDenominatorEqZero = true,
                                  bool convToProcent=false);
 

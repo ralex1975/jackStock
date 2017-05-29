@@ -29,7 +29,7 @@
     <attribute name="title">
      <string>Html Rapport</string>
     </attribute>
-    <widget class="QWebView" name="webView" native="true">
+    <widget class="QWebView" name="webView">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -38,7 +38,7 @@
        <height>541</height>
       </rect>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
@@ -51,8 +51,8 @@
     </attribute>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QWebView" name="webView_2" native="true">
-       <property name="url" stdset="0">
+      <widget class="QWebView" name="webView_2">
+       <property name="url">
         <url>
          <string>about:blank</string>
         </url>
@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -1858,14 +1858,96 @@
         <widget class="QPushButton" name="pushButtonSaveImg_2">
          <property name="geometry">
           <rect>
-           <x>130</x>
-           <y>20</y>
+           <x>10</x>
+           <y>460</y>
            <width>80</width>
            <height>22</height>
           </rect>
          </property>
          <property name="text">
           <string>PushButton</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgCurrAssLiab">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>110</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinCurrAssLiab">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_63">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>40</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_64">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>90</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_65">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>140</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdiMaxtCurrAssLiab">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>60</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResCurrAssetLiab">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>20</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </widget>
@@ -1880,6 +1962,88 @@
            <y>10</y>
            <width>681</width>
            <height>491</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_66">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>90</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_67">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>140</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinCurrAssTotLiab">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_68">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>40</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResCurrAssetTotLiab">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>20</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxCurrAssTotLiab">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>60</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgCurrAssTotLiab">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>110</y>
+           <width>113</width>
+           <height>22</height>
           </rect>
          </property>
         </widget>
@@ -1943,6 +2107,88 @@
           </rect>
          </property>
         </widget>
+        <widget class="QLabel" name="label_75">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>140</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>20</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxtEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>60</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMintEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgtEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>110</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_76">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>40</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_77">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>90</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_18">
         <attribute name="title">
@@ -1954,7 +2200,7 @@
            <x>340</x>
            <y>10</y>
            <width>681</width>
-           <height>491</height>
+           <height>481</height>
           </rect>
          </property>
         </widget>
@@ -1993,14 +2239,96 @@
         <attribute name="title">
          <string>Vmrg</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlotEarningMargin_20">
+        <widget class="QwtPlot" name="qwtPlotProfitMargin">
          <property name="geometry">
           <rect>
            <x>340</x>
            <y>10</y>
            <width>681</width>
-           <height>491</height>
+           <height>481</height>
           </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>60</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_78">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>140</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>20</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>110</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_79">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>40</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_80">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>90</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
          </property>
         </widget>
        </widget>
@@ -2018,6 +2346,75 @@
           </rect>
          </property>
         </widget>
+        <widget class="QLabel" name="label_81">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>40</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinEquityMargin">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_82">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>140</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxEquityMargin">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>60</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgEquityMargin">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>110</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_83">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>90</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_23">
         <attribute name="title">
@@ -2029,7 +2426,7 @@
            <x>330</x>
            <y>10</y>
            <width>681</width>
-           <height>491</height>
+           <height>481</height>
           </rect>
          </property>
         </widget>
@@ -2057,7 +2454,7 @@
     <attribute name="title">
      <string>Analys alla</string>
     </attribute>
-    <widget class="QWebView" name="webViewAllAnalyzedComp" native="true">
+    <widget class="QWebView" name="webViewAllAnalyzedComp">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -2066,7 +2463,7 @@
        <height>541</height>
       </rect>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
@@ -2549,15 +2946,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+  <customwidget>
    <class>QwtPlot</class>
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
  <resources/>

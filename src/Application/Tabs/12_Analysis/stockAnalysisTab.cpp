@@ -13,6 +13,7 @@
 #include "extendedQwtPlot.h"
 #include <qwt_plot_histogram.h>
 #include "myLibCurl.h"
+#include "myLineEdit.h"
 
 #define INDEX_MY_PORTFOLIO      ((int) 3)
 
@@ -5330,7 +5331,7 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     filename = m_dateImgDir;
     filename += "/";
     filename += "image_10.png";
-    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotEarningMargin_20);
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotProfitMargin);
 
     //-----------------------------------------------------------------------------------
     // Avkastning på det egna kapitalet (%) [Vinst/Eget kapital]
@@ -5511,7 +5512,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     plotHeader = QString::fromUtf8("Vinstmarginal (%) (Vinst efter skatt / Omsättning)");
     legendText = QString::fromUtf8("Vm");
 
-    initAnalysisPlot(ui->qwtPlotEarningMargin_20, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+    initAnalysisPlot(ui->qwtPlotProfitMargin, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
 
@@ -5588,10 +5589,8 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
  *******************************************************************/
 void StockAnalysisTab::displayAllAnalysisPlots(void)
 {
-    //SubAnalysDataST tmpArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
     SubAnalysDataST resultArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
     int nofDataResultArr;
-    //int nofTmpArrData;
     int indexToPlot;
     int nofPlotToClear;
     QColor lineColor;
@@ -5601,6 +5600,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     bool resetMinMaxScale;
     int xScaleStep;
     bool clearLegend = true;
+    double min;
+    double max;
+    double average;
+    QString str;
+
+
 
     CYahooStockPlotUtil cyspu;
     m_qwtAllAnalysisPlotData.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
@@ -5620,12 +5625,39 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Omsättningstillgångarna / Kortfristiga skulder > 2
     //-----------------------------------------------------------------------------------
     // Beräkna kvoten
-    subAnalysisCalcQuotient(resultArr,
+    if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totalCurrentAssetsArr,
                             m_nofTotalCurrentAssetsArrData,
                             m_totalCurrentLiabilitiesArr,
-                            m_nofTotalCurrentLiabilitiesData);
+                            m_nofTotalCurrentLiabilitiesData,
+                            min,
+                            max,
+                            average))
+    {
+        str.sprintf("%.2f", max);
+        ui->lineEdiMaxtCurrAssLiab->insert(str);
+        str.sprintf("%.2f", min);
+        ui->lineEditMinCurrAssLiab->insert(str);
+        str.sprintf("%.2f", average);
+        ui->lineEditAvgCurrAssLiab->insert(str);
+
+
+        if(min >= (double) 2.0)
+        {
+            ui->labelResCurrAssetLiab->setPalette(*m_blue_palette);
+            str = str.sprintf("Godkänd >= 2");
+            ui->labelResCurrAssetLiab->setText(str);
+        }
+        else
+        {
+            ui->labelResCurrAssetLiab->setPalette(*m_red_palette);
+            str = QString::fromUtf8("Underkänd < 2");
+            ui->labelResCurrAssetLiab->setText(str);
+        }
+    }
+
+
 
 
     indexToPlot = 0;
@@ -5644,12 +5676,37 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Omsättningstillgångarna / Totala skulder >= 1
     //-----------------------------------------------------------------------------------
     // Beräkna kvoten
-    subAnalysisCalcQuotient(resultArr,
+    if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totalCurrentAssetsArr,
                             m_nofTotalCurrentAssetsArrData,
                             m_totalLiabilitiesArr,
-                            m_nofTotalLiabilitiesData);
+                            m_nofTotalLiabilitiesData,
+                            min,
+                            max,
+                            average))
+    {
+        QString str;
+        str.sprintf("%.2f", max);
+        ui->lineEditMaxCurrAssTotLiab->insert(str);
+        str.sprintf("%.2f", min);
+        ui->lineEditMinCurrAssTotLiab->insert(str);
+        str.sprintf("%.2f", average);
+        ui->lineEditAvgCurrAssTotLiab->insert(str);
+
+        if(min >= (double) 1.0)
+        {
+            ui->labelResCurrAssetTotLiab->setPalette(*m_blue_palette);
+            str = str.sprintf("Godkänd >= 1");
+            ui->labelResCurrAssetTotLiab->setText(str);
+        }
+        else
+        {
+            ui->labelResCurrAssetTotLiab->setPalette(*m_red_palette);
+            str = QString::fromUtf8("Underkänd < 1");
+            ui->labelResCurrAssetTotLiab->setText(str);
+        }
+    }
 
 
     indexToPlot = 1;
@@ -5727,12 +5784,38 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
 
     // Beräkna kvoten
-    subAnalysisCalcQuotient(resultArr,
+    if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_earningsDataArr,
                             m_nofEarningsArrData,
                             m_dividendDataArr,
-                            m_nofDividendArrData);
+                            m_nofDividendArrData,
+                            min,
+                            max,
+                            average))
+    {
+        QString str;
+        str.sprintf("%.2f", max);
+        ui->lineEditMaxtEarningDiv->insert(str);
+        str.sprintf("%.2f", min);
+        ui->lineEditMintEarningDiv->insert(str);
+        str.sprintf("%.2f", average);
+        ui->lineEditAvgtEarningDiv->insert(str);
+
+        if(min >= (double) 2.0)
+        {
+            ui->labelResEarningDiv->setPalette(*m_blue_palette);
+            str = str.sprintf("Godkänd >= 1");
+            ui->labelResEarningDiv->setText(str);
+        }
+        else
+        {
+            ui->labelResEarningDiv->setPalette(*m_red_palette);
+            str = QString::fromUtf8("Underkänd < 1");
+            ui->labelResEarningDiv->setText(str);
+        }
+    }
+
 
     indexToPlot = 4;
     nofPlotToClear = 0;
@@ -5857,14 +5940,26 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     skipDenominatorEqZero = true;
     convToProcent = true;
 
-    subAnalysisCalcQuotient(resultArr,
+    if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totEarningsDataArr,
                             m_nofTotEarningsArrData,
                             m_revenueDataArr,
                             m_nofRevenueArrData,
+                            min,
+                            max,
+                            average,
                             skipDenominatorEqZero,
-                            convToProcent);
+                            convToProcent))
+        {
+            QString str;
+            str.sprintf("%.2f", max);
+            ui->lineEditMaxProfitMargin->insert(str);
+            str.sprintf("%.2f", min);
+            ui->lineEditMinProfitMargin->insert(str);
+            str.sprintf("%.2f", average);
+            ui->lineEditAvgProfitMargin->insert(str);
+        }
 
 
 
@@ -5872,7 +5967,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     nofPlotToClear = 0;
     lineColor = Qt::blue;
     useAutoScale = false;
-    plotLinearReportData(ui->qwtPlotEarningMargin_20,
+    plotLinearReportData(ui->qwtPlotProfitMargin,
                           useAutoScale,
                           resultArr,
                           nofDataResultArr,
@@ -5888,14 +5983,27 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     skipDenominatorEqZero = true;
     convToProcent = true;
 
-    subAnalysisCalcQuotient(resultArr,
+    if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totEarningsDataArr,
                             m_nofTotEarningsArrData,
                             m_totEquityArr,
                             m_nofTotEquityData,
+                            min,
+                            max,
+                            average,
                             skipDenominatorEqZero,
-                            convToProcent);
+                            convToProcent))
+    {
+        QString str;
+        str.sprintf("%.2f", max);
+        ui->lineEditMaxEquityMargin->insert(str);
+        str.sprintf("%.2f", min);
+        ui->lineEditMinEquityMargin->insert(str);
+        str.sprintf("%.2f", average);
+        ui->lineEditAvgEquityMargin->insert(str);
+    }
+
 
     indexToPlot = 8;
     nofPlotToClear = 0;
@@ -6035,22 +6143,27 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 /*******************************************************************
  *
- * Function:        clearGUIIntrinsicValue()
+ * Function:        subAnalysisCalcQuotient()
  *
  * Description:
  *              Numerator =     täljare
  *              Denominator =   nämnare
  *
  *******************************************************************/
-void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     int &nofDataResultArr,
+bool StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     int &nofDataResultArr,
                                                 SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,
                                                SubAnalysDataST *denominatorArr, int nofDataDenominatorArr,
+                                               double &min,
+                                               double &max,
+                                               double &average,
                                                bool skipDenominatorEqZero,
                                                bool convToProcent)
 {
+    bool res = false;
     double tmpRes;
     double procent = 100.0;
     double result;
+    bool isInit = false;
 
     nofDataResultArr = 0;
     for(int i = 0; i < nofDataNumeratorArr; i++)
@@ -6083,11 +6196,39 @@ void StockAnalysisTab::subAnalysisCalcQuotient(SubAnalysDataST *resultArr,     i
                 {
                     result = tmpRes * procent;
                 }
+
+                if(isInit == false)
+                {
+                    isInit = true;
+                    min = result;
+                    max = result;
+                    average = result;
+                }
+                else
+                {
+                    if(min > result)
+                    {
+                        min = result;
+                    }
+
+                    if(max < result)
+                    {
+                        max = result;
+                    }
+                    average += result;
+                }
+
                 resultArr[nofDataResultArr].data.sprintf("%f", result);
                 nofDataResultArr++;
+                res = true;
             }
         }
     }
+    if(nofDataResultArr > 0)
+    {
+        average = average / (double) nofDataResultArr;
+    }
+    return res;
 }
 
 
