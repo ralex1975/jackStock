@@ -5635,23 +5635,33 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                             max,
                             average))
     {
+        str.clear();
         str.sprintf("%.2f", max);
+        ui->lineEdiMaxtCurrAssLiab->clear();
         ui->lineEdiMaxtCurrAssLiab->insert(str);
+
+        str.clear();
         str.sprintf("%.2f", min);
+        ui->lineEditMinCurrAssLiab->clear();
         ui->lineEditMinCurrAssLiab->insert(str);
+
+        str.clear();
         str.sprintf("%.2f", average);
+        ui->lineEditAvgCurrAssLiab->clear();
         ui->lineEditAvgCurrAssLiab->insert(str);
 
-
+        str.clear();
         if(min >= (double) 2.0)
         {
             ui->labelResCurrAssetLiab->setPalette(*m_blue_palette);
-            str = str.sprintf("Godkänd >= 2");
+            str.clear();
+            str = str.fromUtf8("Godkänd >= 2");
             ui->labelResCurrAssetLiab->setText(str);
         }
         else
         {
             ui->labelResCurrAssetLiab->setPalette(*m_red_palette);
+            str.clear();
             str = QString::fromUtf8("Underkänd < 2");
             ui->labelResCurrAssetLiab->setText(str);
         }
@@ -5687,22 +5697,32 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                             average))
     {
         QString str;
+        str.clear();
         str.sprintf("%.2f", max);
+        ui->lineEditMaxCurrAssTotLiab->clear();
         ui->lineEditMaxCurrAssTotLiab->insert(str);
+        str.clear();
         str.sprintf("%.2f", min);
+        ui->lineEditMinCurrAssTotLiab->clear();
         ui->lineEditMinCurrAssTotLiab->insert(str);
+        str.clear();
         str.sprintf("%.2f", average);
+        ui->lineEditAvgCurrAssTotLiab->clear();
         ui->lineEditAvgCurrAssTotLiab->insert(str);
+
 
         if(min >= (double) 1.0)
         {
             ui->labelResCurrAssetTotLiab->setPalette(*m_blue_palette);
-            str = str.sprintf("Godkänd >= 1");
+            str.clear();
+            str = str.fromUtf8("Godkänd >= 1");
             ui->labelResCurrAssetTotLiab->setText(str);
+            str.clear();
         }
         else
         {
             ui->labelResCurrAssetTotLiab->setPalette(*m_red_palette);
+            str.clear();
             str = QString::fromUtf8("Underkänd < 1");
             ui->labelResCurrAssetTotLiab->setText(str);
         }
@@ -5795,17 +5815,24 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                             average))
     {
         QString str;
+        str.clear();
         str.sprintf("%.2f", max);
+        ui->lineEditMaxtEarningDiv->clear();
         ui->lineEditMaxtEarningDiv->insert(str);
+        str.clear();
         str.sprintf("%.2f", min);
+        ui->lineEditMintEarningDiv->clear();
         ui->lineEditMintEarningDiv->insert(str);
+        str.clear();
         str.sprintf("%.2f", average);
+        ui->lineEditAvgtEarningDiv->clear();
         ui->lineEditAvgtEarningDiv->insert(str);
 
+        str.clear();
         if(min >= (double) 2.0)
         {
             ui->labelResEarningDiv->setPalette(*m_blue_palette);
-            str = str.sprintf("Godkänd >= 1");
+            str = str.fromUtf8("Godkänd >= 1");
             ui->labelResEarningDiv->setText(str);
         }
         else
@@ -5953,11 +5980,17 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                             convToProcent))
         {
             QString str;
+            str.clear();
             str.sprintf("%.2f", max);
+            ui->lineEditMaxProfitMargin->clear();
             ui->lineEditMaxProfitMargin->insert(str);
+            str.clear();
             str.sprintf("%.2f", min);
+            ui->lineEditMinProfitMargin->clear();
             ui->lineEditMinProfitMargin->insert(str);
+            str.clear();
             str.sprintf("%.2f", average);
+            ui->lineEditAvgProfitMargin->clear();
             ui->lineEditAvgProfitMargin->insert(str);
         }
 
@@ -5997,10 +6030,13 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     {
         QString str;
         str.sprintf("%.2f", max);
+        ui->lineEditMaxEquityMargin->clear();
         ui->lineEditMaxEquityMargin->insert(str);
         str.sprintf("%.2f", min);
+        ui->lineEditMinEquityMargin->clear();
         ui->lineEditMinEquityMargin->insert(str);
         str.sprintf("%.2f", average);
+        ui->lineEditAvgEquityMargin->clear();
         ui->lineEditAvgEquityMargin->insert(str);
     }
 
