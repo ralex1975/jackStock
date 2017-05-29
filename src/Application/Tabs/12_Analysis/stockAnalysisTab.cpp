@@ -5535,10 +5535,12 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     legendColor = Qt::red;
     legendSize = 10;
 
+    ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
+
     initAnalysisPlot(ui->qwtPlotLiabEquityEarningDiv_21, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
-    ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
+  //  ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
 
 
 
@@ -5547,9 +5549,9 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     // Totala Skulder, Eget kapital, Vinst, Utdelning
     //-----------------------------------------------------------------------------------
 
-    ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
+    //ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
 
-    eqp.setRightLegend(ui->qwtPlotLiabEquityEarningDiv_21);
+    //eqp.setRightLegend(ui->qwtPlotLiabEquityEarningDiv_21);
 
 
     legendText = legendText.fromUtf8("Eget kapital");
