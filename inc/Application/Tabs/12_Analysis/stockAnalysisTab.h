@@ -225,7 +225,6 @@ private slots:
 
     void on_pushButtonSaveImg_2_clicked();
 
-
 private:
     Ui::StockAnalysisTab *ui;
     calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;
@@ -306,8 +305,8 @@ private:
 
     bool makeAnalysPlotDirectory(QString stockname, QString date);
     void saveAnalysisPlotAsImages(void);
-
     void initAllAnalysisPlots(void);
+    void clearAllAnalysisEditCtrls(void);
     void displayAllAnalysisPlots(void);
     bool subAnalysisCalcQuotient(SubAnalysDataST *resultArr, int &nofDataResultArr,
                                  SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,

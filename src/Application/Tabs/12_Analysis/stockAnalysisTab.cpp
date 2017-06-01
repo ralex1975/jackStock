@@ -457,6 +457,8 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     CDbHndl::YahooNordnetOutputkeyData_ST yahooKeyData;
     NordnetCompanyDescription_ST companyDescripData;
 
+    // Reset all edit ctrl i analysis graphs2 (on all tabs)
+    clearAllAnalysisEditCtrls();
 
     cu.getCurrentDate(m_analysisDate);
     cu.getCurrentDate(startDate);
@@ -5589,8 +5591,46 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
  *
  *
  *******************************************************************/
+void StockAnalysisTab::clearAllAnalysisEditCtrls(void)
+{
+    ui->lineEdiMaxtCurrAssLiab->clear();
+    ui->lineEditMinCurrAssLiab->clear();
+    ui->lineEditAvgCurrAssLiab->clear();
+
+    //============================
+    ui->lineEditMaxtEarningDiv->clear();
+    ui->lineEditMintEarningDiv->clear();
+    ui->lineEditAvgtEarningDiv->clear();
+
+    // =================
+    ui->labelResEarningDiv->clear();
+
+    ui->lineEditAnualEarningGrowth->clear();
+
+    //===================
+     ui->lineEditMaxProfitMargin->clear();
+     ui->lineEditMinProfitMargin->clear();
+     ui->lineEditAvgProfitMargin->clear();
+
+    //==================
+    ui->lineEditMaxEquityMargin->clear();
+    ui->lineEditMinEquityMargin->clear();
+    ui->lineEditAvgEquityMargin->clear();
+}
+
+
+/*******************************************************************
+ *
+ * Function:        displayAllAnalysisPlots()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
 void StockAnalysisTab::displayAllAnalysisPlots(void)
 {
+    CUtil cu;
     SubAnalysDataST resultArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
     int nofDataResultArr;
     int indexToPlot;
@@ -5831,16 +5871,16 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
         ui->lineEditAvgtEarningDiv->insert(str);
 
         str.clear();
-        if(min >= (double) 2.0)
+        if(min >= (double) 1.9951)
         {
             ui->labelResEarningDiv->setPalette(*m_blue_palette);
-            str = str.fromUtf8("Godkänd >= 1");
+            str = str.fromUtf8("Godkänd >= 2");
             ui->labelResEarningDiv->setText(str);
         }
         else
         {
             ui->labelResEarningDiv->setPalette(*m_red_palette);
-            str = QString::fromUtf8("Underkänd < 1");
+            str = QString::fromUtf8("Underkänd < 2");
             ui->labelResEarningDiv->setText(str);
         }
     }
@@ -5907,11 +5947,42 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                           lineColor);
 
 
-
-
     //-----------------------------------------------------------------------------------
     // Vinsttillväxt (%)
     //-----------------------------------------------------------------------------------
+    double growthRate;
+    str.clear();
+    ui->labelResEarningDiv->clear();
+
+    // Nof data > 2
+    if(m_nofEarningsArrData > 2)
+    {
+        cu.annualGrowthRate(m_earningsDataArr[0].data.toDouble(),
+                            m_earningsDataArr[m_nofEarningsArrData - 1].data.toDouble(),
+                            (double) (m_nofEarningsArrData - 1),
+                            growthRate);
+
+        growthRate = growthRate - 1.0;
+        growthRate = growthRate * 100;
+
+        str.sprintf("%.2f (%%)", (growthRate));
+        ui->lineEditAnualEarningGrowth->setText(str);
+
+        // We are rounding to two digits
+        if(growthRate >= (double) 2.9951)
+        {
+            ui->lineEditAnualEarningGrowth->setPalette(*m_blue_palette);
+        }
+        else
+        {
+            ui->lineEditAnualEarningGrowth->setPalette(*m_red_palette);
+        }
+
+        ui->labelResEarningDiv->setText(str);
+    }
+
+
+
     // Add zero line to plot
      SubAnalysDataST  zeroLineDataArr[MAX_NOF_EARNINGS_ARR_DATA];
      int              m_nofZeroLineArrData;
@@ -7339,3 +7410,4 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
    qPix.save(filename, "png");
 }
 #endif
+
