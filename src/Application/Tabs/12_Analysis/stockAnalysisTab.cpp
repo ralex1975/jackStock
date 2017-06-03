@@ -7411,3 +7411,31 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
 }
 #endif
 
+
+// (\w+)? and (\w*) both match the same (0..+inf word characters)
+//---------------------------------------------------------------
+// However, there is a slight difference:
+// In the first case, if this part of the regex matches "",
+// the capturing group is absent. In the second case, it is empty.
+// In some languages, the former manifests as a null while the
+// latter should always be "".
+
+// ?                The question mark indicates zero or one occurrences of the preceding element. For example, colou?r matches both "color" and "colour".
+// *                The asterisk indicates zero or more occurrences of the preceding element. For example, ab*c matches "ac", "abc", "abbc", "abbbc", and so on.
+// +                The plus sign indicates one or more occurrences of the preceding element. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac".
+// {n}[19]          The preceding item is matched exactly n times.
+// {min,}[19]       The preceding item is matched min or more times.
+// {min,max}[19] 	The preceding item is matched at least min times, but not more than max times.
+
+// "CrumbStore":{"crumb":"FtGNqEzOvZp"}
+// "CrumbStore":{"crumb":"D4Q3fGUPvOO"}
+void StockAnalysisTab::on_pushButton_2_clicked()
+{
+    CUtil cu;
+    QString filename("abb.html");
+    QRegExp regExp("\"CrumbStore\":[{]\"crumb\":\"(\\w+)\"[}]");
+    QString outSubstring;
+
+    cu.getSubstringFromFile(filename, regExp, outSubstring);
+
+}

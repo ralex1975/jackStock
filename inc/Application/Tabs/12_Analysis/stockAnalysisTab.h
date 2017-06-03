@@ -225,6 +225,8 @@ private slots:
 
     void on_pushButtonSaveImg_2_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::StockAnalysisTab *ui;
     calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;

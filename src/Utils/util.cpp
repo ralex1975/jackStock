@@ -2080,3 +2080,68 @@ bool CUtil::createStartEndDates(QString &startDate,
     return res;
 }
 
+
+
+
+/****************************************************************
+ *
+ * Function:    parseStockPrices()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CUtil::getSubstringFromFile(QString filename, QRegExp regExp, QString &outSubstr)
+{
+    QFile file(filename);
+    QString errStr = QString("Fail to open file: %1").arg(filename);
+    QString str;
+    bool found;
+    int pos;
+
+    outSubstr.clear();
+
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox::critical(NULL, QString::fromUtf8("File error:"), errStr);
+        return false;
+    }
+
+    QTextStream inStream(&file);
+    inStream.setCodec("ISO 8859-1");
+
+    found = false;
+    while(!inStream.atEnd())
+    {
+        str = inStream.readLine();
+        pos = 0;
+        while( (pos = regExp.indexIn(str, pos)) != -1)
+        {
+            pos += regExp.matchedLength();
+            QString s1 = regExp.cap(0);
+            outSubstr = regExp.cap(1);
+
+            qDebug() << "s1" << s1;
+            qDebug() << "s2" << outSubstr;
+            found = true;
+            break;
+        }
+
+        if(found == true)
+        {
+            break;
+        }
+    }
+
+    qDebug() << "close file\n";
+
+    file.close();
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}

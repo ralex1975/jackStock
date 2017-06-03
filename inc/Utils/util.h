@@ -1331,9 +1331,8 @@ public:
     bool number2DoubleRemoveSpace(QString number, double &dbNumber);
     void htmlCodesToChar(QString inStr, QString &outStr);
     bool annualGrowthRate(double startValue, double endValue, double nofYears, double &growthRate);
-    bool createStartEndDates(QString &startDate,
-                             QString &endDate,
-                             int nofMonthInBetween);
+    bool createStartEndDates(QString &startDate, QString &endDate, int nofMonthInBetween);
+    bool getSubstringFromFile(QString filename, QRegExp regExp, QString &outSubstring);
 
 
 
