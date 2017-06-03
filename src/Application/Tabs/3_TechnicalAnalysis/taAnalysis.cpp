@@ -694,7 +694,6 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
                 QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to store crumb & cookie in deb"));
                 return;
             }
-
         }
 
         // Close curl

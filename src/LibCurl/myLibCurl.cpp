@@ -112,9 +112,9 @@ bool MyLibCurl::getCookieExpirationTime(QString cookieArr, QString &expirationTi
 {
     QStringList cookieItemList = cookieArr.split('\t');
 
-    if(7 == cookieItemList.length())
+    if(NOF_COOKIE_ITEMS == cookieItemList.length())
     {
-        expirationTime = cookieItemList.at(4);
+        expirationTime = cookieItemList.at(COOKIE_EXPIRATION_TIME);
     }
     else
     {
