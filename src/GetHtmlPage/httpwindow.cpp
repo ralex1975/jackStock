@@ -14,7 +14,7 @@
 #include "httpwindow.h"
 
 bool HttpWindow::m_supressRedirectionMessageBox = true; // ajn 170423 = false;
-
+// abb
 
 /****************************************************************
  *
