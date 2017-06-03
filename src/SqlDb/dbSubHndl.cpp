@@ -4,6 +4,203 @@
 
 
 
+
+
+/*****************************************************************
+ *
+ * Function:		getTaCrumbCookie()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getTaCrumbCookie(QString stockName,
+                 QString stockSymbol,
+                 QString &crumb,
+                 QString &cookie,
+                 bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblTaCrumbCookie.* "
+                " FROM TblMainAnalysis, TblTaCrumbCookie  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblTaCrumbCookie.MainAnalysisId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s'); ",
+                stockName.toLocal8Bit().constData(),
+                stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"),
+                                        qry.lastError().text().toLatin1().constData());
+        }
+
+        qDebug() << qry.lastError();
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        // Should only be one record so this is unnecessary
+        if(qry.next())
+        {
+            rec = qry.record();
+
+            if( (rec.value("Crumb").isNull() == true)||
+                (rec.value("Cookie").isNull() == true))
+            {
+                qry.finish();
+                if(dbIsHandledExternly == false)
+                {
+                    closeDb();
+                    m_mutex.unlock();
+                }
+
+                return false;
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("Crumb").toString();
+                qDebug() << rec.value("Cookie").toString();
+
+                crumb = rec.value("Crumb").toString();
+                cookie = rec.value("Cookie").toString();
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertTaCrumbCookieData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertTaCrumbCookieData(QString stockName,
+                        QString stockSymbol,
+                        QString &crumb,
+                        QString &cookie,
+                        bool dbIsHandledExternly)
+{
+    QString str;
+    int mainAnalysisId = 0;
+
+    if(false == mainAnalysisDataExists(stockName, stockSymbol, mainAnalysisId))
+    {
+        return false;
+    }
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblTaCrumbCookie "
+                "(Crumb, Cookie, MainAnalysisId) "
+                " VALUES('%s', '%s', %d);",
+                crumb.toLocal8Bit().constData(),
+                cookie.toLocal8Bit().constData(),
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblTaCrumbCookie"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
 #if 0
 /****************************************************************
  *

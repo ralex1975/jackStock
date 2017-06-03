@@ -218,6 +218,9 @@ private:
     QString m_reqEndDate;
     QString m_reqStockSymbol;
     QString m_reqStockName;
+    QString m_reqCrumb;
+    QString m_reqCookie;
+
     StatusReqSingleStockData_ET m_singleStockDataReqStatus;
     QList <NameKey> m_dateIsUpdatedList;
 

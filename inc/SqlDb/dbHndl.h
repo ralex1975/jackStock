@@ -725,6 +725,21 @@ public:
         QString exerciseSound;
     };
 
+    bool getTaCrumbCookie(QString stockName,
+                          QString stockSymbol,
+                          QString &crumb,
+                          QString &cookie,
+                          bool dbIsHandledExternly = false);
+
+
+    bool insertTaCrumbCookieData(QString stockName,
+                                 QString stockSymbol,
+                                 QString &crumb,
+                                 QString &cookie,
+                                 bool dbIsHandledExternly=false);
+
+
+
     //
     bool foundExerciseSounds(QString searchPattern,
                                  QString filePath);

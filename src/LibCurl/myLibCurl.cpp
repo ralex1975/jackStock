@@ -96,6 +96,35 @@ void MyLibCurl::endCurlSession(CURL *curlHndl)
     curl_global_cleanup();
 }
 
+#define NOF_COOKIE_ITEMS 7
+#define COOKIE_EXPIRATION_TIME 4
+/******************************************************************
+ *
+ * Function:        getCookieExpirationTime()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+bool MyLibCurl::getCookieExpirationTime(QString cookieArr, QString &expirationTime)
+{
+    QStringList cookieItemList = cookieArr.split('\t');
+
+    if(7 == cookieItemList.length())
+    {
+        expirationTime = cookieItemList.at(4);
+    }
+    else
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Error"), "Fail to extract Cookie Expiration Time");
+        return false;
+    }
+
+    return true;
+}
+
 
 /******************************************************************
  *
@@ -221,12 +250,225 @@ void MyLibCurl::addYahooCookie(CURL *curlHandl,
 
     // cookieArr is imported immediately via CURLOPT_COOKIELIST.
     curl_easy_setopt(curlHandl, CURLOPT_COOKIELIST, cookieArr);
+}
+
+
+
+
+// "https://finance.yahoo.com/quote/ABB?p=ABB"
+/******************************************************************
+ *
+ * Function:        createYahooCookieUrl(()
+ *
+ * Description:     Create url.
+ *
+ *  Example:
+ *  "https://finance.yahoo.com/quote/ABB?p=ABB"
+ *
+ *****************************************************************/
+void MyLibCurl::createYahooCookieUrl(QString stockSymbol,
+                                     QString &outUrl)
+{
+    int cnt;
+    int i;
+    int index = -1;
+
+    // Check that it is only one dot in symbol name
+    for(cnt = 0, i = 0; i < stockSymbol.length(); i++)
+    {
+        if(stockSymbol[i] == '.')
+        {
+           index = i;
+           cnt++;
+        }
+    }
+
+    // Remove symbol extention anz.st => anz
+    if(cnt == 1)
+    {
+        stockSymbol = stockSymbol.mid(0, index);
+        qDebug() << stockSymbol[stockSymbol.length()-3];
+    }
+    else
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Fail: to find stock symbol extention"));
+        return;
+    }
+
+
+    outUrl = "https://finance.yahoo.com/quote/";
+    outUrl += stockSymbol;
+    outUrl += "?p=";
+    outUrl += stockSymbol;
+}
+
+
+
+/******************************************************************
+ *
+ * Function:        requestYahooWebPageAndCookie(()
+ *
+ * Description:     Invoke this function when finish using MyLibCurl
+ *
+ * Should have a url with following format:
+ *
+ * "https://finance.yahoo.com/quote/ABB?p=ABB"
+ *
+ *****************************************************************/
+bool MyLibCurl::
+requestYahooCrumbWebPageAndCookie(CURL *curlHndl,
+                                  char *url,
+                                  char *filename,
+                                  char *cookieResArr)
+{
+    CURLcode res;
+    QString errorStr;
+    FILE *fp;
+    bool result = false;
+
+
+    if (curlHndl != NULL)
+    {
+        // Open file
+        fp = fopen(filename,"wb");
+
+        if (!fp)
+        {
+            QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Fail to open curlfile"));
+            return 1;
+        }
+
+
+       // Add requested http address
+       curl_easy_setopt(curlHndl, CURLOPT_URL, url);
+
+       // Turn on debug mode
+       curl_easy_setopt(curlHndl, CURLOPT_VERBOSE, DEBUG_MODE_ON);
+
+       // Start the cookie engine
+       curl_easy_setopt(curlHndl, CURLOPT_COOKIEFILE, "");
+       // curl_easy_setopt(curlHndl, CURLOPT_COOKIEFILE, "/home/ajn/Documents/OldPC/swProj/MyQtProj/JackStockProj/JackStock/cookie.txt");
+
+       clearCookieList(curlHndl);
+
+       // Init callback function that will handle received data (write to disk)
+       curl_easy_setopt(curlHndl, CURLOPT_WRITEFUNCTION, writeDataToFile);
+
+       // A data pointer to pass to the write callback function above.
+       // When using CURLOPT_WRITEFUNCTION, this fp will be used
+       // as the 4th argument in that callback function.
+       curl_easy_setopt(curlHndl, CURLOPT_WRITEDATA, fp);
+
+       // Invoke the request
+       res = curl_easy_perform(curlHndl);
+
+       // Close file
+       fclose(fp);
+
+       if (res != CURLE_OK)
+       {
+           errorStr.sprintf("Curl perform failed: %s\n", curl_easy_strerror(res));
+           QMessageBox::information(NULL, QString::fromUtf8("Error"), errorStr);
+           return result;
+       }
+
+       result = getYahooCookies(curlHndl, cookieResArr);
+       if(result == true)
+       {
+           qDebug() << cookieResArr;
+       }
+
+       return result;
+   }
+
+   return result;
 
 }
 
 
 
 
+
+/******************************************************************
+ *
+ * Function:        requestYahooWebPageAndCookie(()
+ *
+ * Description:     Invoke this function when finish using MyLibCurl
+ *
+ *
+ *
+ *
+ *****************************************************************/
+bool MyLibCurl::
+requestYahooWebPage(CURL *curlHndl,
+                    char *url,
+                    char *filename,
+                    char *cookieArr)
+{
+    CURLcode res;
+    QString errorStr;
+    FILE *fp;
+
+
+    if (curlHndl != NULL)
+    {
+        // Open file
+        fp = fopen(filename,"wb");
+
+        if (!fp)
+        {
+            QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Fail topen curlfile"));
+            return 1;
+        }
+
+
+        // Add requested http address
+        curl_easy_setopt(curlHndl, CURLOPT_URL, url);
+
+        // Turn on debug mode
+        curl_easy_setopt(curlHndl, CURLOPT_VERBOSE, DEBUG_MODE_ON);
+
+        // Start the cookie engine
+        curl_easy_setopt(curlHndl, CURLOPT_COOKIEFILE, "");
+
+        clearCookieList(curlHndl);
+
+        // Add cookie
+        curl_easy_setopt(curlHndl, CURLOPT_COOKIELIST, cookieArr);
+
+
+        // Init callback function that will handle received data (write to disk)
+        curl_easy_setopt(curlHndl, CURLOPT_WRITEFUNCTION, writeDataToFile);
+
+        // A data pointer to pass to the write callback function above.
+        // When using CURLOPT_WRITEFUNCTION, this fp will be used
+        // as the 4th argument in that callback function.
+        curl_easy_setopt(curlHndl, CURLOPT_WRITEDATA, fp);
+
+        // Invoke the request
+        res = curl_easy_perform(curlHndl);
+
+        // Close file
+        fclose(fp);
+
+        if (res != CURLE_OK)
+        {
+           errorStr.sprintf("Curl perform failed: %s\n", curl_easy_strerror(res));
+           QMessageBox::information(NULL, QString::fromUtf8("Error"), errorStr);
+           return false;
+        }
+
+        return true;
+   }
+
+   return false;
+
+}
+
+
+
+
+#if 1 // Obsolete
 /******************************************************************
  *
  * Function:        requestYahooWebPageAndCookie(()
@@ -355,6 +597,7 @@ requestYahooWebPageAndCookie(CURL *curlHndl,
    return result;
 
 }
+#endif
 
 
 // ".yahoo.com	TRUE	/	FALSE	1527437638	B	btn35mhcij9e6&b=3&s=e6"

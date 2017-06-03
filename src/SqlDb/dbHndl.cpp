@@ -294,6 +294,38 @@ bool CDbHndl::createTable(void)
         qry.finish();
 
 
+        //-----------------------------------------------------------------------
+        // TblTaCrumbCookie
+        //-----------------------------------------------------------------------
+        tmp.sprintf("CREATE TABLE IF NOT EXISTS TblTaCrumbCookie "
+                    " (CrumbCookieId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    " Crumb VARCHAR(255), "
+                    " Cookie VARCHAR(255), "
+                    " MainAnalysisId INTEGER);");
+
+        qDebug() << tmp;
+
+
+        qry.prepare(tmp);
+
+        res = execSingleCmd(qry);
+
+        if(res == false)
+        {
+            qDebug() << qry.lastError();
+            if(m_disableMsgBoxes == false)
+            {
+                QMessageBox::critical(NULL, QString::fromUtf8("TblTaCrumbCookie"), QString::fromUtf8("Fail create TblDateTotEarningsSubAnalysis"));
+            }
+            closeDb();
+            m_mutex.unlock();
+            return false;
+        }
+
+        qry.finish();
+
+
+
 
         //-----------------------------------------------------------------------
         // TblDateIntrinsicValueSubAnalysis_1

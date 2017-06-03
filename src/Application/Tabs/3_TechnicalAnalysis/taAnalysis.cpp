@@ -12,6 +12,7 @@
 #include "util.h"
 #include <QMessageBox>
 #include <qwt_plot_layout.h>
+#include "myLibCurl.h"
 
 #ifdef TEST_COOKIE
 #include <QNetworkCookieJar>
@@ -537,6 +538,67 @@ void TaAnalysis::on_SelStockListButton_clicked()
 }
 
 
+#if 0
+MyLibCurl mlc;
+CURL *curlHndl;
+char url[256];
+char filename[80];
+char cookieResArr[256];
+
+char hostname[80];
+char incSubdomains[80];       // "TRUE"
+char path[80];                // "/",
+char secure[80];              // "FALSE"
+char expirationDate[80];      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
+char name[80];                // "B"
+char value[80];               // "95jdfnpci12gs&b=3&s=to",
+char cookieArr[256];
+
+// ".yahoo.com	TRUE	/	FALSE	1527437638	B	btn35mhcij9e6&b=3&s=e6"
+strcpy(hostname, ".yahoo.com");
+strcpy(incSubdomains, "TRUE");
+strcpy(path, "/");
+strcpy(secure, "FALSE");
+strcpy(expirationDate, "1527424259");
+strcpy(name, "B");
+strcpy(value, "5ljb2u1ciiiki&b=3&s=m8");
+
+strcpy(filename, "curlAbb.txt");
+
+//Crumb: 'mWnh3sO2quo', Cookie: '5ljb2u1ciiiki&b=3&s=m8'
+strcpy(url,"https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=mWnh3sO2quo");
+
+// strcpy(url,"https://finance.yahoo.com/quote/ABB?p=ABB");
+
+
+
+curlHndl = mlc.beginCurlSession();
+if(curlHndl)
+{
+#if 0
+    mlc.addYahooCookie(curlHndl,
+                       hostname,            // ".yahoo.com",
+                       incSubdomains,       // "TRUE"
+                       path,                // "/",
+                       secure,              // "FALSE"
+                       expirationDate,      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
+                       name,                // "B"
+                       value,               // "95jdfnpci12gs&b=3&s=to",
+                       cookieArr);
+#endif
+
+    if(true == mlc.requestYahooWebPageAndCookie(curlHndl, url, filename, cookieResArr))
+    {
+        QString str;
+        str.sprintf("%s", cookieResArr);
+        QMessageBox::information(NULL, QString::fromUtf8("Cookie"), str);
+    }
+    mlc.endCurlSession(curlHndl);
+}
+
+#endif
+
+
 /*******************************************************************
  *
  * Function:    on_treeWidget_doubleClicked()
@@ -548,7 +610,8 @@ void TaAnalysis::on_SelStockListButton_clicked()
  *******************************************************************/
 void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
 {
-
+    MyLibCurl mlc;
+    CDbHndl db;
     QString stockName;
     QString stockSymbol;
     CDbHndl cd;
@@ -558,6 +621,7 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
     QString tmp;
     int nofDays;
     NordnetCompanyDescription_ST data;
+
 
     // Are we already processing data?
     if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_IDLE)
@@ -571,11 +635,76 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
         qDebug() << m_reqStockSymbol;
         qDebug() << m_reqStockName;
 
+        MyLibCurl mlc;
+        CURL *curlHndl;
+        QString url;
+        QString filename;
+        QRegExp regExp("\"CrumbStore\":[{]\"crumb\":\"(\\w+)\"[}]");
+        char cookieResArr[256];
+
+        // Init Curl
+        curlHndl = mlc.beginCurlSession();
+        if(false == curlHndl)
+        {
+            QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to init curl"));
+            return;
+        }
+
+#if 0
+        // Check if this crumb and cookie is already stored in SQL-db
+        if(false == db.getTaCrumbCookie(m_reqStockName,
+                                        m_reqStockSymbol,
+                                        m_reqCrumb,
+                                        m_reqCookie))
+#endif
+        {
+            // We need to request a yahoo page to retrive crumb and cookie
+
+            // Create url where we can parse out crumb
+            mlc.createYahooCookieUrl(m_reqStockSymbol, url);
+
+            // filename where web page is stored
+            filename = "tmpCrumbWebpage.html";
+
+            // Request the the web page and store it on disk
+            if(false == mlc.requestYahooCrumbWebPageAndCookie(curlHndl,
+                                                             (char *) url.toStdString().c_str(),
+                                                             (char *) filename.toStdString().c_str(),
+                                                              cookieResArr))
+            {
+                QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to request crumb page"));
+                return;
+            }
+
+            // Parse file data and extract crumb
+            if(false == cu.getSubstringFromFile(filename,regExp, m_reqCrumb))
+            {
+                QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to parse crumb page"));
+                return;
+            }
+
+            m_reqCookie.sprintf("%s", cookieResArr);
+            QString expirationTime;
+
+            mlc.getCookieExpirationTime(m_reqCookie, expirationTime);
+
+            // Store crumb and cookie in SQL-db
+            if(false == db.insertTaCrumbCookieData(stockName, stockSymbol, m_reqCrumb, m_reqCookie))
+            {
+                QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to store crumb & cookie in deb"));
+                return;
+            }
+
+        }
+
+        // Close curl
+        mlc.endCurlSession(curlHndl);
+
+
         CDbHndl::snapshotStockData_ST keyFaData;
 
         ui->lineEditPE->setDisabled(false);
         ui->lineEditPE_2->setDisabled(false);
-
 
         ui->lineEditMoreInfoComapnyName->clear();
         ui->lineEditMoreInfoexecutiveDirector->clear();
@@ -1106,24 +1235,59 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
             return;
         }
 
-        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
+        //qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
+        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=",
         c_reqStockSymbol,
         unixStartTime,
         unixEndTime);
 
-        httpSend();
+       // m_reqCrumb.sprintf("%s",".dCDNsa0z5Q");
+        qry += m_reqCrumb;
+
+        qDebug() << qry;
+
+        MyLibCurl mlc;
+        CURL *curlHndl;
+        char filename[80];
+        strcpy(filename, "testData.txt");
+
+        // Init Curl
+        curlHndl = mlc.beginCurlSession();
+        if(false == curlHndl)
+        {
+            QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to init curl (2)"));
+            return;
+        }
+
+        if(false == mlc.requestYahooWebPage(curlHndl,
+                            (char *) qry.toStdString().c_str(),
+                            filename,
+                            (char *) m_reqCookie.toStdString().c_str()))
+        {
+            QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to request web page"));
+            return;
+        }
+
+
+        // Close curl
+        mlc.endCurlSession(curlHndl);
+
+
+
+
+        // ajn 170603 httpSend();
 
         //qry.sprintf("https://finance.yahoo.com/quote/ABB?p=ABB");
         //qry.sprintf("https://uk.finance.yahoo.com/quote/AAPL/history");
 
-        QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
+        // ajn 170603 QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
 
-        qDebug() << qry;
-        QUrl url(qry);
+        // ajn 170603 qDebug() << qry;
+        // ajn 170603 QUrl url(qry);
 
         // Send html request to server (and set timeout)
-        startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
-        m_hw1.startRequest(url, filename, 0x01);
+        // ajn 170603 startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
+        // ajn 170603 m_hw1.startRequest(url, filename, 0x01);
     }
 }
 
