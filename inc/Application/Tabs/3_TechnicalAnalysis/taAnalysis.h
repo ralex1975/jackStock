@@ -133,10 +133,6 @@ public:
 
 
     QPalette *m_faDataPalette[FA_NOF_DATA];
-
-    static void httpSend(void);
-
-
     void initFa3MinMaxPePrice(void);
     void initFa3ProfitabilityAnalysis(void);
     void initFa2OperatingIncomeList(void);
@@ -148,21 +144,15 @@ public:
                                            CDbHndl::EfficPortStockData_ST stockRiskReturnData,
                                            QString assetType);
 
-
     void initMinMaxAxis(CYahooStockPlotUtil::MinMaxAxisValues_ST inputAxis,
                         CYahooStockPlotUtil::MinMaxAxisValues_ST &outputAxis);
 
     void startWorkerThreadParseSingelStockData(void);
 
-    void reqSingleStockDataFromServer(void);
-
-
-
     explicit TaAnalysis(QWidget *parent = 0);
     ~TaAnalysis();
 
 signals:
-    void emitReqSingleStockDataFromServer();
 
 public slots:
     // Thread is finish parsing data
@@ -174,12 +164,6 @@ public slots:
 
 
 private slots:
-    // ajn 170604 void slotReceivedAssetTaDataFromServer(int);
-
-    void slotReqSingleStockDataTimerExpired();
-
-    // ajn 170604 void slotReqSingleStockDataFromServer();
-
     void on_SelStockListButton_clicked();
 
     void on_treeWidget_doubleClicked(const QModelIndex &index);
@@ -213,7 +197,6 @@ private:
 
     importYahooTaData *m_importYahooTaDataThread;
     Ui::TaAnalysis *ui;
-    HttpWindow m_hw1;
     CDbHndl m_db;
     int m_timeSlideWindowInc;
     int m_timePeriodDaysInc;
@@ -227,6 +210,8 @@ private:
     QString m_reqStockName;
     QString m_reqCrumb;
     QString m_reqCookie;
+    bool m_retriveCookieCrumbFromDb;
+
 
     StatusReqSingleStockData_ET m_singleStockDataReqStatus;
     QList <NameKey> m_dateIsUpdatedList;
@@ -239,8 +224,7 @@ private:
     void setTimePeriodDaysUpdateStartStopDate(QString &startDate, QString &endDate, int value);
     void settimeSlideWindowInc(int value);
     void setTimeSlideWindowUpdateStartStopDate(QString &startDate, QString &endDate, int value);
-    void prepReqTaDataFromServer(QString stockname, QString stockSymbol, QString startDate, QString endDate);
-    void startReqSingleStockDataTimeoutTimer(int ms);
+    bool prepReqTaDataFromServer(QString stockname, QString stockSymbol, QString startDate, QString endDate);
     void displayStockData(bool addLastPrice = false, double lastPrice = 0);
     void addStockDataToPlot(DataPlotIndex_ET plotIndex,
                             QString legendLable);

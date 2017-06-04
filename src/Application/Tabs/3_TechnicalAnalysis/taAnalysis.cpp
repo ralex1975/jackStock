@@ -59,6 +59,7 @@ TaAnalysis::TaAnalysis(QWidget *parent) :
 {
     int i;
     CDbHndl db;
+    m_retriveCookieCrumbFromDb = true;
 
 
     ui->setupUi(this);
@@ -133,46 +134,6 @@ TaAnalysis::~TaAnalysis()
 }
 
 
-/*******************************************************************
- *
- * Function:    initFa2OperatingIncomeList()
- *
- * Description:
- *
- * Note: This is a static function: (to be able to hadle curllib)
- *
- * address to get cookie and crumb: https://finance.yahoo.com/quote/ABB?p=ABB
- * -----------------------------------------------------------------
- * Crumb: 'mWnh3sO2quo',
- * Cookie: 'B=5ljb2u1ciiiki&b=3&s=m8'
- * -----------------------------------------------------------------
- *
- * Address to get cvs file from
- * -----------------------------------------------------------------
- * https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=mWnh3sO2quo
- *
- *
- * Cookie received from  https://finance.yahoo.com/quote/ABB?p=ABB
- * ------------------------------------------------------------------
- *     "domain": ".yahoo.com",
- *     "expirationDate": 1527138120,
- *     "hostOnly": false,
- *     "httpOnly": false,
- *     "name": "B",
- *     "path": "/",
- *     "sameSite": "no_restriction",
- *     "secure": false,
- *     "session": false,
- *     "storeId": "0",
- *     "value": "95jdfnpci12gs&b=3&s=to",
- *     "id": 2
- *
- *******************************************************************/
-void TaAnalysis::httpSend(void)
-{
-    QMessageBox::information(NULL, QString::fromUtf8("Info"), QString::fromUtf8("Hej"));
-
-}
 
 
 
@@ -650,13 +611,26 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
             return;
         }
 
-#if 0
+        bool requestYahooCrumbPg = true;
+        if(m_retriveCookieCrumbFromDb == true)
+        {
+             #if 1
+            requestYahooCrumbPg = false;
+
+            // Check if this crumb and cookie is already stored in SQL-db
+            if(false == db.getTaCrumbCookie(m_reqStockName,
+                                            m_reqStockSymbol,
+                                            m_reqCrumb,
+                                            m_reqCookie))
+            {
+                requestYahooCrumbPg = true;
+            }
+            #endif
+        }
+
+
         // Check if this crumb and cookie is already stored in SQL-db
-        if(false == db.getTaCrumbCookie(m_reqStockName,
-                                        m_reqStockSymbol,
-                                        m_reqCrumb,
-                                        m_reqCookie))
-#endif
+        if(requestYahooCrumbPg == true)
         {
             // We need to request a yahoo page to retrive crumb and cookie
 
@@ -688,17 +662,20 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
 
             mlc.getCookieExpirationTime(m_reqCookie, expirationTime);
 
-            // Store crumb and cookie in SQL-db
-            if(false == db.insertTaCrumbCookieData(stockName, stockSymbol, m_reqCrumb, m_reqCookie))
+            if((m_reqCrumb.length() > 0) && (m_reqCookie.length() > 0))
             {
-                QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to store crumb & cookie in deb"));
-                return;
+                // Store crumb and cookie in SQL-db
+                if(false == db.insertTaCrumbCookieData(stockName, stockSymbol, m_reqCrumb, m_reqCookie))
+                {
+    //                QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to store crumb & cookie in deb"));
+    //                return;
+                }
             }
         }
 
         // Close curl
         mlc.endCurlSession(curlHndl);
-
+        m_retriveCookieCrumbFromDb = true;
 
         CDbHndl::snapshotStockData_ST keyFaData;
 
@@ -847,7 +824,10 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
                     qDebug() << lastDbDate;
                     qDebug() << currDate;
 
-                    prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate);
+                    if(false == prepReqTaDataFromServer(stockName, stockSymbol, lastDbDate, currDate))
+                    {
+                       m_retriveCookieCrumbFromDb = false;
+                    }
                 }
                 else
                 {
@@ -1094,7 +1074,6 @@ void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST
     setFaEditControlTxtColor(ui->lineMeanReturn, m_faDataPalette[FA_MEAN_RETURN], color);
 
 
-
     if(keyData.keyValuePS.toDouble() <= 0.75)
     {
         color = cu.getQColor((CUtil::ColorRgb_ET) CUtil::GREEN);
@@ -1115,49 +1094,6 @@ void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST
     setFaEditControlTxtColor(ui->lineEditPs, m_faDataPalette[FA_YIELD], color);
     setFaEditControlTxtColor(ui->lineEditPs_2, m_faDataPalette[FA_YIELD], color);
     setFaEditControlTxtColor(ui->lineEditPs_3, m_faDataPalette[FA_YIELD], color);
-
-
-
-
-}
-
-
-
-/*******************************************************************
- *
- * Function:    startResendTimer()
- *
- * Description: This function activate resend timer that is used when
- *              request data from Yahoo server.
- *
- *              This is a single shot timer.
- *
- *******************************************************************/
-void TaAnalysis::startReqSingleStockDataTimeoutTimer(int ms)
-{
-    QTimer::singleShot(ms, this, SLOT(slotReqSingleStockDataTimerExpired()));
-    qDebug() << "startReqSingleStockDataTimeoutTimer()";
-
-}
-
-/*******************************************************************
- *
- * Function:    slotReqSingleStockDataTimerExpired()
- *
- * Description: This function is invoked when resend timer has expired
- *
- *
- *******************************************************************/
-void TaAnalysis::slotReqSingleStockDataTimerExpired()
-{
-    if(m_singleStockDataReqStatus != STATUS_REQ_SINGLE_STOCK_IDLE)
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-        modifyDateList(m_reqStockSymbol, true);
-        qDebug() << m_reqStockSymbol;
-        QMessageBox::information(this, QString::fromUtf8("Timeout"), QString::fromUtf8("Timeout: ingen data kunde hämtas"));
-    }
-
 }
 
 
@@ -1165,17 +1101,29 @@ void TaAnalysis::slotReqSingleStockDataTimerExpired()
 
 /*******************************************************************
  *
- * Function:    on_pushButtonImportAllData_clicked()
+ * Function:    prepReqTaDataFromServer()
  *
- * Description:
+ * Description: This function is invoked when singel stock data need
+ *              to be updated. (price data is old)
  *
  *
  *******************************************************************/
-void TaAnalysis::prepReqTaDataFromServer(QString stockName, QString stockSymbol, QString startDate, QString endDate)
+bool TaAnalysis::prepReqTaDataFromServer(QString stockName, QString stockSymbol, QString startDate, QString endDate)
 {
+
+    QString qry;
+    CUtil cu;
+
+    uint unixStartTime;
+    uint unixEndTime;
 
     if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
     {
+        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
+
+        // Signal used when thread is finish importing data
+        connect(m_importYahooTaDataThread, SIGNAL(emitImportSingelStockDataIsFinish(int)), this, SLOT(slotImportSingelStockDataIsFinish(int)));
+
         m_reqStartDate = startDate;
         m_reqEndDate = endDate;
         m_reqStockSymbol = stockSymbol;
@@ -1186,58 +1134,19 @@ void TaAnalysis::prepReqTaDataFromServer(QString stockName, QString stockSymbol,
         qDebug() << m_reqStockSymbol;
         qDebug() << m_reqStockName;
 
-
-        // Signal used when thread is finish importing data
-       connect(m_importYahooTaDataThread, SIGNAL(emitImportSingelStockDataIsFinish(int)), this, SLOT(slotImportSingelStockDataIsFinish(int)));
-       // ajn 170604 connect(this, SIGNAL(emitReqSingleStockDataFromServer()), this, SLOT(slotReqSingleStockDataFromServer()));
-
-       // ajn 170604 emit emitReqSingleStockDataFromServer();
-
-       // ajn 170604
-       reqSingleStockDataFromServer();
-
-    }
-
-}
-
-
-/*******************************************************************
- *
- * Function:    slotReqSingleStockDataFromServer()
- *
- * Description: This function is invoked when singel stock data need
- *              to be updated. (price data is old)
- *
- *******************************************************************/
-void TaAnalysis::reqSingleStockDataFromServer(void)
-{
-    QString qry;
-    CUtil cu;
-
-    //QString filename = DWLD_PATH_TA_LIST_FILE;
-    uint unixStartTime;
-    uint unixEndTime;
-
-    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
-
-        // Do not remove need when select difften stocks
         QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
         const char *c_reqStockSymbol = ba1.data();
 
         if(false == cu.getLinuxTime(m_reqStartDate, unixStartTime))
         {
-            return;
+            return false;
         }
 
         if(false == cu.getLinuxTime(m_reqEndDate, unixEndTime))
         {
-            return;
+            return false;
         }
 
-        // ajn 170604 ska tas bort
-        //unixStartTime = 1433368800;
 
         //qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
         qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=",
@@ -1245,7 +1154,6 @@ void TaAnalysis::reqSingleStockDataFromServer(void)
         unixStartTime,
         unixEndTime);
 
-       // m_reqCrumb.sprintf("%s",".dCDNsa0z5Q");
         qry += m_reqCrumb;
 
         qDebug() << qry;
@@ -1253,7 +1161,6 @@ void TaAnalysis::reqSingleStockDataFromServer(void)
         MyLibCurl mlc;
         CURL *curlHndl;
         char filename[255];
-        // strcpy(filename, "testData.txt");
         strcpy(filename, DWLD_PATH_TA_LIST_FILE);
 
 
@@ -1262,137 +1169,27 @@ void TaAnalysis::reqSingleStockDataFromServer(void)
         if(false == curlHndl)
         {
             QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to init curl (2)"));
-            return;
+            return false;
         }
 
+        // Request cvs file with stock price volume ... data
         if(false == mlc.requestYahooWebPage(curlHndl,
                             (char *) qry.toStdString().c_str(),
                             filename,
                             (char *) m_reqCookie.toStdString().c_str()))
         {
             QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to request web page"));
-            return;
+            return false;
         }
 
         // Close curl
         mlc.endCurlSession(curlHndl);
-
         startWorkerThreadParseSingelStockData();
-
-
-        // ajn 170603 httpSend();
-
-        //qry.sprintf("https://finance.yahoo.com/quote/ABB?p=ABB");
-        //qry.sprintf("https://uk.finance.yahoo.com/quote/AAPL/history");
-
-        // ajn 170603 QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
-
-        // ajn 170603 qDebug() << qry;
-        // ajn 170603 QUrl url(qry);
-
-        // Send html request to server (and set timeout)
-        // ajn 170603 startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
-        // ajn 170603 m_hw1.startRequest(url, filename, 0x01);
     }
+    return true;
 }
 
 
-#if 0
-/*******************************************************************
- *
- * Function:    slotReqSingleStockDataFromServer()
- *
- * Description: This function is invoked when singel stock data need
- *              to be updated. (price data is old)
- *
- *******************************************************************/
-void TaAnalysis::slotReqSingleStockDataFromServer()
-{
-    QString qry;
-    CUtil cu;
-
-    //QString filename = DWLD_PATH_TA_LIST_FILE;
-    uint unixStartTime;
-    uint unixEndTime;
-
-    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
-
-        // Do not remove need when select difften stocks
-        QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
-        const char *c_reqStockSymbol = ba1.data();
-
-        if(false == cu.getLinuxTime(m_reqStartDate, unixStartTime))
-        {
-            return;
-        }
-
-        if(false == cu.getLinuxTime(m_reqEndDate, unixEndTime))
-        {
-            return;
-        }
-
-        // ajn 170604 ska tas bort
-        unixStartTime = 1433368800;
-
-        //qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
-        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=",
-        c_reqStockSymbol,
-        unixStartTime,
-        unixEndTime);
-
-       // m_reqCrumb.sprintf("%s",".dCDNsa0z5Q");
-        qry += m_reqCrumb;
-
-        qDebug() << qry;
-
-        MyLibCurl mlc;
-        CURL *curlHndl;
-        char filename[255];
-        // strcpy(filename, "testData.txt");
-        strcpy(filename, DWLD_PATH_TA_LIST_FILE);
-
-
-        // Init Curl
-        curlHndl = mlc.beginCurlSession();
-        if(false == curlHndl)
-        {
-            QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to init curl (2)"));
-            return;
-        }
-
-        if(false == mlc.requestYahooWebPage(curlHndl,
-                            (char *) qry.toStdString().c_str(),
-                            filename,
-                            (char *) m_reqCookie.toStdString().c_str()))
-        {
-            QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to request web page"));
-            return;
-        }
-
-        // Close curl
-        mlc.endCurlSession(curlHndl);
-
-        startWorkerThreadParseSingelStockData();
-
-
-        // ajn 170603 httpSend();
-
-        //qry.sprintf("https://finance.yahoo.com/quote/ABB?p=ABB");
-        //qry.sprintf("https://uk.finance.yahoo.com/quote/AAPL/history");
-
-        // ajn 170603 QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
-
-        // ajn 170603 qDebug() << qry;
-        // ajn 170603 QUrl url(qry);
-
-        // Send html request to server (and set timeout)
-        // ajn 170603 startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
-        // ajn 170603 m_hw1.startRequest(url, filename, 0x01);
-    }
-}
-#endif
 
 
 /*******************************************************************
@@ -1415,230 +1212,6 @@ void TaAnalysis::startWorkerThreadParseSingelStockData(void)
 }
 
 
-
-#if 0
-/*******************************************************************
- *
- * Function:    slotReqSingleStockDataFromServer()
- *
- * Description: This function is invoked when singel stock data need
- *              to be updated. (price data is old)
- *
- *******************************************************************/
-void TaAnalysis::slotReqSingleStockDataFromServer()
-{
-    QString qry;
-    CUtil cu;
-
-    QString filename = DWLD_PATH_TA_LIST_FILE;
-
-#if 0 // Old yahoo interface
-//    QString startDate;
-    QString startYear;
-    QString startMonth;
-    QString startDay;
-
-  //  QString endDate;
-    QString endYear;
-    QString endMonth;
-    QString endDay;
-#endif
-
-    uint unixStartTime;
-    uint unixEndTime;
-
-    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
-
-        QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
-
-        const char *c_reqStockSymbol = ba1.data();
-
-#if 0 // Old yahoo interface
-  //      m_reqStartDate = "2013-12-01";
-
-        // cu.splitDate(m_reqStartDate, startYear, startMonth, startDay);
-
-        // cu.splitDate(m_reqEndDate, endYear, endMonth, endDay);
-#endif
-
-        if(false == cu.getLinuxTime(m_reqStartDate, unixStartTime))
-        {
-            return;
-        }
-
-        if(false == cu.getLinuxTime(m_reqEndDate, unixEndTime))
-        {
-            return;
-        }
-
-    #ifdef TEST_COOKIE
-                  // https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=cI6dnQuNRz2
-        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=%d&period2=%d&interval=1d&events=history&crumb=pmgEoB9HeYB",
-                    unixStartTime,
-                    unixEndTime);
-    #else
-       // https://query1.finance.yahoo.com/v7/finance/download/ABB.ST?period1=1492722268&period2=1495314268&interval=1d&events=history&crumb=.dCDNsa0z5Q
-        qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
-        c_reqStockSymbol,
-        unixStartTime,
-        unixEndTime);
-    #endif
-
-       #if 0 // Stop working 2017-05-17 Yahoo change download interface (cookie is no needed)
-       // Old wrong
-        qry.sprintf("http://ichart.finance.yahoo.com/table.csv?s=%s&d=%d&e=%d&f=%d&g=d&a=%d&b=%d&c=%d&ignore=.csv",
-                    c_reqStockSymbol,
-                    (endMonth.toInt()-1),
-                    endDay.toInt(),
-                    endYear.toInt(),
-                    (startMonth.toInt()-1),
-                    startDay.toInt(),
-                    startYear.toInt());
-
-    //    qDebug() << startDate;
-        qDebug() << startYear;
-        qDebug() << startMonth;
-        qDebug() << startDay;
-
-      //  qDebug() << endDate;
-        qDebug() << endYear;
-        qDebug() << endMonth;
-        qDebug() << endDay;
-        #endif
-
-        qDebug() << qry;
-
-
-        QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
-        QUrl url(qry);
-
-#if 0 // his is wrong this need to be inside m_hw1.startRequest()
-        if(false ==  m_networkCookieJar.setCookiesFromUrl(m_cookieList, url))
-        {
-            qDebug() << QString::fromUtf8("Fail set cookies");
-
-            qDebug() << "len" <<  m_cookieList.count();
-            for( int i=0; i < m_cookieList.count(); ++i )
-            {
-                qDebug() << m_cookieList[i];
-                // process items in numerical order by index
-                // do something with "list[i]";
-            }
-        }
-
-        qDebug() << "len" <<  m_cookieList.count();
-        for( int i=0; i < m_cookieList.count(); ++i )
-        {
-            qDebug() << m_cookieList[i].domain();
-            qDebug() << m_cookieList[i].expirationDate();
-            qDebug() << m_cookieList[i].value();
-            // process items in numerical order by index
-            // do something with "list[i]";
-        }
-#endif
-
-        startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
-        m_hw1.startRequest(url, filename, 0x01);
-    }
-}
-#endif
-
-
-
-#if 0
-/*******************************************************************
- *
- * Function:    slotReqSingleStockDataFromServer()
- *
- * Description: This function is invoked when singel stock data need
- *              to be updated. (price data is old)
- *
- *******************************************************************/
-void TaAnalysis::slotReqSingleStockDataFromServer()
-{
-    QString qry;
-    CUtil cu;
-
-    QString filename = DWLD_PATH_TA_LIST_FILE;
-
-//    QString startDate;
-    QString startYear;
-    QString startMonth;
-    QString startDay;
-
-  //  QString endDate;
-    QString endYear;
-    QString endMonth;
-    QString endDay;
-
-
-    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PENDING)
-    {
-        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_PROCESSING;
-
-        QByteArray ba1 = m_reqStockSymbol.toLocal8Bit();
-        const char *c_reqStockSymbol = ba1.data();
-
-  //      m_reqStartDate = "2013-12-01";
-
-        cu.splitDate(m_reqStartDate, startYear, startMonth, startDay);
-
-        cu.splitDate(m_reqEndDate, endYear, endMonth, endDay);
-
-        qry.sprintf("http://ichart.finance.yahoo.com/table.csv?s=%s&d=%d&e=%d&f=%d&g=d&a=%d&b=%d&c=%d&ignore=.csv",
-                    c_reqStockSymbol,
-                    (endMonth.toInt()-1),
-                    endDay.toInt(),
-                    endYear.toInt(),
-                    (startMonth.toInt()-1),
-                    startDay.toInt(),
-                    startYear.toInt());
-
-    //    qDebug() << startDate;
-        qDebug() << startYear;
-        qDebug() << startMonth;
-        qDebug() << startDay;
-
-      //  qDebug() << endDate;
-        qDebug() << endYear;
-        qDebug() << endMonth;
-        qDebug() << endDay;
-
-        qDebug() << qry;
-
-
-        QObject::connect(&m_hw1, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(slotReceivedAssetTaDataFromServer(int)));
-        QUrl url(qry);
-
-        startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
-        m_hw1.startRequest(url, filename, 0x01);
-    }
-}
-#endif
-
-
-#if 0
-/*******************************************************************
- *
- * Function:    slotReceivedAssetTaDataFromServer()
- *
- * Description:
- *
- *
- *
- *******************************************************************/
-void TaAnalysis::slotReceivedAssetTaDataFromServer(int)
-{
-    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PROCESSING)
-    {
-        // Init thread with data before starting it
-        m_importYahooTaDataThread->setImportInfoSingleStock(m_reqStockName, m_reqStockSymbol);
-        m_importYahooTaDataThread->start(QThread::NormalPriority);
-    }
-}
-#endif
 
 /*******************************************************************
  *
