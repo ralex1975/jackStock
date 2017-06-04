@@ -1212,7 +1212,7 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
     QString qry;
     CUtil cu;
 
-    QString filename = DWLD_PATH_TA_LIST_FILE;
+    //QString filename = DWLD_PATH_TA_LIST_FILE;
     uint unixStartTime;
     uint unixEndTime;
 
@@ -1234,6 +1234,8 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
             return;
         }
 
+        unixStartTime = 1433368800;
+
         //qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=.dCDNsa0z5Q",
         qry.sprintf("https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&crumb=",
         c_reqStockSymbol,
@@ -1247,8 +1249,10 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
 
         MyLibCurl mlc;
         CURL *curlHndl;
-        char filename[80];
-        strcpy(filename, "testData.txt");
+        char filename[255];
+        // strcpy(filename, "testData.txt");
+        strcpy(filename, DWLD_PATH_TA_LIST_FILE);
+
 
         // Init Curl
         curlHndl = mlc.beginCurlSession();
@@ -1267,11 +1271,10 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
             return;
         }
 
-
         // Close curl
         mlc.endCurlSession(curlHndl);
 
-
+        startWorkerThreadParseSingelStockData();
 
 
         // ajn 170603 httpSend();
@@ -1290,6 +1293,25 @@ void TaAnalysis::slotReqSingleStockDataFromServer()
     }
 }
 
+
+/*******************************************************************
+ *
+ * Function:    slotReceivedAssetTaDataFromServer()
+ *
+ * Description:
+ *
+ * 170604
+ *
+ *******************************************************************/
+void TaAnalysis::startWorkerThreadParseSingelStockData(void)
+{
+    if(m_singleStockDataReqStatus == STATUS_REQ_SINGLE_STOCK_PROCESSING)
+    {
+        // Init thread with data before starting it
+        m_importYahooTaDataThread->setImportInfoSingleStock(m_reqStockName, m_reqStockSymbol);
+        m_importYahooTaDataThread->start(QThread::NormalPriority);
+    }
+}
 
 
 

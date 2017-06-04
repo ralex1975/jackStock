@@ -152,6 +152,8 @@ public:
     void initMinMaxAxis(CYahooStockPlotUtil::MinMaxAxisValues_ST inputAxis,
                         CYahooStockPlotUtil::MinMaxAxisValues_ST &outputAxis);
 
+    void startWorkerThreadParseSingelStockData(void);
+
 
     explicit TaAnalysis(QWidget *parent = 0);
     ~TaAnalysis();
@@ -163,6 +165,8 @@ public slots:
     // Thread is finish parsing data
     void slotImportSingelStockDataIsFinish(int);
     // http Thread is finish download file from server
+
+
 
 
 

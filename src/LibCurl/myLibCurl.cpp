@@ -273,6 +273,7 @@ void MyLibCurl::createYahooCookieUrl(QString stockSymbol,
     int i;
     int index = -1;
 
+#if 0
     // Check that it is only one dot in symbol name
     for(cnt = 0, i = 0; i < stockSymbol.length(); i++)
     {
@@ -294,7 +295,7 @@ void MyLibCurl::createYahooCookieUrl(QString stockSymbol,
         QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Fail: to find stock symbol extention"));
         return;
     }
-
+#endif
 
     outUrl = "https://finance.yahoo.com/quote/";
     outUrl += stockSymbol;

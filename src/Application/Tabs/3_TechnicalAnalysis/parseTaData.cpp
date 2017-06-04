@@ -115,7 +115,7 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
 
                   if(false == db.findYahooTaData(myStringList.at(0), assetNameId, dbIsHandledExternly))
                   {
-
+#if 0 // ajn 170604
                      if(false == db.insertYahooStockData(myStringList.at(0),  // date
                                                          myStringList.at(1),  // open,
                                                          myStringList.at(2),  // high,
@@ -130,7 +130,23 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
                         QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
                         return false;
                      }
+#else
+                      if(false == db.insertYahooStockData(myStringList.at(0),  // date
+                                                          myStringList.at(1),  // open,
+                                                          myStringList.at(2),  // high,
+                                                          myStringList.at(3),  // low,
+                                                          myStringList.at(4),  // close,
+                                                          myStringList.at(6),  // volume, (swapped)
+                                                          myStringList.at(5),  // adjClose, (swapped)
+                                                          assetNameId,
+                                                          dbIsHandledExternly))
+                      {
+                         db.closeDb(true);
+                         QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
+                         return false;
+                      }
 
+#endif
                   }
 //                 for(int index =0;index < myStringList.length();index++)
 //                 {
