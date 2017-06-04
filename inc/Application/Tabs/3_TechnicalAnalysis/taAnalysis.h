@@ -154,6 +154,9 @@ public:
 
     void startWorkerThreadParseSingelStockData(void);
 
+    void reqSingleStockDataFromServer(void);
+
+
 
     explicit TaAnalysis(QWidget *parent = 0);
     ~TaAnalysis();
@@ -171,11 +174,11 @@ public slots:
 
 
 private slots:
-    void slotReceivedAssetTaDataFromServer(int);
+    // ajn 170604 void slotReceivedAssetTaDataFromServer(int);
 
     void slotReqSingleStockDataTimerExpired();
 
-    void slotReqSingleStockDataFromServer();
+    // ajn 170604 void slotReqSingleStockDataFromServer();
 
     void on_SelStockListButton_clicked();
 

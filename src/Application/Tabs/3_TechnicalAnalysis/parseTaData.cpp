@@ -12,6 +12,7 @@
 #include <iostream>
 #include "dbHndl.h"
 #include "common.h"
+#include "util.h"
 
 /****************************************************************
  *
@@ -44,10 +45,11 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
 {
     bool firstTime = true;
     bool res;
-
+    CUtil ut;
     QString str;
     int assetNameId;
     CDbHndl db;
+    int i;
 
     // just open database once when processing this data
     bool dbIsHandledExternly = true;
@@ -112,6 +114,24 @@ bool CParseTaData::parseData(QString filename, QString assetName, QString assetS
                     QMessageBox::critical(NULL, QString::fromUtf8("Database Error"), QString::fromUtf8("Fail to insert data in TA list"));
                     return false;
                  }
+
+                double dummyDouble;
+                bool wrongData = false;
+                for(i = 1; i < myStringList.length(); i++)
+                {
+                    if(false == ut.number2double(myStringList.at(i), dummyDouble))
+                    {
+                        wrongData = true;
+                        break;
+                    }
+                }
+
+                // Skip this invalid data
+                if(true == wrongData)
+                {
+                    continue;
+                }
+
 
                   if(false == db.findYahooTaData(myStringList.at(0), assetNameId, dbIsHandledExternly))
                   {
