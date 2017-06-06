@@ -18,7 +18,7 @@
     <rect>
      <x>290</x>
      <y>10</y>
-     <width>1041</width>
+     <width>1051</width>
      <height>648</height>
     </rect>
    </property>
@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2073,6 +2073,124 @@
            <width>701</width>
            <height>481</height>
           </rect>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidgetProfitGrowth">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>251</width>
+           <height>361</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxShowForecast_2">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>10</y>
+           <width>131</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Visa prognosdata</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_70">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Historisk vinstutveckling</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>420</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_71">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>400</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>470</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_72">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>450</y>
+           <width>251</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Grahams Intrinsic Value</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgEarningPerShare">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>420</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_73">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>400</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinst/Aktie</string>
          </property>
         </widget>
        </widget>
@@ -2531,7 +2649,7 @@
         <rect>
          <x>0</x>
          <y>60</y>
-         <width>121</width>
+         <width>131</width>
          <height>391</height>
         </rect>
        </property>
@@ -2552,9 +2670,9 @@
       <widget class="QTableWidget" name="tableWidgetIntrinsicValueEarningsPerShare">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>140</x>
          <y>60</y>
-         <width>131</width>
+         <width>141</width>
          <height>391</height>
         </rect>
        </property>
@@ -2562,7 +2680,7 @@
       <widget class="QLabel" name="label_54">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>140</x>
          <y>40</y>
          <width>131</width>
          <height>16</height>
@@ -2575,7 +2693,7 @@
       <widget class="QTableWidget" name="tableWidgetEquityPerShare">
        <property name="geometry">
         <rect>
-         <x>270</x>
+         <x>290</x>
          <y>60</y>
          <width>151</width>
          <height>391</height>
@@ -2585,7 +2703,7 @@
       <widget class="QLabel" name="label_55">
        <property name="geometry">
         <rect>
-         <x>270</x>
+         <x>290</x>
          <y>40</y>
          <width>141</width>
          <height>16</height>
@@ -2598,7 +2716,7 @@
       <widget class="QTableWidget" name="tableWidgetIntrinsicValueDividendPerShare">
        <property name="geometry">
         <rect>
-         <x>430</x>
+         <x>450</x>
          <y>60</y>
          <width>151</width>
          <height>391</height>
@@ -2608,7 +2726,7 @@
       <widget class="QLabel" name="label_56">
        <property name="geometry">
         <rect>
-         <x>430</x>
+         <x>460</x>
          <y>40</y>
          <width>221</width>
          <height>16</height>
@@ -2621,10 +2739,10 @@
       <widget class="QwtPlot" name="qwtPlot_10">
        <property name="geometry">
         <rect>
-         <x>590</x>
-         <y>270</y>
-         <width>441</width>
-         <height>251</height>
+         <x>610</x>
+         <y>250</y>
+         <width>421</width>
+         <height>281</height>
         </rect>
        </property>
       </widget>
@@ -2667,7 +2785,7 @@
       <widget class="QPushButton" name="pushButtonSaveEquityPerShare">
        <property name="geometry">
         <rect>
-         <x>270</x>
+         <x>290</x>
          <y>10</y>
          <width>51</width>
          <height>21</height>
@@ -2854,7 +2972,7 @@
       <widget class="QPushButton" name="pushSaveIValueDividend">
        <property name="geometry">
         <rect>
-         <x>430</x>
+         <x>450</x>
          <y>10</y>
          <width>51</width>
          <height>22</height>

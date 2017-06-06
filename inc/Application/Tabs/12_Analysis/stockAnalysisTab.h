@@ -60,6 +60,11 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
     int                   m_nofEarningsArrData;
 
+    // This is calculated later in this file not retrived from db
+    SubAnalysDataST       m_earningsGrowthArr[MAX_NOF_EARNINGS_GROWTH_ARR_DATA];
+    int                   m_nofEarningsGrowthArrData;
+
+
     SubAnalysDataST       m_totalCurrentAssetsArr[MAX_NOF_TOTAL_CURRENT_ASSETS_ARR_DATA];
     int                   m_nofTotalCurrentAssetsArrData;
 
@@ -120,7 +125,14 @@ class StockAnalysisTab : public QDialog
 
     void resetGuiCtrl(void);
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
+    void initNetProfitAfterTaxTreeWidget(void);
     void initSubAnalysisPlots(void);
+
+    void addEarningAndGrowsToTreeWidget(bool &leastSqrtFitIsValid,
+                                        double &k,
+                                        double &m,
+                                        double &minX,
+                                        double &maxX);
 
 
     void initSubAnalyseTableWidget(QTableWidget *tableWidget,
@@ -262,7 +274,9 @@ private:
                                   int legendSize = 10);
 
     void plotLinearReportData(QwtPlot *qwtPlot,
+                              CYahooStockPlotUtil::PlotData_ST &qwtAllPlotData,
                               bool useAutoScale,
+                              bool resetMinMaxValue,
                               SubAnalysDataST *dataArr,
                               int nofData,
                               int indexToPlot,

@@ -41,8 +41,6 @@ const TaAnalysis::TimePeriodDays_ST TaAnalysis::m_timePeriodDaysArr[TaAnalysis::
 
 
 
-
-
 /*******************************************************************
  *
  * Function:    ()
@@ -137,10 +135,6 @@ TaAnalysis::~TaAnalysis()
 
 
 
-
-
-
-
 /*******************************************************************
  *
  * Function:    initFa2OperatingIncomeList()
@@ -178,9 +172,6 @@ void TaAnalysis::initFa2OperatingIncomeList(void)
     ui->treeWidget_2->setColumnWidth(4, 50);
 
 }
-
-
-
 
 
 
@@ -257,8 +248,6 @@ void TaAnalysis::initFa3ProfitabilityAnalysis(void)
     ui->treeWidget_4->setColumnWidth(0, 65);
     ui->treeWidget_4->setColumnWidth(1, 85);
     ui->treeWidget_4->setColumnWidth(2, 65);
-
-
 
 }
 
@@ -498,66 +487,6 @@ void TaAnalysis::on_SelStockListButton_clicked()
      }
 }
 
-
-#if 0
-MyLibCurl mlc;
-CURL *curlHndl;
-char url[256];
-char filename[80];
-char cookieResArr[256];
-
-char hostname[80];
-char incSubdomains[80];       // "TRUE"
-char path[80];                // "/",
-char secure[80];              // "FALSE"
-char expirationDate[80];      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
-char name[80];                // "B"
-char value[80];               // "95jdfnpci12gs&b=3&s=to",
-char cookieArr[256];
-
-// ".yahoo.com	TRUE	/	FALSE	1527437638	B	btn35mhcij9e6&b=3&s=e6"
-strcpy(hostname, ".yahoo.com");
-strcpy(incSubdomains, "TRUE");
-strcpy(path, "/");
-strcpy(secure, "FALSE");
-strcpy(expirationDate, "1527424259");
-strcpy(name, "B");
-strcpy(value, "5ljb2u1ciiiki&b=3&s=m8");
-
-strcpy(filename, "curlAbb.txt");
-
-//Crumb: 'mWnh3sO2quo', Cookie: '5ljb2u1ciiiki&b=3&s=m8'
-strcpy(url,"https://query1.finance.yahoo.com/v7/finance/download/ABB?period1=1493062089&period2=1495654089&interval=1d&events=history&crumb=mWnh3sO2quo");
-
-// strcpy(url,"https://finance.yahoo.com/quote/ABB?p=ABB");
-
-
-
-curlHndl = mlc.beginCurlSession();
-if(curlHndl)
-{
-#if 0
-    mlc.addYahooCookie(curlHndl,
-                       hostname,            // ".yahoo.com",
-                       incSubdomains,       // "TRUE"
-                       path,                // "/",
-                       secure,              // "FALSE"
-                       expirationDate,      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
-                       name,                // "B"
-                       value,               // "95jdfnpci12gs&b=3&s=to",
-                       cookieArr);
-#endif
-
-    if(true == mlc.requestYahooWebPageAndCookie(curlHndl, url, filename, cookieResArr))
-    {
-        QString str;
-        str.sprintf("%s", cookieResArr);
-        QMessageBox::information(NULL, QString::fromUtf8("Cookie"), str);
-    }
-    mlc.endCurlSession(curlHndl);
-}
-
-#endif
 
 
 /*******************************************************************
@@ -1097,6 +1026,43 @@ void TaAnalysis::setFundametalAnalysisCtrlTxtColor(CDbHndl::snapshotStockData_ST
 }
 
 
+/*******************************************************************
+ *
+ * Function:    startResendTimer()
+ *
+ * Description: This function activate resend timer that is used when
+ *              request data from Yahoo server.
+ *
+ *              This is a single shot timer.
+ *
+ *******************************************************************/
+void TaAnalysis::startReqSingleStockDataTimeoutTimer(int ms)
+{
+    QTimer::singleShot(ms, this, SLOT(slotReqSingleStockDataTimerExpired()));
+    qDebug() << "startReqSingleStockDataTimeoutTimer()";
+
+}
+
+
+/*******************************************************************
+ *
+ * Function:    slotReqSingleStockDataTimerExpired()
+ *
+ * Description: This function is invoked when resend timer has expired
+ *
+ *
+ *******************************************************************/
+void TaAnalysis::slotReqSingleStockDataTimerExpired()
+{
+    if(m_singleStockDataReqStatus != STATUS_REQ_SINGLE_STOCK_IDLE)
+    {
+        m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
+        modifyDateList(m_reqStockSymbol, true);
+        qDebug() << m_reqStockSymbol;
+        QMessageBox::information(this, QString::fromUtf8("Timeout"), QString::fromUtf8("Timeout: ingen data kunde hämtas"));
+    }
+
+}
 
 
 /*******************************************************************
@@ -1185,6 +1151,7 @@ bool TaAnalysis::prepReqTaDataFromServer(QString stockName, QString stockSymbol,
         // Close curl
         mlc.endCurlSession(curlHndl);
         startWorkerThreadParseSingelStockData();
+        startReqSingleStockDataTimeoutTimer(TIME_2_MIN);
     }
     return true;
 }

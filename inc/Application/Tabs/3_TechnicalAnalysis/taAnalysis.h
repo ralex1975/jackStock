@@ -164,6 +164,7 @@ public slots:
 
 
 private slots:
+	void slotReqSingleStockDataTimerExpired();
     void on_SelStockListButton_clicked();
 
     void on_treeWidget_doubleClicked(const QModelIndex &index);
@@ -217,6 +218,7 @@ private:
     QList <NameKey> m_dateIsUpdatedList;
 
 
+    void startReqSingleStockDataTimeoutTimer(int ms);
     void initStockList(void);
     bool openStockNameFile(QString filename, QString stockListName);
     void getSelStockListItem(QString &stockName, QString &stockSymbol, const QModelIndex &index);
