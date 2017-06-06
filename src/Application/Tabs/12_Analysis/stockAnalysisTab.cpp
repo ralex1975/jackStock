@@ -72,7 +72,9 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     m_stockNameIsInit = false;
 
+    // Init treeWidgets
     initNetProfitAfterTaxTreeWidget();
+    initMinMaxPePrice();
 
     initSubAnalysTables();
 
@@ -167,6 +169,75 @@ void StockAnalysisTab::initNetProfitAfterTaxTreeWidget(void)
 
     ui->treeWidgetProfitGrowth->setFont(QFont("Helvetica", 9));
 }
+
+
+/*******************************************************************
+ *
+ * Function:    initMinMaxPePrice()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initMinMaxPePrice(void)
+{
+
+    QString column0 = QString::fromUtf8("År");
+    QString column1 = QString("Min\npris");
+    QString column2 = QString::fromUtf8("Medel\npris");
+    QString column3 = QString("Max\npris");
+
+
+    ui->treeWidgetHistoricalPrices->setColumnCount(4);
+    ui->treeWidgetHistoricalPrices->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidgetHistoricalPrices->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header = ui->treeWidgetHistoricalPrices->headerItem())
+    {
+        header->setText(0, column0);
+        header->setText(1, column1);
+        header->setText(2, column2);
+        header->setText(3, column3);
+
+    }
+
+    ui->treeWidgetHistoricalPrices->setColumnWidth(0, 65);
+    ui->treeWidgetHistoricalPrices->setColumnWidth(1, 65);
+    ui->treeWidgetHistoricalPrices->setColumnWidth(2, 60);
+    ui->treeWidgetHistoricalPrices->setColumnWidth(3, 50);
+
+
+    QString column4 = QString::fromUtf8("År");
+    QString column5 = QString("Min\nP/E");
+    QString column6 = QString::fromUtf8("Medel\nP/E");
+    QString column7 = QString("Max\nP/E");
+
+
+    ui->treeWidgetHistoricalPENum->setColumnCount(4);
+    ui->treeWidgetHistoricalPENum->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidgetHistoricalPENum->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header1 = ui->treeWidgetHistoricalPENum->headerItem())
+    {
+        header1->setText(0, column4);
+        header1->setText(1, column5);
+        header1->setText(2, column6);
+        header1->setText(3, column7);
+    }
+
+    ui->treeWidgetHistoricalPENum->setColumnWidth(0, 65);
+    ui->treeWidgetHistoricalPENum->setColumnWidth(1, 65);
+    ui->treeWidgetHistoricalPENum->setColumnWidth(2, 60);
+    ui->treeWidgetHistoricalPENum->setColumnWidth(3, 50);
+    ui->treeWidgetHistoricalPENum->setColumnWidth(4, 50);
+
+}
+
+
 
 /******************************************************************
  *
@@ -5908,7 +5979,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Vinst/Aktie
     //-----------------------------------------------------------------------------------
-
+    CDbHndl db;
     bool leastSqrtFitIsValid = false;
     double k;
     double m;
@@ -5929,6 +6000,10 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     ui->lineEditAvgEarningPerShare->clear();
     ui->lineEditAnualEarningGrowthRate->clear();
     ui->lineEditGrahamsIntrinsicValue->clear();
+
+    ui->treeWidgetHistoricalPrices->clear();
+    ui->treeWidgetHistoricalPENum->clear();
+
     if(leastSqrtFitIsValid == true)
     {
         SubAnalysDataST tmpArr[MAX_NOF_EARNINGS_ARR_DATA];
@@ -6012,6 +6087,16 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                              hideDataSample);
 
     }
+
+    if(m_nofEarningsArrData > 0)
+    {
+        db.subAnalysisAddMinMaxPEAndPrice(ui->treeWidgetHistoricalPrices,
+                                       ui->treeWidgetHistoricalPENum,
+                                       m_earningsDataArr,
+                                       m_nofEarningsArrData,
+                                       m_stockSymbol);
+    }
+
 
 
     // Plot vinst
@@ -7600,7 +7685,6 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
     char expirationDate[80];      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
     char name[80];                // "B"
     char value[80];               // "95jdfnpci12gs&b=3&s=to",
-    char cookieArr[256];
 
     // ".yahoo.com	TRUE	/	FALSE	1527437638	B	btn35mhcij9e6&b=3&s=e6"
     strcpy(hostname, ".yahoo.com");

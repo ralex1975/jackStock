@@ -126,6 +126,7 @@ class StockAnalysisTab : public QDialog
     void resetGuiCtrl(void);
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
     void initNetProfitAfterTaxTreeWidget(void);
+    void initMinMaxPePrice(void);
     void initSubAnalysisPlots(void);
 
     void addEarningAndGrowsToTreeWidget(bool &leastSqrtFitIsValid,

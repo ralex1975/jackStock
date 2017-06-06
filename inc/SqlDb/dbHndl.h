@@ -1674,6 +1674,13 @@ public:
     bool addFa2operatingIncomeToTreeWidget(QTreeWidget *treeWidget, QString assetName);
 
 
+    bool subAnalysisAddMinMaxPEAndPrice(QTreeWidget *treeWidget,
+                                   QTreeWidget *treeWidget1,
+                                   SubAnalysDataST *earningPerShareArr,
+                                   int nofArrData,
+                                   QString assetSymbol);
+
+
     bool addFa3MinMaxPEAndPrice(QTreeWidget *treeWidget, QTreeWidget *treeWidget1, QString assetName, QString assetSymbol);
     bool getYahooTaMinMaxAvgPrice(QString assetSymbol,
                                   QString startDate,
