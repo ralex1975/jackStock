@@ -131,7 +131,8 @@ SOURCES += 	\
                 src/GetHtmlPage/httpwindow.cpp \
     src/LibCurl/myLibCurl.cpp \
     src/QtLib/treewidgetfinance.cpp \
-    src/Utils/financemath.cpp
+    src/Utils/financemath.cpp \
+    src/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.cpp
 
 			    
     
@@ -208,10 +209,11 @@ HEADERS  += \
                 inc/Application/Tabs/7_ImportData/getYahooKeyStatistics.h \
                 inc/GetHtmlPage/httpwindow.h \
     inc/LibCurl/myLibCurl.h \
-    src/QtLib/treewidgetfinance.h \
-    src/Utils/financemath.h \
     inc/QtLib/treewidgetfinance.h \
-    inc/Utils/financemath.h
+    inc/Utils/financemath.h \
+    inc/QtLib/treewidgetfinance.h \
+    inc/Utils/financemath.h \
+    inc/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.h
 
 FORMS    += \
     src/Application/selIndicatorsDlg.ui \
@@ -232,7 +234,8 @@ FORMS    += \
     src/Application/Tabs/13_video/video.ui \
     src/Application/Tabs/14_others/portfolio.ui \
     src/Application/Tabs/14_others/graphtab.ui \
-    src/Application/Tabs/14_others/jackStock.ui
+    src/Application/Tabs/14_others/jackStock.ui \
+    src/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.ui
 
 RESOURCES += \
     database/resourcedb.qrc

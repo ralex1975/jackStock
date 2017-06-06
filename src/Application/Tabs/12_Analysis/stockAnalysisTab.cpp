@@ -17,6 +17,8 @@
 #include "financemath.h"
 #include "treewidgetfinance.h"
 
+
+
 #define INDEX_MY_PORTFOLIO      ((int) 3)
 
 
@@ -254,7 +256,8 @@ addEarningAndGrowsToTreeWidget(bool &leastSqrtFitIsValid,
                                double &k,
                                double &m,
                                double &minX,
-                               double &maxX)
+                               double &maxX,
+                               QString &lastGrowthRateData)
 {
     FinanceMath fm;
     TreeWidgetFinance twf;
@@ -298,12 +301,10 @@ addEarningAndGrowsToTreeWidget(bool &leastSqrtFitIsValid,
         if(true == twf.calcLeastSqrtFit(ui->treeWidgetProfitGrowth, k, m, minX, maxX, colToUse))
         {
             leastSqrtFitIsValid = true;
-            twf.addLeastSqrtFitAndGrowthRateDataToTreeWidget(ui->treeWidgetProfitGrowth, k, m, maxX, nofDataToAdd);
+            twf.addLeastSqrtFitAndGrowthRateDataToTreeWidget(ui->treeWidgetProfitGrowth, k, m, maxX, nofDataToAdd, lastGrowthRateData);
+            qDebug() << lastGrowthRateData;
         }
     }
-
-    // bool calcLeastSqrtFit(QTreeWidget *treeWidget, double &k, double &m, double &minX, double &maxX, int colToUse);
-    // void addLeastSqrtFitAndGrowthRateDataToTreeWidget(QTreeWidget *treeWidget, double k, double m, double maxX, int nofDataToAdd);
 }
 
 
@@ -2596,6 +2597,8 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     ui->lineEditCurrEquityPerShare->setText(hSAPData.currEquityPerShare);
     ui->lineEditEstimateYearlyDividend->setText(hSAPData.estimateYearlyDividend);
     ui->lineEditIntrinsicValueResult->setText(hSAPData.calcIntrinsicValue);
+    ui->lineEditIntrinsicValueResult_2->setText(hSAPData.calcIntrinsicValue);
+    ui->lineEditIntrinsicValueResult_3->setText(hSAPData.calcIntrinsicValue);
     ui->lineEditHistoricalInterestOnEquity->setText(hSAPData.historicalYearlyInterestOnEquity);
 
 
@@ -4946,10 +4949,6 @@ void StockAnalysisTab::on_pushButtonCalcIntrinsicValue_clicked()
     double tmpPow2Res;
 
 
-    //intrinsicValue = pow(1.05, nofYears);
-    //QString str1;
-    //str1.sprintf("%.2f", intrinsicValue);
-    //ui->lineEditIntrinsicValueResult->setText(str1);
 
     if(ui->lineEditTenYearNoteYield->text().isEmpty() == true)
     {
@@ -5002,6 +5001,8 @@ void StockAnalysisTab::on_pushButtonCalcIntrinsicValue_clicked()
     QString str1;
     str1.sprintf("%.2f", powYData3);
     ui->lineEditIntrinsicValueResult->setText(str1);
+    ui->lineEditIntrinsicValueResult_2->setText(str1);
+    ui->lineEditIntrinsicValueResult_3->setText(str1);
 
 
     tmpPow2Res = pow(powYData3, nofYears);
@@ -5013,6 +5014,8 @@ void StockAnalysisTab::on_pushButtonCalcIntrinsicValue_clicked()
     QString str;
     str.sprintf("%.2f", intrinsicValue);
     ui->lineEditIntrinsicValueResult->setText(str);
+    ui->lineEditIntrinsicValueResult_2->setText(str);
+    ui->lineEditIntrinsicValueResult_3->setText(str1);
 
 }
 
@@ -5987,6 +5990,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     double maxX;
     int nofYears;
     QString str1;
+    QString lastGrowthRateData;
 
 
     // Calc and display least square fit earning data
@@ -5994,12 +5998,20 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                    k,
                                    m,
                                    minX,
-                                   maxX);
+                                   maxX,
+                                   lastGrowthRateData);
 
 
     ui->lineEditAvgEarningPerShare->clear();
     ui->lineEditAnualEarningGrowthRate->clear();
     ui->lineEditGrahamsIntrinsicValue->clear();
+
+    ui->lineEditAvgEarningPerShare_2->clear();
+    ui->lineEditAnualEarningGrowthRate_2->clear();
+    ui->lineEditGrahamsIntrinsicValue_2->clear();
+
+    ui->lineEditGrahamsIntrinsicValue_3->clear();
+
 
     ui->treeWidgetHistoricalPrices->clear();
     ui->treeWidgetHistoricalPENum->clear();
@@ -6034,12 +6046,18 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
         if(true == cu.annualGrowthRate(startY, endY, nofYears, growthRate))
         {
-            growthRate = growthRate - 1;
-            growthRate = growthRate * 100;
+            // Lets last predicted growth rate (not so high) instead of the calculated value above
+            growthRate = lastGrowthRateData.toDouble();
+            //growthRate = growthRate - 1;
+            //growthRate = growthRate * 100;
             qDebug() << growthRate;
 
             str1.sprintf("%.2f", growthRate);
             ui->lineEditAnualEarningGrowthRate->setText(str1);
+
+            // Is shown on earning growth page
+            ui->lineEditAnualEarningGrowthRate_2->setText(str1);
+
 
             //----------------------------------------------------------------
             // Calc average Earning Per Share and Grahams intrinsic value
@@ -6058,15 +6076,24 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                 str1.sprintf("%.2f", averageEarningPerShare);
                 ui->lineEditAvgEarningPerShare->setText(str1);
 
+                // Is shown on earning growth page
+                ui->lineEditAvgEarningPerShare_2->setText(str1);
+
+
                 if((averageEarningPerShare > 0) && (growthRate > 0))
                 {
                     double intrinsicValue = averageEarningPerShare * (8.5 + (growthRate * 2));
                     str1.sprintf("%.2f", intrinsicValue);
                     ui->lineEditGrahamsIntrinsicValue->setText(str1);
+
+                    // Is shown on earning growth page
+                    ui->lineEditGrahamsIntrinsicValue_2->setText(str1);
+
+                    // Is shown on revenue and earning
+                    ui->lineEditGrahamsIntrinsicValue_3->setText(str1);
                 }
             }
         }
-
 
 
         indexToPlot = 8;
@@ -7370,40 +7397,12 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMax
     qwtPlot->setAxisMaxMinor(QwtPlot::yLeft, 10);
 
     // Set x-axis scale
-    //qwtPlot->setAxisScale(QwtPlot::yLeft, yAxisStartTicValue, yAxisStopTicValue, 1);
     qwtPlot->setAxisScale(QwtPlot::yLeft, (yAxisStartTicValue/10.0), yAxisStopTicValue, 0);
 
     // Update plot with new data
     allPlotData.stock[index].data.attach(qwtPlot);
     qDebug() << "index" << index;
     qwtPlot->replot();
-
-     #if 0
-    //qwtPlot->setAxisScaleDiv();
-    //qwtPlot->setAxisScale()
-    //qwtPlot->setAxisScale(QwtPlot::yLeft, 5, 250);
-    //qwtPlot->setAxisScale(QwtPlot::yLeft, (allPlotData.axis.minY), (allPlotData.axis.maxY)/*1, 100000000*/);
-
-
-    // qDebug() << "minY" << allPlotData.axis.minY;
-    // qDebug() << "maxY" << allPlotData.axis.maxY;
-
-    //QwtScaleDiv *scaleDiv = new QwtPlotGrid;
-
-    //scaleDiv->setTicks();
-
-    // qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound(); //  and ->hBound()
-    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->upperBound());
-    qDebug() << "x axis upper" << tmp << "\n";
-
-    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->lowerBound());
-    qDebug() << "x axis lower" << tmp << "\n";
-
-    tmp.sprintf("%g", qwtPlot->axisScaleDiv(QwtPlot::xBottom)->range());
-    qDebug() << "x range " << tmp << "\n";
-
-    qDebug() << "x axisInterval" << tmp << "\n";
-    #endif
 
     return true;
 }
@@ -7435,9 +7434,10 @@ void StockAnalysisTab::clearGUIIntrinsicValue(void)
     ui->lineEditHistoricalInterestOnEquity->clear();
     ui->lineEditCurrEquityPerShare->clear();
     ui->lineEditEstimateYearlyDividend->clear();
-    ui->lineEditIntrinsicValueResult->clear();
 
     ui->lineEditIntrinsicValueResult->clear();
+    ui->lineEditIntrinsicValueResult_2->clear();
+    ui->lineEditIntrinsicValueResult_3->clear();
     for(int i = 0; i < 2; i++)
         cyspu.removePlotData(m_qwtEquityPlotData, i, ui->qwtPlot_10);
 }
@@ -7708,18 +7708,6 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
     curlHndl = mlc.beginCurlSession();
     if(curlHndl)
     {
-#if 0
-        mlc.addYahooCookie(curlHndl,
-                           hostname,            // ".yahoo.com",
-                           incSubdomains,       // "TRUE"
-                           path,                // "/",
-                           secure,              // "FALSE"
-                           expirationDate,      // "1527424259" (Linux time: Sun, 27 May 2018 12:30:59 GMT)
-                           name,                // "B"
-                           value,               // "95jdfnpci12gs&b=3&s=to",
-                           cookieArr);
-#endif
-
         if(true == mlc.requestYahooWebPageAndCookie(curlHndl, url, filename, cookieResArr))
         {
             QString str;
@@ -7779,4 +7767,10 @@ void StockAnalysisTab::on_pushButton_2_clicked()
 
     cu.getSubstringFromFile(filename, regExp, outSubstring);
 
+}
+
+void StockAnalysisTab::on_pushButtonAltGrahamCalcIntrinsicValue_clicked()
+{
+
+    m_grahamCalcIntrinsicValueDlg.show();
 }

@@ -9,6 +9,7 @@
 #include "subanalysisdisplaygraphdata.h"
 #include "stockPlotUtil.h"
 #include "calcavgannualgrowthrateequity.h"
+#include "altgcalcintrinsicvaluedlg.h"
 
 
 
@@ -133,7 +134,8 @@ class StockAnalysisTab : public QDialog
                                         double &k,
                                         double &m,
                                         double &minX,
-                                        double &maxX);
+                                        double &maxX,
+                                        QString &lastGrowthRateData);
 
 
     void initSubAnalyseTableWidget(QTableWidget *tableWidget,
@@ -240,9 +242,13 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButtonAltGrahamCalcIntrinsicValue_clicked();
+
 private:
     Ui::StockAnalysisTab *ui;
     calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;
+
+    AltGCalcIntrinsicValueDlg m_grahamCalcIntrinsicValueDlg;
 
     // Cannot extract x,y data. Contains all data that is send to graph
     CYahooStockPlotUtil::PlotData_ST m_qwtEquityPlotData;

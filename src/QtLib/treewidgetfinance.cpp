@@ -186,7 +186,8 @@ addLeastSqrtFitAndGrowthRateDataToTreeWidget(QTreeWidget *treeWidget,
                                              double k,
                                              double m,
                                              double maxX,
-                                             int nofDataToAdd)
+                                             int nofDataToAdd,
+                                             QString &lastGrowthRateData)
 {
     bool lastYIsInit = false;
     int i;
@@ -240,6 +241,8 @@ addLeastSqrtFitAndGrowthRateDataToTreeWidget(QTreeWidget *treeWidget,
         {
             yStr = yStr.sprintf("%.2f", ((y - lastY) / lastY) * 100);
             item->setText(2, yStr);
+            qDebug() << yStr;
+            lastGrowthRateData = yStr;
 
             double value;
             bool isNumeric;

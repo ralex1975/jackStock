@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2081,7 +2081,7 @@
            <x>10</x>
            <y>30</y>
            <width>251</width>
-           <height>361</height>
+           <height>331</height>
           </rect>
          </property>
          <column>
@@ -2162,12 +2162,12 @@
           <rect>
            <x>10</x>
            <y>450</y>
-           <width>251</width>
+           <width>301</width>
            <height>16</height>
           </rect>
          </property>
          <property name="text">
-          <string>Grahams Intrinsic Value</string>
+          <string>(Grahams,                    Buffett) Intrinsic Value</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="lineEditAvgEarningPerShare">
@@ -2191,6 +2191,29 @@
          </property>
          <property name="text">
           <string>Vinst/Aktie</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditIntrinsicValueResult_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>470</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButtonAltGrahamCalcIntrinsicValue">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>370</y>
+           <width>251</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Alternativ beräkning Graham</string>
          </property>
         </widget>
        </widget>
@@ -2232,7 +2255,7 @@
            <x>0</x>
            <y>20</y>
            <width>271</width>
-           <height>211</height>
+           <height>191</height>
           </rect>
          </property>
          <property name="font">
@@ -2253,7 +2276,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>240</y>
+           <y>260</y>
            <width>271</width>
            <height>17</height>
           </rect>
@@ -2274,9 +2297,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>260</y>
+           <y>280</y>
            <width>271</width>
-           <height>241</height>
+           <height>221</height>
           </rect>
          </property>
          <property name="font">
@@ -2289,6 +2312,39 @@
            <string notr="true">1</string>
           </property>
          </column>
+        </widget>
+        <widget class="QLabel" name="label_88">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>210</y>
+           <width>301</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>(Grahams,                    Buffett) Intrinsic Value</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditIntrinsicValueResult_3">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>230</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>230</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
         </widget>
        </widget>
        <widget class="QWidget" name="tab_16">
@@ -2450,7 +2506,7 @@
         <widget class="QLabel" name="label_69">
          <property name="geometry">
           <rect>
-           <x>110</x>
+           <x>20</x>
            <y>10</y>
            <width>221</width>
            <height>20</height>
@@ -2463,13 +2519,105 @@
         <widget class="QLineEdit" name="lineEditAnualEarningGrowth">
          <property name="geometry">
           <rect>
-           <x>110</x>
+           <x>20</x>
            <y>30</y>
-           <width>191</width>
+           <width>121</width>
            <height>22</height>
           </rect>
          </property>
         </widget>
+        <widget class="QLineEdit" name="lineEditAvgEarningPerShare_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>120</y>
+           <width>121</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate_2">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>120</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>170</y>
+           <width>121</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_85">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>100</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_86">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>100</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinst/Aktie</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_87">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>150</y>
+           <width>251</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Grahams Intrinsic Value</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>321</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Minstakvadrat</string>
+         </property>
+        </widget>
+        <zorder>groupBox</zorder>
+        <zorder>qwtPlot_19</zorder>
+        <zorder>label_69</zorder>
+        <zorder>lineEditAnualEarningGrowth</zorder>
+        <zorder>lineEditAvgEarningPerShare_2</zorder>
+        <zorder>lineEditAnualEarningGrowthRate_2</zorder>
+        <zorder>lineEditGrahamsIntrinsicValue_2</zorder>
+        <zorder>label_85</zorder>
+        <zorder>label_86</zorder>
+        <zorder>label_87</zorder>
        </widget>
        <widget class="QWidget" name="tab_21">
         <attribute name="title">
