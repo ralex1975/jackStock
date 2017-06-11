@@ -50,13 +50,6 @@ public:
                                                  int &nofResultArrData,
                                                  bool skipWhenDenominatorEqZero = true);
 
-    void subAnalysisOneArrCalcProcentRationPrevCurrSlot(SubAnalysDataST *inputArr,
-                                            int nofInputArrData,
-                                            SubAnalysDataST *resultArr,
-                                            int &nofResultArrData,
-                                            bool skipWhenDenominatorEqZero = true);
-
-
 };
 
 #endif // SUBANALYSISDISPLAYGRAPHDATA_H

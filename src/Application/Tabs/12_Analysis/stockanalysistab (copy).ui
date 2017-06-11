@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>8</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2221,12 +2221,12 @@
           <rect>
            <x>150</x>
            <y>370</y>
-           <width>161</width>
+           <width>131</width>
            <height>16</height>
           </rect>
          </property>
          <property name="text">
-          <string/>
+          <string>TextLabel</string>
          </property>
         </widget>
        </widget>
@@ -2515,6 +2515,7 @@
            <height>491</height>
           </rect>
          </property>
+         <zorder>treeWidgetProfitGrowth_2</zorder>
         </widget>
         <widget class="QLabel" name="label_69">
          <property name="geometry">
@@ -2598,6 +2599,21 @@
           <string>Grahams Intrinsic Value</string>
          </property>
         </widget>
+        <widget class="QTreeWidget" name="treeWidgetProfitGrowth_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>130</y>
+           <width>251</width>
+           <height>331</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
         <widget class="QLabel" name="label_91">
          <property name="geometry">
           <rect>
@@ -2621,21 +2637,6 @@
           </rect>
          </property>
         </widget>
-        <widget class="QTreeWidget" name="treeWidgetProfitGrowth_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>110</y>
-           <width>301</width>
-           <height>381</height>
-          </rect>
-         </property>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
         <zorder>qwtPlot_19</zorder>
         <zorder>lineEditAvgEarningPerShare_2</zorder>
         <zorder>lineEditAnualEarningGrowthRate_2</zorder>
@@ -2643,10 +2644,10 @@
         <zorder>label_85</zorder>
         <zorder>label_86</zorder>
         <zorder>label_87</zorder>
+        <zorder>treeWidgetProfitGrowth_2</zorder>
         <zorder>label_91</zorder>
         <zorder>label_69</zorder>
         <zorder>lineEditAnualEarningGrowth</zorder>
-        <zorder>treeWidgetProfitGrowth_2</zorder>
        </widget>
        <widget class="QWidget" name="tab_21">
         <attribute name="title">

@@ -269,11 +269,12 @@ void MyLibCurl::addYahooCookie(CURL *curlHandl,
 void MyLibCurl::createYahooCookieUrl(QString stockSymbol,
                                      QString &outUrl)
 {
+#if 0
     int cnt;
     int i;
     int index = -1;
 
-#if 0
+
     // Check that it is only one dot in symbol name
     for(cnt = 0, i = 0; i < stockSymbol.length(); i++)
     {

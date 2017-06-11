@@ -9,6 +9,7 @@
 #include "treewidgetfinance.h"
 #include "dbHndl.h"
 #include "util.h"
+#include "financemath.h"
 
 
 /*******************************************************************
@@ -68,6 +69,71 @@ bool TreeWidgetFinance::addTreeWidgetData(QTreeWidget *treeWidget,
         else
         {
             item->setTextColor(2, Qt::red);
+        }
+    }
+
+    treeWidget->addTopLevelItem(item);
+
+    return true;
+}
+
+
+/*******************************************************************
+ *
+ * Function:    TreeWidgetFinance()
+ *
+ * Description: In TreeWidget, add 3 data.
+ *              Note: this is a top level tree widget without branches.
+ *
+ *
+ *******************************************************************/
+bool TreeWidgetFinance::addTreeWidgetData(QTreeWidget *treeWidget,
+                                          QString inData1,
+                                          QString inData2,
+                                          QString inData3,
+                                          QString inData4,
+                                          bool setColor)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem;
+    bool isNumeric;
+    double value3;
+    double value4;
+
+    if(item == NULL)
+    {
+        return false;
+    }
+
+    item->setText(0, inData1);
+    item->setText(1, inData2);
+    item->setText(2, inData3);
+    item->setText(3, inData4);
+
+    value3 = inData3.toDouble(&isNumeric);
+
+    if((isNumeric == true) && (setColor == true))
+    {
+        if(value3 >= 0)
+        {
+            item->setTextColor(2, Qt::darkGreen);
+        }
+        else
+        {
+            item->setTextColor(2, Qt::red);
+        }
+    }
+
+    value4 = inData4.toDouble(&isNumeric);
+
+    if((isNumeric == true) && (setColor == true))
+    {
+        if(value4 >= 0)
+        {
+            item->setTextColor(3, Qt::darkGreen);
+        }
+        else
+        {
+            item->setTextColor(3, Qt::red);
         }
     }
 
@@ -186,8 +252,7 @@ addLeastSqrtFitAndGrowthRateDataToTreeWidget(QTreeWidget *treeWidget,
                                              double k,
                                              double m,
                                              double maxX,
-                                             int nofDataToAdd,
-                                             QString &lastGrowthRateData)
+                                             int nofDataToAdd)
 {
     bool lastYIsInit = false;
     int i;
@@ -210,7 +275,6 @@ addLeastSqrtFitAndGrowthRateDataToTreeWidget(QTreeWidget *treeWidget,
 
     if(nofTopItems > 0)
     {
-       // item1 = treeWidget->topLevelItem(0);
         item1 = treeWidget->topLevelItem(treeWidget->topLevelItemCount() - 1);
         lastY = item1->text(1).toDouble();
         lastYIsInit = true;
@@ -239,26 +303,24 @@ addLeastSqrtFitAndGrowthRateDataToTreeWidget(QTreeWidget *treeWidget,
 
         if(lastYIsInit==true && lastY != 0)
         {
-            yStr = yStr.sprintf("%.2f", ((y - lastY) / lastY) * 100);
+            FinanceMath fm;
+            double growth;
+
+            fm.singleEventGrowth(y, lastY,  growth);
+
+            yStr = yStr.sprintf("%.2f", (growth * 100));
             item->setText(2, yStr);
+            item->setTextColor(2, Qt::darkRed);
+
             qDebug() << yStr;
-            lastGrowthRateData = yStr;
 
-            double value;
-            bool isNumeric;
-            value = yStr.toDouble(&isNumeric);
-
-            if(isNumeric == true)
+            if(growth >= 0)
             {
-                if(value >= 0)
-                {
-                    //item->setTextColor(2, Qt::darkGreen);
-                }
-                else
-                {
-                    //item->setTextColor(2, Qt::red);
-                }
-                item->setTextColor(2, Qt::darkRed);
+                item->setTextColor(1, Qt::darkGreen);
+            }
+            else
+            {
+                item->setTextColor(2, Qt::red);
             }
         }
 

@@ -129,10 +129,11 @@ SOURCES += 	\
                 src/Application/Tabs/14_others/jackStock.cpp \
                 src/Application/Tabs/7_ImportData/getYahooKeyStatistics.cpp \
                 src/GetHtmlPage/httpwindow.cpp \
-    src/LibCurl/myLibCurl.cpp \
-    src/QtLib/treewidgetfinance.cpp \
-    src/Utils/financemath.cpp \
-    src/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.cpp
+                src/LibCurl/myLibCurl.cpp \
+                src/QtLib/treewidgetfinance.cpp \
+                src/Utils/financemath.cpp \
+                src/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.cpp \
+                src/Utils/robustgrowth.cpp
 
 			    
     
@@ -208,12 +209,13 @@ HEADERS  += \
                 inc/Application/Tabs/14_others/jackStock.h \
                 inc/Application/Tabs/7_ImportData/getYahooKeyStatistics.h \
                 inc/GetHtmlPage/httpwindow.h \
-    inc/LibCurl/myLibCurl.h \
-    inc/QtLib/treewidgetfinance.h \
-    inc/Utils/financemath.h \
-    inc/QtLib/treewidgetfinance.h \
-    inc/Utils/financemath.h \
-    inc/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.h
+                inc/LibCurl/myLibCurl.h \
+                inc/QtLib/treewidgetfinance.h \
+                inc/Utils/financemath.h \
+                inc/QtLib/treewidgetfinance.h \
+                inc/Utils/financemath.h \
+                inc/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.h \
+                inc/Utils/robustgrowth.h
 
 FORMS    += \
     src/Application/selIndicatorsDlg.ui \

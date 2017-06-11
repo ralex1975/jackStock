@@ -2038,10 +2038,27 @@ void CUtil::htmlCodesToChar(QString inStr, QString &outStr)
  *********************************************************************/
 bool CUtil::annualGrowthRate(double startValue, double endValue, double nofYears, double &growthRate)
 {
-    if(startValue == 0 || nofYears == 0)
-        return false;
+    double value1;
+    double value2;
 
-    growthRate = pow((endValue/startValue), (1/nofYears));
+    if((startValue <= 0) || (nofYears == 0))
+    {
+        return false;
+    }
+
+    value1 = endValue / startValue;
+    value2 = ((double) 1.0 / nofYears);
+
+    if(value1 < 0)
+    {
+        value1 = -value1;
+        growthRate = (double) -pow(value1, value2);
+    }
+    else
+    {
+        growthRate = (double) pow(value1, value2);
+    }
+
     return true;
 }
 

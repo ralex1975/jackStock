@@ -167,61 +167,6 @@ subAnalysisOneArrCalcRationPrevCurrSlot(SubAnalysDataST *inputArr,
 
 
 
-/******************************************************************
- *
- * Function:    subAnalysisOneArrCalcRationPrevCurrSlot()
- *
- * Description:  out[i] = arr[i-1] / arr[i]; out[0] is set to 0
- *
- *
- *
- *
- *****************************************************************/
-void subAnalysisDisplayGraphData::
-subAnalysisOneArrCalcProcentRationPrevCurrSlot(SubAnalysDataST *inputArr,
-                                        int nofInputArrData,
-                                        SubAnalysDataST *resultArr,
-                                        int &nofResultArrData,
-                                        bool skipWhenDenominatorEqZero)
-{
-    double denominator = 0;
-    double numerator = 0;
-    double result = 0;
-    nofResultArrData = nofInputArrData;
-
-    if(nofInputArrData > 1)
-    {
-        resultArr[0].date = inputArr[0].date;
-
-        resultArr[0].data.sprintf("%.2f", 0.0);
-
-        for(int i = 1; i < nofInputArrData; i++)
-        {
-            // Do not divide with zero
-            denominator = inputArr[i-1].data.toDouble();
-            numerator = inputArr[i].data.toDouble();
-            if(denominator == 0)
-            {
-                if(skipWhenDenominatorEqZero == true)
-                {
-                    continue;
-                }
-                else
-                {
-                    denominator = 0.001;
-                }
-            }
-
-            resultArr[i].date = inputArr[i].date;
-
-            result = ((numerator - denominator) / denominator) * (double) 100.0;
-
-            resultArr[i].data.sprintf("%.2f", result);
-        }
-    }
-}
-
-
 
 
 /******************************************************************

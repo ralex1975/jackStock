@@ -39,6 +39,8 @@ class StockAnalysisTab : public QDialog
    // QVector <QwtIntervalSample> m_barHistDataArr[NOF_QWT_PLOTS];
 
 
+    double m_growthRate;
+    bool m_growthRateIsValid;
 
     QwtPlot *m_qwtPlot[NOF_QWT_PLOTS];
     subAnalysisDisplayGraphData m_saDisply;
@@ -127,15 +129,12 @@ class StockAnalysisTab : public QDialog
     void resetGuiCtrl(void);
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
     void initNetProfitAfterTaxTreeWidget(void);
+    void initProfitabilityAnalysis(void);
     void initMinMaxPePrice(void);
     void initSubAnalysisPlots(void);
 
-    void addEarningAndGrowsToTreeWidget(bool &leastSqrtFitIsValid,
-                                        double &k,
-                                        double &m,
-                                        double &minX,
-                                        double &maxX,
-                                        QString &lastGrowthRateData);
+    void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
+
 
 
     void initSubAnalyseTableWidget(QTableWidget *tableWidget,
@@ -330,6 +329,11 @@ private:
     void saveAnalysisPlotAsImages(void);
     void initAllAnalysisPlots(void);
     void clearAllAnalysisEditCtrls(void);
+    void addRevenueAndEquityToTreeWidget(QTreeWidget *treeWidget,
+                                         SubAnalysDataST *revenueArr,
+                                         int revenueArrLen,
+                                         SubAnalysDataST *equityArr,
+                                         int equityArrLen);
     void displayAllAnalysisPlots(void);
     bool subAnalysisCalcQuotient(SubAnalysDataST *resultArr, int &nofDataResultArr,
                                  SubAnalysDataST *numeratorArr, int nofDataNumeratorArr,

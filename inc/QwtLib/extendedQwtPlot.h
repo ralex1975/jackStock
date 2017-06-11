@@ -60,6 +60,7 @@ public:
     void setXAxisFontSize(QwtPlot *qwtPlot, int fontSize);
     void setYAxisFontSize(QwtPlot *qwtPlot, int fontSize);
     void saveQwtPlotAsImage(QString filename, QwtPlot *qwtPlot);
+    void saveQwtPlotAsImage(QString filename, QTreeWidget *treeWidget);
     void removeLegend( QwtPlotCurve *data);
     void setXAxisScale(QwtPlot *qwtPlot, double min, double max);
     void setYAxisScale(QwtPlot *qwtPlot, double min, double max);

@@ -137,6 +137,31 @@ void CExtendedQwtPlot::saveQwtPlotAsImage(QString filename, QwtPlot *qwtPlot)
 
 
 
+/*******************************************************************
+ *
+ * Function:    saveQwtPlotAsImage(()
+ *
+ * Description: Save Plot as an png-image on disk.
+ *
+ *
+ *******************************************************************/
+void CExtendedQwtPlot::saveQwtPlotAsImage(QString filename, QTreeWidget *treeWidget)
+{
+    QPixmap qPix = QPixmap::grabWidget(treeWidget);
+
+    if(qPix.isNull())
+    {
+        qDebug("Failed to save image on disk");
+        QMessageBox::information(NULL, QString::fromUtf8("Image error"),
+                                       QString::fromUtf8("Failed to save image on disk"));
+        return;
+    }
+
+   qPix.save(filename, "png");
+
+}
+
+
 
 
 /*******************************************************************
