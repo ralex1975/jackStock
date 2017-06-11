@@ -2219,9 +2219,9 @@
         <widget class="QLabel" name="labelReportLossOfEarning">
          <property name="geometry">
           <rect>
-           <x>150</x>
+           <x>140</x>
            <y>370</y>
-           <width>161</width>
+           <width>171</width>
            <height>16</height>
           </rect>
          </property>
@@ -3366,6 +3366,7 @@
       <zorder>lineEditCurrEquityPerShare</zorder>
       <zorder>lineEditEstimateYearlyDividend</zorder>
       <zorder>label_61</zorder>
+      <zorder>label_63</zorder>
       <zorder>lineEditTotErningsPerShare</zorder>
       <zorder>lineEditTotEquityIncPerShare</zorder>
       <zorder>lineEditTotDividendPerShare</zorder>
