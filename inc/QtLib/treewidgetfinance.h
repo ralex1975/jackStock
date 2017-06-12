@@ -8,6 +8,7 @@ class TreeWidgetFinance
 public:
     TreeWidgetFinance();
     bool calcLeastSqrtFit(QTreeWidget *treeWidget, double &k, double &m, double &minX, double &maxX, int colToUse);
+    bool addTreeWidgetData(QTreeWidget *treeWidget, QString inData1, QString inData2, bool setColor=false);
     bool addTreeWidgetData(QTreeWidget *treeWidget,QString inData1, QString inData2, QString inData3, bool setColor = false);
     bool addTreeWidgetData(QTreeWidget *treeWidget, QString inData1, QString inData2, QString inData3, QString inData4, bool setColor = false);
 

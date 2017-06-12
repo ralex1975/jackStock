@@ -79,6 +79,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     initProfitabilityAnalysis();
     initNetProfitAfterTaxTreeWidget();
     initMinMaxPePrice();
+    initTreeWidgetDividend();
 
     initSubAnalysTables();
 
@@ -321,6 +322,56 @@ void StockAnalysisTab::initMinMaxPePrice(void)
     ui->treeWidgetHistoricalPENum->setColumnWidth(4, 50);
 
 }
+
+
+
+/*******************************************************************
+ *
+ * Function:    initTreeWidgetDividend()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initTreeWidgetDividend(void)
+{
+
+    QString column0 = QString::fromUtf8("År");
+    QString column1 = QString("Utdelning");
+
+
+    ui->treeWidgetDividend->setColumnCount(2);
+    ui->treeWidgetDividend->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidgetDividend->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header = ui->treeWidgetDividend->headerItem())
+    {
+        header->setText(0, column0);
+        header->setText(1, column1);
+    }
+
+    ui->treeWidgetDividend->setColumnWidth(0, 65);
+    ui->treeWidgetDividend->setColumnWidth(1, 65);
+}
+
+
+void StockAnalysisTab::addDividendToTreeWidget(void)
+{
+    TreeWidgetFinance twf;
+    QString year;
+    QString dividend;
+
+    ui->treeWidgetDividend->clear();
+    for(int i = 0; i < m_nofDividendArrData; i++)
+    {
+        year.sprintf("%.0f", m_dividendDataArr[i].date.toDouble());
+        dividend.sprintf("%.2f", m_dividendDataArr[i].data.toDouble());
+        twf.addTreeWidgetData(ui->treeWidgetDividend, year, dividend, true);
+    }
+}
+
 
 
 /******************************************************************
@@ -789,8 +840,12 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             ele.setTxtColor(ui->lineEditPs, &palette[3], color);
 
             gColor = gfc.getColorYield(faData.keyValueYield, faData.earningsDividedByDividend);
+
             ui->lineEditYield->setText(faData.keyValueYield);
             ele.setTxtColor(ui->lineEditYield, &palette[4], gColor);
+
+            ui->lineEditDividendYield->setText(faData.keyValueYield);
+            ele.setTxtColor(ui->lineEditDividendYield, &palette[4], gColor);
 
         }
 
@@ -2668,6 +2723,7 @@ void StockAnalysisTab::on_treeWidgetAnalysisDate_doubleClicked(const QModelIndex
     ui->lineEditPs->setText(hSAPData.keyValuePs);
     ui->lineEditNavDivLastStockPrice->setText(hSAPData.keyValueNavPriceRatio);
     ui->lineEditYield->setText(hSAPData.keyValueYield);
+    ui->lineEditDividendYield->setText(hSAPData.keyValueYield);
 
     // m_keyValuePriceJEKRatio, saknas
     ui->lineEditTotDebtEquityRatio->setText(hSAPData.keyValueTotalDebtEquityRatio);
@@ -2750,6 +2806,7 @@ void StockAnalysisTab::resetGuiCtrl(void)
     ui->lineEditPs->clear();
     ui->lineEditNavDivLastStockPrice->clear();
     ui->lineEditYield->clear();
+    ui->lineEditDividendYield->clear();
 
     // m_keyValuePriceJEKRatio, saknas
     ui->lineEditTotDebtEquityRatio->clear();
@@ -6370,6 +6427,8 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                 indexToPlot,
                                 nofPlotToClear,
                                 lineColor);
+
+    addDividendToTreeWidget();
 
 
     //-----------------------------------------------------------------------------------

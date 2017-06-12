@@ -131,7 +131,9 @@ class StockAnalysisTab : public QDialog
     void initNetProfitAfterTaxTreeWidget(void);
     void initProfitabilityAnalysis(void);
     void initMinMaxPePrice(void);
+    void initTreeWidgetDividend(void);
     void initSubAnalysisPlots(void);
+    void addDividendToTreeWidget(void);
 
     void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
 

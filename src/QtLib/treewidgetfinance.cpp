@@ -29,6 +29,53 @@ TreeWidgetFinance::TreeWidgetFinance()
 
 
 
+/*******************************************************************
+ *
+ * Function:    TreeWidgetFinance()
+ *
+ * Description: In TreeWidget, add 3 data.
+ *              Note: this is a top level tree widget without branches.
+ *
+ *
+ *******************************************************************/
+bool TreeWidgetFinance::addTreeWidgetData(QTreeWidget *treeWidget,
+                                          QString inData1,
+                                          QString inData2,
+                                          bool setColor)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem;
+    bool isNumeric;
+    double value;
+
+    if(item == NULL)
+    {
+        return false;
+    }
+
+    item->setText(0, inData1);
+    item->setText(1, inData2);
+
+    value = inData2.toDouble(&isNumeric);
+
+    if((isNumeric == true) && (setColor == true))
+    {
+        if(value >= 0)
+        {
+            item->setTextColor(2, Qt::darkGreen);
+        }
+        else
+        {
+            item->setTextColor(2, Qt::red);
+        }
+    }
+
+    treeWidget->addTopLevelItem(item);
+
+    return true;
+}
+
+
+
 
 /*******************************************************************
  *
