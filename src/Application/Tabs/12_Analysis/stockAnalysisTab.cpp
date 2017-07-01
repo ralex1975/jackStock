@@ -4497,7 +4497,6 @@ void StockAnalysisTab::plotCashflowData(void)
 
     for(i = 0; i < m_nofCashFlowCapexData; i++)
     {
-
         data_x.push_back(m_cashFlowCapexArr[i].date.toDouble());
         data_y.push_back(-m_cashFlowCapexArr[i].data.toDouble());
 
@@ -4546,7 +4545,6 @@ void StockAnalysisTab::plotCashflowData(void)
 
     for(i = 0; i < m_nofTotDividensData; i++)
     {
-
         data_x.push_back(m_totDividensArr[i].date.toDouble());
         data_y.push_back(-m_totDividensArr[i].data.toDouble());
 
@@ -5477,6 +5475,12 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
         cyspu.updateMinMaxAxis(m_qwtEquityPlotData.axis, m_x[i], m_y[i]);
     }
 
+    if( (m_qwtEquityPlotData.axis.minY > 0))
+    {
+        m_qwtEquityPlotData.axis.minY = 0;
+    }
+
+
     int nofXTicks;
     m_qwtEquityPlotData.stock[index].data.setSamples(m_x, m_y, nofData);
     ui->qwtPlot_10->setAxisMaxMinor(QwtPlot::xBottom, 2);
@@ -5502,7 +5506,7 @@ void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofD
                                                                       QSize( 7, 7 ) ) );
     }
 
-    cyspu.plotData(m_qwtEquityPlotData, ui->qwtPlot_10, index, true);
+    cyspu.plotData(m_qwtEquityPlotData, ui->qwtPlot_10, index, false);
     m_qwtEquityPlotData.stock[index].data.attach(ui->qwtPlot_10);
     ui->qwtPlot_10->replot();
 }
@@ -5567,7 +5571,7 @@ bool StockAnalysisTab::makeAnalysPlotDirectory(QString stockname, QString date)
 
 /*******************************************************************
  *
- * Function:        clearGUIIntrinsicValue()
+ * Function:        saveAnalysisPlotAsImages()
  *
  * Description:
  *
@@ -5622,8 +5626,6 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     ceqp.saveQwtPlotAsImage(filename, ui->treeWidgetProfitGrowth);
 
 
-
-
     //-----------------------------------------------------------------------------------
     // Omsättning, Vinst efter skatt
     //-----------------------------------------------------------------------------------
@@ -5645,7 +5647,6 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     ceqp.saveQwtPlotAsImage(filename, ui->treeWidgetHistoricalPENum);
 
 
-
     //-----------------------------------------------------------------------------------
     // Utdelning
     //-----------------------------------------------------------------------------------
@@ -5663,7 +5664,6 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     filename += "image_6.png";
     ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotEarningDiv_16);
 
-
     //-----------------------------------------------------------------------------------
     // Operativt kassaflöde - CAPEX - Utdelning > 0
     //-----------------------------------------------------------------------------------
@@ -5671,7 +5671,6 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     filename += "/";
     filename += "image_7.png";
     ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCashflow1_15);
-
 
     //-----------------------------------------------------------------------------------
     // Operativt kassaflöde, CAPEX, Utdelning
@@ -5760,9 +5759,6 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     CExtendedQwtPlot eqp;
 
 
-
-
-
     //===================================================================================
     // Trading company industrial companies
     //===================================================================================
@@ -5816,9 +5812,6 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
     initAnalysisPlot(ui->qwtPlotDiv_14, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
-
-
-
 
     //-----------------------------------------------------------------------------------
     // Vinst/Utdelning
@@ -5877,7 +5870,6 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
     initAnalysisPlot(ui->qwtPlot_19, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
-
 
 
     //-----------------------------------------------------------------------------------
@@ -5953,6 +5945,8 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     eqp.setLegendSymbol(ui->qwtPlotLiabEquityEarningDiv_21, legendText, legendSymbol, legendColor, legendSize);
 
 }
+
+
 
 
 /*******************************************************************
@@ -6071,8 +6065,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     bool resetMinMaxValue = true;
     //double growthRate;
     bool hideDataSample = false;
-
-
 
 
     CYahooStockPlotUtil cyspu;
