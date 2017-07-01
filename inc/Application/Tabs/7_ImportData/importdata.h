@@ -229,6 +229,7 @@ private slots:
     // void on_pushButton_3_clicked();
     // void on_pushButtonGetAnualData_clicked();
     void on_pushButtonParseOmxBridgeData_clicked();
+    void on_pushButtonImportBorsData_clicked();
 };
 
 #endif // IMPORTDATA_H

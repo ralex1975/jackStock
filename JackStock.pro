@@ -133,7 +133,8 @@ SOURCES += 	\
                 src/QtLib/treewidgetfinance.cpp \
                 src/Utils/financemath.cpp \
                 src/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.cpp \
-                src/Utils/robustgrowth.cpp
+                src/Utils/robustgrowth.cpp \
+    src/Application/Tabs/7_ImportData/parseborsdata.cpp
 
 			    
     
@@ -215,7 +216,8 @@ HEADERS  += \
                 inc/QtLib/treewidgetfinance.h \
                 inc/Utils/financemath.h \
                 inc/Application/Tabs/12_Analysis/altgcalcintrinsicvaluedlg.h \
-                inc/Utils/robustgrowth.h
+                inc/Utils/robustgrowth.h \
+    src/Application/Tabs/7_ImportData/parseborsdata.h
 
 FORMS    += \
     src/Application/selIndicatorsDlg.ui \

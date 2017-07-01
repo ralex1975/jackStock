@@ -21,6 +21,8 @@
 #include "parseomxallfinancelinkdata.h"
 #include "parseomxbridgedata.h"
 
+#include "parseborsdata.h"
+
 
 
 
@@ -2015,3 +2017,11 @@ void ImportData::slotReqNextOmxBridgData()
 
 
 
+
+void ImportData::on_pushButtonImportBorsData_clicked()
+{
+    ParseBorsData pbd;
+    QString filename = "database/inputData/borsdata/analys.html";
+    pbd.readFile(filename);
+
+}
