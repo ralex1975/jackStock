@@ -6,6 +6,8 @@
 #include <QDebug>
 
 
+
+
 struct OmxBridgeDataST
 {
     QString stockSymbol;

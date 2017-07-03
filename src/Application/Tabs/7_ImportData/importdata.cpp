@@ -22,7 +22,7 @@
 #include "parseomxbridgedata.h"
 
 #include "parseborsdata.h"
-
+#include "myLibCurl.h"
 
 
 
@@ -2017,11 +2017,28 @@ void ImportData::slotReqNextOmxBridgData()
 
 
 
-
+/****************************************************************
+ *
+ * Function:    on_pushButtonImportBorsData_clicked()
+ *
+ * Description: Import data from Börsdata.se
+ *
+ *
+ *
+ *
+ ****************************************************************/
 void ImportData::on_pushButtonImportBorsData_clicked()
 {
+     QString filename = "database/inputData/borsdata/bdSverigeLargeCap.csv";
+    //QString filename = "database/inputData/borsdata/bdSverigeMidCap.csv";
     ParseBorsData pbd;
-    QString filename = "database/inputData/borsdata/analys.html";
-    pbd.readFile(filename);
+
+    if(true == pbd.readStockSymbolsFile(filename))
+    {
+
+    }
+
+    QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
+
 
 }

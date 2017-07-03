@@ -543,7 +543,7 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
         bool requestYahooCrumbPg = true;
         if(m_retriveCookieCrumbFromDb == true)
         {
-             #if 1
+             #if 0
             requestYahooCrumbPg = false;
 
             // Check if this crumb and cookie is already stored in SQL-db

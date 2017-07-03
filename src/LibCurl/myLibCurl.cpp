@@ -35,6 +35,9 @@ static size_t writeDataToFile(void *ptr, size_t size, size_t nmemb, FILE *stream
 
 
 
+
+
+
 /******************************************************************
  *
  * Function:    writeDataToFile()
@@ -55,7 +58,7 @@ static size_t writeDataToFile(void *ptr, size_t size, size_t nmemb, FILE *stream
 
 /******************************************************************
  *
- * Function:    ()
+ * Function:    beginCurlSession()
  *
  * Description: Invoke this function before you use any
  *              other functions in this class;
@@ -714,3 +717,46 @@ CURL *curl;
 
 #endif
 #endif
+
+
+/******************************************************************
+*
+* Function:    getHtmlPage()
+*
+* Description: get html page (No cookie)
+*
+*
+*
+*****************************************************************/
+bool MyLibCurl::getHtmlPage(const char* url, const char* filename)
+{
+    CURL* easyhandle = curl_easy_init();
+    CURLcode res;
+    QString errorStr;
+
+    curl_easy_setopt( easyhandle, CURLOPT_URL, url ) ;
+
+    FILE* file = fopen( filename, "w");
+
+    curl_easy_setopt( easyhandle, CURLOPT_WRITEDATA, file);
+
+    /* Set the default value: strict certificate check please */
+    curl_easy_setopt(easyhandle, CURLOPT_SSL_VERIFYPEER, 1L);
+
+    curl_easy_setopt(easyhandle, CURLOPT_VERBOSE, DEBUG_MODE_ON);
+
+    res = curl_easy_perform( easyhandle );
+
+     if (res != CURLE_OK)
+     {
+         errorStr.sprintf("Curl perform failed: %s\n", curl_easy_strerror(res));
+         QMessageBox::information(NULL, QString::fromUtf8("Error"), errorStr);
+         return false;
+     }
+
+    curl_easy_cleanup( easyhandle );
+
+    fclose(file);
+
+ return true;
+}

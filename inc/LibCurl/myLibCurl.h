@@ -27,6 +27,7 @@ public:
     MyLibCurl(){}
     ~MyLibCurl(){}
     static CURL *beginCurlSession(void);
+    static bool getHtmlPage(const char* url, const char* filename);
     static void endCurlSession(CURL *curlHndl);
     static bool getCookieExpirationTime(QString cookieArr, QString &expirationTime);
     static bool getYahooCookies(CURL *curlHandl, char *cookieResArr);

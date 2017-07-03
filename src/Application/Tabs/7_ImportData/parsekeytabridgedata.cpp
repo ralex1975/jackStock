@@ -3,7 +3,14 @@
 #include "dbHndl.h"
 
 
-
+/****************************************************************
+ *
+ * Function:    ParseKeyTaBridgeData()
+ *
+ * Description:  *
+ *
+ *
+ ****************************************************************/
 ParseKeyTaBridgeData::ParseKeyTaBridgeData()
 {
 }

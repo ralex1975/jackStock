@@ -3739,6 +3739,8 @@ void StockAnalysisTab::on_pushButtonSaveSolidity_clicked()
 
 }
 
+
+
 /******************************************************************
  *
  * Function:    on_pushButtonSaveCoverageRatio_clicked()
