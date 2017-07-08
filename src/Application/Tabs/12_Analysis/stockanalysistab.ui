@@ -1839,7 +1839,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>6</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2062,6 +2062,394 @@
         </widget>
        </widget>
        <widget class="QWidget" name="tab_14">
+        <attribute name="title">
+         <string>Soliditet</string>
+        </attribute>
+        <widget class="QLineEdit" name="lineEditAvgSolidity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>120</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinSolidity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>170</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotSolidity">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_125">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxSolidity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>70</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_126">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>150</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_127">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>100</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResultSolidity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>20</y>
+           <width>181</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_26">
+        <attribute name="title">
+         <string>TSkuld/Eget kap</string>
+        </attribute>
+        <widget class="QLabel" name="label_128">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_129">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>150</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_130">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>100</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinTotLiabDivEquity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>170</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxTotLiabDivEquity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>70</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResultTotLiabDivEquity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>20</y>
+           <width>181</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotTotLiabDivEquity">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgTotLiabDivEquity">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>120</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_27">
+        <attribute name="title">
+         <string>RTGrad</string>
+        </attribute>
+        <widget class="QLineEdit" name="lineEditMaxCovRatio">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>70</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResultCovRatio">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>20</y>
+           <width>181</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_131">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>100</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinCovRatio">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>170</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_132">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgCovRatio">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>120</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_133">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>150</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotCovRatio">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_28">
+        <attribute name="title">
+         <string>KärnPriKapRel</string>
+        </attribute>
+        <widget class="QLabel" name="labelResultCoreCapitalRatio">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>181</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_134">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>50</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_135">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>100</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxCoreCapitalRatio">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>70</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_136">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>150</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinCoreCapitalRatio">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>170</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotCoreCapitalRatio">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgCoreCapitalRatio">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>120</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_31">
         <attribute name="title">
          <string>Vinst</string>
         </attribute>
@@ -2972,21 +3360,6 @@
         </widget>
        </widget>
       </widget>
-     </widget>
-     <widget class="QWidget" name="tab_26">
-      <attribute name="title">
-       <string>Fastighetsbolag</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tab_27">
-      <attribute name="title">
-       <string>Försörjningsbolag</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tab_28">
-      <attribute name="title">
-       <string>Bank</string>
-      </attribute>
      </widget>
     </widget>
    </widget>

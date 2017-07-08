@@ -357,6 +357,16 @@ void StockAnalysisTab::initTreeWidgetDividend(void)
 }
 
 
+/******************************************************************
+ *
+ * Function:    addDividendToTreeWidget()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
 void StockAnalysisTab::addDividendToTreeWidget(void)
 {
     TreeWidgetFinance twf;
@@ -609,7 +619,7 @@ void StockAnalysisTab::initSubAnalysTables(void)
     m_nofCoverageRatioData = 0;
 
 
-    // Core Tier1 Ratio (Primärkapitalrelation)
+    // Core Tier1 Ratio (Primärkapitalrelation) används ej
     dataHeader = QString::fromUtf8("primärkap.rel");
     initSubAnalyseTableWidget(ui->tableWidgetCoreTier1Ratio, dateHeader, dataHeader);
     m_nofCoreTier1RatioData = 0;
@@ -2462,9 +2472,6 @@ void StockAnalysisTab::writeHtmlArrDataToTxtFile(void)
             }
         }
     }
-
-
-
 
 
     // Save data
@@ -5787,6 +5794,52 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
 
     //-----------------------------------------------------------------------------------
+    // Soliditet > 0.40
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Soliditet > 0.40 (Eget Kapital/Summa Tillgångar)");
+    legendText = QString::fromUtf8("Sol");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initAnalysisPlot(ui->qwtPlotSolidity, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Totala skulder/Eget kapital < 2
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Totala skulder/Eget kapital < 2");
+    legendText = QString::fromUtf8("Ts/Ek");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initAnalysisPlot(ui->qwtPlotTotLiabDivEquity, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Räntetäckningsgrad > 3
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Räntetäckningsgrad > 3");
+    legendText = QString::fromUtf8("RT");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initAnalysisPlot(ui->qwtPlotCovRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Kärnprimärkapitalrelation >= 15%
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Kärnprimärkapitalrelation >= 15%");
+    legendText = QString::fromUtf8("Kpkr");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initAnalysisPlot(ui->qwtPlotCoreCapitalRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
+
+
+
+    //-----------------------------------------------------------------------------------
     // Vinst/Aktie
     //-----------------------------------------------------------------------------------
     plotHeader = QString::fromUtf8("Vinst/Aktie > 0");
@@ -5799,8 +5852,16 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Omsättning, Vinst efter skatt
     //-----------------------------------------------------------------------------------
+    legendText = legendText.fromUtf8("V");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::red;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotRevenueEarnings_17, legendText, legendSymbol, legendColor, legendSize);
+
+    legendColor = Qt::blue;
     plotHeader = QString::fromUtf8("Omsättning, Vinst efter skatt");
-    legendText = QString::fromUtf8("O, V");
+    legendText = QString::fromUtf8("O");
 
     initAnalysisPlot(ui->qwtPlotRevenueEarnings_17, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
@@ -5909,19 +5970,10 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     initAnalysisPlot(ui->qwtPlotLiabEquityEarningDiv_21, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
 
-  //  ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
-
-
-
 
     //-----------------------------------------------------------------------------------
     // Totala Skulder, Eget kapital, Vinst, Utdelning
     //-----------------------------------------------------------------------------------
-
-    //ui->qwtPlotLiabEquityEarningDiv_21->insertLegend(NULL);
-
-    //eqp.setRightLegend(ui->qwtPlotLiabEquityEarningDiv_21);
-
 
     legendText = legendText.fromUtf8("Eget kapital");
     legendSymbol = QwtSymbol::Rect;
@@ -5987,9 +6039,12 @@ void StockAnalysisTab::clearAllAnalysisEditCtrls(void)
     ui->lineEditAvgEquityMargin->clear();
 }
 
+
+
+
 /*******************************************************************
  *
- * Function:        displayAllAnalysisPlots()
+ * Function:        addRevenueAndEquityToTreeWidget()
  *
  * Description:
  *
@@ -6065,8 +6120,9 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     double average;
     QString str;
     bool resetMinMaxValue = true;
-    //double growthRate;
     bool hideDataSample = false;
+    FinanceMath fm;
+
 
 
     CYahooStockPlotUtil cyspu;
@@ -6087,6 +6143,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Omsättningstillgångarna / Kortfristiga skulder > 2
     //-----------------------------------------------------------------------------------
     // Beräkna kvoten
+
+    ui->lineEdiMaxtCurrAssLiab->clear();
+    ui->lineEditMinCurrAssLiab->clear();
+    ui->lineEditAvgCurrAssLiab->clear();
+
+
     if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totalCurrentAssetsArr,
@@ -6099,17 +6161,14 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     {
         str.clear();
         str.sprintf("%.2f", max);
-        ui->lineEdiMaxtCurrAssLiab->clear();
         ui->lineEdiMaxtCurrAssLiab->insert(str);
 
         str.clear();
         str.sprintf("%.2f", min);
-        ui->lineEditMinCurrAssLiab->clear();
         ui->lineEditMinCurrAssLiab->insert(str);
 
         str.clear();
         str.sprintf("%.2f", average);
-        ui->lineEditAvgCurrAssLiab->clear();
         ui->lineEditAvgCurrAssLiab->insert(str);
 
         str.clear();
@@ -6127,9 +6186,8 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
             str = QString::fromUtf8("Underkänd < 2");
             ui->labelResCurrAssetLiab->setText(str);
         }
+
     }
-
-
 
 
     indexToPlot = 0;
@@ -6146,6 +6204,9 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                          indexToPlot,
                          nofPlotToClear,
                          lineColor);
+
+
+
 
     //-----------------------------------------------------------------------------------
     // Omsättningstillgångarna / Totala skulder >= 1
@@ -6208,6 +6269,232 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                          indexToPlot,
                          nofPlotToClear,
                          lineColor);
+
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Soliditet > 0.4
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 11;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    skipDenominatorEqZero = true;
+    resetMinMaxValue = true;
+    QString minY;
+    QString maxY;
+    QString avgY;
+
+    ui->labelResultSolidity->clear();
+    ui->lineEditMinSolidity->clear();
+    ui->lineEditAvgSolidity->clear();
+    ui->lineEditMaxSolidity->clear();
+
+
+    if(true == fm.getMinMaxAvgYData(m_solidityArr,
+                         m_nofSolidityData,
+                         minY,
+                         maxY,
+                         avgY))
+    {
+        if(minY.toDouble() >= 0.4)
+        {
+            ui->labelResultSolidity->setPalette(*m_blue_palette);
+            ui->labelResultSolidity->setText(QString::fromUtf8("Godkänt >= 0.40"));
+        }
+        else
+        {
+            ui->labelResultSolidity->setPalette(*m_red_palette);
+            ui->labelResultSolidity->setText(QString::fromUtf8("Underkänt < 0.40"));
+        }
+
+        ui->lineEditMinSolidity->setText(minY);
+        ui->lineEditAvgSolidity->setText(avgY);
+        ui->lineEditMaxSolidity->setText(maxY);
+    }
+
+
+    plotLinearReportData(ui->qwtPlotSolidity,
+                         m_qwtAllAnalysisPlotData,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_solidityArr,
+                         m_nofSolidityData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+
+    //=====================================================================
+    // Totala Skulder/Eget kapital < 2
+    //=====================================================================
+    ui->lineEditMaxTotLiabDivEquity->clear();
+    ui->lineEditMinTotLiabDivEquity->clear();
+    ui->lineEditAvgTotLiabDivEquity->clear();
+
+
+    if(true == subAnalysisCalcQuotient(resultArr,
+                            nofDataResultArr,
+                            m_totalLiabilitiesArr,
+                            m_nofTotalLiabilitiesData,
+                            m_totEquityArr,
+                            m_nofTotEquityData,
+                            min,
+                            max,
+                            average))
+    {
+        str.clear();
+        str.sprintf("%.2f", max);
+        ui->lineEditMaxTotLiabDivEquity->insert(str);
+
+        str.clear();
+        str.sprintf("%.2f", min);
+        ui->lineEditMinTotLiabDivEquity->insert(str);
+
+        str.clear();
+        str.sprintf("%.2f", average);
+        ui->lineEditAvgTotLiabDivEquity->insert(str);
+
+        str.clear();
+        if(max < (double) 2.0)
+        {
+            ui->labelResultTotLiabDivEquity->setPalette(*m_blue_palette);
+            str = str.fromUtf8("Godkänd < 2");
+            ui->labelResultTotLiabDivEquity->setText(str);
+        }
+        else
+        {
+            ui->labelResultTotLiabDivEquity->setPalette(*m_red_palette);
+            str = QString::fromUtf8("Underkänd >= 2");
+            ui->labelResultTotLiabDivEquity->setText(str);
+        }
+
+        indexToPlot = 2;
+        nofPlotToClear = 0;
+        lineColor = Qt::blue;
+        useAutoScale = false;
+        resetMinMaxValue = true;
+
+        plotLinearReportData(ui->qwtPlotTotLiabDivEquity,
+                             m_qwtAllAnalysisPlotData,
+                             useAutoScale,
+                             resetMinMaxValue,
+                             resultArr,
+                             nofDataResultArr,
+                             indexToPlot,
+                             nofPlotToClear,
+                             lineColor);
+
+
+    }
+
+
+    //-----------------------------------------------------------------------------------
+    // Räntetäckningsgrad > 3
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 9;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+    ui->labelResultCovRatio->clear();
+    ui->lineEditMinCovRatio->clear();
+    ui->lineEditAvgCovRatio->clear();
+    ui->lineEditMaxCovRatio->clear();
+
+    if(true == fm.getMinMaxAvgYData(m_coverageRatioArr,
+                                    m_nofCoverageRatioData,
+                                    minY,
+                                    maxY,
+                                    avgY))
+    {
+        if(minY.toDouble() > 3.0)
+        {
+            ui->labelResultCovRatio->setPalette(*m_blue_palette);
+            ui->labelResultCovRatio->setText(QString::fromUtf8("Godkänt > 3.0"));
+        }
+        else
+        {
+            ui->labelResultCovRatio->setPalette(*m_red_palette);
+            ui->labelResultCovRatio->setText(QString::fromUtf8("Underkänt < 3.0"));
+        }
+
+        ui->lineEditMinCovRatio->setText(minY);
+        ui->lineEditAvgCovRatio->setText(avgY);
+        ui->lineEditMaxCovRatio->setText(maxY);
+
+    }
+
+
+    plotLinearReportData(ui->qwtPlotCovRatio,
+                         m_qwtAnalysisPlotDataArr2,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_coverageRatioArr,
+                         m_nofCoverageRatioData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+
+    //-----------------------------------------------------------------------------------
+    // Kärnprimärkapitalrelation >= 15.0%
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 10;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+    ui->labelResultCoreCapitalRatio->clear();
+    ui->lineEditMinCoreCapitalRatio->clear();
+    ui->lineEditAvgCoreCapitalRatio->clear();
+    ui->lineEditMaxCoreCapitalRatio->clear();
+
+    if(true == fm.getMinMaxAvgYData(m_coreCapitalRatioArr,
+                                    m_nofCoreCapitalRatioData,
+                                    minY,
+                                    maxY,
+                                    avgY))
+    {
+        if(minY.toDouble() >= 15.0)
+        {
+            ui->labelResultCoreCapitalRatio->setPalette(*m_blue_palette);
+            ui->labelResultCoreCapitalRatio->setText(QString::fromUtf8("Godkänt >= 15.0"));
+        }
+        else
+        {
+            ui->labelResultCoreCapitalRatio->setPalette(*m_red_palette);
+            ui->labelResultCoreCapitalRatio->setText(QString::fromUtf8("Underkänt < 15.0"));
+        }
+
+        ui->lineEditMinCoreCapitalRatio->setText(minY);
+        ui->lineEditAvgCoreCapitalRatio->setText(avgY);
+        ui->lineEditMaxCoreCapitalRatio->setText(maxY);
+
+
+    }
+
+
+    plotLinearReportData(ui->qwtPlotCoreCapitalRatio,
+                         m_qwtAnalysisPlotDataArr2,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_coreCapitalRatioArr,
+                         m_nofCoreCapitalRatioData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+
+
+
+
 
 
     //-----------------------------------------------------------------------------------
@@ -6415,12 +6702,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     useAutoScale = false;
 
     plotBarGraphReportData(ui->qwtPlotDiv_14,
-                                useAutoScale,
-                                m_dividendDataArr,
-                                m_nofDividendArrData,
-                                indexToPlot,
-                                nofPlotToClear,
-                                lineColor);
+                           useAutoScale,
+                           m_dividendDataArr,
+                           m_nofDividendArrData,
+                           indexToPlot,
+                           nofPlotToClear,
+                           lineColor);
 
     addDividendToTreeWidget();
 
@@ -6607,7 +6894,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                            lineColor,
                           hideDataSample);
 
-    FinanceMath fm;
 
     if(true == fm.calcGrowth(m_earningsDataArr, m_nofEarningsArrData, resultArr))
     {

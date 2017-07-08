@@ -29,6 +29,75 @@ FinanceMath::FinanceMath()
 }
 
 
+/****************************************************************
+ *
+ * Function:
+ *
+ * Description:
+ *
+ *
+ ****************************************************************/
+bool FinanceMath::getMinMaxAvgYData(SubAnalysDataST  *dataArr,
+                                    int nofArrData,
+                                    QString &minY,
+                                    QString &maxY,
+                                    QString &avgY)
+{
+    double y;
+    double dbMinY;
+    double dbMaxY;
+    double dbAvg;
+    double sum;
+    bool isValid;
+
+    if(nofArrData < 1)
+    {
+        return false;
+    }
+
+
+    y = dataArr[0].data.toDouble(&isValid);
+    if(isValid == false)
+    {
+        return false;
+    }
+
+    dbMinY = y;
+    dbMaxY = y;
+    sum = y;
+
+    for(int i = 1; i < nofArrData; i++)
+    {
+        y = dataArr[i].data.toDouble(&isValid);
+        if(isValid == false)
+        {
+            return false;
+        }
+
+        if(dbMinY > y)
+        {
+            dbMinY = y;
+        }
+
+        if(dbMaxY < y)
+        {
+            dbMaxY = y;
+        }
+
+        sum += y;
+    }
+
+    dbAvg = (sum / (double) nofArrData);
+
+    minY.sprintf("%.2f", dbMinY);
+    maxY.sprintf("%.2f", dbMaxY);
+    avgY.sprintf("%.2f", dbAvg);
+
+    return true;
+}
+
+
+
 
 
 

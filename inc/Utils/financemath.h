@@ -9,6 +9,7 @@ class FinanceMath
 
 public:
     FinanceMath();
+    bool getMinMaxAvgYData(SubAnalysDataST  *dataArr, int nofArrData, QString &minY, QString &maxY, QString &avgY);
     bool modifiedZScore(double *inArr, int arrLen, bool *isOutlierArr);
     bool mAD(double *inArr, int arrLen, double &mad);
     double absolute(double value);
