@@ -201,19 +201,19 @@ insertTaCrumbCookieData(QString stockName,
 
 
 
-#if 0
+#if 1
 /****************************************************************
  *
- * Function:    subAnalysisIntrinsicValueDateExists()
+ * Function:    subAnalysisEfficientRatioDateExists()
  *
- * Description: Operating Cash Flow
+ * Description: Efficient Ratio
  *
  *
  *
  *
  *
  ****************************************************************/
-bool CDbHndl::subAnalysis1IntrinsicValueDateExists(QString date,
+bool CDbHndl::subAnalysisEfficientRatioDateExists(QString date,
                                      int mainAnalysisId,
                                      int &dateId)
 {
@@ -232,7 +232,7 @@ bool CDbHndl::subAnalysis1IntrinsicValueDateExists(QString date,
 
 
     str.sprintf("SELECT * "
-                " FROM  TblDateIntrinsicValueSubAnalysis_1 "
+                " FROM  TblDateEfficientRatio "
                 " WHERE Date = '%s' AND MainAnalysisId = %d;",
                 c_date,
                 mainAnalysisId);
@@ -247,8 +247,9 @@ bool CDbHndl::subAnalysis1IntrinsicValueDateExists(QString date,
     {
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QString::fromUtf8("TblDateIntrinsicValueSubAnalysis_1 error 1"), qry.lastError().text().toUtf8().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("Error:"), qry.lastError().text().toUtf8().constData());
         }
+
         qDebug() << qry.lastError();
         closeDb();
         m_mutex.unlock();
@@ -294,7 +295,7 @@ bool CDbHndl::subAnalysis1IntrinsicValueDateExists(QString date,
 
 /****************************************************************
  *
- * Function:    insertSubAnalysisIntrinsicValueDate()
+ * Function:    insertSubAnalysisEfficientRatioDate()
  *
  * Description:
  *
@@ -304,10 +305,10 @@ bool CDbHndl::subAnalysis1IntrinsicValueDateExists(QString date,
  *
  ****************************************************************/
 bool CDbHndl::
-insertSubAnalysisIntrinsicValueDate(QString date,
-                       int mainAnalysisId,
-                       int &dateId,
-                       bool dbIsHandledExternly)
+insertSubAnalysisEfficientRatioDate(QString date,
+                                    int mainAnalysisId,
+                                    int &dateId,
+                                    bool dbIsHandledExternly)
 {
     QString str;
 
@@ -323,7 +324,7 @@ insertSubAnalysisIntrinsicValueDate(QString date,
     const char *c_date = ba.data();
 
 
-    str.sprintf("INSERT OR REPLACE INTO TblDateIntrinsicValueSubAnalysis_1 "
+    str.sprintf("INSERT OR REPLACE INTO TblDateEfficientRatio "
                 "(Date, MainAnalysisId) "
                 " VALUES('%s', %d);",
                 c_date,
@@ -339,7 +340,7 @@ insertSubAnalysisIntrinsicValueDate(QString date,
 
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QString::fromUtf8("TblDateIntrinsicValueSubAnalysis_1"), qry.lastError().text().toUtf8().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateEfficientRatio"), qry.lastError().text().toUtf8().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -369,7 +370,7 @@ insertSubAnalysisIntrinsicValueDate(QString date,
 
 /*****************************************************************
  *
- * Function:		getSubAnalysisIntrinsicValueId()
+ * Function:		getSubAnalysisEfficientRatioDataId()
  *
  * Description:
  *
@@ -377,10 +378,10 @@ insertSubAnalysisIntrinsicValueDate(QString date,
  *
  *****************************************************************/
 bool CDbHndl::
-getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
-                  int dateId,
-                  int &dataId,
-                  bool dbIsHandledExternly)
+getSubAnalysisEfficientRatioDataId(int mainAnalysisId,
+                                   int dateId,
+                                   int &dataId,
+                                   bool dbIsHandledExternly)
 {
 
 
@@ -398,13 +399,12 @@ getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
   bool found = false;
 
 
-    str.sprintf("SELECT TblDataIntrinsicValueSubAnalysis_1.DataId, TblDataIntrinsicValueSubAnalysis_1.DateId, TblDataIntrinsicValueSubAnalysis_1.MainAnalysisId   "
-                " FROM TblDataIntrinsicValueSubAnalysis_1   "
+    str.sprintf("SELECT TblDataEfficientRatio.DataId, TblDataEfficientRatio.DateId, TblDataEfficientRatio.MainAnalysisId   "
+                " FROM TblDataEfficientRatio   "
                 " WHERE  "
-                "       TblDataIntrinsicValueSubAnalysis.DateId = %d AND "
-                "       TblDataIntrinsicValueSubAnalysis.MainAnalysisId = %d;",
-                                                                           dateId,
-                                                                           mainAnalysisId);
+                "       TblDataEfficientRatio.DateId = %d AND "
+                "       TblDataEfficientRatio.MainAnalysisId = %d;", dateId
+                                                                   , mainAnalysisId);
 
 
     qDebug() << str << "\n";
@@ -431,9 +431,6 @@ getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
         while(qry.next())
         {
             rec = qry.record();
-
-
-
 
             if(rec.value("DataId").isNull() == true)
             {
@@ -493,7 +490,7 @@ getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
 
 /****************************************************************
  *
- * Function:    insertSubAnalysisIntrinsicValueData()
+ * Function:    insertSubAnalysisEfficientRatioData()
  *
  * Description:
  *
@@ -503,14 +500,11 @@ getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
  *
  ****************************************************************/
 bool CDbHndl::
-insertSubAnalysisIntrinsicValueData(int dateId,
+insertSubAnalysisEfficientRatioData(int dateId,
                                     int mainAnalysisId,
                                     int inputDataId,
                                     bool idIsValid,
-                                    QString intrinsicValue,
-                                    QString tenYearFedNodeInterestRate,
-                                    QString backTrackYears,
-                                    QString calcAnnualInterestRate,
+                                    QString efficientRatio,
                                     int &dataId,
                                     bool dbIsHandledExternly)
 {
@@ -528,39 +522,27 @@ insertSubAnalysisIntrinsicValueData(int dateId,
 
     if(idIsValid == true)
     {
-        str.sprintf("INSERT OR REPLACE INTO TblDataIntrinsicValueSubAnalysis_1 "
-                " (DateId, "
-                "  IntrinsicValue, "
-                "  TenYearFedNodeInterestRate, "
-                "  BackTrackYears, "
-                "  CalcAnnualInterestRate, " // On equity per share
-                 " DataId,"
-                 " MainAnalysisId) "
-                 " VALUES( %d,  '%s', '%s', '%s', '%s', %d, %d);",
-                        dateId,
-                        intrinsicValue.toLocal8Bit().constData(),
-                        tenYearFedNodeInterestRate.toLocal8Bit().constData(),
-                        backTrackYears.toLocal8Bit().constData(),
-                        calcAnnualInterestRate.toLocal8Bit().constData(),
-                        inputDataId,
-                        mainAnalysisId);
+        str.sprintf("INSERT OR REPLACE INTO TblDataEfficientRatio "
+                    " (DateId, "
+                    "  EfficientRatioValue, "
+                    " DataId,"
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d, %d);",
+                            dateId,
+                            efficientRatio.toLocal8Bit().constData(),
+                            inputDataId,
+                            mainAnalysisId);
     }
     // New data
     else
     {
-        str.sprintf("INSERT INTO TblDataTotDividendsSubAnalysis_1 "
+        str.sprintf("INSERT INTO TblDataEfficientRatio "
                     " (DateId, "
-                    "  IntrinsicValue, "
-                    "  TenYearFedNodeInterestRate, "
-                    "  BackTrackYears, "
-                    "  CalcAnnualInterestRate, " // On equity per share
+                    "  EfficientRatioValue, "
                     " MainAnalysisId) "
                     " VALUES( %d, '%s', %d);",
                             dateId,
-                            intrinsicValue.toLocal8Bit().constData(),
-                            tenYearFedNodeInterestRate.toLocal8Bit().constData(),
-                            backTrackYears.toLocal8Bit().constData(),
-                            calcAnnualInterestRate.toLocal8Bit().constData(),
+                            efficientRatio.toLocal8Bit().constData(),
                             mainAnalysisId);
     }
 
@@ -575,7 +557,7 @@ insertSubAnalysisIntrinsicValueData(int dateId,
         qDebug() << qry.lastError();
         if(m_disableMsgBoxes == false)
         {
-            QMessageBox::critical(NULL, QString::fromUtf8("TblDataTotDividendsSubAnalysis"), qry.lastError().text().toLatin1().constData());
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataEfficientRatio"), qry.lastError().text().toLatin1().constData());
         }
 
         if(dbIsHandledExternly == false)
@@ -614,12 +596,9 @@ insertSubAnalysisIntrinsicValueData(int dateId,
  *
  *****************************************************************/
 bool CDbHndl::
-getSubAnalysisIntrinsicValueData(QString stockName,
+getSubAnalysisEfficientRatioData(QString stockName,
                            QString stockSymbol,
-                           QString &intrinsicValue,
-                           QString &tenYearFedNodeInterestRate,
-                           QString &backTrackYears,
-                           QString &calcAnnualInterestRate,
+                           SubAnalysDataST *dataArr,
                            int &nofArrData,
                            bool dbIsHandledExternly)
 {
@@ -627,9 +606,9 @@ getSubAnalysisIntrinsicValueData(QString stockName,
 
     QSqlRecord rec;
     QString str;
-    SubAnalysDataST data;
 
     nofArrData = 0;
+
 
 
     if(dbIsHandledExternly == false)
@@ -643,17 +622,16 @@ getSubAnalysisIntrinsicValueData(QString stockName,
   bool found = false;
 
 
-    str.sprintf("SELECT TblMainAnalysis.*, TblDateIntrinsicValueSubAnalysis_1.*, TblDataIntrinsicValueSubAnalysis_1.* "
-                " FROM TblMainAnalysis, TblDateIntrinsicValueSubAnalysis_1, TblDataIntrinsicValueSubAnalysis_1  "
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateEfficientRatio.*, TblDataEfficientRatio.* "
+                " FROM TblMainAnalysis, TblDateEfficientRatio, TblDataEfficientRatio  "
                 " WHERE  "
-                "       TblMainAnalysis.MainAnalysisId = TblDateIntrinsicValueSubAnalysis_1.MainAnalysisId AND "
-                "       TblMainAnalysis.MainAnalysisId = TblDataIntrinsicValueSubAnalysis_1.MainAnalysisId AND "
-                "       TblDateIntrinsicValueSubAnalysis_1.DateId = TblIntrinsicValueSubAnalysis_1.DateId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDateEfficientRatio.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataEfficientRatio.MainAnalysisId AND "
+                "       TblDateEfficientRatio.DateId = TblDataEfficientRatio.DateId AND "
                 "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
                 "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
-                " ORDER BY (CAST(TblDateIntrinsicValueSubAnalysis_1.Date AS REAL)) ASC;",              // DESC";",
-                                                                           stockName.toLocal8Bit().constData(),
-                                                                           stockSymbol.toLocal8Bit().constData());
+                " ORDER BY (CAST(TblDateEfficientRatio.Date AS REAL)) ASC;", stockName.toLocal8Bit().constData()
+                                                                           , stockSymbol.toLocal8Bit().constData());
 
 
     qDebug() << str << "\n";
@@ -684,10 +662,7 @@ getSubAnalysisIntrinsicValueData(QString stockName,
         {
             rec = qry.record();
 
-            if( (rec.value("IntrinsicValue").isNull() == true)||
-                (rec.value("TenYearFedNodeInterestRate").isNull() == true)||
-                (rec.value("BackTrackYears").isNull() == true)||
-                (rec.value("CalcAnnualInterestRate").isNull() == true))
+            if( (rec.value("EfficientRatioValue").isNull() == true))
             {
 
                 if(found == true)
@@ -709,38 +684,24 @@ getSubAnalysisIntrinsicValueData(QString stockName,
             else
             {
                 found = true;
-                // qDebug() << rec.value("Date").toString() << "\n";
+                qDebug() << rec.value("Date").toString() << "\n";
+                qDebug() << rec.value("EfficientRatioValue").toString() << "\n";
                 qDebug() << rec.value("stockSymbol").toString();
                 qDebug() << rec.value("stockName").toString();
 
 
-
-
-
-                intrinsicValue.clear();
-                if(rec.value("IntrinsicValue").isNull() == false)
+                dataArr[nofArrData].date.clear();
+                if(rec.value("Date").isNull() == false)
                 {
-                    intrinsicValue = rec.value("IntrinsicValue").toString();
+                    dataArr[nofArrData].date = rec.value("Date").toString();
                 }
 
-
-                tenYearFedNodeInterestRate.clear();
-                if(rec.value("TenYearFedNodeInterestRate").isNull() == false)
+                dataArr[nofArrData].data.clear();
+                if(rec.value("EfficientRatioValue").isNull() == false)
                 {
-                    tenYearFedNodeInterestRate = rec.value("TenYearFedNodeInterestRate").toString();
+                    dataArr[nofArrData].data = rec.value("EfficientRatioValue").toString();
                 }
-
-                backTrackYears.clear();
-                if(rec.value("BackTrackYears").isNull() == false)
-                {
-                    backTrackYears = rec.value("BackTrackYears").toString();
-                }
-
-                calcAnnualInterestRate.clear();
-                if(rec.value("CalcAnnualInterestRate").isNull() == false)
-                {
-                    calcAnnualInterestRate = rec.value("CalcAnnualInterestRate").toString();
-                }
+                nofArrData++;
             }
         }
     }

@@ -1868,7 +1868,7 @@
      </property>
      <widget class="QWidget" name="tab_25">
       <attribute name="title">
-       <string>Industri / Handel</string>
+       <string>Stark finansiell ställning</string>
       </attribute>
       <widget class="QTabWidget" name="tabWidgetCurrAssTotLiab">
        <property name="geometry">
@@ -3609,6 +3609,21 @@
         </widget>
        </widget>
       </widget>
+     </widget>
+     <widget class="QWidget" name="tab_33">
+      <attribute name="title">
+       <string>Intjäningsstabilitet</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_34">
+      <attribute name="title">
+       <string>Utdelningsstabilitet</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_35">
+      <attribute name="title">
+       <string>Intjäningstillväxt</string>
+      </attribute>
      </widget>
     </widget>
    </widget>

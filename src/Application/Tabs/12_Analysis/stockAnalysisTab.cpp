@@ -79,6 +79,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     initProfitabilityAnalysis();
     initNetProfitAfterTaxTreeWidget();
     initMinMaxPePrice();
+    initTreeWidgetHistoricalYield();
     initTreeWidgetDividend();
 
     initSubAnalysTables();
@@ -255,6 +256,47 @@ void StockAnalysisTab::initProfitabilityAnalysis(void)
     ui->treeWidgetProfit_2->setFont(QFont("Helvetica", 9));
 }
 
+
+
+
+
+/*******************************************************************
+ *
+ * Function:    initTreeWidgetHistoricalYield()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initTreeWidgetHistoricalYield(void)
+{
+
+    QString column0 = QString::fromUtf8("År");
+    QString column1 = QString("Min\nDirAvk (%)");
+    QString column2 = QString::fromUtf8("Medel\nDirAvk (%)");
+    QString column3 = QString("Max\nDirAvk (%)");
+
+
+    ui->treeWidgetHistoricalYield->setColumnCount(4);
+    ui->treeWidgetHistoricalYield->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidgetHistoricalYield->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header = ui->treeWidgetHistoricalYield->headerItem())
+    {
+        header->setText(0, column0);
+        header->setText(1, column1);
+        header->setText(2, column2);
+        header->setText(3, column3);
+
+    }
+
+    ui->treeWidgetHistoricalYield->setColumnWidth(0, 65);
+    ui->treeWidgetHistoricalYield->setColumnWidth(1, 65);
+    ui->treeWidgetHistoricalYield->setColumnWidth(2, 60);
+    ui->treeWidgetHistoricalYield->setColumnWidth(3, 50);
+}
 
 
 /*******************************************************************
@@ -625,7 +667,13 @@ void StockAnalysisTab::initSubAnalysTables(void)
     m_nofCoreTier1RatioData = 0;
 
 
-    // CoreCapitalRatio (Kärnprimärkapitalrelation)
+    // EfficientRatio (kostnadseffektivitet, bank)
+    dataHeader = QString::fromUtf8("KEffektivitet");
+    initSubAnalyseTableWidget(ui->tableWidgetEfficientRatio, dateHeader, dataHeader);
+    m_nofEfficientRatioData = 0;
+
+
+    // CoreCapitalRatio (Kärnprimärkapitalrelation, bank)
     dataHeader = QString::fromUtf8("kärnprimärkap.rel");
     initSubAnalyseTableWidget(ui->tableWidgetCoreCapitalRatio, dateHeader, dataHeader);
     m_nofCoreCapitalRatioData = 0;
@@ -769,8 +817,6 @@ void StockAnalysisTab::on_SelStockListButton_clicked()
  * Function:    on_treeWidgetStockListAnalysis_doubleClicked()
  *
  * Description: Select stock to analyse and display all date of analysis
- *
- *
  *
  *
  *****************************************************************/
@@ -965,6 +1011,7 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_earningsDataArr,
                                  m_nofEarningsArrData);
 
+
     updateTableWithSubAnalysData(ui->tableWidgetEarnings,
                                  SAD_EARNINGS,
                                  m_earningsDataArr,
@@ -978,10 +1025,12 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_totalCurrentAssetsArr,
                                  m_nofTotalCurrentAssetsArrData);
 
+
     updateTableWithSubAnalysData(ui->tableWidgetTotalCurrentLiabilities,
                                  SAD_TOTAL_CURRENT_LIABILITIES,
                                  m_totalCurrentLiabilitiesArr,
                                  m_nofTotalCurrentLiabilitiesData);
+
 
     updateTableWithSubAnalysData(ui->tableWidgetTotalLiabilities,
                                  SAD_TOTAL_LIABILITIES,
@@ -1018,6 +1067,12 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  SAD_CORE_CAPITAL_RATIO,
                                  m_coreCapitalRatioArr,
                                  m_nofCoreCapitalRatioData);
+
+    updateTableWithSubAnalysData(ui->tableWidgetEfficientRatio,
+                                 SAD_EFFICIENT_RATIO,
+                                 m_efficientRatioArr,
+                                 m_nofEfficientRatioData);
+
 
     updateTableWithSubAnalysData(ui->tableWidgetEquity,
                                  SAD_EQUITY,
@@ -1091,6 +1146,8 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
 
     // Display all analysis graphs
     displayAllAnalysisPlots();
+
+
 
 
 }
@@ -1201,6 +1258,15 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
         }
         break;
 
+    case SAD_EFFICIENT_RATIO:
+        res = db.getSubAnalysisEfficientRatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_EFFICIENT_RATIO)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
+        }
+        break;
+
+
     case SAD_CORE_TIER_1_RATIO:
         res = db.getSubAnalysisCoreTier1RatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
         if(nofArrData > MAX_NOF_CORE_TIER_1_RATIO)
@@ -1208,6 +1274,8 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
         }
         break;
+
+
 
     case SAD_CORE_CAPITAL_RATIO:
         res = db.getSubAnalysisCoreCapitalRatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
@@ -5749,7 +5817,7 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
 
 /*******************************************************************
  *
- * Function:        clearGUIIntrinsicValue()
+ * Function:        initAllAnalysisPlots()
  *
  * Description:
  *
@@ -5827,7 +5895,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
 
     //-----------------------------------------------------------------------------------
-    // Kärnprimärkapitalrelation >= 15%
+    // Kärnprimärkapitalrelation >= 15% (Bank)
     //-----------------------------------------------------------------------------------
     plotHeader = QString::fromUtf8("Kärnprimärkapitalrelation >= 15%");
     legendText = QString::fromUtf8("Kpkr");
@@ -5836,6 +5904,16 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     initAnalysisPlot(ui->qwtPlotCoreCapitalRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                      location, legendSize);
 
+
+    //-----------------------------------------------------------------------------------
+    // kostnadseffektivitet <= 60% (Bank)
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("kostnadseffektivitet <= 60%");
+    legendText = QString::fromUtf8("KE");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initAnalysisPlot(ui->qwtPlotEfficientRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
 
 
 
@@ -6005,7 +6083,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
 /*******************************************************************
  *
- * Function:        displayAllAnalysisPlots()
+ * Function:        clearAllAnalysisEditCtrls()
  *
  * Description:
  *
@@ -6087,6 +6165,86 @@ void StockAnalysisTab::addRevenueAndEquityToTreeWidget(QTreeWidget *treeWidget,
 
     }
 }
+
+
+/*******************************************************************
+ *
+ * Function:        addRevenueAndEquityToTreeWidget()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::addMinAvgMaxYieldToTreeWidget(void)
+{
+    TreeWidgetFinance tw;
+
+    double dbMinYield;
+    double dbAvgYield;
+    double dbMaxYield;
+    double dbDividend;
+
+    QString year;
+    QString minYield;
+    QString avgYield;
+    QString maxYield;
+
+
+    ui->treeWidgetHistoricalYield->clear();
+
+    // Get min prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpMinPriceArr, m_noftmpMinPriceArrData, 0, 1);
+    // Get avg prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpAvgPriceArr, m_noftmpAvgPriceArrData, 0, 2);
+    // Get max prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpMaxPriceArr, m_nofMaxAvgPriceArrData, 0, 3);
+
+
+    for(int i = 0; i < m_noftmpMinPriceArrData; i++)
+    {
+        for(int j = 0; j < m_nofDividendArrData; j++)
+        {
+            if(m_dividendDataArr[j].date.toInt() == m_tmpMinPriceArr[i].date.toInt())
+            {
+                year = m_dividendDataArr[j].date;
+
+                dbDividend = m_dividendDataArr[j].data.toDouble();
+                dbMaxYield = m_tmpMinPriceArr[i].data.toDouble();
+                dbAvgYield = m_tmpAvgPriceArr[i].data.toDouble();
+                dbMinYield = m_tmpMaxPriceArr[i].data.toDouble();
+
+                if(dbDividend == 0)
+                {
+                    minYield.sprintf("%.2f", 0.0);
+                    avgYield.sprintf("%.2f", 0.0);
+                    maxYield.sprintf("%.2f", 0.0);
+                }
+                else
+                {
+                    dbMinYield = dbDividend / dbMinYield * 100.0;
+                    dbAvgYield = dbDividend / dbAvgYield * 100.0;
+                    dbMaxYield = dbDividend / dbMaxYield * 100.0;
+
+                    minYield.sprintf("%.2f", dbMinYield);
+                    avgYield.sprintf("%.2f", dbAvgYield);
+                    maxYield.sprintf("%.2f", dbMaxYield);
+                }
+
+                qDebug() << "min" << minYield << dbMinYield;
+                qDebug() << "avg" << avgYield << dbAvgYield;
+                qDebug() << "max" << maxYield << dbMaxYield;
+
+                tw.addTreeWidgetData(ui->treeWidgetHistoricalYield,
+                                     year,
+                                     minYield,
+                                     avgYield,
+                                     maxYield);
+            }
+        }
+    }
+}
+
 
 
 
@@ -6455,6 +6613,18 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     ui->lineEditAvgCoreCapitalRatio->clear();
     ui->lineEditMaxCoreCapitalRatio->clear();
 
+    plotLinearReportData(ui->qwtPlotCoreCapitalRatio,
+                         m_qwtAnalysisPlotDataArr2,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_coreCapitalRatioArr,
+                         m_nofCoreCapitalRatioData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+
     if(true == fm.getMinMaxAvgYData(m_coreCapitalRatioArr,
                                     m_nofCoreCapitalRatioData,
                                     minY,
@@ -6480,19 +6650,55 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     }
 
 
-    plotLinearReportData(ui->qwtPlotCoreCapitalRatio,
+
+    //-----------------------------------------------------------------------------------
+    // kostnadseffektivitet <= 60% (Bank)
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 11;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+    ui->labelResultEfficientRatio->clear();
+    ui->lineEditMinEfficientRatio->clear();
+    ui->lineEditAvgEfficientRatio->clear();
+    ui->lineEditMaxEfficientRatio->clear();
+
+    if(true == fm.getMinMaxAvgYData(m_efficientRatioArr,
+                                    m_nofEfficientRatioData,
+                                    minY,
+                                    maxY,
+                                    avgY))
+    {
+        if(minY.toDouble() <= 60.0)
+        {
+            ui->labelResultEfficientRatio->setPalette(*m_blue_palette);
+            ui->labelResultEfficientRatio->setText(QString::fromUtf8("Godkänt <= 60.0"));
+        }
+        else
+        {
+            ui->labelResultEfficientRatio->setPalette(*m_red_palette);
+            ui->labelResultEfficientRatio->setText(QString::fromUtf8("Underkänt > 60.0"));
+        }
+
+        ui->lineEditMinEfficientRatio->setText(minY);
+        ui->lineEditAvgEfficientRatio->setText(avgY);
+        ui->lineEditMaxEfficientRatio->setText(maxY);
+
+
+    }
+
+
+    plotLinearReportData(ui->qwtPlotEfficientRatio,
                          m_qwtAnalysisPlotDataArr2,
                          useAutoScale,
                          resetMinMaxValue,
-                         m_coreCapitalRatioArr,
-                         m_nofCoreCapitalRatioData,
+                         m_efficientRatioArr,
+                         m_nofEfficientRatioData,
                          indexToPlot,
                          nofPlotToClear,
                          lineColor);
-
-
-
-
 
 
 
@@ -7148,6 +7354,9 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                       changeSignYdata,
                                       xOffset,
                                       resetMinMaxScale);
+
+    addMinAvgMaxYieldToTreeWidget();
+
 }
 
 
@@ -8075,9 +8284,6 @@ void StockAnalysisTab::on_pushSaveIValueDividend_clicked()
     str = str + m_analysisDate;
 
 
-
-
-
     if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"), str, QMessageBox::Yes|QMessageBox::No))
     {
         return;
@@ -8282,23 +8488,29 @@ void StockAnalysisTab::on_pushButtonSaveImg_2_clicked()
 #endif
 
 
-// (\w+)? and (\w*) both match the same (0..+inf word characters)
-//---------------------------------------------------------------
-// However, there is a slight difference:
-// In the first case, if this part of the regex matches "",
-// the capturing group is absent. In the second case, it is empty.
-// In some languages, the former manifests as a null while the
-// latter should always be "".
 
-// ?                The question mark indicates zero or one occurrences of the preceding element. For example, colou?r matches both "color" and "colour".
-// *                The asterisk indicates zero or more occurrences of the preceding element. For example, ab*c matches "ac", "abc", "abbc", "abbbc", and so on.
-// +                The plus sign indicates one or more occurrences of the preceding element. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac".
-// {n}[19]          The preceding item is matched exactly n times.
-// {min,}[19]       The preceding item is matched min or more times.
-// {min,max}[19] 	The preceding item is matched at least min times, but not more than max times.
-
-// "CrumbStore":{"crumb":"FtGNqEzOvZp"}
-// "CrumbStore":{"crumb":"D4Q3fGUPvOO"}
+/*******************************************************************
+ *
+ * Function:        on_pushButton_2_clicked()
+ *
+ * Description:     (\w+)? and (\w*) both match the same (0..+inf word characters)
+ *
+ *                  However, there is a slight difference:
+ *                  In the first case, if this part of the regex matches "",
+ *                  the capturing group is absent. In the second case, it is empty.
+ *                  In some languages, the former manifests as a null while the
+ *                  latter should always be "".
+ *
+ * ?                The question mark indicates zero or one occurrences of the preceding element. For example, colou?r matches both "color" and "colour".
+ * *                The asterisk indicates zero or more occurrences of the preceding element. For example, ab*c matches "ac", "abc", "abbc", "abbbc", and so on.
+ * +                The plus sign indicates one or more occurrences of the preceding element. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac".
+ * {n}[19]          The preceding item is matched exactly n times.
+ * {min,}[19]       The preceding item is matched min or more times.
+ * {min,max}[19] 	The preceding item is matched at least min times, but not more than max times.
+ *
+ * "CrumbStore":{"crumb":"FtGNqEzOvZp"}
+ *
+ *******************************************************************/
 void StockAnalysisTab::on_pushButton_2_clicked()
 {
     CUtil cu;
@@ -8310,8 +8522,139 @@ void StockAnalysisTab::on_pushButton_2_clicked()
 
 }
 
+/*******************************************************************
+ *
+ * Function:    on_pushButtonAltGrahamCalcIntrinsicValue_clicked()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
 void StockAnalysisTab::on_pushButtonAltGrahamCalcIntrinsicValue_clicked()
 {
 
     m_grahamCalcIntrinsicValueDlg.show();
+}
+
+
+/*******************************************************************
+ *
+ * Function:    on_pushButtonSaveEfficientRatio_clicked()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::on_pushButtonSaveEfficientRatio_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int efficientRatioDateId;
+    int inputEfficientRatioDataId;
+    int efficientRatioDataId;
+    bool efficientRatioDataIdIsValid = false;
+
+    int nofData;
+    QString efficientRatioDate;
+    QString efficientRatioData;
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"),
+       str,
+       QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                    m_stockSymbol,
+                                    mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                        m_stockSymbol,
+                                        mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetEfficientRatio->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetEfficientRatio->item(row, 0))
+        {
+            efficientRatioDate = ui->tableWidgetEfficientRatio->item(row, 0)->text();
+            efficientRatioData = ui->tableWidgetEfficientRatio->item(row, 1)->text();
+
+            efficientRatioDate.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(efficientRatioData, efficientRatioData);
+            efficientRatioData.toDouble(&isValid);
+
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Efficient Ratio is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+        res = db.subAnalysisEfficientRatioDateExists(efficientRatioDate,
+                                                     mainAnalysisId,
+                                                     efficientRatioDateId);
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisEfficientRatioDate(efficientRatioDate,
+                                                         mainAnalysisId,
+                                                         efficientRatioDateId);
+        }
+
+        if(true == res)
+        {
+           efficientRatioDataIdIsValid = false;
+
+           if( true == db.getSubAnalysisEfficientRatioDataId(mainAnalysisId,
+                                                             efficientRatioDateId,
+                                                             inputEfficientRatioDataId))
+           {
+               efficientRatioDataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisEfficientRatioData(efficientRatioDateId,
+                                                         mainAnalysisId,
+                                                         inputEfficientRatioDataId,
+                                                         efficientRatioDataIdIsValid,
+                                                         efficientRatioData,
+                                                         efficientRatioDataId);
+        }
+    }
 }

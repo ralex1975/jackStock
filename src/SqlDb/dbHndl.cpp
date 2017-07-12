@@ -328,13 +328,13 @@ bool CDbHndl::createTable(void)
 
 
         //-----------------------------------------------------------------------
-        // TblDateIntrinsicValueSubAnalysis_1
+        // TblDateEfficientRatio
         //-----------------------------------------------------------------------
         //Date
                 //-----------------------------------------------------------------------
-                // TblDateIntrinsicValueSubAnalysis_1 (Vinst)
+                // TblDateEfficientRatio (banks kostnadseffektivitet)
                 //-----------------------------------------------------------------------
-                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateIntrinsicValueSubAnalysis_1 "
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateEfficientRatio "
                             " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
                             "  Date DATE, "
                             "  MainAnalysisId INTEGER);");
@@ -351,7 +351,7 @@ bool CDbHndl::createTable(void)
                     qDebug() << qry.lastError();
                     if(m_disableMsgBoxes == false)
                     {
-                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenue"), QString::fromUtf8("Fail create TblDateTotEarningsSubAnalysis"));
+                        QMessageBox::critical(NULL, QString::fromUtf8("EfficientRatio"), QString::fromUtf8("Fail create TblDateEfficientRatio"));
                     }
                     closeDb();
                     m_mutex.unlock();
@@ -363,15 +363,12 @@ bool CDbHndl::createTable(void)
 
         //Data
                 //-----------------------------------------------------------------------
-                // TblDataIntrinsicValueSubAnalysis_1
+                // TblDataEfficientRatio
                 //-----------------------------------------------------------------------
-                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataIntrinsicValueSubAnalysis_1 "
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataEfficientRatio "
                             " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
                             "  DateId INTEGER, "
-                            "  IntrinsicValue VARCHAR(255), "
-                            "  TenYearFedNodeInterestRate VARCHAR(255), "
-                            "  BackTrackYears VARCHAR(255), "
-                            "  CalcAnnualInterestRate VARCHAR(255), "
+                            "  EfficientRatioValue VARCHAR(255), "
                             "  MainAnalysisId INTEGER);");
 
                 qDebug() << tmp;
@@ -386,7 +383,7 @@ bool CDbHndl::createTable(void)
                     qDebug() << qry.lastError();
                     if(m_disableMsgBoxes == false)
                     {
-                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenue"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDataEfficientRatio"), QString::fromUtf8("Fail create TblDataEfficientRatio"));
                     }
                     closeDb();
                     m_mutex.unlock();
@@ -6068,7 +6065,7 @@ bool CDbHndl::addFa3NetProfitAfterTaxToTreeWidget(QTreeWidget *treeWidget,
  *
  * Function:    subAnalysisAddMinMaxPEAndPrice()
  *
- * Description: This function is used by subanalysis att
+ * Description: This function is used by subanalysis an
  *              adds min maxand avg prices en PE-ratios
  *              to treewidget ctrls.
  *

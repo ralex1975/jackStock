@@ -50,6 +50,20 @@ class StockAnalysisTab : public QDialog
     QVector <QwtIntervalSample> m_barHistData;
 
 
+    //------------------------------------------------------------------
+    // This arrays are used to display min avg and max yield
+    //-----------------------------------------------------------------
+    SubAnalysDataST       m_tmpMinPriceArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_noftmpMinPriceArrData;
+
+    SubAnalysDataST       m_tmpAvgPriceArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_noftmpAvgPriceArrData;
+
+    SubAnalysDataST       m_tmpMaxPriceArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofMaxAvgPriceArrData;
+
+
+    //-----------------------------------------------------------------
 
     SubAnalysDataST       m_totEarningsDataArr[MAX_NOF_TOT_EARNINGS];
     int                   m_nofTotEarningsArrData;
@@ -88,6 +102,9 @@ class StockAnalysisTab : public QDialog
 
     SubAnalysDataST       m_coreCapitalRatioArr[MAX_NOF_CORE_CAPITAL_RATIO];
     int                   m_nofCoreCapitalRatioData;
+
+    SubAnalysDataST       m_efficientRatioArr[MAX_NOF_EFFICIENT_RATIO];
+    int                   m_nofEfficientRatioData;
 
     SubAnalysDataST       m_totEquityArr[MAX_NOF_EQUITY];
     int                   m_nofTotEquityData;
@@ -130,12 +147,15 @@ class StockAnalysisTab : public QDialog
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
     void initNetProfitAfterTaxTreeWidget(void);
     void initProfitabilityAnalysis(void);
+    void initTreeWidgetHistoricalYield(void);
     void initMinMaxPePrice(void);
     void initTreeWidgetDividend(void);
     void initSubAnalysisPlots(void);
     void addDividendToTreeWidget(void);
 
     void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
+
+    void addMinAvgMaxYieldToTreeWidget(void);
 
 
 
@@ -244,6 +264,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButtonAltGrahamCalcIntrinsicValue_clicked();
+
+    void on_pushButtonSaveEfficientRatio_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;

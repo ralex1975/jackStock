@@ -195,6 +195,7 @@ struct SubAnalysDataST
 #define MAX_NOF_COVERAGE_RATIO                      MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_EFFICIENT_RATIO                     MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY_PER_SHARE                    MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CASH_FLOW_CAPEX                     MAX_NOF_DIVIDEND_ARR_DATA
@@ -203,7 +204,7 @@ struct SubAnalysDataST
 #define MAX_NOF_TOT_EARNINGS                        MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_REVENUE                             MAX_NOF_DIVIDEND_ARR_DATA
 
-
+#define MAX_NOF_TMP_PRICE_DATA                      MAX_NOF_DIVIDEND_ARR_DATA
 
 
 
@@ -217,7 +218,8 @@ enum SubAnalyseDataTypeET
     SAD_SOLIDITY,                   // Soliditet
     SAD_COVERAGE_RATIO,             // Räntetäckningsgrad
     SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
-    SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation
+    SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation (Bank)
+    SAD_EFFICIENT_RATIO,            // kostnadseffektivitet      (Bank)
     SAD_EQUITY,                     // Eget kapital
     SAD_EQUITY_PER_SHARE,           // Eget kapital/Aktie
     SAD_CASH_FLOW_CAPEX,            // Kassaflöde Capex Investeringar/kapitalutgifter
@@ -816,58 +818,46 @@ public:
 
     bool findExerciseWithNoSound(void);
 
-
-
     // Stop video help
 
 
     //===========================================
 
-    // start dbSubHndl.cpp
+    // Start EfficientRatio
 
-#if 0
-    bool subAnalysis1IntrinsicValueDateExists(QString date,
+    bool subAnalysisEfficientRatioDateExists(QString date,
                                          int mainAnalysisId,
                                          int &dateId);
 
+    bool insertSubAnalysisEfficientRatioDate(QString date,
+                                        int mainAnalysisId,
+                                        int &dateId,
+                                        bool dbIsHandledExternly = false);
 
-    bool insertSubAnalysisIntrinsicValueDate(QString date,
-                           int mainAnalysisId,
-                           int &dateId,
-                           bool dbIsHandledExternly = false);
+    bool getSubAnalysisEfficientRatioDataId(int mainAnalysisId,
+                                       int dateId,
+                                       int &dataId,
+                                       bool dbIsHandledExternly = false);
 
-
-    bool getSubAnalysisIntrinsicValueDataId(int mainAnalysisId,
-                      int dateId,
-                      int &dataId,
-                      bool dbIsHandledExternly = false);
-
-
-
-    bool insertSubAnalysisIntrinsicValueData(int dateId,
+    bool insertSubAnalysisEfficientRatioData(int dateId,
                                         int mainAnalysisId,
                                         int inputDataId,
                                         bool idIsValid,
-                                        QString intrinsicValue,
-                                        QString tenYearFedNodeInterestRate,
-                                        QString backTrackYears,
-                                        QString calcAnnualInterestRate,
+                                        QString efficientRatio,
                                         int &dataId,
                                         bool dbIsHandledExternly = false);
 
-
-    bool getSubAnalysisIntrinsicValueData(QString stockName,
+    bool getSubAnalysisEfficientRatioData(QString stockName,
                                QString stockSymbol,
-                               QString &intrinsicValue,
-                               QString &tenYearFedNodeInterestRate,
-                               QString &backTrackYears,
-                               QString &calcAnnualInterestRate,
+                               SubAnalysDataST *dataArr,
                                int &nofArrData,
                                bool dbIsHandledExternly = false);
-#endif
 
+    // End EfficientRatio
 
     //---------------------------------------------------------------
+
+
 
     bool subAnalysisTotDividendsDateExists(QString date,
                                          int mainAnalysisId,
