@@ -198,8 +198,525 @@ insertTaCrumbCookieData(QString stockName,
     return true;
 }
 
+//===============================================================
+/****************************************************************
+ *
+ * Function:    subAnalysisLoanLossRatioDateExists()
+ *
+ * Description: Loan Loss Ratio
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::subAnalysisLoanLossRatioDateExists(QString date,
+                                     int mainAnalysisId,
+                                     int &dateId)
+{
+    QSqlRecord rec;
+    QString str;
+
+    m_mutex.lock();
+    openDb(PATH_JACK_STOCK_DB);
+    QSqlQuery qry(m_db);
 
 
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+
+    str.sprintf("SELECT * "
+                " FROM  TblDateLoanLossRatio "
+                " WHERE Date = '%s' AND MainAnalysisId = %d;",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("Error:"), qry.lastError().text().toUtf8().constData());
+        }
+
+        qDebug() << qry.lastError();
+        closeDb();
+        m_mutex.unlock();
+        return false;
+    }
+    else
+    {
+        if(qry.next())
+        {
+            rec = qry.record();
+
+
+
+            if((rec.value("Date").isNull() == true) || (true == rec.value("MainAnalysisId").isNull()))
+            {
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return false;
+            }
+            else
+            {
+                dateId = rec.value("DateId").toInt();
+                qry.finish();
+                closeDb();
+                m_mutex.unlock();
+                return true;
+            }
+        }
+    }
+
+    qry.finish();
+    closeDb();
+    m_mutex.unlock();
+    return false;
+}
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisLoanLossRatioDate()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisLoanLossRatioDate(QString date,
+                                    int mainAnalysisId,
+                                    int &dateId,
+                                    bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+    QByteArray ba = date.toLocal8Bit();
+    const char *c_date = ba.data();
+
+
+    str.sprintf("INSERT OR REPLACE INTO TblDateLoanLossRatio "
+                "(Date, MainAnalysisId) "
+                " VALUES('%s', %d);",
+                c_date,
+                mainAnalysisId);
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDateLoanLossRatio"), qry.lastError().text().toUtf8().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dateId = (int) qry.lastInsertId().toInt();
+
+    qry.finish();
+
+    if(dbIsHandledExternly==false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisLoanLossRatioDataId()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisLoanLossRatioDataId(int mainAnalysisId,
+                                  int dateId,
+                                  int &dataId,
+                                  bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblDataLoanLossRatio.DataId, TblDataLoanLossRatio.DateId, TblDataLoanLossRatio.MainAnalysisId   "
+                " FROM TblDataLoanLossRatio "
+                " WHERE  "
+                "       TblDataLoanLossRatio.DateId = %d AND "
+                "       TblDataLoanLossRatio.MainAnalysisId = %d;", dateId
+                                                                  , mainAnalysisId);
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toUtf8().constData());
+        }
+        qDebug() << qry.lastError();
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if(rec.value("DataId").isNull() == true)
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("DataId").toString();
+                qDebug() << rec.value("MainAnalysisId").toString();
+
+
+                if(rec.value("DataId").isNull() == false)
+                {
+                    dataId = rec.value("DataId").toInt();
+                }
+
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+/****************************************************************
+ *
+ * Function:    insertSubAnalysisLoanLossRatioData()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *
+ ****************************************************************/
+bool CDbHndl::
+insertSubAnalysisLoanLossRatioData(int dateId,
+                                    int mainAnalysisId,
+                                    int inputDataId,
+                                    bool idIsValid,
+                                    QString loanLossRatio,
+                                    int &dataId,
+                                    bool dbIsHandledExternly)
+{
+    QString str;
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+
+    QSqlQuery qry(m_db);
+
+
+    if(idIsValid == true)
+    {
+        str.sprintf("INSERT OR REPLACE INTO TblDataLoanLossRatio "
+                    " (DateId, "
+                    "  LoanLossRatioValue, "
+                    " DataId,"
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d, %d);",
+                            dateId,
+                            loanLossRatio.toLocal8Bit().constData(),
+                            inputDataId,
+                            mainAnalysisId);
+    }
+    // New data
+    else
+    {
+        str.sprintf("INSERT INTO TblDataLoanLossRatio "
+                    " (DateId, "
+                    "  LoanLossRatioValue, "
+                    " MainAnalysisId) "
+                    " VALUES( %d, '%s', %d);",
+                            dateId,
+                            loanLossRatio.toLocal8Bit().constData(),
+                            mainAnalysisId);
+    }
+
+
+    qDebug() << str;
+
+    qry.prepare(str);
+
+
+    if(!qry.exec())
+    {
+        qDebug() << qry.lastError();
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("TblDataLoanLossRatio"), qry.lastError().text().toLatin1().constData());
+        }
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+
+
+    dataId = (int) qry.lastInsertId().toInt();
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    return true;
+}
+
+
+
+
+
+/*****************************************************************
+ *
+ * Function:		getSubAnalysisIntrinsicValueData()
+ *
+ * Description:
+ *
+ *
+ *
+ *****************************************************************/
+bool CDbHndl::
+getSubAnalysisLoanLossRatioData(QString stockName,
+                                QString stockSymbol,
+                                SubAnalysDataST *dataArr,
+                                int &nofArrData,
+                                bool dbIsHandledExternly)
+{
+
+
+    QSqlRecord rec;
+    QString str;
+
+    nofArrData = 0;
+
+
+
+    if(dbIsHandledExternly == false)
+    {
+        m_mutex.lock();
+        openDb(PATH_JACK_STOCK_DB);
+    }
+
+    QSqlQuery qry(m_db);
+
+  bool found = false;
+
+
+    str.sprintf("SELECT TblMainAnalysis.*, TblDateLoanLossRatio.*, TblDataLoanLossRatio.* "
+                " FROM TblMainAnalysis, TblDateLoanLossRatio, TblDataLoanLossRatio  "
+                " WHERE  "
+                "       TblMainAnalysis.MainAnalysisId = TblDateLoanLossRatio.MainAnalysisId AND "
+                "       TblMainAnalysis.MainAnalysisId = TblDataLoanLossRatio.MainAnalysisId AND "
+                "       TblDateLoanLossRatio.DateId = TblDataLoanLossRatio.DateId AND "
+                "       lower(TblMainAnalysis.stockName) = lower('%s') AND "
+                "       lower(TblMainAnalysis.StockSymbol) = lower('%s') "
+                " ORDER BY (CAST(TblDateLoanLossRatio.Date AS REAL)) ASC;", stockName.toLocal8Bit().constData()
+                                                                          , stockSymbol.toLocal8Bit().constData());
+
+
+    qDebug() << str << "\n";
+
+    qry.prepare(str);
+
+
+    if( !qry.exec() )
+    {
+        if(m_disableMsgBoxes == false)
+        {
+            QMessageBox::critical(NULL, QString::fromUtf8("db error"), qry.lastError().text().toLatin1().constData());
+        }
+
+        qDebug() << qry.lastError();
+
+        if(dbIsHandledExternly == false)
+        {
+            closeDb();
+            m_mutex.unlock();
+        }
+        return false;
+    }
+    else
+    {
+        // Should only be one record so this is unnecessary
+        while(qry.next())
+        {
+            rec = qry.record();
+
+            if( (rec.value("LoanLossRatioValue").isNull() == true))
+            {
+
+                if(found == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    qry.finish();
+                    if(dbIsHandledExternly == false)
+                    {
+                        closeDb();
+                        m_mutex.unlock();
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                found = true;
+                qDebug() << rec.value("Date").toString() << "\n";
+                qDebug() << rec.value("LoanLossRatioValue").toString() << "\n";
+                qDebug() << rec.value("stockSymbol").toString();
+                qDebug() << rec.value("stockName").toString();
+
+
+                dataArr[nofArrData].date.clear();
+                if(rec.value("Date").isNull() == false)
+                {
+                    dataArr[nofArrData].date = rec.value("Date").toString();
+                }
+
+                dataArr[nofArrData].data.clear();
+                if(rec.value("LoanLossRatioValue").isNull() == false)
+                {
+                    dataArr[nofArrData].data = rec.value("LoanLossRatioValue").toString();
+                }
+                nofArrData++;
+            }
+        }
+    }
+
+
+    qry.finish();
+    if(dbIsHandledExternly == false)
+    {
+        closeDb();
+        m_mutex.unlock();
+    }
+
+    if(found == true)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//===============================================================
 
 #if 1
 /****************************************************************

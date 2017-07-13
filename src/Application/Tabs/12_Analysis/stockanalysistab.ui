@@ -1565,6 +1565,42 @@
       <string>Spara</string>
      </property>
     </widget>
+    <widget class="QTableWidget" name="tableWidgetLoanLossRatio">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>50</y>
+       <width>191</width>
+       <height>441</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonSaveLoanLossRatio">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>20</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Spara</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_102">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>20</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Kreditförlustnivån %</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -1864,11 +1900,11 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_25">
       <attribute name="title">
-       <string>Industri / Handel</string>
+       <string>Stark finansiell ställning</string>
       </attribute>
       <widget class="QTabWidget" name="tabWidgetCurrAssTotLiab">
        <property name="geometry">
@@ -1880,7 +1916,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>8</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2652,40 +2688,76 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="tab_31">
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_33">
+      <attribute name="title">
+       <string>Intjäningsstabilitet</string>
+      </attribute>
+      <widget class="QTabWidget" name="tabWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1021</width>
+         <height>531</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <widget class="QWidget" name="tab_36">
         <attribute name="title">
          <string>Vinst</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlotEarningsPerShare_13">
+        <widget class="QLabel" name="label_72">
          <property name="geometry">
           <rect>
-           <x>310</x>
-           <y>10</y>
-           <width>701</width>
-           <height>481</height>
+           <x>0</x>
+           <y>440</y>
+           <width>301</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>(Grahams,                    Buffett) Intrinsic Value</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>410</y>
+           <width>113</width>
+           <height>22</height>
           </rect>
          </property>
         </widget>
-        <widget class="QTreeWidget" name="treeWidgetProfitGrowth">
+        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>251</width>
-           <height>331</height>
+           <x>0</x>
+           <y>460</y>
+           <width>113</width>
+           <height>22</height>
           </rect>
          </property>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgEarningPerShare">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>410</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
         </widget>
         <widget class="QCheckBox" name="checkBoxShowForecast_2">
          <property name="geometry">
           <rect>
-           <x>180</x>
-           <y>10</y>
+           <x>170</x>
+           <y>0</y>
            <width>131</width>
            <height>22</height>
           </rect>
@@ -2702,103 +2774,11 @@
           <bool>true</bool>
          </property>
         </widget>
-        <widget class="QLabel" name="label_70">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>181</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Historisk vinstutveckling</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate">
-         <property name="geometry">
-          <rect>
-           <x>150</x>
-           <y>420</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_71">
-         <property name="geometry">
-          <rect>
-           <x>150</x>
-           <y>400</y>
-           <width>141</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Vinsttillväxt</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>470</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_72">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>450</y>
-           <width>301</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>(Grahams,                    Buffett) Intrinsic Value</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAvgEarningPerShare">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>420</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_73">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>400</y>
-           <width>131</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Vinst/Aktie (medel)</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditIntrinsicValueResult_2">
-         <property name="geometry">
-          <rect>
-           <x>150</x>
-           <y>470</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
         <widget class="QPushButton" name="pushButtonAltGrahamCalcIntrinsicValue">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>370</y>
+           <x>0</x>
+           <y>360</y>
            <width>111</width>
            <height>22</height>
           </rect>
@@ -2807,11 +2787,85 @@
           <string>Alt. ber. Graham</string>
          </property>
         </widget>
-        <widget class="QLabel" name="labelReportLossOfEarning">
+        <widget class="QLabel" name="label_70">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Historisk vinstutveckling</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_73">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>390</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinst/Aktie (medel)</string>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotEarningsPerShare_13">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>701</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidgetProfitGrowth">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>251</width>
+           <height>331</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_71">
          <property name="geometry">
           <rect>
            <x>140</x>
-           <y>370</y>
+           <y>390</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditIntrinsicValueResult_2">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>460</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelReportLossOfEarning">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>360</y>
            <width>171</width>
            <height>16</height>
           </rect>
@@ -2821,15 +2875,656 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="tab_32">
+       <widget class="QWidget" name="tab_37">
         <attribute name="title">
-         <string>Värdering</string>
+         <string>Kflöde1</string>
         </attribute>
-        <widget class="QLabel" name="label_84">
+        <widget class="QwtPlot" name="qwtPlotCashflow1_15">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>10</y>
+           <width>691</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_38">
+        <attribute name="title">
+         <string>Kflöde2</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotCashFlow2_18">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_39">
+        <attribute name="title">
+         <string>Omst, Vinst</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotRevenueEarnings_17">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>0</y>
+           <width>701</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_34">
+      <attribute name="title">
+       <string>Utdelningsstabilitet</string>
+      </attribute>
+      <widget class="QTabWidget" name="tabWidget_5">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1021</width>
+         <height>521</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="tab_41">
+        <attribute name="title">
+         <string>Utdelning</string>
+        </attribute>
+        <widget class="QTreeWidget" name="treeWidgetDividend">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>251</width>
+           <height>331</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_92">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>181</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Utdelningshistorik</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditDividendYield">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>400</y>
+           <width>251</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotDiv_14">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>10</y>
+           <width>661</width>
+           <height>461</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_93">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>380</y>
+           <width>221</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Direktavkastning</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_42">
+        <attribute name="title">
+         <string>Vinst/Utdelning</string>
+        </attribute>
+        <widget class="QLineEdit" name="lineEditAvgtEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>120</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMintEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>170</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxtEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>70</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotEarningDiv_16">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>20</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelResEarningDiv">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>30</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_76">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>50</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_77">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>100</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_75">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>150</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_35">
+      <attribute name="title">
+       <string>Intjäningstillväxt</string>
+      </attribute>
+      <widget class="QTabWidget" name="tabWidget_6">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1021</width>
+         <height>521</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <widget class="QWidget" name="tab_43">
+        <attribute name="title">
+         <string>Vinsttillväxt</string>
+        </attribute>
+        <widget class="QLabel" name="label_86">
          <property name="geometry">
           <rect>
            <x>0</x>
+           <y>0</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinst/Aktie</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_85">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>0</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>70</y>
+           <width>121</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_69">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>50</y>
+           <width>221</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt per år (&gt; 3%)</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate_2">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>20</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualEarningGrowth">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>70</y>
+           <width>121</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgEarningPerShare_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>121</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlot_19">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>30</y>
+           <width>671</width>
+           <height>451</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidgetProfitGrowth_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>120</y>
+           <width>301</width>
+           <height>361</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_87">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>50</y>
+           <width>251</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Grahams Intrinsic Value</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_44">
+        <attribute name="title">
+         <string>Vinstmarginal</string>
+        </attribute>
+        <widget class="QLabel" name="labelResProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
            <y>260</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_80">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>310</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_78">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>360</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidgetProfit">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>321</width>
+           <height>221</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_89">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Lönsamhetsanalys</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>330</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_79">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>260</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>10</y>
+           <width>681</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>380</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxProfitMargin">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>280</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_45">
+        <attribute name="title">
+         <string>Avkastning på eget kapital</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotEquityMargin_22">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>20</y>
+           <width>681</width>
+           <height>461</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMinEquityMargin">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>370</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_82">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>350</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Min</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_83">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>300</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Medel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMaxEquityMargin">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>270</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_90">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Lönsamhetsanalys</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgEquityMargin">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>320</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidgetProfit_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>321</width>
+           <height>221</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLabel" name="label_81">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>250</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Max</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_40">
+      <attribute name="title">
+       <string>Historik</string>
+      </attribute>
+      <widget class="QTabWidget" name="tabWidget_7">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1021</width>
+         <height>531</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_15">
+        <attribute name="title">
+         <string>Priser</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotHistPrice">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>10</y>
+           <width>711</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_74">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
            <width>271</width>
            <height>17</height>
           </rect>
@@ -2837,13 +3532,10 @@
          <property name="font">
           <font>
            <pointsize>9</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
           </font>
          </property>
          <property name="text">
-          <string>P/E-talsprognos</string>
+          <string>Historiska priser</string>
          </property>
         </widget>
         <widget class="QTreeWidget" name="treeWidgetHistoricalPrices">
@@ -2869,11 +3561,80 @@
           </property>
          </column>
         </widget>
+        <widget class="QLabel" name="label_88">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>230</y>
+           <width>301</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>(Grahams,                    Buffett) Intrinsic Value</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditIntrinsicValueResult_3">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>250</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>250</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_16">
+        <attribute name="title">
+         <string>P/E-tal</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotHistPE">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>10</y>
+           <width>711</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_84">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>271</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>P/E-talsprognos</string>
+         </property>
+        </widget>
         <widget class="QTreeWidget" name="treeWidgetHistoricalPENum">
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>280</y>
+           <y>20</y>
            <width>271</width>
            <height>221</height>
           </rect>
@@ -2889,28 +3650,25 @@
           </property>
          </column>
         </widget>
-        <widget class="QLabel" name="label_74">
+       </widget>
+       <widget class="QWidget" name="tab_17">
+        <attribute name="title">
+         <string>Direktavk</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotHistYield">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>271</width>
-           <height>17</height>
+           <x>300</x>
+           <y>10</y>
+           <width>711</width>
+           <height>481</height>
           </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Historiska priser</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_100">
          <property name="geometry">
           <rect>
-           <x>310</x>
+           <x>0</x>
            <y>0</y>
            <width>271</width>
            <height>17</height>
@@ -2928,9 +3686,9 @@
         <widget class="QTreeWidget" name="treeWidgetHistoricalYield">
          <property name="geometry">
           <rect>
-           <x>310</x>
+           <x>0</x>
            <y>20</y>
-           <width>271</width>
+           <width>291</width>
            <height>191</height>
           </rect>
          </property>
@@ -2949,641 +3707,53 @@
          </column>
         </widget>
        </widget>
-       <widget class="QWidget" name="tab_15">
+       <widget class="QWidget" name="tab_18">
         <attribute name="title">
-         <string>Omst, Vinst</string>
+         <string>Pris/Eget kap</string>
         </attribute>
-        <widget class="QwtPlot" name="qwtPlotRevenueEarnings_17">
+        <widget class="QwtPlot" name="qwtPlotHistPriceBookValueRatio">
          <property name="geometry">
           <rect>
-           <x>310</x>
+           <x>300</x>
            <y>10</y>
-           <width>701</width>
-           <height>491</height>
+           <width>711</width>
+           <height>481</height>
           </rect>
          </property>
         </widget>
-        <widget class="QLabel" name="label_88">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>210</y>
-           <width>301</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>(Grahams,                    Buffett) Intrinsic Value</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditIntrinsicValueResult_3">
-         <property name="geometry">
-          <rect>
-           <x>140</x>
-           <y>230</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue_3">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>230</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="tab_16">
-        <attribute name="title">
-         <string>Utdel</string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlotDiv_14">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>10</y>
-           <width>681</width>
-           <height>491</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QTreeWidget" name="treeWidgetDividend">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>20</y>
-           <width>251</width>
-           <height>331</height>
-          </rect>
-         </property>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
-        <widget class="QLabel" name="label_92">
+        <widget class="QLabel" name="label_101">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>181</width>
-           <height>16</height>
+           <width>271</width>
+           <height>17</height>
           </rect>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>Utdelningshistorik</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eget kapital/Pris&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="lineEditDividendYield">
+        <widget class="QTreeWidget" name="treeWidgetPriceBookValueRatio">
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>390</y>
-           <width>251</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_93">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>370</y>
-           <width>221</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Direktavkastning</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="tab_17">
-        <attribute name="title">
-         <string>Vinst/Utdel</string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlotEarningDiv_16">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>10</y>
-           <width>681</width>
-           <height>491</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_75">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>140</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Min</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="labelResEarningDiv">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
            <y>20</y>
-           <width>131</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditMaxtEarningDiv">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>60</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditMintEarningDiv">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>160</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAvgtEarningDiv">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>110</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_76">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>40</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Max</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_77">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>90</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Medel</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="tab_18">
-        <attribute name="title">
-         <string>Kflöde1</string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlotCashflow1_15">
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>10</y>
-           <width>691</width>
-           <height>481</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="tab_19">
-        <attribute name="title">
-         <string>Kflöde2 </string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlotCashFlow2_18">
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>10</y>
-           <width>681</width>
-           <height>491</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="tab_20">
-        <attribute name="title">
-         <string>Vtillvxt</string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlot_19">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>10</y>
-           <width>681</width>
-           <height>491</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_69">
-         <property name="geometry">
-          <rect>
-           <x>180</x>
-           <y>60</y>
-           <width>221</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Vinsttillväxt per år (&gt; 3%)</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAvgEarningPerShare_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>121</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate_2">
-         <property name="geometry">
-          <rect>
-           <x>180</x>
-           <y>30</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditGrahamsIntrinsicValue_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>80</y>
-           <width>121</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_85">
-         <property name="geometry">
-          <rect>
-           <x>180</x>
-           <y>10</y>
-           <width>141</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Vinsttillväxt</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_86">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>121</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Vinst/Aktie</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_87">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>60</y>
-           <width>251</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Grahams Intrinsic Value</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_91">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>110</y>
-           <width>181</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Historisk vinstutveckling</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAnualEarningGrowth">
-         <property name="geometry">
-          <rect>
-           <x>180</x>
-           <y>80</y>
-           <width>121</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QTreeWidget" name="treeWidgetProfitGrowth_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>110</y>
-           <width>301</width>
-           <height>381</height>
-          </rect>
-         </property>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
-        <zorder>qwtPlot_19</zorder>
-        <zorder>lineEditAvgEarningPerShare_2</zorder>
-        <zorder>lineEditAnualEarningGrowthRate_2</zorder>
-        <zorder>lineEditGrahamsIntrinsicValue_2</zorder>
-        <zorder>label_85</zorder>
-        <zorder>label_86</zorder>
-        <zorder>label_87</zorder>
-        <zorder>label_91</zorder>
-        <zorder>label_69</zorder>
-        <zorder>lineEditAnualEarningGrowth</zorder>
-        <zorder>treeWidgetProfitGrowth_2</zorder>
-       </widget>
-       <widget class="QWidget" name="tab_21">
-        <attribute name="title">
-         <string>Vmrg</string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlotProfitMargin">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>10</y>
-           <width>681</width>
-           <height>481</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditMaxProfitMargin">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>280</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_78">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>360</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Min</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="labelResProfitMargin">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>280</y>
-           <width>131</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAvgProfitMargin">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>330</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditMinProfitMargin">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>380</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_79">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>260</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Max</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_80">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>310</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Medel</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_89">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>10</y>
-           <width>181</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Lönsamhetsanalys</string>
-         </property>
-        </widget>
-        <widget class="QTreeWidget" name="treeWidgetProfit">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>321</width>
-           <height>221</height>
+           <width>291</width>
+           <height>211</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <pointsize>9</pointsize>
-          </font>
-         </property>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
-        <zorder>qwtPlotProfitMargin</zorder>
-        <zorder>lineEditMaxProfitMargin</zorder>
-        <zorder>label_78</zorder>
-        <zorder>labelResProfitMargin</zorder>
-        <zorder>lineEditAvgProfitMargin</zorder>
-        <zorder>lineEditMinProfitMargin</zorder>
-        <zorder>label_79</zorder>
-        <zorder>label_80</zorder>
-        <zorder>treeWidgetProfit</zorder>
-        <zorder>label_89</zorder>
-       </widget>
-       <widget class="QWidget" name="tab_22">
-        <attribute name="title">
-         <string>Avk eget kap</string>
-        </attribute>
-        <widget class="QwtPlot" name="qwtPlotEquityMargin_22">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>10</y>
-           <width>681</width>
-           <height>491</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_81">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>260</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Max</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditMinEquityMargin">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>380</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_82">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>360</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Min</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditMaxEquityMargin">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>280</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAvgEquityMargin">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>330</y>
-           <width>113</width>
-           <height>22</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_83">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>310</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Medel</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_90">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>181</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Lönsamhetsanalys</string>
-         </property>
-        </widget>
-        <widget class="QTreeWidget" name="treeWidgetProfit_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>321</width>
-           <height>221</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <column>
@@ -3593,7 +3763,7 @@
          </column>
         </widget>
        </widget>
-       <widget class="QWidget" name="tab_23">
+       <widget class="QWidget" name="tab_47">
         <attribute name="title">
          <string>Skuld, Eget kap, Vinst, Utdel</string>
         </attribute>

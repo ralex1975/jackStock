@@ -96,8 +96,8 @@ bool CMatrix::Gaussj(int *n)
             k,
             l,
             nv,
-            irow,
-            icol,
+            irow = 0,   // ajn 170713
+            icol= 0,    // ajn 170713
             l1;
 
     nv=1;

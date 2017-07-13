@@ -80,6 +80,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
     initNetProfitAfterTaxTreeWidget();
     initMinMaxPePrice();
     initTreeWidgetHistoricalYield();
+    initTreeWidgetHistoricalPriceToBookValue();
     initTreeWidgetDividend();
 
     initSubAnalysTables();
@@ -298,6 +299,45 @@ void StockAnalysisTab::initTreeWidgetHistoricalYield(void)
     ui->treeWidgetHistoricalYield->setColumnWidth(3, 50);
 }
 
+
+
+/*******************************************************************
+ *
+ * Function:        initTreeWidgetHistoricalPriceToBookValue()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initTreeWidgetHistoricalPriceToBookValue(void)
+{
+
+    QString column0 = QString::fromUtf8("År");
+    QString column1 = QString("Min\nSubstans/Pris");
+    QString column2 = QString::fromUtf8("Medel\nSubstans/Pris");
+    QString column3 = QString("Max\nSubstans/Pris");
+
+
+    ui->treeWidgetPriceBookValueRatio->setColumnCount(4);
+    ui->treeWidgetPriceBookValueRatio->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidgetPriceBookValueRatio->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header = ui->treeWidgetPriceBookValueRatio->headerItem())
+    {
+        header->setText(0, column0);
+        header->setText(1, column1);
+        header->setText(2, column2);
+        header->setText(3, column3);
+
+    }
+
+    ui->treeWidgetPriceBookValueRatio->setColumnWidth(0, 65);
+    ui->treeWidgetPriceBookValueRatio->setColumnWidth(1, 65);
+    ui->treeWidgetPriceBookValueRatio->setColumnWidth(2, 60);
+    ui->treeWidgetPriceBookValueRatio->setColumnWidth(3, 50);
+}
 
 /*******************************************************************
  *
@@ -671,6 +711,13 @@ void StockAnalysisTab::initSubAnalysTables(void)
     dataHeader = QString::fromUtf8("KEffektivitet");
     initSubAnalyseTableWidget(ui->tableWidgetEfficientRatio, dateHeader, dataHeader);
     m_nofEfficientRatioData = 0;
+
+
+    // loanLossRatio (Kreditförlustnivån, bank)
+    dataHeader = QString::fromUtf8("Kreditförlust");
+    initSubAnalyseTableWidget(ui->tableWidgetLoanLossRatio, dateHeader, dataHeader);
+    m_nofLoanLossRatioData = 0;
+
 
 
     // CoreCapitalRatio (Kärnprimärkapitalrelation, bank)
@@ -1068,10 +1115,17 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_coreCapitalRatioArr,
                                  m_nofCoreCapitalRatioData);
 
+
     updateTableWithSubAnalysData(ui->tableWidgetEfficientRatio,
                                  SAD_EFFICIENT_RATIO,
                                  m_efficientRatioArr,
                                  m_nofEfficientRatioData);
+
+
+    updateTableWithSubAnalysData(ui->tableWidgetLoanLossRatio,
+                                 SAD_LOAN_LOSS_RATIO,
+                                 m_loanLossRatioArr,
+                                 m_nofLoanLossRatioData);
 
 
     updateTableWithSubAnalysData(ui->tableWidgetEquity,
@@ -1261,6 +1315,15 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
     case SAD_EFFICIENT_RATIO:
         res = db.getSubAnalysisEfficientRatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
         if(nofArrData > MAX_NOF_EFFICIENT_RATIO)
+        {
+            QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
+        }
+        break;
+
+
+    case SAD_LOAN_LOSS_RATIO:
+        res = db.getSubAnalysisLoanLossRatioData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+        if(nofArrData > MAX_NOF_LOAN_LOSS_RATIO)
         {
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 7: Too many array data"));
         }
@@ -5516,7 +5579,10 @@ void StockAnalysisTab::on_pushButtonCalcYearlyIntrestRateOnEquity_clicked()
  *
  *
  *******************************************************************/
-void StockAnalysisTab::plotEquityPerShareData(SubAnalysDataST *dataArr, int nofData, bool plotPrediction)
+void StockAnalysisTab::
+plotEquityPerShareData(SubAnalysDataST *dataArr,
+                       int nofData,
+                       bool plotPrediction)
 {
     CExtendedQwtPlot eqp;
     CYahooStockPlotUtil cyspu;
@@ -6032,7 +6098,7 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     legendText = QString::fromUtf8("Ak/Ek");
 
     initAnalysisPlot(ui->qwtPlotEquityMargin_22, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
-                             location, legendSize);
+                     location, legendSize);
 
 
     //-----------------------------------------------------------------------------------
@@ -6075,6 +6141,73 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     legendSize = 10;
 
     eqp.setLegendSymbol(ui->qwtPlotLiabEquityEarningDiv_21, legendText, legendSymbol, legendColor, legendSize);
+
+
+    //---------------------
+
+
+    plotHeader = QString::fromUtf8("Historiska priser");
+    legendText = QString::fromUtf8("Min pris");
+
+    initAnalysisPlot(ui->qwtPlotHistPrice, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
+    legendText = legendText.fromUtf8("Avg priser");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::black;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotHistPrice, legendText, legendSymbol, legendColor, legendSize);
+
+
+    //-------
+
+    plotHeader = QString::fromUtf8("Historiska P/E");
+    legendText = QString::fromUtf8("Min P/E");
+
+    initAnalysisPlot(ui->qwtPlotHistPE, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
+    legendText = legendText.fromUtf8("Avg P/E");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::black;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotHistPE, legendText, legendSymbol, legendColor, legendSize);
+
+
+    //-----
+
+    plotHeader = QString::fromUtf8("Historisk direktavkastning");
+    legendText = QString::fromUtf8("Min DirAvk");
+
+    initAnalysisPlot(ui->qwtPlotHistYield, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                    location, legendSize);
+
+    legendText = legendText.fromUtf8("Avg DirAvk");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::black;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotHistYield, legendText, legendSymbol, legendColor, legendSize);
+
+
+    //---
+
+    plotHeader = QString::fromUtf8("Historisk Substans/Pris");
+    legendText = QString::fromUtf8("Min Substans/Pris");
+
+    initAnalysisPlot(ui->qwtPlotHistPriceBookValueRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                    location, legendSize);
+
+
+    legendText = legendText.fromUtf8("Avg Substans/Pris");
+    legendSymbol = QwtSymbol::Rect;
+    legendColor = Qt::black;
+    legendSize = 10;
+
+    eqp.setLegendSymbol(ui->qwtPlotHistPriceBookValueRatio, legendText, legendSymbol, legendColor, legendSize);
+
 
 }
 
@@ -6169,7 +6302,7 @@ void StockAnalysisTab::addRevenueAndEquityToTreeWidget(QTreeWidget *treeWidget,
 
 /*******************************************************************
  *
- * Function:        addRevenueAndEquityToTreeWidget()
+ * Function:        addMinAvgMaxYieldToTreeWidget()
  *
  * Description:
  *
@@ -6198,7 +6331,7 @@ void StockAnalysisTab::addMinAvgMaxYieldToTreeWidget(void)
     // Get avg prices
     tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpAvgPriceArr, m_noftmpAvgPriceArrData, 0, 2);
     // Get max prices
-    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpMaxPriceArr, m_nofMaxAvgPriceArrData, 0, 3);
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpMaxPriceArr, m_nofMaxPriceArrData, 0, 3);
 
 
     for(int i = 0; i < m_noftmpMinPriceArrData; i++)
@@ -6244,6 +6377,84 @@ void StockAnalysisTab::addMinAvgMaxYieldToTreeWidget(void)
         }
     }
 }
+
+
+
+/*******************************************************************
+ *
+ * Function:        addMinAvgMaxBookValuePriceRatioToTreeWidget()
+ *
+ * Description:
+ *
+ * Note: BookValue = Equity Per Share
+ *
+ *******************************************************************/
+void StockAnalysisTab::addMinAvgMaxBookValuePriceRatioToTreeWidget(void)
+{
+    TreeWidgetFinance tw;
+
+    double dbMinBookValuePrice;
+    double dbAvgBookValuePrice;
+    double dbMaxBookValuePrice;
+    double dbBookValue;
+
+    QString year;
+    QString minBookValuePrice;
+    QString avgBookValuePrice;
+    QString maxBookValuePrice;
+
+
+    ui->treeWidgetPriceBookValueRatio->clear();
+
+    // Get min prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpMinPriceArr, m_noftmpMinPriceArrData, 0, 1);
+    // Get avg prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpAvgPriceArr, m_noftmpAvgPriceArrData, 0, 2);
+    // Get max prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPrices, m_tmpMaxPriceArr, m_nofMaxPriceArrData, 0, 3);
+
+
+    for(int i = 0; i < m_noftmpMinPriceArrData; i++)
+    {
+        for(int j = 0; j < m_nofEquityPerShareData; j++)
+        {
+            if(m_equityPerShareArr[j].date.toInt() == m_tmpMinPriceArr[i].date.toInt())
+            {
+                year = m_equityPerShareArr[j].date;
+
+                dbBookValue = m_equityPerShareArr[j].data.toDouble();
+                dbMaxBookValuePrice = m_tmpMinPriceArr[i].data.toDouble();
+                dbAvgBookValuePrice = m_tmpAvgPriceArr[i].data.toDouble();
+                dbMinBookValuePrice = m_tmpMaxPriceArr[i].data.toDouble();
+
+                if(dbMinBookValuePrice == 0)
+                {
+                    minBookValuePrice.sprintf("%.2f", 0.0);
+                    avgBookValuePrice.sprintf("%.2f", 0.0);
+                    maxBookValuePrice.sprintf("%.2f", 0.0);
+                }
+                else
+                {
+                    dbMinBookValuePrice = dbBookValue / dbMinBookValuePrice;
+                    dbAvgBookValuePrice = dbBookValue / dbAvgBookValuePrice;
+                    dbMaxBookValuePrice = dbBookValue / dbMaxBookValuePrice;
+
+                    minBookValuePrice.sprintf("%.2f", dbMinBookValuePrice);
+                    avgBookValuePrice.sprintf("%.2f", dbAvgBookValuePrice);
+                    maxBookValuePrice.sprintf("%.2f", dbMaxBookValuePrice);
+                }
+
+
+                tw.addTreeWidgetData(ui->treeWidgetPriceBookValueRatio,
+                                     year,
+                                     minBookValuePrice,
+                                     avgBookValuePrice,
+                                     maxBookValuePrice);
+            }
+        }
+    }
+}
+
 
 
 
@@ -7355,7 +7566,295 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                       xOffset,
                                       resetMinMaxScale);
 
+    //------------------------
+
+
+    //------------------------
+
+
     addMinAvgMaxYieldToTreeWidget();
+
+    addMinAvgMaxBookValuePriceRatioToTreeWidget();
+
+    //------------------------
+
+    //-----------------------------------------------------------------------------------
+    // Historisk pris
+    //-----------------------------------------------------------------------------------
+    indexToPlot = 0;
+    nofPlotToClear = 0;
+    lineColor = Qt::black;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+
+    plotLinearReportData(ui->qwtPlotHistPrice,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMinPriceArr,
+                         m_noftmpMinPriceArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 1;
+    nofPlotToClear = 0;
+    lineColor = Qt::red;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+
+    plotLinearReportData(ui->qwtPlotHistPrice,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpAvgPriceArr,
+                         m_noftmpAvgPriceArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 2;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+
+    plotLinearReportData(ui->qwtPlotHistPrice,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMaxPriceArr,
+                         m_nofMaxPriceArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    //------------------------------
+    TreeWidgetFinance tw;
+
+    // Get min prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPENum, m_tmpMinPEArr, m_noftmpMinPEArrData, 0, 1);
+    // Get avg prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPENum, m_tmpAvgPEArr, m_noftmpAvgPEArrData, 0, 2);
+    // Get max prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalPENum, m_tmpMaxPEArr, m_nofMaxPEArrData, 0, 3);
+
+
+
+    indexToPlot = 3;
+    nofPlotToClear = 0;
+    lineColor = Qt::black;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+
+    plotLinearReportData(ui->qwtPlotHistPE,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMinPEArr,
+                         m_noftmpMinPEArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 4;
+    nofPlotToClear = 0;
+    lineColor = Qt::red;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+
+    plotLinearReportData(ui->qwtPlotHistPE,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpAvgPEArr,
+                         m_noftmpAvgPEArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 5;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+
+    plotLinearReportData(ui->qwtPlotHistPE,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMaxPEArr,
+                         m_nofMaxPEArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    //-------------
+
+    // Get min prices
+    tw.getTreeWidgetData(ui->treeWidgetPriceBookValueRatio, m_tmpMinPriceBookRatioArr, m_nofTmpMinPriceBookRatioArrData, 0, 1);
+    // Get avg prices
+    tw.getTreeWidgetData(ui->treeWidgetPriceBookValueRatio, m_tmpAvgPriceBookRatioArr, m_nofTmpAvgPriceBookRatioArrData, 0, 2);
+    // Get max prices
+    tw.getTreeWidgetData(ui->treeWidgetPriceBookValueRatio, m_tmpMaxPriceBookRatioArr, m_nofTmpMaxPriceBookRatioArrData, 0, 3);
+
+
+
+    indexToPlot = 6;
+    nofPlotToClear = 0;
+    lineColor = Qt::black;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+
+    plotLinearReportData(ui->qwtPlotHistPriceBookValueRatio,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMinPriceBookRatioArr,
+                         m_nofTmpMinPriceBookRatioArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 7;
+    nofPlotToClear = 0;
+    lineColor = Qt::red;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+
+    plotLinearReportData(ui->qwtPlotHistPriceBookValueRatio,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpAvgPriceBookRatioArr,
+                         m_nofTmpAvgPriceBookRatioArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 8;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+    plotLinearReportData(ui->qwtPlotHistPriceBookValueRatio,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMaxPriceBookRatioArr,
+                         m_nofTmpMaxPriceBookRatioArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    //-------------
+
+    // Get min prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalYield, m_tmpMinYieldArr, m_nofTmpMinYieldArrData, 0, 1);
+    // Get avg prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalYield, m_tmpAvgYieldArr, m_nofTmpAvgYieldArrData, 0, 2);
+    // Get max prices
+    tw.getTreeWidgetData(ui->treeWidgetHistoricalYield, m_tmpMaxYieldArr, m_nofTmpMaxYieldArrData, 0, 3);
+
+
+
+    indexToPlot = 9;
+    nofPlotToClear = 0;
+    lineColor = Qt::black;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+
+
+    plotLinearReportData(ui->qwtPlotHistYield,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMinYieldArr,
+                         m_nofTmpMinYieldArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 10;
+    nofPlotToClear = 0;
+    lineColor = Qt::red;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+
+    plotLinearReportData(ui->qwtPlotHistYield,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpAvgYieldArr,
+                         m_nofTmpAvgYieldArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+    indexToPlot = 11;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+
+
+
+    plotLinearReportData(ui->qwtPlotHistYield,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_tmpMaxYieldArr,
+                         m_nofTmpMaxYieldArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
+
+
+
+    //------------------------
+
+
+    // addMinAvgMaxYieldToTreeWidget();
+
+    // addMinAvgMaxBookValuePriceRatioToTreeWidget();
+
+    //------------------------
 
 }
 
@@ -8655,6 +9154,128 @@ void StockAnalysisTab::on_pushButtonSaveEfficientRatio_clicked()
                                                          efficientRatioDataIdIsValid,
                                                          efficientRatioData,
                                                          efficientRatioDataId);
+        }
+    }
+}
+
+/*******************************************************************
+ *
+ * Function:    on_pushButtonSaveLoanLossRatio_clicked()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::on_pushButtonSaveLoanLossRatio_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int loanLossRatioDateId;
+    int inputLoanLossRatioDataId;
+    int loanLossRatioDataId;
+    bool loanLossRatioDataIdIsValid = false;
+
+    int nofData;
+    QString loanLossRatioDate;
+    QString loanLossRatioData;
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"),
+       str,
+       QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                    m_stockSymbol,
+                                    mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                        m_stockSymbol,
+                                        mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetLoanLossRatio->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetLoanLossRatio->item(row, 0))
+        {
+            loanLossRatioDate = ui->tableWidgetLoanLossRatio->item(row, 0)->text();
+            loanLossRatioData = ui->tableWidgetLoanLossRatio->item(row, 1)->text();
+
+            loanLossRatioDate.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(loanLossRatioData, loanLossRatioData);
+            loanLossRatioData.toDouble(&isValid);
+
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("LoanLossRatio is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+        res = db.subAnalysisLoanLossRatioDateExists(loanLossRatioDate,
+                                                     mainAnalysisId,
+                                                     loanLossRatioDateId);
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisLoanLossRatioDate(loanLossRatioDate,
+                                                        mainAnalysisId,
+                                                        loanLossRatioDateId);
+        }
+
+        if(true == res)
+        {
+           loanLossRatioDataIdIsValid = false;
+
+           if( true == db.getSubAnalysisLoanLossRatioDataId(mainAnalysisId,
+                                                            loanLossRatioDateId,
+                                                            inputLoanLossRatioDataId))
+           {
+               loanLossRatioDataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisLoanLossRatioData(loanLossRatioDateId,
+                                                         mainAnalysisId,
+                                                         inputLoanLossRatioDataId,
+                                                         loanLossRatioDataIdIsValid,
+                                                         loanLossRatioData,
+                                                         loanLossRatioDataId);
         }
     }
 }

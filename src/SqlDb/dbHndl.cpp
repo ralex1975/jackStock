@@ -324,7 +324,74 @@ bool CDbHndl::createTable(void)
 
         qry.finish();
 
+        //----
 
+        //-----------------------------------------------------------------------
+        // TblDateLoanLossRatio
+        //-----------------------------------------------------------------------
+        //Date
+                //-----------------------------------------------------------------------
+                // TblDateLoanLossRatio (banks Kreditförlustnivån)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateLoanLossRatio "
+                            " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  Date DATE, "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("LoanLossRatio"), QString::fromUtf8("Fail create TblDateEfficientRatio"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+        //Data
+                //-----------------------------------------------------------------------
+                // TblDataLoanLossRatio
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataLoanLossRatio "
+                            " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  DateId INTEGER, "
+                            "  LoanLossRatioValue VARCHAR(255), "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDataLoanLossRatio"), QString::fromUtf8("Fail create TblDataEfficientRatio"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+        //-----
 
 
         //-----------------------------------------------------------------------
@@ -11945,7 +12012,7 @@ bool CDbHndl::calcMacdMovAvg(const QString assetSymbol,
     double sumOfPrice;
     double average;
     double ema;
-    double oldEma;
+    double oldEma = 0;  // ajn 170713
     QString date;
 
     // Fifo help variable
@@ -12573,7 +12640,7 @@ bool CDbHndl::getYahooTaRsi(const QString assetSymbol,
     int stockDataIndex;
 
     double res;
-    double refDayPrice;
+    double refDayPrice = 0; // ajn 170713
     double RSU;
     double RSD;
     int i;
@@ -12808,8 +12875,8 @@ bool CDbHndl::getYahooTaStochastics(const QString assetSymbol,
     double procD;
 
 
-    double minPrice;
-    double maxPrice;
+    double minPrice = 0;            // ajn 170713
+    double maxPrice = 0;            // ajn 170713
     bool initMinMaxPrice = true;
 
 

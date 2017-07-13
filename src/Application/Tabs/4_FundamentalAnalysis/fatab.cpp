@@ -1419,7 +1419,7 @@ addSalesOrProfitGrowthPrognosData(QTreeWidget *treeWidget,
     // Milj Kr
     double y1;
 
-    double lastY;
+    double lastY = 0;
 
     QString xStr;
     QString yStr;

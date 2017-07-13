@@ -196,6 +196,7 @@ struct SubAnalysDataST
 #define MAX_NOF_CORE_TIER_1_RATIO                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CORE_CAPITAL_RATIO                  MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EFFICIENT_RATIO                     MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_LOAN_LOSS_RATIO                     MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY                              MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_EQUITY_PER_SHARE                    MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_CASH_FLOW_CAPEX                     MAX_NOF_DIVIDEND_ARR_DATA
@@ -220,6 +221,7 @@ enum SubAnalyseDataTypeET
     SAD_CORE_TIER_1_RATIO,          // primärkapitalrelation, (Lundaluppen används ej längre)
     SAD_CORE_CAPITAL_RATIO,         // kärnprimärkapitalrelation (Bank)
     SAD_EFFICIENT_RATIO,            // kostnadseffektivitet      (Bank)
+    SAD_LOAN_LOSS_RATIO,            // Kreditförlustnivån        (Bank)
     SAD_EQUITY,                     // Eget kapital
     SAD_EQUITY_PER_SHARE,           // Eget kapital/Aktie
     SAD_CASH_FLOW_CAPEX,            // Kassaflöde Capex Investeringar/kapitalutgifter
@@ -820,7 +822,43 @@ public:
 
     // Stop video help
 
+    //===========================================
+    // Start LoanLossRatio
 
+    bool subAnalysisLoanLossRatioDateExists(QString date,
+                                            int mainAnalysisId,
+                                            int &dateId);
+
+
+    bool insertSubAnalysisLoanLossRatioDate(QString date,
+                                        int mainAnalysisId,
+                                        int &dateId,
+                                        bool dbIsHandledExternly = false);
+
+
+    bool getSubAnalysisLoanLossRatioDataId(int mainAnalysisId,
+                                           int dateId,
+                                           int &dataId,
+                                           bool dbIsHandledExternly = false);
+
+
+    bool insertSubAnalysisLoanLossRatioData(int dateId,
+                                            int mainAnalysisId,
+                                            int inputDataId,
+                                            bool idIsValid,
+                                            QString loanLossRatio,
+                                            int &dataId,
+                                            bool dbIsHandledExternly = false);
+
+    bool getSubAnalysisLoanLossRatioData(QString stockName,
+                                         QString stockSymbol,
+                                         SubAnalysDataST *dataArr,
+                                         int &nofArrData,
+                                         bool dbIsHandledExternly = false);
+
+
+
+    // Stop LoanLossRatio
     //===========================================
 
     // Start EfficientRatio

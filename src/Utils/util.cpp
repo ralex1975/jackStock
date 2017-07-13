@@ -1330,6 +1330,7 @@ bool CUtil::saveTextFile(QString dataToStore, QString filename, QString path)
    outStream << dataToStore;
 
    outputFile.close();
+   return true;
 }
 
 

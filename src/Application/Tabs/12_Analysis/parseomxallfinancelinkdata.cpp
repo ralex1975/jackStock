@@ -742,7 +742,7 @@ void ParseOmxAllFinanceLinkData::insertNetIncomeIntoDb(struct OmxBridgeDataST *o
     int dataId;
     bool dataIdIsValid = false;
 
-    int nofData;
+  //  int nofData;
     QString date;
     QString data;
     QString stockName;

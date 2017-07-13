@@ -60,10 +60,44 @@ class StockAnalysisTab : public QDialog
     int                   m_noftmpAvgPriceArrData;
 
     SubAnalysDataST       m_tmpMaxPriceArr[MAX_NOF_TMP_PRICE_DATA];
-    int                   m_nofMaxAvgPriceArrData;
+    int                   m_nofMaxPriceArrData;
 
+
+
+    SubAnalysDataST       m_tmpMinPEArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_noftmpMinPEArrData;
+
+    SubAnalysDataST       m_tmpAvgPEArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_noftmpAvgPEArrData;
+
+    SubAnalysDataST       m_tmpMaxPEArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofMaxPEArrData;
+
+
+
+    SubAnalysDataST       m_tmpMinPriceBookRatioArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofTmpMinPriceBookRatioArrData;
+
+    SubAnalysDataST       m_tmpAvgPriceBookRatioArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofTmpAvgPriceBookRatioArrData;
+
+    SubAnalysDataST       m_tmpMaxPriceBookRatioArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofTmpMaxPriceBookRatioArrData;
+
+
+
+    SubAnalysDataST       m_tmpMinYieldArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofTmpMinYieldArrData;
+
+    SubAnalysDataST       m_tmpAvgYieldArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofTmpAvgYieldArrData;
+
+    SubAnalysDataST       m_tmpMaxYieldArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofTmpMaxYieldArrData;
 
     //-----------------------------------------------------------------
+
+
 
     SubAnalysDataST       m_totEarningsDataArr[MAX_NOF_TOT_EARNINGS];
     int                   m_nofTotEarningsArrData;
@@ -105,6 +139,9 @@ class StockAnalysisTab : public QDialog
 
     SubAnalysDataST       m_efficientRatioArr[MAX_NOF_EFFICIENT_RATIO];
     int                   m_nofEfficientRatioData;
+
+    SubAnalysDataST       m_loanLossRatioArr[MAX_NOF_LOAN_LOSS_RATIO];
+    int                   m_nofLoanLossRatioData;
 
     SubAnalysDataST       m_totEquityArr[MAX_NOF_EQUITY];
     int                   m_nofTotEquityData;
@@ -148,6 +185,7 @@ class StockAnalysisTab : public QDialog
     void initNetProfitAfterTaxTreeWidget(void);
     void initProfitabilityAnalysis(void);
     void initTreeWidgetHistoricalYield(void);
+    void initTreeWidgetHistoricalPriceToBookValue(void);
     void initMinMaxPePrice(void);
     void initTreeWidgetDividend(void);
     void initSubAnalysisPlots(void);
@@ -156,8 +194,7 @@ class StockAnalysisTab : public QDialog
     void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
 
     void addMinAvgMaxYieldToTreeWidget(void);
-
-
+    void addMinAvgMaxBookValuePriceRatioToTreeWidget(void);
 
     void initSubAnalyseTableWidget(QTableWidget *tableWidget,
                                    QString dateHeader,
@@ -267,6 +304,8 @@ private slots:
 
     void on_pushButtonSaveEfficientRatio_clicked();
 
+    void on_pushButtonSaveLoanLossRatio_clicked();
+
 private:
     Ui::StockAnalysisTab *ui;
     calcAvgAnnualGrowthRateEquity calcAvgAnnualGrowthRateEquity_dlg;
@@ -281,6 +320,9 @@ private:
 
     // Cannot extract x,y data. Contains all data that is send to graph
     CYahooStockPlotUtil::PlotData_ST m_qwtAnalysisPlotDataArr2;
+
+    // Cannot extract x,y data. Contains all data that is send to graph
+    CYahooStockPlotUtil::PlotData_ST m_qwtAnalysisPlotDataArr3;
 
     double m_x[1000];
     double m_y[1000];
