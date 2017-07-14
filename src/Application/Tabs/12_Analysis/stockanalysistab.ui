@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>8</number>
+    <number>10</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1534,7 +1534,7 @@
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>191</width>
+       <width>181</width>
        <height>441</height>
       </rect>
      </property>
@@ -1549,7 +1549,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Operating Cash Flow</string>
+      <string>Kostnadseffektivitet %</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButtonSaveEfficientRatio">
@@ -1568,9 +1568,9 @@
     <widget class="QTableWidget" name="tableWidgetLoanLossRatio">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>230</x>
        <y>50</y>
-       <width>191</width>
+       <width>181</width>
        <height>441</height>
       </rect>
      </property>
@@ -1578,7 +1578,7 @@
     <widget class="QPushButton" name="pushButtonSaveLoanLossRatio">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>240</x>
        <y>20</y>
        <width>51</width>
        <height>22</height>
@@ -1591,7 +1591,7 @@
     <widget class="QLabel" name="label_102">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>300</x>
        <y>20</y>
        <width>161</width>
        <height>21</height>
@@ -1900,7 +1900,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_25">
       <attribute name="title">
@@ -1916,7 +1916,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2360,7 +2360,7 @@
        </widget>
        <widget class="QWidget" name="tab_27">
         <attribute name="title">
-         <string>RTGrad</string>
+         <string>Räntetäckningsgraden</string>
         </attribute>
         <widget class="QLineEdit" name="lineEditMaxCovRatio">
          <property name="geometry">
@@ -2470,7 +2470,7 @@
        </widget>
        <widget class="QWidget" name="tab_28">
         <attribute name="title">
-         <string>KärnPriKapRel</string>
+         <string>Kärnprimärkapitalrelation</string>
         </attribute>
         <widget class="QLabel" name="labelResultCoreCapitalRatio">
          <property name="geometry">
@@ -2580,7 +2580,7 @@
        </widget>
        <widget class="QWidget" name="tab_30">
         <attribute name="title">
-         <string>kEffektivitet</string>
+         <string>Kostnadseffektivitet</string>
         </attribute>
         <widget class="QLineEdit" name="lineEditMaxEfficientRatio">
          <property name="geometry">
@@ -2685,6 +2685,21 @@
          </property>
          <property name="text">
           <string>Gäller bank</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_19">
+        <attribute name="title">
+         <string>Kreditförluster</string>
+        </attribute>
+        <widget class="QwtPlot" name="qwtPlotLoanLossRatio">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>10</y>
+           <width>681</width>
+           <height>491</height>
+          </rect>
          </property>
         </widget>
        </widget>

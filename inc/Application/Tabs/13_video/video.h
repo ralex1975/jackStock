@@ -30,7 +30,7 @@ public:
 private slots:
     void on_pushButtonImportVideoHelp_clicked();
 
-    void on_exerciseTreeWidget_clicked(const QModelIndex &index);
+    // void on_exerciseTreeWidget_clicked(const QModelIndex &index);
 
     void on_pushButton_2_clicked();
 

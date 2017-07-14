@@ -707,8 +707,8 @@ void StockAnalysisTab::initSubAnalysTables(void)
     m_nofCoreTier1RatioData = 0;
 
 
-    // EfficientRatio (kostnadseffektivitet, bank)
-    dataHeader = QString::fromUtf8("KEffektivitet");
+    // EfficientRatio C/I (Kostnadseffektivitet, K/I bank)
+    dataHeader = QString::fromUtf8("K/I-talet %");
     initSubAnalyseTableWidget(ui->tableWidgetEfficientRatio, dateHeader, dataHeader);
     m_nofEfficientRatioData = 0;
 
@@ -5638,15 +5638,15 @@ plotEquityPerShareData(SubAnalysDataST *dataArr,
     {
         m_qwtEquityPlotData.stock[index].data.setPen(QPen(Qt::blue, 2));
         m_qwtEquityPlotData.stock[index].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
-                                                                     QPen( Qt::blue ),
-                                                                      QSize( 7, 7 ) ) );
+                                                                       QPen( Qt::blue ),
+                                                                       QSize( 7, 7 ) ) );
     }
     else
     {
         m_qwtEquityPlotData.stock[index].data.setPen(QPen(Qt::black, 2));
         m_qwtEquityPlotData.stock[index].data.setSymbol( new QwtSymbol(QwtSymbol::Ellipse,                                                            Qt::blue,
-                                                                     QPen( Qt::black ),
-                                                                      QSize( 7, 7 ) ) );
+                                                                       QPen( Qt::black ),
+                                                                       QSize( 7, 7 ) ) );
     }
 
     cyspu.plotData(m_qwtEquityPlotData, ui->qwtPlot_10, index, false);
@@ -5974,12 +5974,24 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // kostnadseffektivitet <= 60% (Bank)
     //-----------------------------------------------------------------------------------
-    plotHeader = QString::fromUtf8("kostnadseffektivitet <= 60%");
-    legendText = QString::fromUtf8("KE");
+    plotHeader = QString::fromUtf8("Kostnadseffektivitet K/I <= 60%");
+    legendText = QString::fromUtf8("Ke");
     legendSymbol = QwtSymbol::Ellipse;
 
     initAnalysisPlot(ui->qwtPlotEfficientRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                      location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Kreditförlustnivå (Bank)
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Kreditförlustnivå");
+    legendText = QString::fromUtf8("Kf");
+    legendSymbol = QwtSymbol::Ellipse;
+
+    initAnalysisPlot(ui->qwtPlotLoanLossRatio, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                     location, legendSize);
+
 
 
 
@@ -6882,7 +6894,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                     maxY,
                                     avgY))
     {
-        if(minY.toDouble() <= 60.0)
+        if(maxY.toDouble() <= 60.0)
         {
             ui->labelResultEfficientRatio->setPalette(*m_blue_palette);
             ui->labelResultEfficientRatio->setText(QString::fromUtf8("Godkänt <= 60.0"));
@@ -7849,10 +7861,28 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
     //------------------------
 
+    //====================================================================
+    // Kreditförlustnivå
+    //====================================================================
 
-    // addMinAvgMaxYieldToTreeWidget();
+    indexToPlot = 12;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = true;
 
-    // addMinAvgMaxBookValuePriceRatioToTreeWidget();
+
+
+    plotLinearReportData(ui->qwtPlotLoanLossRatio,
+                         m_qwtAnalysisPlotDataArr3,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_loanLossRatioArr,
+                         m_nofLoanLossRatioData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
 
     //------------------------
 

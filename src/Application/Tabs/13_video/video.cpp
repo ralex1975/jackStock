@@ -171,6 +171,7 @@ void Video::on_pushButtonImportVideoHelp_clicked()
 }
 
 
+#if 0
 /****************************************************************
  *
  * Function:    on_exerciseTreeWidget_clicked()
@@ -184,6 +185,7 @@ void Video::on_exerciseTreeWidget_clicked(const QModelIndex &index)
 {
 
 }
+#endif
 
 // räntabilitet_på_eget_kapital_2.mp4
 
@@ -237,19 +239,25 @@ void Video::on_exerciseTreeWidget_doubleClicked(const QModelIndex &index)
      path =  QCoreApplication::applicationDirPath();
      path += "/database/Video/klipp/";
      path += m_exerciseDataArr[index1].exercisePronunciation;
-     if(path.size() > 0)
-     {
-         // --aspect-ratio 5:4
-         str = "vlc --aspect-ratio 5:4 ";
-         str += path;
-         str += " --play-and-exit";
+    if(path.size() > 0)
+    {
+        // --aspect-ratio 5:4
+        str = "vlc --aspect-ratio 5:4 ";
+        str += path;
+        str += " --play-and-exit";
 
-         //str = "vlc database/theory/video/j-ljudet.mpg";
+        //str = "vlc database/theory/video/j-ljudet.mpg";
 
-         QByteArray byteArray = str.toLocal8Bit().constData();
-         byteArray.constData();
-         system(byteArray);
-     }
+        QByteArray byteArray = str.toLocal8Bit().constData();
+        byteArray.constData();
+
+        // Ignore result
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wunused-result"
+        system(byteArray);
+        #pragma GCC diagnostic pop
+
+    }
 
 }
 
