@@ -732,6 +732,12 @@ void StockAnalysisTab::initSubAnalysTables(void)
     m_nofTotEquityData = 0;
 
 
+    // RevenuePerShare (Omsättning/Aktie)
+    dataHeader = QString::fromUtf8("Försäljning/Aktie");
+    initSubAnalyseTableWidget(ui->tableWidgetRevenuePerShare, dateHeader, dataHeader);
+    m_nofRevenuePerShareData = 0;
+
+
     // EquityPerShare (Eget kapital/Aktie)
     dataHeader = QString::fromUtf8("Eget kapital/Aktie");
     initSubAnalyseTableWidget(ui->tableWidgetEquityPerShare, dateHeader, dataHeader);
@@ -1133,6 +1139,14 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                                  m_totEquityArr,
                                  m_nofTotEquityData);
 
+
+    updateTableWithSubAnalysData(ui->tableWidgetRevenuePerShare,
+                                 SAD_REVENUE_PER_SHARE,
+                                 m_revenuePerShareArr,
+                                 m_nofRevenuePerShareData);
+
+
+
     updateTableWithSubAnalysData(ui->tableWidgetEquityPerShare,
                                  SAD_EQUITY_PER_SHARE,
                                  m_equityPerShareArr,
@@ -1355,6 +1369,15 @@ void StockAnalysisTab::updateTableWithSubAnalysData(QTableWidget *tableWidget,
             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 8: Too many array data"));
         }
         break;
+
+    case SAD_REVENUE_PER_SHARE:
+         res = db.getSubAnalysisRevenuePerShareData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
+         if(nofArrData > MAX_NOF_REVENUE_PER_SHARE)
+         {
+             QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Error 8: Too many array data"));
+         }
+         break;
+
 
     case SAD_EQUITY_PER_SHARE:
          res = db.getSubAnalysisEquityPerShareData(m_stockName, m_stockSymbol, subAnalysDataArr, nofArrData);
@@ -6882,6 +6905,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     lineColor = Qt::blue;
     useAutoScale = false;
     resetMinMaxValue = true;
+    double dbMinY;
 
     ui->labelResultEfficientRatio->clear();
     ui->lineEditMinEfficientRatio->clear();
@@ -6894,15 +6918,18 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                     maxY,
                                     avgY))
     {
-        if(maxY.toDouble() <= 60.0)
+
+        dbMinY = maxY.toDouble();
+        qDebug() << "maxY" << dbMinY;
+        if(dbMinY <= 0.60)
         {
             ui->labelResultEfficientRatio->setPalette(*m_blue_palette);
-            ui->labelResultEfficientRatio->setText(QString::fromUtf8("Godkänt <= 60.0"));
+            ui->labelResultEfficientRatio->setText(QString::fromUtf8("Godkänt <= 0.60"));
         }
         else
         {
             ui->labelResultEfficientRatio->setPalette(*m_red_palette);
-            ui->labelResultEfficientRatio->setText(QString::fromUtf8("Underkänt > 60.0"));
+            ui->labelResultEfficientRatio->setText(QString::fromUtf8("Underkänt > 0.60"));
         }
 
         ui->lineEditMinEfficientRatio->setText(minY);
@@ -7545,7 +7572,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                       m_qwtAnalysisPlotDataArr2,
                                       useAutoScale,
                                       m_cashFlowCapexArr,
-                                      m_nofOperatingCashFlowData,
+                                      m_nofCashFlowCapexData,
                                       indexToPlot,
                                       nofPlotToClear,
                                       lineColor,
@@ -8188,6 +8215,8 @@ void StockAnalysisTab::plotBarGraphReportDataWithXOffset(QwtPlot *qwtPlot,
 {
     CYahooStockPlotUtil cyspu;
 
+
+
     // Do not excide array bondary
     if((indexToPlot >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS) ||
        (nofPlotToClear >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS))
@@ -8342,7 +8371,10 @@ void StockAnalysisTab::plotLinearReportData(QwtPlot *qwtPlot,
                                                                    QPen(lineColor), QSize(7, 7) ) );
     }
 
-    cyspu.plotData(qwtAllPlotData, qwtPlot, indexToPlot, useAutoScale);
+    if(nofData > 1)
+    {
+        cyspu.plotData(qwtAllPlotData, qwtPlot, indexToPlot, useAutoScale);
+    }
 
     // Dirty way to acutoscale y axis
     //qwtPlot->setAxisAutoScale(QwtPlot::yLeft, true);
@@ -9306,6 +9338,130 @@ void StockAnalysisTab::on_pushButtonSaveLoanLossRatio_clicked()
                                                          loanLossRatioDataIdIsValid,
                                                          loanLossRatioData,
                                                          loanLossRatioDataId);
+        }
+    }
+}
+
+
+
+/*******************************************************************
+ *
+ * Function:    on_pushButtonSaveRevenuePerShare_clicked()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::on_pushButtonSaveRevenuePerShare_clicked()
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+    QString str;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    int nofData;
+    QString date;
+    QString data;
+
+    if((m_stockName.length() < 1) || m_stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Välj aktie"));
+        return;
+    }
+
+
+    str = (QString::fromUtf8("Vill du lägga till sub data?\n"));
+    str = str + m_stockName;
+    str = str + ", ";
+    str = str + m_stockSymbol;
+    str = str + ", ";
+    str = str + m_analysisDate;
+
+
+    if(QMessageBox::No == QMessageBox::question(this, QString::fromUtf8("Uppdatera databas"),
+       str,
+       QMessageBox::Yes|QMessageBox::No))
+    {
+        return;
+    }
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(m_stockName,
+                                    m_stockSymbol,
+                                    mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(m_stockName,
+                                        m_stockSymbol,
+                                        mainAnalysisId);
+    }
+
+
+    nofData = ui->tableWidgetRevenuePerShare->rowCount();
+
+    for(int row = 0; row < nofData; row++)
+    {
+        if(NULL != ui->tableWidgetRevenuePerShare->item(row, 0))
+        {
+            date = ui->tableWidgetRevenuePerShare->item(row, 0)->text();
+            data = ui->tableWidgetRevenuePerShare->item(row, 1)->text();
+
+            date.toInt(&isValid);
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("Year is not a number"));
+                continue;
+            }
+
+            CUtil cu;
+            cu.number2double(data, data);
+            data.toDouble(&isValid);
+
+            if (false == isValid)
+            {
+                QMessageBox::information(this, QString::fromUtf8("Uppdatera databas"), QString::fromUtf8("LoanLossRatio is not a number"));
+                continue;
+            }
+        }
+        else
+        {
+           break;
+        }
+
+        res = db.subAnalysisRevenuePerShareDateExists(date,
+                                                      mainAnalysisId,
+                                                      dateId);
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisRevenuePerShareDate(date,
+                                                          mainAnalysisId,
+                                                          dateId);
+        }
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisRevenuePerShareDataId(mainAnalysisId,
+                                                            dateId,
+                                                            inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisRevenuePerShareData(dateId,
+                                                         mainAnalysisId,
+                                                         inputDataId,
+                                                         dataIdIsValid,
+                                                         data,
+                                                         dataId);
         }
     }
 }

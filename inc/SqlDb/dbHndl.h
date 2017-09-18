@@ -203,6 +203,7 @@ struct SubAnalysDataST
 #define MAX_NOF_OPERATING_CASH_FLOW                 MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOT_DIVIDENT                        MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_TOT_EARNINGS                        MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_REVENUE_PER_SHARE                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_REVENUE                             MAX_NOF_DIVIDEND_ARR_DATA
 
 #define MAX_NOF_TMP_PRICE_DATA                      MAX_NOF_DIVIDEND_ARR_DATA
@@ -224,6 +225,7 @@ enum SubAnalyseDataTypeET
     SAD_LOAN_LOSS_RATIO,            // Kreditförlustnivån        (Bank)
     SAD_EQUITY,                     // Eget kapital
     SAD_EQUITY_PER_SHARE,           // Eget kapital/Aktie
+    SAD_REVENUE_PER_SHARE,          // Omsättning/Aktie
     SAD_CASH_FLOW_CAPEX,            // Kassaflöde Capex Investeringar/kapitalutgifter
     SAD_OPERATING_CASH_FLOW,        // Operativt kassaföde
     SAD_TOTAL_DIVIDENT,             // Total utdelning
@@ -1138,6 +1140,47 @@ public:
 
 
     //---------------------------
+    // RevenuePerShare
+
+    bool subAnalysisRevenuePerShareDateExists(QString date,
+                                         int mainAnalysisId,
+                                         int &dateId);
+
+
+    bool insertSubAnalysisRevenuePerShareDate(QString date,
+                           int mainAnalysisId,
+                           int &dateId,
+                           bool dbIsHandledExternly=false);
+
+
+
+    bool getSubAnalysisRevenuePerShareDataId(int mainAnalysisId,
+                                    int dateId,
+                                    int &dataId,
+                                    bool dbIsHandledExternly=false);
+
+
+
+    bool insertSubAnalysisRevenuePerShareData(int dateId,
+                              int mainAnalysisId,
+                              int inputDataId,
+                              bool dataIdIsValid,
+                              QString data,
+                              int &dataId,
+                              bool dbIsHandledExternly=false);
+
+
+
+    bool getSubAnalysisRevenuePerShareData(QString stockName,
+                                      QString stockSymbol,
+                                      SubAnalysDataST *dataArr,
+                                      int &nofArrData,
+                                      bool dbIsHandledExternly=false);
+
+
+
+
+    //----------------------------
 
     //Earnings per share
     bool subAnalysisEarningsPerShareDateExists(QString date,

@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>10</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1599,6 +1599,42 @@
      </property>
      <property name="text">
       <string>Kreditförlustnivån %</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_103">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>20</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Försäljning/Aktie</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonSaveRevenuePerShare">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>20</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Spara</string>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidgetRevenuePerShare">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>50</y>
+       <width>181</width>
+       <height>441</height>
+      </rect>
      </property>
     </widget>
    </widget>

@@ -10,6 +10,7 @@ class ParseBorsData
     {
         MSTATE_YEAR,
         MSTATE_SOLIDITY,
+        MSTATE_REVENUE_PER_SHARE,
         MSTATE_EQUITY_PER_SHARE,
         MSTATE_EARNINGS_PER_SHARE,
         MSTATE_DIVIDEND
@@ -27,6 +28,7 @@ class ParseBorsData
     {
         QString year;
         QString solidity;
+        QString revenuePerShare;
         QString equityPerShare;
         QString earningPerShare;
         QString dividend;
@@ -42,6 +44,12 @@ public:
     bool helpParser(QString &result, QRegExp rx, MainStateET mainState, QString dbgStr, StockParseDataST *parseDataArr, int &nofParseArrData);
     bool cleanupParsedProcentValue(QString &value, QString str);
     bool cleanupParsedRealValue(QString &value, QString str);
+
+    bool addRevenuePerShare(StockParseDataST *parseDataArr,
+                                            int nofParseArrData,
+                                            QString stockSymbol,
+                                            QString stockName);
+
 
     bool addDividendPerShare(StockParseDataST *parseDataArr,
                                             int nofParseArrData,

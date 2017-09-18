@@ -81,6 +81,14 @@ bool ParseBorsData::helpParser(QString &result,
                 }
                 break;
 
+            case MSTATE_REVENUE_PER_SHARE:
+                res = cleanupParsedRealValue(value, dbgStr);
+                if(res == true)
+                {
+                    parseDataArr[cnt++].revenuePerShare = value;
+                }
+                break;
+
             case MSTATE_EQUITY_PER_SHARE:
                 res = cleanupParsedRealValue(value, dbgStr);
                 if(res == true)
@@ -295,6 +303,111 @@ bool ParseBorsData::addDividendPerShare(StockParseDataST *parseDataArr,
 
 /******************************************************************
  *
+ * Function:    addRevenuePerShare()
+ *
+ * Description: This function saves Revenue data to db
+ *
+ *
+ *
+ *****************************************************************/
+bool ParseBorsData::addRevenuePerShare(StockParseDataST *parseDataArr,
+                                        int nofParseArrData,
+                                        QString stockSymbol,
+                                        QString stockName)
+{
+    CDbHndl db;
+    bool res;
+    int mainAnalysisId;
+
+    bool isValid;
+    int dateId;
+    int inputDataId;
+    int dataId;
+    bool dataIdIsValid = false;
+
+    QString year;
+    QString revenuePerShare;
+
+    if((stockName.length() < 1) || stockSymbol.length() < 1)
+    {
+        QMessageBox::critical(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Stock data missing"));
+        return false;
+    }
+
+
+    // Check if this stocksymbol and stockname is already added, if not add it
+    res = db.mainAnalysisDataExists(stockName, stockSymbol, mainAnalysisId);
+    if(false == res)
+    {
+        res = db.insertMainAnalysisData(stockName, stockSymbol, mainAnalysisId);
+    }
+
+
+
+
+    for(int row = 0; row < nofParseArrData; row++)
+    {
+        year = parseDataArr[row].year;
+        revenuePerShare = parseDataArr[row].revenuePerShare;
+
+
+        year.toInt(&isValid);
+        if (false == isValid)
+        {
+            QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("Year is not a number"));
+            continue;
+        }
+
+        CUtil cu;
+        cu.number2double(revenuePerShare, revenuePerShare);
+        revenuePerShare.toDouble(&isValid);
+        if (false == isValid)
+        {
+            QMessageBox::information(NULL, QString::fromUtf8("Error"), QString::fromUtf8("RevenuePerShare is not a number"));
+            continue;
+        }
+
+
+        res = db.subAnalysisRevenuePerShareDateExists(year,
+                                               mainAnalysisId,
+                                               dateId);
+
+        // Exist anaysis date?
+        if(false == res)
+        {
+            res = db.insertSubAnalysisRevenuePerShareDate(year,
+                                                   mainAnalysisId,
+                                                   dateId);
+        }
+
+
+        if(true == res)
+        {
+           dataIdIsValid = false;
+
+           if( true == db.getSubAnalysisRevenuePerShareDataId(mainAnalysisId, dateId, inputDataId))
+           {
+               dataIdIsValid = true;
+           }
+
+            res = db.insertSubAnalysisRevenuePerShareData(dateId,
+                                               mainAnalysisId,
+                                               dataId,
+                                               dataIdIsValid,
+                                               revenuePerShare,
+                                               dataId);
+        }
+    }
+
+    return true;
+}
+
+
+
+
+
+/******************************************************************
+ *
  * Function:    addEarningsPerShare()
  *
  * Description: This function saves earnings data to db
@@ -399,7 +512,7 @@ bool ParseBorsData::addEarningsPerShare(StockParseDataST *parseDataArr,
 
 /******************************************************************
  *
- * Function:    on_pushButtonSaveSolidity_clicked()
+ * Function:    addSolidityPerShare()
  *
  * Description: This function saves Solidity data to db
  *
@@ -668,6 +781,11 @@ bool ParseBorsData::readStockSymbolsFile(QString filename)
                                         stockData.stockSymbol,
                                         stockData.stockName);
 
+                    addRevenuePerShare(m_parseDataArr,
+                                       m_nofParseArrData,
+                                       stockData.stockSymbol,
+                                       stockData.stockName);
+
                     addEquityPerShare(m_parseDataArr,
                                       m_nofParseArrData,
                                       stockData.stockSymbol,
@@ -763,6 +881,7 @@ bool ParseBorsData::readParseHtmlFile(QString filename,
             }
 
             break;
+
         case MSTATE_SOLIDITY:
             if(result.indexOf("Soliditet") > 0)
             {
@@ -771,6 +890,26 @@ bool ParseBorsData::readParseHtmlFile(QString filename,
 
                 dbgStr = "Sol";
                 res = helpParser(result, rx_procent, m_mainState, dbgStr, parseDataArr, nofParseArrData);
+                if(res == true)
+                {
+                    m_mainState = MSTATE_REVENUE_PER_SHARE;//MSTATE_EQUITY_PER_SHARE;
+                }
+                else
+                {
+                    file.close();
+                    return false;
+                }
+            }
+            break;
+
+        case MSTATE_REVENUE_PER_SHARE:
+            if(result.indexOf("Omsättning/Aktie") > 0)
+            {
+                result = inStream.readLine();
+                result = inStream.readLine();
+
+                dbgStr = "Omsättning";
+                res = helpParser(result, rx_real, m_mainState, dbgStr, parseDataArr, nofParseArrData);
                 if(res == true)
                 {
                     m_mainState = MSTATE_EQUITY_PER_SHARE;
@@ -782,6 +921,7 @@ bool ParseBorsData::readParseHtmlFile(QString filename,
                 }
             }
             break;
+
 
         case MSTATE_EQUITY_PER_SHARE:
             if(result.indexOf("Eget Kapital/Aktie") > 0)

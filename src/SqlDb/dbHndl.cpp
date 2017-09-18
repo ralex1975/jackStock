@@ -1215,6 +1215,70 @@ bool CDbHndl::createTable(void)
         qry.finish();
 
 
+        // 2a
+        //Date
+                //-----------------------------------------------------------------------
+                // TblDateRevenuePerShareSubAnalysis (Omsättning/Aktie)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDateRevenuePerShareSubAnalysis "
+                            " (DateId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  Date DATE, "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenuePerShareSubAnalysis"), QString::fromUtf8("Fail create TblDateEarningsSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
+        //Data
+                //-----------------------------------------------------------------------
+                // TblDataRevenuePerShareSubAnalysis (Omsättning/Altie)
+                //-----------------------------------------------------------------------
+                tmp.sprintf("CREATE TABLE IF NOT EXISTS TblDataRevenuePerShareSubAnalysis "
+                            " (DataId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "  DateId INTEGER, "
+                            "  Data VARCHAR(255), "
+                            "  MainAnalysisId INTEGER);");
+
+                qDebug() << tmp;
+
+
+                qry.prepare(tmp);
+
+                res = execSingleCmd(qry);
+
+                if(res == false)
+                {
+                    qDebug() << qry.lastError();
+                    if(m_disableMsgBoxes == false)
+                    {
+                        QMessageBox::critical(NULL, QString::fromUtf8("TblDateRevenuePerShareSubAnalysis"), QString::fromUtf8("Fail create TblDataEarningsSubAnalysis"));
+                    }
+                    closeDb();
+                    m_mutex.unlock();
+                    return false;
+                }
+
+                qry.finish();
+
+
 
 // 3
 

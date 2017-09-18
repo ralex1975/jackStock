@@ -146,6 +146,9 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_totEquityArr[MAX_NOF_EQUITY];
     int                   m_nofTotEquityData;
 
+    SubAnalysDataST       m_revenuePerShareArr[MAX_NOF_REVENUE_PER_SHARE];
+    int                   m_nofRevenuePerShareData;
+
     SubAnalysDataST       m_equityPerShareArr[MAX_NOF_EQUITY_PER_SHARE];
     int                   m_nofEquityPerShareData;
 
@@ -305,6 +308,8 @@ private slots:
     void on_pushButtonSaveEfficientRatio_clicked();
 
     void on_pushButtonSaveLoanLossRatio_clicked();
+
+    void on_pushButtonSaveRevenuePerShare_clicked();
 
 private:
     Ui::StockAnalysisTab *ui;
