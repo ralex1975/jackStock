@@ -205,6 +205,7 @@ struct SubAnalysDataST
 #define MAX_NOF_TOT_EARNINGS                        MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_REVENUE_PER_SHARE                   MAX_NOF_DIVIDEND_ARR_DATA
 #define MAX_NOF_REVENUE                             MAX_NOF_DIVIDEND_ARR_DATA
+#define MAX_NOF_REVENUE_GROWTH_ARR_DATA             MAX_NOF_DIVIDEND_ARR_DATA
 
 #define MAX_NOF_TMP_PRICE_DATA                      MAX_NOF_DIVIDEND_ARR_DATA
 

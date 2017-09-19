@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>8</number>
    </property>
    <widget class="QWidget" name="tab_8">
     <attribute name="title">
@@ -1936,7 +1936,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_25">
       <attribute name="title">
@@ -2755,7 +2755,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_36">
         <attribute name="title">
@@ -2923,6 +2923,129 @@
          </property>
          <property name="text">
           <string/>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_20">
+        <attribute name="title">
+         <string>Försäljning</string>
+        </attribute>
+        <widget class="QTreeWidget" name="treeWidgetRevenue_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>251</width>
+           <height>331</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxShowForecast_3">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>0</y>
+           <width>131</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Visa prognosdata</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualRevenueGrowthRate_3">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>430</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_91">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>390</y>
+           <width>161</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Försäljning/Aktie</string>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotRevenuePerShare_14">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>701</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgRevenuePerShare_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>430</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_104">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Historisk försäljningsutv</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_105">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>390</y>
+           <width>151</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Försäljningstillväxt %</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_106">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>410</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>(Medel)</string>
          </property>
         </widget>
        </widget>

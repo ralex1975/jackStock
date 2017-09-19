@@ -2029,8 +2029,8 @@ void ImportData::slotReqNextOmxBridgData()
  ****************************************************************/
 void ImportData::on_pushButtonImportBorsData_clicked()
 {
-     QString filename = "database/inputData/borsdata/bdSverigeLargeCap.csv";
-    //QString filename = "database/inputData/borsdata/bdSverigeMidCap.csv";
+    // QString filename = "database/inputData/borsdata/bdSverigeLargeCap.csv";
+    QString filename = "database/inputData/borsdata/bdSverigeMidCap.csv";
     ParseBorsData pbd;
 
     if(true == pbd.readStockSymbolsFile(filename))

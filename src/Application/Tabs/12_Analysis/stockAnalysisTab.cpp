@@ -77,6 +77,7 @@ StockAnalysisTab::StockAnalysisTab(QWidget *parent) :
 
     // Init treeWidgets
     initProfitabilityAnalysis();
+    initRevenueTreeWidget();
     initNetProfitAfterTaxTreeWidget();
     initMinMaxPePrice();
     initTreeWidgetHistoricalYield();
@@ -144,6 +145,43 @@ StockAnalysisTab::~StockAnalysisTab()
 /*******************************************************************
  *
  * Function:       initNetProfitAfterTaxTreeWidget()
+ *
+ * Description:
+ *
+ *
+ *******************************************************************/
+void StockAnalysisTab::initRevenueTreeWidget(void)
+{
+
+    QString column0 = QString::fromUtf8("År");
+    QString column1 = QString::fromUtf8("Kr/Aktie");
+    QString column2 = QString::fromUtf8("Tillväxt (%)");
+
+    ui->treeWidgetRevenue_3->setColumnCount(3);
+    ui->treeWidgetRevenue_3->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->treeWidgetRevenue_3->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+
+
+    if(QTreeWidgetItem* header = ui->treeWidgetRevenue_3->headerItem())
+    {
+        header->setText(0, column0);
+        header->setText(1, column1);
+        header->setText(2, column2);
+    }
+
+    ui->treeWidgetRevenue_3->setColumnWidth(0, 65);
+    ui->treeWidgetRevenue_3->setColumnWidth(1, 65);
+    ui->treeWidgetRevenue_3->setColumnWidth(2, 60);
+    ui->treeWidgetRevenue_3->setColumnWidth(3, 50);
+
+    ui->treeWidgetRevenue_3->setFont(QFont("Helvetica", 9));
+}
+
+
+/*******************************************************************
+ *
+ * Function:       initRevenueTreeWidget()
  *
  * Description:
  *
@@ -539,6 +577,78 @@ addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning)
         {
             twf.addLeastSqrtFitAndGrowthRateDataToTreeWidget(ui->treeWidgetProfitGrowth, k, m, maxX, nofDataToAdd);
             twf.addLeastSqrtFitAndGrowthRateDataToTreeWidget(ui->treeWidgetProfitGrowth_2, k, m, maxX, nofDataToAdd);
+        }
+    }
+}
+
+
+
+/******************************************************************
+ *
+ * Function:    addRevenueAndGrowsToTreeWidget()
+ *
+ * Description:
+ *
+ *
+ *
+ *
+ *****************************************************************/
+void StockAnalysisTab::
+addRevenueAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfRevenue)
+{
+    FinanceMath fm;
+    TreeWidgetFinance twf;
+    QString year;
+    QString revenuePerShare;
+    QString revenueGrowth;
+
+   double k;
+   double m;
+   double minX;
+   double maxX;
+
+    if(m_nofRevenuePerShareData < 2 || nofPredictionYears < 2)
+    {
+        return;
+    }
+
+    // Calc earning growth
+    m_nofRevenueGrowthArrData = 0;
+    if(false == fm.calcGrowth(m_revenuePerShareArr, m_nofRevenuePerShareData, m_revenueGrowthArr))
+    {
+        return;
+    }
+
+    m_nofRevenueGrowthArrData = m_nofRevenueArrData;
+    ui->treeWidgetRevenue_3->clear();
+
+    gotLossOfRevenue = false;
+    for(int i = 0; i < m_nofRevenuePerShareData; i++)
+    {
+        year = m_revenuePerShareArr[i].date;
+        revenuePerShare = m_revenuePerShareArr[i].data;
+        revenueGrowth = m_revenueGrowthArr[i].data;
+
+        if(revenuePerShare.toDouble() < 0)
+        {
+            gotLossOfRevenue = true;
+        }
+
+
+        if(false == twf.addTreeWidgetData(ui->treeWidgetRevenue_3, year, revenuePerShare, revenueGrowth, true))
+        {
+            return;
+        }
+    }
+
+    if(ui->checkBoxShowForecast_3->isChecked())
+    {
+        int colToUse = 1;
+        int nofDataToAdd = nofPredictionYears;
+
+        if(true == twf.calcLeastSqrtFit(ui->treeWidgetRevenue_3, k, m, minX, maxX, colToUse))
+        {
+            twf.addLeastSqrtFitAndGrowthRateDataToTreeWidget(ui->treeWidgetRevenue_3, k, m, maxX, nofDataToAdd);
         }
     }
 }
@@ -5777,6 +5887,9 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotCurrAssTotLiab_12);
 
 
+
+
+
     //-----------------------------------------------------------------------------------
     // Vinst/Aktie
     //-----------------------------------------------------------------------------------
@@ -5790,6 +5903,16 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     filename += "/";
     filename += "image_3a.png";
     ceqp.saveQwtPlotAsImage(filename, ui->treeWidgetProfitGrowth);
+
+
+    //-----------------------------------------------------------------------------------
+    // försäljning/Aktie
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_3b.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotRevenuePerShare_14);
+
 
 
     //-----------------------------------------------------------------------------------
@@ -6026,6 +6149,18 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
 
     initAnalysisPlot(ui->qwtPlotEarningsPerShare_13, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
                              location, legendSize);
+
+
+    //-----------------------------------------------------------------------------------
+    // Vinst/Aktie
+    //-----------------------------------------------------------------------------------
+    plotHeader = QString::fromUtf8("Försäljning/Aktie > 0");
+    legendText = QString::fromUtf8("F/A");
+
+    initAnalysisPlot(ui->qwtPlotRevenuePerShare_14, plotHeader, canvasColor, legendText, legendSymbol, legendColor,
+                             location, legendSize);
+
+
 
 
     //-----------------------------------------------------------------------------------
@@ -6536,6 +6671,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     m_qwtAnalysisPlotDataArr2.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
     cyspu.emtypPlotData(m_qwtAnalysisPlotDataArr2, clearLegend);
 
+    m_qwtAnalysisPlotDataArr3.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
+    cyspu.emtypPlotData(m_qwtAnalysisPlotDataArr3, clearLegend);
+
+    m_qwtAnalysisPlotDataArr4.nofStocksToPlot = CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS;
+    cyspu.emtypPlotData(m_qwtAnalysisPlotDataArr4, clearLegend);
+
 
 
 
@@ -6951,14 +7092,113 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                          lineColor);
 
 
+    //-----------------------------------------------------------------------------------
+    // Försäljning/Aktie
+    //-----------------------------------------------------------------------------------
+    CDbHndl db;
+    QString str1;
+    bool gotLossOfEarning;
+
+
+    // Calc and display least square fit earning data
+    addRevenueAndGrowsToTreeWidget(NOF_PREDICTION_YEARS, gotLossOfEarning);
+
+
+
+
+    RobustGrowth rg;
+    SubAnalysDataST trendlineArr[MAX_NOF_EARNINGS_ARR_DATA];
+    int nofTrendlineArrData = 2;
+
+    double m_revenuGrowthRate;
+    bool m_revenuGrowthRateIsValid;
+
+
+    // Calc revenu growth rate
+    ui->lineEditAnualRevenueGrowthRate_3->clear();
+    m_revenuGrowthRateIsValid = true;
+    if(false == rg.calcAnualRobustGrowth(m_revenuePerShareArr,
+                                         m_nofRevenuePerShareData,
+                                         trendlineArr,
+                                         nofTrendlineArrData,
+                                         NOF_PREDICTION_YEARS,
+                                         m_revenuGrowthRate))
+    {
+        m_revenuGrowthRateIsValid = false;
+    }
+
+    if(m_revenuGrowthRateIsValid == true)
+    {
+        if(m_revenuGrowthRate >= 0 && m_revenuGrowthRateIsValid == true)
+        {
+            str1.sprintf("%.2f", m_revenuGrowthRate);
+        }
+        else
+        {
+            str1 = "Negativ";
+        }
+
+        ui->lineEditAnualRevenueGrowthRate_3->setText(str1);
+   }
+
+    // Calc average revenue/share
+    ui->lineEditAvgRevenuePerShare_3->clear();
+    if(m_nofRevenuePerShareData > 0)
+    {
+        double averageRevenuePerShare = 0;
+
+        for(int i = 0; i < m_nofRevenuePerShareData; i++)
+        {
+            averageRevenuePerShare += m_revenuePerShareArr[i].data.toDouble();
+        }
+
+        averageRevenuePerShare = averageRevenuePerShare / (double) m_nofRevenuePerShareData;
+
+        str1.sprintf("%.2f", averageRevenuePerShare);
+        ui->lineEditAvgRevenuePerShare_3->setText(str1);
+    }
+
+
+    indexToPlot = 0;
+    nofPlotToClear = 0;
+    lineColor = Qt::red;
+    useAutoScale = false;
+    resetMinMaxValue = true;
+    hideDataSample = true;
+    plotLinearReportData(ui->qwtPlotRevenuePerShare_14,
+                         m_qwtAnalysisPlotDataArr4,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         trendlineArr,
+                         nofTrendlineArrData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor,
+                         hideDataSample);
+
+
+
+    // Plot vinst
+    indexToPlot = 1;
+    nofPlotToClear = 0;
+    lineColor = Qt::blue;
+    useAutoScale = false;
+    resetMinMaxValue = false;
+    plotLinearReportData(ui->qwtPlotRevenuePerShare_14,
+                         m_qwtAnalysisPlotDataArr4,
+                         useAutoScale,
+                         resetMinMaxValue,
+                         m_revenuePerShareArr,
+                         m_nofRevenuePerShareData,
+                         indexToPlot,
+                         nofPlotToClear,
+                         lineColor);
+
 
 
     //-----------------------------------------------------------------------------------
     // Vinst/Aktie
     //-----------------------------------------------------------------------------------
-    CDbHndl db;
-    QString str1;
-    bool gotLossOfEarning;
 
     // Calc and display least square fit earning data
     addEarningAndGrowsToTreeWidget(NOF_PREDICTION_YEARS, gotLossOfEarning);
@@ -6995,9 +7235,9 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 
 
-    RobustGrowth rg;
-    SubAnalysDataST trendlineArr[MAX_NOF_EARNINGS_ARR_DATA];
-    int nofTrendlineArrData = 2;
+    //RobustGrowth rg;
+    //SubAnalysDataST trendlineArr[MAX_NOF_EARNINGS_ARR_DATA];
+    /*int*/ nofTrendlineArrData = 2;
 
     m_growthRateIsValid = true;
     if(false == rg.calcAnualRobustGrowth(m_earningsDataArr,

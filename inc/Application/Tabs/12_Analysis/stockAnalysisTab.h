@@ -42,6 +42,9 @@ class StockAnalysisTab : public QDialog
     double m_growthRate;
     bool m_growthRateIsValid;
 
+    double m_revenuGrowthRate;
+    bool m_revenuGrowthRateIsValid;
+
     QwtPlot *m_qwtPlot[NOF_QWT_PLOTS];
     subAnalysisDisplayGraphData m_saDisply;
 
@@ -149,6 +152,11 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_revenuePerShareArr[MAX_NOF_REVENUE_PER_SHARE];
     int                   m_nofRevenuePerShareData;
 
+    // This is calculated later in this file not retrived from db
+    SubAnalysDataST       m_revenueGrowthArr[MAX_NOF_TMP_PRICE_DATA];
+    int                   m_nofRevenueGrowthArrData;
+
+
     SubAnalysDataST       m_equityPerShareArr[MAX_NOF_EQUITY_PER_SHARE];
     int                   m_nofEquityPerShareData;
 
@@ -186,6 +194,7 @@ class StockAnalysisTab : public QDialog
     void resetGuiCtrl(void);
     void resetStockAnalysisData(HtmlStockAnalysPageDataST &hSAPData);
     void initNetProfitAfterTaxTreeWidget(void);
+    void initRevenueTreeWidget(void);
     void initProfitabilityAnalysis(void);
     void initTreeWidgetHistoricalYield(void);
     void initTreeWidgetHistoricalPriceToBookValue(void);
@@ -195,6 +204,8 @@ class StockAnalysisTab : public QDialog
     void addDividendToTreeWidget(void);
 
     void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
+    void addRevenueAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfRevenue);
+
 
     void addMinAvgMaxYieldToTreeWidget(void);
     void addMinAvgMaxBookValuePriceRatioToTreeWidget(void);
@@ -328,6 +339,9 @@ private:
 
     // Cannot extract x,y data. Contains all data that is send to graph
     CYahooStockPlotUtil::PlotData_ST m_qwtAnalysisPlotDataArr3;
+
+    // Cannot extract x,y data. Contains all data that is send to graph
+    CYahooStockPlotUtil::PlotData_ST m_qwtAnalysisPlotDataArr4;
 
     double m_x[1000];
     double m_y[1000];
