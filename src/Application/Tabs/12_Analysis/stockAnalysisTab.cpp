@@ -17,6 +17,7 @@
 #include "financemath.h"
 #include "treewidgetfinance.h"
 #include "robustgrowth.h"
+#include "myLineEdit.h"
 
 
 #define NOF_PREDICTION_YEARS 5
@@ -551,7 +552,7 @@ addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning)
         earningPerShare = m_earningsDataArr[i].data;
         earningGrowth = m_earningsGrowthArr[i].data;
 
-        if(earningPerShare.toDouble() < 0)
+        if(earningPerShare.toDouble() <= 0.0)
         {
             gotLossOfEarning = true;
         }
@@ -1042,8 +1043,31 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     {
         if(true == db.getKeyDataUseBridge(m_stockSymbol, faData))
         {
+
             gfc.getColorEarningsDivDividend(faData.earningsDividedByDividend, color);
             ui->lineEditEarningsDivByDividend->setText(faData.earningsDividedByDividend);
+
+
+            ui->lineEditLatestStockPrice->clear();
+            ui->lineEditLatestStockPrice->setText(faData.lastPrice);
+
+
+            bool isValued;
+            double dbValue;
+            QString value;
+            dbValue = faData.earningsDividedByDividend.toDouble(&isValued);
+
+            ui->lineEditDividendDivEarning->clear();
+            if(isValued == true && dbValue != 0.0)
+            {
+                dbValue = (1.0 / dbValue);
+                // Cannot be more than 100 %
+                if(dbValue > 1.0)
+                    dbValue = 1.0;
+                value.sprintf("%.2f", dbValue);
+                ui->lineEditDividendDivEarning->setText(value);
+            }
+
             ele.setTxtColor(ui->lineEditEarningsDivByDividend, &palette[0], color);
 
             gfc.getColorNavDivStockPrice(faData.navDivLastStockPrice, color);
@@ -1053,6 +1077,10 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             gfc.getColorPe(faData.keyValuePE, color);
             ui->lineEditPE->setText(faData.keyValuePE);
             ele.setTxtColor(ui->lineEditPE, &palette[2], color);
+
+            // ui->lineEditRoeDivPriceBook->setText(faData.keyValueCoursePerJEK);
+            ui->lineEditPriceJEKRatio->setText(faData.keyValueCoursePerJEK);
+
 
             gfc.getColorPs(faData.keyValuePS, color);
             ui->lineEditPs->setText(faData.keyValuePS);
@@ -6395,6 +6423,10 @@ void StockAnalysisTab::initAllAnalysisPlots(void)
  *******************************************************************/
 void StockAnalysisTab::clearAllAnalysisEditCtrls(void)
 {
+    ui->lineEditLatestStockPrice->clear();
+    ui->lineEditPriceJEKRatio->clear();
+
+
     ui->lineEdiMaxtCurrAssLiab->clear();
     ui->lineEditMinCurrAssLiab->clear();
     ui->lineEditAvgCurrAssLiab->clear();
@@ -6756,6 +6788,11 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Omsättningstillgångarna / Totala skulder >= 1
     //-----------------------------------------------------------------------------------
+
+    ui->lineEditMaxCurrAssTotLiab->clear();
+    ui->lineEditMinCurrAssTotLiab->clear();
+    ui->lineEditAvgCurrAssTotLiab->clear();
+
     // Beräkna kvoten
     if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
@@ -6770,15 +6807,15 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
         QString str;
         str.clear();
         str.sprintf("%.2f", max);
-        ui->lineEditMaxCurrAssTotLiab->clear();
+
         ui->lineEditMaxCurrAssTotLiab->insert(str);
         str.clear();
         str.sprintf("%.2f", min);
-        ui->lineEditMinCurrAssTotLiab->clear();
+
         ui->lineEditMinCurrAssTotLiab->insert(str);
         str.clear();
         str.sprintf("%.2f", average);
-        ui->lineEditAvgCurrAssTotLiab->clear();
+
         ui->lineEditAvgCurrAssTotLiab->insert(str);
 
 
@@ -7117,6 +7154,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Calc revenu growth rate
     ui->lineEditAnualRevenueGrowthRate_3->clear();
     m_revenuGrowthRateIsValid = true;
+
     if(false == rg.calcAnualRobustGrowth(m_revenuePerShareArr,
                                          m_nofRevenuePerShareData,
                                          trendlineArr,
@@ -7143,6 +7181,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
     // Calc average revenue/share
     ui->lineEditAvgRevenuePerShare_3->clear();
+
     if(m_nofRevenuePerShareData > 0)
     {
         double averageRevenuePerShare = 0;
@@ -7165,6 +7204,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     useAutoScale = false;
     resetMinMaxValue = true;
     hideDataSample = true;
+
     plotLinearReportData(ui->qwtPlotRevenuePerShare_14,
                          m_qwtAnalysisPlotDataArr4,
                          useAutoScale,
@@ -7200,18 +7240,20 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Vinst/Aktie
     //-----------------------------------------------------------------------------------
 
+    ui->labelReportLossOfEarning->setText(QString::fromUtf8(" "));
+
     // Calc and display least square fit earning data
     addEarningAndGrowsToTreeWidget(NOF_PREDICTION_YEARS, gotLossOfEarning);
 
 
     if(gotLossOfEarning == true)
     {
-        ui->labelReportLossOfEarning->setText(QString::fromUtf8("Underkänt Vinst < 0"));
+        ui->labelReportLossOfEarning->setText(QString::fromUtf8("Underkänd Vinst < 0"));
         ui->labelReportLossOfEarning->setPalette(*m_red_palette);
     }
     else
     {
-        ui->labelReportLossOfEarning->setText(QString::fromUtf8("Godkänt Vinst > 0"));
+        ui->labelReportLossOfEarning->setText(QString::fromUtf8("Godkänd Vinst > 0"));
         ui->labelReportLossOfEarning->setPalette(*m_blue_palette);
     }
 
@@ -7412,6 +7454,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     // Vinst/Utdelning
     //-----------------------------------------------------------------------------------
 
+    ui->lineEditMaxtEarningDiv->clear();
+    ui->lineEditMintEarningDiv->clear();
+    ui->lineEditAvgtEarningDiv->clear();
+
+
+
     // Beräkna kvoten
     if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
@@ -7426,15 +7474,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
         QString str;
         str.clear();
         str.sprintf("%.2f", max);
-        ui->lineEditMaxtEarningDiv->clear();
         ui->lineEditMaxtEarningDiv->insert(str);
         str.clear();
         str.sprintf("%.2f", min);
-        ui->lineEditMintEarningDiv->clear();
         ui->lineEditMintEarningDiv->insert(str);
         str.clear();
         str.sprintf("%.2f", average);
-        ui->lineEditAvgtEarningDiv->clear();
         ui->lineEditAvgtEarningDiv->insert(str);
 
         str.clear();
@@ -7617,6 +7662,10 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     skipDenominatorEqZero = true;
     convToProcent = true;
 
+    ui->lineEditMaxProfitMargin->clear();
+    ui->lineEditMinProfitMargin->clear();
+    ui->lineEditAvgProfitMargin->clear();
+
     if(true == subAnalysisCalcQuotient(resultArr,
                             nofDataResultArr,
                             m_totEarningsDataArr,
@@ -7632,15 +7681,12 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
             QString str;
             str.clear();
             str.sprintf("%.2f", max);
-            ui->lineEditMaxProfitMargin->clear();
             ui->lineEditMaxProfitMargin->insert(str);
             str.clear();
             str.sprintf("%.2f", min);
-            ui->lineEditMinProfitMargin->clear();
             ui->lineEditMinProfitMargin->insert(str);
             str.clear();
             str.sprintf("%.2f", average);
-            ui->lineEditAvgProfitMargin->clear();
             ui->lineEditAvgProfitMargin->insert(str);
         }
 
@@ -7668,6 +7714,11 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     skipDenominatorEqZero = true;
     convToProcent = true;
 
+    ui->lineEditMaxEquityMargin->clear();
+    ui->lineEditMinEquityMargin->clear();
+    ui->lineEditAvgEquityMargin->clear();
+
+
     if(true == subAnalysisCalcQuotient(resultArr2,
                             nofDataResultArr2,
                             m_totEarningsDataArr,
@@ -7682,13 +7733,10 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     {
         QString str;
         str.sprintf("%.2f", max);
-        ui->lineEditMaxEquityMargin->clear();
         ui->lineEditMaxEquityMargin->insert(str);
         str.sprintf("%.2f", min);
-        ui->lineEditMinEquityMargin->clear();
         ui->lineEditMinEquityMargin->insert(str);
         str.sprintf("%.2f", average);
-        ui->lineEditAvgEquityMargin->clear();
         ui->lineEditAvgEquityMargin->insert(str);
     }
 
@@ -7721,6 +7769,213 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                                     nofDataResultArr,
                                     resultArr2,
                                     nofDataResultArr2);
+
+    bool isValid1 = false;
+    bool isValid2 = false;
+    bool isValid3 = false;
+    bool isValid4 = false;
+    bool isValid5 = false;
+    bool isValid6 = false;
+    bool isValid7 = false;
+    QString roeDivJekRatio;
+    QString jekRatio;
+    QString dividendDivEarning;
+    QString montgomeryIntrinsicValue;
+    QString latestStockPrice;
+
+
+    double dbRoeDivJekRatio = 0;
+    double dbJekRatio;
+    double dbRoe;
+    double dbTmp;
+    double dbYear1 = 0;
+    double dbYear2 = 0;
+    double dbEqutyPerShare = 0;
+    double dbDividendDivEarning = 0;
+    double dbMontgomeryIntrinsicValue = 0;
+    double dbLatestStockPrice;
+
+    double dbIntrinsicValueNoDividend = 0;
+    double dbIntrinsicValueAllDividend = 0;
+    QString intrinsicValueNoDividend;
+    QString intrinsicValueAllDividend;
+
+
+    ui->lineEditIntrinsicValueNoDividend->clear();
+    ui->lineEditIntrinsicValueAllDividend->clear();
+    ui->lineEditMontgomeryIntrinsicValue->clear();
+
+    if(nofDataResultArr2 > 0 && m_nofEquityPerShareData > 0)
+    {
+        // Contains keyValuePriceJEKRatio
+        jekRatio = ui->lineEditPriceJEKRatio->text();
+        dbJekRatio = jekRatio.toDouble(&isValid1);
+
+        dbRoe = resultArr2[nofDataResultArr2-1].data.toDouble(&isValid2);
+        dbYear1 = resultArr2[nofDataResultArr2-1].date.toDouble(&isValid4);
+
+
+        // ROE / P/B
+        dbRoeDivJekRatio = dbRoe / dbJekRatio;
+
+        qDebug() << "dbRoe" << dbRoe;
+        qDebug() << "dbJekRatio" << dbJekRatio;
+        qDebug() << "dbRoeDivJekRatio" << dbJekRatio;
+
+
+        //--------------------------------------------------------------------------------------
+        // IntrinsicValue
+        //--------------------------------------------------------------------------------------
+
+        dividendDivEarning = ui->lineEditDividendDivEarning->text();
+
+        // dbDividendDivEarning Value between 0 - 1.
+        dbDividendDivEarning = dividendDivEarning.toDouble(&isValid6);
+
+
+        if((isValid6 == true))
+        {
+            ExtendedLineEdit ele;
+            QPalette palette[2];
+            QColor color;
+
+            if(dbDividendDivEarning <= 0.5)
+            {
+                color = Qt::blue;
+            }
+            else
+            {
+                color = Qt::red;
+            }
+
+            ele.setTxtColor(ui->lineEditDividendDivEarning, &palette[0], color);
+        }
+
+
+        // Roe / 10 % (10 % Investor expected return)
+        dbEqutyPerShare = m_equityPerShareArr[m_nofEquityPerShareData -1].data.toDouble(&isValid3);
+        dbYear2 = m_equityPerShareArr[m_nofEquityPerShareData -1].date.toDouble(&isValid5);
+
+        qDebug() << "dbEqutyPerShare" << dbEqutyPerShare;
+
+        // Roe / 10 % (10 % Investor expected return)
+        dbTmp = pow((dbRoe / 10.0 /*dbRoeDivJekRatio*/), 1.8);
+        qDebug() << "dbTmp" << dbTmp;
+        qDebug() << "(dbRoe / dbRoeDivJekRatio)" << (dbRoe / dbRoeDivJekRatio);
+
+
+        dbIntrinsicValueNoDividend = dbTmp * dbEqutyPerShare;
+        // Roe / 10 % (10 % Investor expected return)
+        dbIntrinsicValueAllDividend = (dbRoe / 10.0 /*dbRoeDivJekRatio*/) * dbEqutyPerShare;
+
+        qDebug() << "dbIntrinsicValueNoDividend" << dbIntrinsicValueNoDividend;
+        qDebug() << "dbIntrinsicValueAllDividend" << dbIntrinsicValueAllDividend;
+
+        dbMontgomeryIntrinsicValue = (dbIntrinsicValueAllDividend * dbDividendDivEarning) +
+                                     (dbIntrinsicValueNoDividend * (1 - dbDividendDivEarning));
+
+        //--------------------------------------------------------------------------------------
+
+    }
+
+
+    if((isValid1 == true) && (isValid2 == true))
+    {
+        roeDivJekRatio.sprintf("%.2f", dbRoeDivJekRatio);
+        ui->lineEditYearlineEditRoeDivPriceBook->setText(resultArr[nofDataResultArr-1].date);
+
+        intrinsicValueNoDividend.sprintf("%.2f", dbIntrinsicValueNoDividend);
+        intrinsicValueAllDividend.sprintf("%.2f", dbIntrinsicValueAllDividend);
+
+        if((dbYear1 == dbYear2) && (isValid4 == true)  && (isValid5 == true) && (isValid3 == true))
+        {
+            if(gotLossOfEarning == false && (m_growthRate >= 0 && m_growthRateIsValid == true))
+            {
+                ui->lineEditIntrinsicValueNoDividend->setText(intrinsicValueNoDividend);
+                ui->lineEditIntrinsicValueAllDividend->setText(intrinsicValueAllDividend);
+            }
+            else
+            {
+                ui->lineEditIntrinsicValueNoDividend->clear();
+                ui->lineEditIntrinsicValueAllDividend->clear();
+            }
+
+            if(isValid6 == true)
+            {
+                latestStockPrice = ui->lineEditLatestStockPrice->text();
+                dbLatestStockPrice = latestStockPrice.toDouble(&isValid7);
+
+                montgomeryIntrinsicValue.sprintf("%.2f", dbMontgomeryIntrinsicValue);
+
+                if(isValid7 == true)
+                {
+                    ExtendedLineEdit ele;
+                    QPalette palette[2];
+                    QColor color;
+
+                    if(dbMontgomeryIntrinsicValue > dbLatestStockPrice)
+                    {
+                        color = Qt::blue;
+                    }
+                    else
+                    {
+                        color = Qt::red;
+                    }
+
+                    ele.setTxtColor(ui->lineEditMontgomeryIntrinsicValue, &palette[0], color);
+                }
+
+                if(gotLossOfEarning == false && (m_growthRate >= 0 && m_growthRateIsValid == true))
+                {
+                    ui->lineEditMontgomeryIntrinsicValue->setText(montgomeryIntrinsicValue);
+                }
+                else
+                {
+                    ui->lineEditMontgomeryIntrinsicValue->clear();
+                }
+            }
+        }
+    }
+    else
+    {
+        roeDivJekRatio.sprintf("Saknas");
+        ui->lineEditYearlineEditRoeDivPriceBook->setText(" ");
+        ui->lineEditDividendDivEarning->clear();
+    }
+
+
+    ExtendedLineEdit ele;
+    QPalette palette[2];
+    QColor color;
+
+    color = Qt::black;
+
+    ele.setTxtColor(ui->lineEditLatestStockPrice, &palette[1], color);
+    ele.setTxtColor(ui->lineEditRoeDivPriceBook, &palette[1], color);
+    ele.setTxtColor(ui->lineEditLatestStockPrice, &palette[1], color);
+
+    if((isValid1 == true) && (isValid2 == true))
+    {
+        if(dbRoeDivJekRatio >= 7.0)
+        {
+            color = Qt::blue;
+        }
+        else
+        {
+            color = Qt::red;
+        }
+
+
+        ele.setTxtColor(ui->lineEditRoeDivPriceBook, &palette[0], color);
+
+        if((gotLossOfEarning == false) && (m_growthRate >= 0 && m_growthRateIsValid == true))
+        {
+            ele.setTxtColor(ui->lineEditLatestStockPrice, &palette[0], color);
+        }
+
+    }
+
+    ui->lineEditRoeDivPriceBook->setText(roeDivJekRatio);
 
 
 
@@ -8022,8 +8277,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     lineColor = Qt::red;
     useAutoScale = false;
     resetMinMaxValue = false;
-
-
 
 
     plotLinearReportData(ui->qwtPlotHistPriceBookValueRatio,
