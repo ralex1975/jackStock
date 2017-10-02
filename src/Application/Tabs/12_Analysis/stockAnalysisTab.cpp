@@ -7812,6 +7812,11 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
         dbJekRatio = jekRatio.toDouble(&isValid1);
 
         dbRoe = resultArr2[nofDataResultArr2-1].data.toDouble(&isValid2);
+        if(dbRoe < 10.0)
+        {
+            isValid2 = false;
+            ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("ROE < 10.0%"));
+        }
         dbYear1 = resultArr2[nofDataResultArr2-1].date.toDouble(&isValid4);
 
 
@@ -7861,7 +7866,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
         // Roe / 10 % (10 % Investor expected return)
         dbTmp = pow((dbRoe / 10.0 /*dbRoeDivJekRatio*/), 1.8);
         qDebug() << "dbTmp" << dbTmp;
-        qDebug() << "(dbRoe / dbRoeDivJekRatio)" << (dbRoe / dbRoeDivJekRatio);
+        qDebug() << "(dbRoe / dbRoeDivJekRatio)" << (dbRoe / 10.0 /*dbRoeDivJekRatio*/);
 
 
         dbIntrinsicValueNoDividend = dbTmp * dbEqutyPerShare;
@@ -7931,7 +7936,14 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                 }
                 else
                 {
-                    ui->lineEditMontgomeryIntrinsicValue->clear();
+                    if(gotLossOfEarning == true)
+                    {
+                        ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("Vinst < 0"));
+                    }
+                    else
+                    {
+                        ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("Vinsttillvxt < 0"));
+                    }
                 }
             }
         }
