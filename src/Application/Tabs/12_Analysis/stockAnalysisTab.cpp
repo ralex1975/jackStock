@@ -1081,6 +1081,9 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             // ui->lineEditRoeDivPriceBook->setText(faData.keyValueCoursePerJEK);
             ui->lineEditPriceJEKRatio->setText(faData.keyValueCoursePerJEK);
 
+            ui->lineEditDividendYield_aa->setText(faData.keyValueYield);
+
+
 
             gfc.getColorPs(faData.keyValuePS, color);
             ui->lineEditPs->setText(faData.keyValuePS);
@@ -6425,6 +6428,7 @@ void StockAnalysisTab::clearAllAnalysisEditCtrls(void)
 {
     ui->lineEditLatestStockPrice->clear();
     ui->lineEditPriceJEKRatio->clear();
+    ui->lineEditDividendYield_aa->clear();
 
 
     ui->lineEdiMaxtCurrAssLiab->clear();
@@ -7777,6 +7781,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     bool isValid5 = false;
     bool isValid6 = false;
     bool isValid7 = false;
+    bool isValid8 = false;
     QString roeDivJekRatio;
     QString jekRatio;
     QString dividendDivEarning;
@@ -7794,16 +7799,19 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     double dbDividendDivEarning = 0;
     double dbMontgomeryIntrinsicValue = 0;
     double dbLatestStockPrice;
+    double dbPeRatio;
 
     double dbIntrinsicValueNoDividend = 0;
     double dbIntrinsicValueAllDividend = 0;
     QString intrinsicValueNoDividend;
     QString intrinsicValueAllDividend;
+    QString peRatio;
 
 
     ui->lineEditIntrinsicValueNoDividend->clear();
     ui->lineEditIntrinsicValueAllDividend->clear();
     ui->lineEditMontgomeryIntrinsicValue->clear();
+    ui->lineEditInvertedPE->clear();
 
     if(nofDataResultArr2 > 0 && m_nofEquityPerShareData > 0)
     {
@@ -7928,6 +7936,8 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                     }
 
                     ele.setTxtColor(ui->lineEditMontgomeryIntrinsicValue, &palette[0], color);
+                    ele.setTxtColor(ui->lineEditLatestStockPrice, &palette[0], color);
+
                 }
 
                 if(gotLossOfEarning == false && (m_growthRate >= 0 && m_growthRateIsValid == true))
@@ -7968,15 +7978,39 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
     if((isValid1 == true) && (isValid2 == true))
     {
-        if(dbRoeDivJekRatio >= 7.0)
+        QString tmp;
+        peRatio = ui->lineEditPE->text();
+        dbPeRatio = peRatio.toDouble(&isValid8);
+
+        tmp.sprintf("%.2f", ((1.0/dbPeRatio)*100.0));
+
+        ui->lineEditInvertedPE->setText(tmp);
+
+#if 0
+        if(isValid8 == true && dbPeRatio != 0)
         {
-            color = Qt::blue;
+            if(dbRoeDivJekRatio >= (1.0/dbPeRatio)*100)
+            {
+                color = Qt::blue;
+            }
+            else
+            {
+                color = Qt::red;
+            }
         }
         else
+#endif
         {
-            color = Qt::red;
-        }
 
+            if(dbRoeDivJekRatio >= 6.0)
+            {
+                color = Qt::blue;
+            }
+            else
+            {
+                color = Qt::red;
+            }
+        }
 
         ele.setTxtColor(ui->lineEditRoeDivPriceBook, &palette[0], color);
 
