@@ -2021,13 +2021,40 @@ void ImportData::slotReqNextOmxBridgData()
  *
  * Function:    on_pushButtonImportBorsData_clicked()
  *
- * Description: Import data from Börsdata.se
+ * Description: Import data from Börsdata.se Large Cap
  *
  *
  *
  *
  ****************************************************************/
 void ImportData::on_pushButtonImportBorsData_clicked()
+{
+    QString filename = "database/inputData/borsdata/bdSverigeLargeCap.csv";
+    // QString filename = "database/inputData/borsdata/bdSverigeMidCap.csv";
+    ParseBorsData pbd;
+
+    if(true == pbd.readStockSymbolsFile(filename))
+    {
+
+    }
+
+    QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
+
+
+}
+
+
+/****************************************************************
+ *
+ * Function:    on_pushButtonImportMidCap_clicked()
+ *
+ * Description: Import data Börsdata.se Mid Cap
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void ImportData::on_pushButtonImportMidCap_clicked()
 {
     // QString filename = "database/inputData/borsdata/bdSverigeLargeCap.csv";
     QString filename = "database/inputData/borsdata/bdSverigeMidCap.csv";
@@ -2039,6 +2066,4 @@ void ImportData::on_pushButtonImportBorsData_clicked()
     }
 
     QMessageBox::information(this, QString::fromUtf8("Finish"), QString::fromUtf8("Finish"));
-
-
 }

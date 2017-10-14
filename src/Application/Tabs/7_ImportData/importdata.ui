@@ -454,12 +454,25 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>101</width>
+       <width>121</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>Import</string>
+      <string>Import LargeCap</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonImportMidCap">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>131</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Import MidCap</string>
      </property>
     </widget>
    </widget>

@@ -1066,6 +1066,7 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
                     dbValue = 1.0;
                 value.sprintf("%.2f", dbValue);
                 ui->lineEditDividendDivEarning->setText(value);
+                qDebug() << "dbValue" << dbValue;
             }
 
             ele.setTxtColor(ui->lineEditEarningsDivByDividend, &palette[0], color);
@@ -1078,12 +1079,19 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
             ui->lineEditPE->setText(faData.keyValuePE);
             ele.setTxtColor(ui->lineEditPE, &palette[2], color);
 
-            // ui->lineEditRoeDivPriceBook->setText(faData.keyValueCoursePerJEK);
-            ui->lineEditPriceJEKRatio->setText(faData.keyValueCoursePerJEK);
+            bool isValuedTmp;
+            double dbCoursePerJEK = 0;
+
+
+            ui->lineEditPriceJEKRatio->clear();
+            dbCoursePerJEK = faData.keyValueCoursePerJEK.toDouble(&isValuedTmp);
+
+            if(dbCoursePerJEK > 0 && isValuedTmp == true)
+            {
+                ui->lineEditPriceJEKRatio->setText(faData.keyValueCoursePerJEK);
+            }
 
             ui->lineEditDividendYield_aa->setText(faData.keyValueYield);
-
-
 
             gfc.getColorPs(faData.keyValuePS, color);
             ui->lineEditPs->setText(faData.keyValuePS);
@@ -7791,7 +7799,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
     double dbRoeDivJekRatio = 0;
     double dbJekRatio;
-    double dbRoe;
+    double dbRoe = 0;
     double dbTmp;
     double dbYear1 = 0;
     double dbYear2 = 0;
@@ -7825,68 +7833,78 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
             isValid2 = false;
             ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("ROE < 10.0%"));
         }
-        dbYear1 = resultArr2[nofDataResultArr2-1].date.toDouble(&isValid4);
-
-
-        // ROE / P/B
-        dbRoeDivJekRatio = dbRoe / dbJekRatio;
-
-        qDebug() << "dbRoe" << dbRoe;
-        qDebug() << "dbJekRatio" << dbJekRatio;
-        qDebug() << "dbRoeDivJekRatio" << dbJekRatio;
-
-
-        //--------------------------------------------------------------------------------------
-        // IntrinsicValue
-        //--------------------------------------------------------------------------------------
-
-        dividendDivEarning = ui->lineEditDividendDivEarning->text();
-
-        // dbDividendDivEarning Value between 0 - 1.
-        dbDividendDivEarning = dividendDivEarning.toDouble(&isValid6);
-
-
-        if((isValid6 == true))
+        else
         {
-            ExtendedLineEdit ele;
-            QPalette palette[2];
-            QColor color;
+            dbYear1 = resultArr2[nofDataResultArr2-1].date.toDouble(&isValid4);
 
-            if(dbDividendDivEarning <= 0.5)
+
+            // ROE / P/B
+            if(dbJekRatio != 0)
             {
-                color = Qt::blue;
+                dbRoeDivJekRatio = dbRoe / dbJekRatio;
             }
             else
             {
-                color = Qt::red;
+                isValid1 = false;
             }
 
-            ele.setTxtColor(ui->lineEditDividendDivEarning, &palette[0], color);
+            qDebug() << "dbRoe" << dbRoe;
+            qDebug() << "dbJekRatio" << dbJekRatio;
+            qDebug() << "dbRoeDivJekRatio" << dbJekRatio;
+
+
+            //--------------------------------------------------------------------------------------
+            // IntrinsicValue
+            //--------------------------------------------------------------------------------------
+
+            dividendDivEarning = ui->lineEditDividendDivEarning->text();
+
+            // dbDividendDivEarning Value between 0 - 1.
+            dbDividendDivEarning = dividendDivEarning.toDouble(&isValid6);
+
+
+            if((isValid6 == true))
+            {
+                ExtendedLineEdit ele;
+                QPalette palette[2];
+                QColor color;
+
+                if(dbDividendDivEarning <= 0.5)
+                {
+                    color = Qt::blue;
+                }
+                else
+                {
+                    color = Qt::red;
+                }
+
+                ele.setTxtColor(ui->lineEditDividendDivEarning, &palette[0], color);
+            }
+
+
+            // Roe / 10 % (10 % Investor expected return)
+            dbEqutyPerShare = m_equityPerShareArr[m_nofEquityPerShareData -1].data.toDouble(&isValid3);
+            dbYear2 = m_equityPerShareArr[m_nofEquityPerShareData -1].date.toDouble(&isValid5);
+
+            qDebug() << "dbEqutyPerShare" << dbEqutyPerShare;
+
+            // Roe / 10 % (10 % Investor expected return)
+            dbTmp = pow((dbRoe / 10.0 /*dbRoeDivJekRatio*/), 1.8);
+            qDebug() << "dbTmp" << dbTmp;
+            qDebug() << "(dbRoe / dbRoeDivJekRatio)" << (dbRoe / 10.0 /*dbRoeDivJekRatio*/);
+
+
+            dbIntrinsicValueNoDividend = dbTmp * dbEqutyPerShare;
+            // Roe / 10 % (10 % Investor expected return)
+            dbIntrinsicValueAllDividend = (dbRoe / 10.0 /*dbRoeDivJekRatio*/) * dbEqutyPerShare;
+
+            qDebug() << "dbIntrinsicValueNoDividend" << dbIntrinsicValueNoDividend;
+            qDebug() << "dbIntrinsicValueAllDividend" << dbIntrinsicValueAllDividend;
+
+            dbMontgomeryIntrinsicValue = (dbIntrinsicValueAllDividend * dbDividendDivEarning) +
+                                         (dbIntrinsicValueNoDividend * (1 - dbDividendDivEarning));
+
         }
-
-
-        // Roe / 10 % (10 % Investor expected return)
-        dbEqutyPerShare = m_equityPerShareArr[m_nofEquityPerShareData -1].data.toDouble(&isValid3);
-        dbYear2 = m_equityPerShareArr[m_nofEquityPerShareData -1].date.toDouble(&isValid5);
-
-        qDebug() << "dbEqutyPerShare" << dbEqutyPerShare;
-
-        // Roe / 10 % (10 % Investor expected return)
-        dbTmp = pow((dbRoe / 10.0 /*dbRoeDivJekRatio*/), 1.8);
-        qDebug() << "dbTmp" << dbTmp;
-        qDebug() << "(dbRoe / dbRoeDivJekRatio)" << (dbRoe / 10.0 /*dbRoeDivJekRatio*/);
-
-
-        dbIntrinsicValueNoDividend = dbTmp * dbEqutyPerShare;
-        // Roe / 10 % (10 % Investor expected return)
-        dbIntrinsicValueAllDividend = (dbRoe / 10.0 /*dbRoeDivJekRatio*/) * dbEqutyPerShare;
-
-        qDebug() << "dbIntrinsicValueNoDividend" << dbIntrinsicValueNoDividend;
-        qDebug() << "dbIntrinsicValueAllDividend" << dbIntrinsicValueAllDividend;
-
-        dbMontgomeryIntrinsicValue = (dbIntrinsicValueAllDividend * dbDividendDivEarning) +
-                                     (dbIntrinsicValueNoDividend * (1 - dbDividendDivEarning));
-
         //--------------------------------------------------------------------------------------
 
     }
@@ -7957,12 +7975,27 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                 }
             }
         }
+        else
+        {
+            ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("Data ogiltiga"));
+        }
     }
     else
     {
-        roeDivJekRatio.sprintf("Saknas");
+        if(dbRoe >= 10.0 && isValid2 == true)
+        {
+            ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("Data saknas"));
+        }
+        else if(dbRoe < 10.0 && isValid2 == false)
+        {
+            ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("ROE < 10.0%"));
+        }
+        else
+        {
+            ui->lineEditMontgomeryIntrinsicValue->setText(QString::fromUtf8("Data saknas"));
+        }
         ui->lineEditYearlineEditRoeDivPriceBook->setText(" ");
-        ui->lineEditDividendDivEarning->clear();
+        //ui->lineEditDividendDivEarning->clear();
     }
 
 
