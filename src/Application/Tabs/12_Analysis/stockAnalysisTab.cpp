@@ -5872,11 +5872,13 @@ plotEquityPerShareData(SubAnalysDataST *dataArr,
     if(plotPrediction == true)
     {
         index = 1;
+        m_qwtEquityPlotData.axis.minMaxIsInit = false;
     }
     else
     {
         m_qwtEquityPlotData.stock[1].data.detach();
         m_qwtEquityPlotData.stock[1].data.setData(NULL);
+        m_qwtEquityPlotData.axis.minMaxIsInit = true;
     }
 
     m_qwtEquityPlotData.stock[index].data.detach();
@@ -5888,8 +5890,6 @@ plotEquityPerShareData(SubAnalysDataST *dataArr,
     title = QString::fromUtf8("Eget kapital/Aktie (Historiskt & beräknat)");
     eqp.setPlotTitle(ui->qwtPlot_10, title);
 
-
-    m_qwtEquityPlotData.axis.minMaxIsInit = false;
 
     for(int i = 0; i < nofData; i++)
     {
@@ -5929,7 +5929,7 @@ plotEquityPerShareData(SubAnalysDataST *dataArr,
                                                                        QSize( 7, 7 ) ) );
     }
 
-    cyspu.plotData(m_qwtEquityPlotData, ui->qwtPlot_10, index, false);
+    cyspu.plotData(m_qwtEquityPlotData, ui->qwtPlot_10, index, true);
     m_qwtEquityPlotData.stock[index].data.attach(ui->qwtPlot_10);
     ui->qwtPlot_10->replot();
 }
