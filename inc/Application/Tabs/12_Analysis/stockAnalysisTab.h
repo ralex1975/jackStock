@@ -45,6 +45,10 @@ class StockAnalysisTab : public QDialog
     double m_revenuGrowthRate;
     bool m_revenuGrowthRateIsValid;
 
+    double m_dividendGrowthRate;
+    bool m_dividendGrowthRateIsValid;
+
+
     QwtPlot *m_qwtPlot[NOF_QWT_PLOTS];
     subAnalysisDisplayGraphData m_saDisply;
 
@@ -110,6 +114,11 @@ class StockAnalysisTab : public QDialog
 
     SubAnalysDataST       m_dividendDataArr[MAX_NOF_DIVIDEND_ARR_DATA];
     int                   m_nofDividendArrData;
+
+    // This is calculated later in this file not retrived from db
+    SubAnalysDataST       m_dividendGrowthArr[MAX_NOF_DIVIDEND_ARR_DATA];
+    int                   m_nofDividendGrowthArrData;
+
 
     SubAnalysDataST       m_earningsDataArr[MAX_NOF_EARNINGS_ARR_DATA];
     int                   m_nofEarningsArrData;
@@ -205,6 +214,8 @@ class StockAnalysisTab : public QDialog
 
     void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
     void addRevenueAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfRevenue);
+    void addDividendAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfDividend);
+
 
 
     void addMinAvgMaxYieldToTreeWidget(void);

@@ -1936,7 +1936,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_25">
       <attribute name="title">
@@ -2755,7 +2755,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="tab_36">
         <attribute name="title">
@@ -3049,6 +3049,116 @@
          </property>
         </widget>
        </widget>
+       <widget class="QWidget" name="tab_21">
+        <attribute name="title">
+         <string>Utdelning</string>
+        </attribute>
+        <widget class="QLabel" name="label_143">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>390</y>
+           <width>151</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Utdelningstillväxt %</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_144">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>390</y>
+           <width>161</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Utdelning/Aktie</string>
+         </property>
+        </widget>
+        <widget class="QTreeWidget" name="treeWidgetDividendGroth_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>251</width>
+           <height>331</height>
+          </rect>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxShowForecast_6">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>0</y>
+           <width>131</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Visa prognosdata</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_145">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>181</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Historisk försäljningsutv</string>
+         </property>
+        </widget>
+        <widget class="QwtPlot" name="qwtPlotDividendPerShare_16">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>701</width>
+           <height>481</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgDividendPerShare_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>410</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualDividendGrowthRate_5">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>410</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
        <widget class="QWidget" name="tab_37">
         <attribute name="title">
          <string>Kflöde1</string>
@@ -3081,7 +3191,7 @@
        </widget>
        <widget class="QWidget" name="tab_39">
         <attribute name="title">
-         <string>Omst, Vinst</string>
+         <string>Omst, Vinst, Utdel</string>
         </attribute>
         <widget class="QwtPlot" name="qwtPlotRevenueEarnings_17">
          <property name="geometry">
@@ -3093,6 +3203,227 @@
           </rect>
          </property>
         </widget>
+        <widget class="QLineEdit" name="lineEditAnualEarningGrowthRate_3">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>100</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_120">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>80</y>
+           <width>141</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinsttillväxt %</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgEarningPerShare_3">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>100</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_121">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>131</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vinst/Aktie (medel)</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_123">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Försälj./Aktie (Medel)</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgRevenuePerShare_4">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualRevenueGrowthRate_4">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>40</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_124">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>20</y>
+           <width>151</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Försälj.tillväxt %</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAnualDividendGrowthRate_6">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_146">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>140</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Utdel./Aktie (medel)</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAvgDividendPerShare_6">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>160</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_147">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>140</y>
+           <width>151</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Utdel.stillväxt %</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_122">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>215</y>
+           <width>281</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Kontrollera att kurstillväxten håller jämna</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_140">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>240</y>
+           <width>251</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>steg med försäljs-och vinsttillväxten.</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_141">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>255</y>
+           <width>261</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Om kurstillväxten är lägre än försäljs- och</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_142">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>280</y>
+           <width>271</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>vinsttillväxten anses det som GYNNSAM</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>190</y>
+           <width>291</width>
+           <height>121</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+        </widget>
+        <zorder>groupBox</zorder>
+        <zorder>qwtPlotRevenueEarnings_17</zorder>
+        <zorder>lineEditAnualEarningGrowthRate_3</zorder>
+        <zorder>label_120</zorder>
+        <zorder>lineEditAvgEarningPerShare_3</zorder>
+        <zorder>label_121</zorder>
+        <zorder>label_123</zorder>
+        <zorder>lineEditAvgRevenuePerShare_4</zorder>
+        <zorder>lineEditAnualRevenueGrowthRate_4</zorder>
+        <zorder>label_124</zorder>
+        <zorder>lineEditAnualDividendGrowthRate_6</zorder>
+        <zorder>label_146</zorder>
+        <zorder>lineEditAvgDividendPerShare_6</zorder>
+        <zorder>label_147</zorder>
+        <zorder>label_122</zorder>
+        <zorder>label_140</zorder>
+        <zorder>label_141</zorder>
+        <zorder>label_142</zorder>
        </widget>
       </widget>
      </widget>
