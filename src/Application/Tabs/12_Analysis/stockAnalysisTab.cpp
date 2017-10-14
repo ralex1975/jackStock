@@ -6061,6 +6061,15 @@ void StockAnalysisTab::saveAnalysisPlotAsImages(void)
     ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotRevenuePerShare_14);
 
 
+    //-----------------------------------------------------------------------------------
+    // Utdelning/Aktie
+    //-----------------------------------------------------------------------------------
+    filename = m_dateImgDir;
+    filename += "/";
+    filename += "image_3c.png";
+    ceqp.saveQwtPlotAsImage(filename, ui->qwtPlotDividendPerShare_16);
+
+
 
     //-----------------------------------------------------------------------------------
     // Omsättning, Vinst efter skatt
@@ -7389,9 +7398,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 
 
-    //---------------------------------------------------------------
-
-
     //-----------------------------------------------------------------------------------
     // Utdelning/Aktie
     //-----------------------------------------------------------------------------------
@@ -7503,8 +7509,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 
 
-//------------------------------------------------------------------------
-
 
     //-----------------------------------------------------------------------------------
     // Vinst/Aktie
@@ -7550,12 +7554,9 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     ui->treeWidgetHistoricalPENum->clear();
 
 
-
-    //RobustGrowth rg;
-    //SubAnalysDataST trendlineArr[MAX_NOF_EARNINGS_ARR_DATA];
-    /*int*/ nofTrendlineArrData = 2;
-
+    nofTrendlineArrData = 2;
     m_growthRateIsValid = true;
+
     if(false == rg.calcAnualRobustGrowth(m_earningsDataArr,
                                          m_nofEarningsArrData,
                                          trendlineArr,
@@ -7682,8 +7683,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                          lineColor);
 
 
-
-
     //-----------------------------------------------------------------------------------
     // Omsättning, Vinst efter skatt 1,(3)
     //-----------------------------------------------------------------------------------
@@ -7709,33 +7708,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     //-----------------------------------------------------------------------------------
     // Omsättning, Vinst efter skatt 3,(3)
     //-----------------------------------------------------------------------------------
-
-#if 0
-    SubAnalysDataST       tmpDividensArr[MAX_NOF_TOT_DIVIDENT];
-    int nofTmpDividenData = 0;
-    double dbTmpDividen;
-    bool tmpDividenIsValid;
-
-    for(int tmpCnt = 0; tmpCnt < m_nofTotDividensData; tmpCnt++)
-    {
-        dbTmpDividen = m_totDividensArr[tmpCnt].data.toDouble(&tmpDividenIsValid);
-        if(true == tmpDividenIsValid)
-        {
-            tmpDividensArr[tmpCnt].date = m_totDividensArr[tmpCnt].date;
-
-
-            if(dbTmpDividen < 0)
-            {
-                dbTmpDividen = -dbTmpDividen;
-            }
-
-
-            tmpDividensArr[tmpCnt].data.sprintf("%.2f", dbTmpDividen);
-            nofTmpDividenData++;
-        }
-    }
-#endif
-
     indexToPlot = 6;
     resetMinMaxScale = false;
     xScaleStep = 1;
@@ -7744,93 +7716,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
                      ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::black, xScaleStep);
 
 
-
-
-#if 0
-
-        //-----------------------------------------------------------------------------------
-        // Omsättning, Vinst efter skatt 1,(3)
-        //-----------------------------------------------------------------------------------
-        indexToPlot = 4;
-        resetMinMaxScale = true;
-        xScaleStep = 1;
-        plotYAxisLogData(m_qwtAnalysisPlotDataArr4, resetMinMaxScale,
-                         m_revenueDataArr, m_nofRevenueArrData,
-                         ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::blue, xScaleStep);
-
-
-        //-----------------------------------------------------------------------------------
-        // Omsättning, Vinst efter skatt 2,(3)
-        //-----------------------------------------------------------------------------------
-        indexToPlot = 5;
-        resetMinMaxScale = false;
-        xScaleStep = 1;
-        plotYAxisLogData(m_qwtAnalysisPlotDataArr4, resetMinMaxScale,
-                         m_totEarningsDataArr, m_nofTotEarningsArrData,
-                         ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::red, xScaleStep);
-
-
-        //-----------------------------------------------------------------------------------
-        // Omsättning, Vinst efter skatt 3,(3)
-        //-----------------------------------------------------------------------------------
-
-        SubAnalysDataST       tmpDividensArr[MAX_NOF_TOT_DIVIDENT];
-        int nofTmpDividenData = 0;
-        double dbTmpDividen;
-        bool tmpDividenIsValid;
-
-        for(int tmpCnt = 0; tmpCnt < m_nofTotDividensData; tmpCnt++)
-        {
-            dbTmpDividen = m_totDividensArr[tmpCnt].data.toDouble(&tmpDividenIsValid);
-            if(true == tmpDividenIsValid)
-            {
-                tmpDividensArr[tmpCnt].date = m_totDividensArr[tmpCnt].date;
-
-
-                if(dbTmpDividen < 0)
-                {
-                    dbTmpDividen = -dbTmpDividen;
-                }
-
-
-                tmpDividensArr[tmpCnt].data.sprintf("%.2f", dbTmpDividen);
-                nofTmpDividenData++;
-            }
-        }
-
-
-        indexToPlot = 6;
-        resetMinMaxScale = false;
-        xScaleStep = 1;
-        plotYAxisLogData(m_qwtAnalysisPlotDataArr4, resetMinMaxScale,
-                         tmpDividensArr, nofTmpDividenData,
-                         ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::black, xScaleStep);
-
-#endif
-
-     #if 0
-    //-----------------------------------------------------------------------------------
-    // Omsättning, Vinst efter skatt 1,(2)
-    //-----------------------------------------------------------------------------------
-    indexToPlot = 9;
-    resetMinMaxScale = true;
-    xScaleStep = 1;
-    plotYAxisLogData(m_qwtAllAnalysisPlotData, resetMinMaxScale,
-                     m_revenueDataArr, m_nofRevenueArrData,
-                     ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::blue, xScaleStep);
-
-
-    //-----------------------------------------------------------------------------------
-    // Omsättning, Vinst efter skatt 2,(2)
-    //-----------------------------------------------------------------------------------
-    indexToPlot = 10;
-    resetMinMaxScale = false;
-    xScaleStep = 1;
-    plotYAxisLogData(m_qwtAllAnalysisPlotData, resetMinMaxScale,
-                     m_totEarningsDataArr, m_nofTotEarningsArrData,
-                     ui->qwtPlotRevenueEarnings_17, indexToPlot, Qt::red, xScaleStep);
-
-    #endif
 
     //-----------------------------------------------------------------------------------
     // Utdelning
@@ -9589,12 +9474,21 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMax
     int nofTicks;
 
 
+
+
     if(index >= CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS)
     {
         str.sprintf("Felaktigt index för inte vara större (Max = %d)", CYahooStockPlotUtil::MAX_NOF_PLOT_COLORS);
         QMessageBox::information(NULL, QString::fromUtf8("Förstort index"), str);
         return false;
     }
+
+    if(nofData == 0)
+    {
+        // cyspu.removePlotData(m_qwtAllAnalysisPlotData, index, qwtPlot);
+        cyspu.removePlotData(allPlotData, index, qwtPlot);
+    }
+
 
     if(index < 0)
     {
@@ -9604,10 +9498,6 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMax
     }
 
 
-    if(nofData == 0)
-    {
-        cyspu.removePlotData(m_qwtAllAnalysisPlotData, index, qwtPlot);
-    }
 
 
     if(resetMinMaxScale == true)
@@ -9639,6 +9529,7 @@ plotYAxisLogData(CYahooStockPlotUtil::PlotData_ST &allPlotData, bool resetMinMax
     if(false == logScaleFindStartStopTicksValue(allPlotData.axis.minY, allPlotData.axis.maxY,
                                                 yAxisStartTicValue, yAxisStopTicValue, nofTicks))
     {
+        cyspu.removePlotData(allPlotData, index, qwtPlot);
         return false;
     }
 
