@@ -48,6 +48,9 @@ class StockAnalysisTab : public QDialog
     double m_dividendGrowthRate;
     bool m_dividendGrowthRateIsValid;
 
+    double m_equityGrowthRate;
+    bool m_equityGrowthRateIsValid;
+
 
     QwtPlot *m_qwtPlot[NOF_QWT_PLOTS];
     subAnalysisDisplayGraphData m_saDisply;
@@ -169,6 +172,11 @@ class StockAnalysisTab : public QDialog
     SubAnalysDataST       m_equityPerShareArr[MAX_NOF_EQUITY_PER_SHARE];
     int                   m_nofEquityPerShareData;
 
+    // This is calculated later in this file not retrived from db
+    SubAnalysDataST       m_equityGrowthArr[MAX_NOF_EQUITY_PER_SHARE];
+    int                   m_nofEquityGrowthArrData;
+
+
     SubAnalysDataST       m_cashFlowCapexArr[MAX_NOF_CASH_FLOW_CAPEX];
     int                   m_nofCashFlowCapexData;
 
@@ -208,6 +216,7 @@ class StockAnalysisTab : public QDialog
     void initTreeWidgetHistoricalYield(void);
     void initTreeWidgetHistoricalPriceToBookValue(void);
     void initMinMaxPePrice(void);
+    void initTreeWidgetEquity(void);
     void initTreeWidgetDividend(void);
     void initSubAnalysisPlots(void);
     void addDividendToTreeWidget(void);
@@ -215,6 +224,8 @@ class StockAnalysisTab : public QDialog
     void addEarningAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEarning);
     void addRevenueAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfRevenue);
     void addDividendAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfDividend);
+    void addEquityAndGrowsToTreeWidget(int nofPredictionYears, bool &gotLossOfEquity);
+
 
 
 
