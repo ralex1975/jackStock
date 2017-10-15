@@ -3451,32 +3451,6 @@
           <string>Utdel.tillväxt %</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_122">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>205</y>
-           <width>301</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Kontrollera att kurstillväxten håller jämna</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_140">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>230</y>
-           <width>301</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>steg med försäljs-och vinsttillväxten.</string>
-         </property>
-        </widget>
         <widget class="QLineEdit" name="lineEditAvgEquityPerShare_8">
          <property name="geometry">
           <rect>
@@ -3709,6 +3683,78 @@
            <width>51</width>
            <height>21</height>
           </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_141">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>260</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Mg Intrinsic Value</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_142">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>380</y>
+           <width>59</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>1/PE</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditRoeDivPriceBook_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>396</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_156">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>380</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Pris/JEK</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditMontgomeryIntrinsicValue_2">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>280</y>
+           <width>113</width>
+           <height>22</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_122">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>240</y>
+           <width>311</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Uppskattade avkastning för Aktieägarnas  (%)</string>
          </property>
         </widget>
        </widget>
