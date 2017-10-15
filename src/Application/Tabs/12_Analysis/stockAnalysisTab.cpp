@@ -1597,7 +1597,17 @@ void StockAnalysisTab::on_treeWidgetStockListAnalysis_doubleClicked(const QModel
     // Display all analysis graphs
     displayAllAnalysisPlots();
 
+    // If TenYearNoteYield value is valid calc buffett Intrinsic Value
+    QString tmpTenYearNoteYield;
+    double dbTenYearNoteYield;
+    bool tmpIsValid;
+    tmpTenYearNoteYield = ui->lineEditTenYearNoteYield->text();
+    dbTenYearNoteYield = tmpTenYearNoteYield.toDouble(&tmpIsValid);
 
+    if((true == tmpIsValid) && (dbTenYearNoteYield > 0))
+    {
+        on_pushButtonCalcIntrinsicValue_clicked();
+    }
 
 
 }
@@ -7466,8 +7476,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
     // Calc and display least square fit earning data
     addRevenueAndGrowsToTreeWidget(NOF_PREDICTION_YEARS, gotLossOfEarning);
-
-
 
 
     RobustGrowth rg;
