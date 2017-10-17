@@ -144,7 +144,7 @@ bool RobustGrowth::calcAnualRobustGrowth(SubAnalysDataST *inArr,
         {
             startYear = (minX + i);
             startY = k * (minX + i) + m;
-            if(startY >= 1)
+            if(startY > 0/*>=1*/)
             {
                 minX = (minX + i);
                 break;
@@ -157,7 +157,7 @@ bool RobustGrowth::calcAnualRobustGrowth(SubAnalysDataST *inArr,
             endYear = (maxX - i);
             endY = k * (maxX -i) + m;
 
-            if(endY >= 1)
+            if(endY > 0/*>=1*/)
             {
                 maxX = (maxX - i);
                 break;

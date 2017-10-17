@@ -7413,7 +7413,7 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
 
 
     //-----------------------------------------------------------------------------------
-    // kostnadseffektivitet <= 60% (Bank)
+    // Kostnadseffektivitet <= 60% (Bank)
     //-----------------------------------------------------------------------------------
     indexToPlot = 11;
     nofPlotToClear = 0;
@@ -7482,8 +7482,6 @@ void StockAnalysisTab::displayAllAnalysisPlots(void)
     SubAnalysDataST trendlineArr[MAX_NOF_EARNINGS_ARR_DATA];
     int nofTrendlineArrData = 2;
 
-    //m_revenuGrowthRate;
-    //m_revenuGrowthRateIsValid =false;
 
 
     // Calc revenu growth rate
