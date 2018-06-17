@@ -488,7 +488,7 @@ void TaAnalysis::on_SelStockListButton_clicked()
 }
 
 
-
+bool m_crumb_failed = false;
 /*******************************************************************
  *
  * Function:    on_treeWidget_doubleClicked()
@@ -536,6 +536,7 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
         curlHndl = mlc.beginCurlSession();
         if(false == curlHndl)
         {
+            //m_crumb_failed = true;
             QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to init curl"));
             return;
         }
@@ -582,6 +583,7 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
             // Parse file data and extract crumb
             if(false == cu.getSubstringFromFile(filename,regExp, m_reqCrumb))
             {
+                m_crumb_failed = true;
                 QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to parse crumb page"));
                 return;
             }
@@ -784,7 +786,15 @@ void TaAnalysis::on_treeWidget_doubleClicked(const QModelIndex &index)
     else
     {
         m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-        QMessageBox::information(this, QString::fromUtf8("Vänta"), QString::fromUtf8("Vänta Processar redan data.."));
+        if(m_crumb_failed == true)
+        {
+            m_crumb_failed = false;
+        }
+        else
+        {
+            QMessageBox::information(this, QString::fromUtf8("Vänta"), QString::fromUtf8("Vänta Processar redan data.."));
+
+        }
     }
 }
 
@@ -1134,6 +1144,7 @@ bool TaAnalysis::prepReqTaDataFromServer(QString stockName, QString stockSymbol,
         curlHndl = mlc.beginCurlSession();
         if(false == curlHndl)
         {
+            //m_crumb_failed = true;
             QMessageBox::information(this, QString::fromUtf8("Errror"), QString::fromUtf8("Fail to init curl (2)"));
             return false;
         }

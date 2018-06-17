@@ -3,6 +3,8 @@
 #include "dbHndl.h"
 #include "util.h"
 
+extern bool m_crumb_failed;
+
 const CTADlg::TimePeriodDays_ST CTADlg::m_timePeriodDaysArr[CTADlg::MAX_NOF_TIME_PERIOD_DAYS_ITEMS] =
 {
     {QString::fromUtf8("AllaData"),       CTADlg::TIME_PERIOD_DAYS_ALL_DATA,},
@@ -579,7 +581,14 @@ void CTADlg::on_treeWidgetStockList_doubleClicked(const QModelIndex &index)
     else
     {
         m_singleStockDataReqStatus = STATUS_REQ_SINGLE_STOCK_IDLE;
-        QMessageBox::information(this, QString::fromUtf8("Vänta"), QString::fromUtf8("Vänta Processar redan data.."));
+       if(m_crumb_failed == true)
+        {
+            m_crumb_failed = false;
+        }
+        else
+        {
+            QMessageBox::information(this, QString::fromUtf8("Vänta"), QString::fromUtf8("Vänta Processar redan data.."));
+        }
     }
 }
 
