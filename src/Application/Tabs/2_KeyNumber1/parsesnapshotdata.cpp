@@ -39,10 +39,6 @@ CParseSnapshotData::CParseSnapshotData(QObject *parent):
 
 
 
-
-
-
-
 /****************************************************************
  *
  * Function:    ()
@@ -101,6 +97,92 @@ void CParseSnapshotData::run()
                 db.delAllStockSnapshotData(true);
                 db.resetSnapshotRamData(db.m_snapshotStockData, true);
 
+
+                filename = DWLD_PATH_STOCK_KEY_NO_FILE;
+                //qDebug() << filename;
+                pknd.parseStockKeyNumberData(filename, db, CDbHndl::DB_MODE_INSERT_DATA/*CDbHndl::DB_MODE_UPDATE_DATA*/);
+
+                db.addCustomerSnabshotData(true);
+                // qDebug("Open db 2b %s, %d", __FILE__, __LINE__);
+                db.closeDb();
+                emit sendParserThreadFinish();
+                toDo = PARSER_IS_IDLE;
+                finish = true;
+                qDebug() << "Thread: Finish parse snapshot data";
+                break;
+            default:
+                this->msleep(100);
+            }
+        }
+    }
+    // db.closeDb(true);
+
+
+
+}
+
+
+
+#if 0
+/****************************************************************
+ *
+ * Function:    ()
+ *
+ * Description:.
+ *
+ *
+ *
+ *
+ ****************************************************************/
+void CParseSnapshotData::run()
+{
+    CTaskQueData data;
+    bool finish = false;
+    TaskQueToDo_ET toDo = PARSER_IS_IDLE;
+    CDbHndl db;
+    CParsePriceData ppd;
+    CParseYieldData pyd;
+    CParseKeyNumberData pknd;
+    QString filename;
+
+
+    qDebug("Open db 2 %s, %d", __FILE__, __LINE__);
+    db.openDb(PATH_JACK_STOCK_DB, true);
+
+    while(finish == false)
+    {
+        if(toDo == PARSER_IS_IDLE)
+        {
+            qDebug() << "Parser thread is running";
+
+            if(true == m_inputQue.removeFirst(data))
+            {
+                toDo = data.toDo;
+                qDebug() << "Thread data has been received";
+            }
+            else
+            {
+                qDebug() << "Thread: is idle";
+                this->msleep(500);
+            }
+        }
+        else
+        {
+            switch(toDo)
+            {
+            case PARSER_IS_IDLE:
+                    this->msleep(100);
+                break;
+
+            case PARSE_COMPLETE_SNAPSHOT_DATA:
+                qDebug() << "Thread: parse snapshot data";
+
+
+
+                db.delAllStockSnapshotData(true);
+                db.resetSnapshotRamData(db.m_snapshotStockData, true);
+
+
                 filename = DWLD_PATH_STOCK_PRICE_FILE;
                 //qDebug() << filename;
                 if(false == ppd.parseStockPrices(filename, db))
@@ -136,7 +218,7 @@ void CParseSnapshotData::run()
 
 
 }
-
+#endif
 
 
 

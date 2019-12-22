@@ -41,7 +41,8 @@ CWebBrowserTab::CWebBrowserTab(QWidget *parent) :
 
     // funkar med nya browsern qt 5.7
     //QUrl url("http://www.google.com/finance/historical?q=AAPL&startdate=Nov 1, 2011&enddate=Nov 30, 2011&output=csv");
-    QUrl url("https://borsdata.se/");
+    //QUrl url("https://borsdata.se/");
+    QUrl url("http://www.yieldcurve.com/");
 
     // Ska funka
    //QUrl url("http://www.google.com/finance/historical?q=NASDAQ:ADBE&startdate=Jan+01%2C+2009&enddate=Aug+2%2C+2012&output=csv");
@@ -143,7 +144,8 @@ void CWebBrowserTab::on_pushButton_5_clicked()
 
 void CWebBrowserTab::on_pushButton_6_clicked()
 {
-    QUrl url("https://www.investing.com/rates-bonds/sweden-government-bonds");
+    //QUrl url("https://www.investing.com/rates-bonds/sweden-government-bonds");
+    QUrl url("https://tradingeconomics.com/sweden/government-bond-yield");
     ui->webView->setUrl(url);
 }
 

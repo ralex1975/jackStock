@@ -197,10 +197,58 @@ void CTableTab::sectionClicked1(int logicalIndex)
 
 
 
+/*******************************************************************
+ *
+ * Function:    on_pushButton_clicked()
+ *
+ * Description:
+ *
+ *
+ *
+ *******************************************************************/
+void CTableTab::on_pushButton_clicked()
+{
+    QString filename2 = DWLD_PATH_STOCK_KEY_NO_FILE;
+    QUrl url2;
+    static char s_toggle = 0;
+    QString page("https://www.svd.se/bors/aktier.php?view=nyckeltal&list=35207");
+    QString page1("https://www.svd.se/bors/aktier.php?view=nyckeltal&list=35208");
+
+
+    if(m_filesReceived != 0)
+    {
+        QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), QString::fromUtf8("Vänta: Upptagen med hämta data"));
+        return;
+    }
+
+    QMessageBox::information(NULL, QString::fromUtf8("Hämta data"), (QString) QString::fromUtf8("Hämtar data via thread"));
+
+   if(0x01 == (s_toggle++ & 0x01))
+   {
+       url2 = page1;
+       QObject::connect(&m_hw2, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(recvHtmlPageIsDownloaded(int)));
+       m_hw2.startRequest(url2, filename2, 0x02);
+       m_filesReceived = 0;
+   }
+   else
+   {
+       url2 = page;
+       QObject::connect(&m_hw2, SIGNAL(sendSignalTextToDlg2(int)), this, SLOT(recvHtmlPageIsDownloaded(int)));
+       m_hw2.startRequest(url2, filename2, 0x02);
+       m_filesReceived = 0;
+   }
 
 
 
 
+
+
+
+}
+
+
+
+#if 0
 /*******************************************************************
  *
  * Function:    on_pushButton_clicked()
@@ -245,8 +293,39 @@ void CTableTab::on_pushButton_clicked()
     }
 
 }
+#endif
 
 
+
+/*******************************************************************
+ *
+ * Function:    recvHtmlPageIsDownloaded()
+ *
+ * Description: This function is invoked when a html page is
+ *              completely received.
+ *
+ *
+ *******************************************************************/
+void CTableTab::recvHtmlPageIsDownloaded(int number)
+{
+    CTaskQueData data;
+
+    m_filesReceived |= number;
+
+    if(m_filesReceived == 0x02)
+    {
+        data.toDo = PARSE_COMPLETE_SNAPSHOT_DATA;
+        data.priority = QUE_PRIO_3;
+
+         m_parserThread->addQueData(data);
+         m_parserThread->start(QThread::HighestPriority);
+         m_filesReceived = 0xff;
+   }
+
+}
+
+
+#if 0
 /*******************************************************************
  *
  * Function:    recvHtmlPageIsDownloaded()
@@ -273,7 +352,7 @@ void CTableTab::recvHtmlPageIsDownloaded(int number)
    }
 
 }
-
+#endif
 
 /*******************************************************************
  *

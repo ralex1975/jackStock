@@ -18047,6 +18047,8 @@ bool CDbHndl::insertOneRowKeyNumberData(bool dbIsHandledExternly)
     // QSqlQuery qry;
     QString str;
 
+    m_snapshotStockData.keyValuePS = " ";
+
 
     if(dbIsHandledExternly == false)
     {
@@ -18059,13 +18061,23 @@ bool CDbHndl::insertOneRowKeyNumberData(bool dbIsHandledExternly)
                 "companyName,"
                 "keyValuePE,"
                 "keyValuePS,"
+                "procentChangeOneDay, "
+                "priceChange, "
+                "lastPrice, "
                 "keyValueEarningsPerShare,"
                 "keyValueNAVPerShare,"
                 "keyValueDividendPerShare,"
+                "earningsDividedByDividend, "
+                "keyValueNAVPerShare, "
                 "keyValueYield,"
                 "keyValueCoursePerJEK"
                 ") "
                 "VALUES("
+                "'%s',"
+                "'%s',"
+                "'%s',"
+                "'%s',"
+                "'%s',"
                 "'%s',"
                 "'%s',"
                 "'%s',"
@@ -18078,9 +18090,14 @@ bool CDbHndl::insertOneRowKeyNumberData(bool dbIsHandledExternly)
                 //m_snapshotStockData.companyName.toLatin1().constData(),
                 m_snapshotStockData.keyValuePE.toAscii().constData(),
                 m_snapshotStockData.keyValuePS.toAscii().constData(),
+                m_snapshotStockData.procentChangeOneDay.toAscii().constData(),
+                m_snapshotStockData.priceChange.toAscii().constData(),
+                m_snapshotStockData.lastPrice.toAscii().constData(),
                 m_snapshotStockData.keyValueEarningsPerShare.toAscii().constData(),
                 m_snapshotStockData.keyValueNAVPerShare.toAscii().constData(),
                 m_snapshotStockData.keyValueDividendPerShare.toAscii().constData(),
+                m_snapshotStockData.earningsDividedByDividend.toAscii().constData(),
+                m_snapshotStockData.keyValueNAVPerShare.toAscii().constData(),
                 m_snapshotStockData.keyValueYield.toAscii().constData(),
                 m_snapshotStockData.keyValueCoursePerJEK.toAscii().constData());
 
